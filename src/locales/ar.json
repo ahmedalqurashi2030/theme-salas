@@ -1,13 +1,3 @@
-{
-  "blocks": {
-    "header": {
-      "cart": "السلة"
-    },
-    "appBanner": {
-      "download_now": "حمله الان"
-    }
-  },
-  "pages": {
     "cart": {
       "cart_options": "خيارات السلة"
     },
