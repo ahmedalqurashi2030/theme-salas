@@ -194,3 +194,63 @@ salla-user-menu {
     @apply z-10;
   }
 }
+
+
+
+
+/* Tharaa Header Styles */
+.tharaa-header {
+  @apply bg-white shadow-sm;
+
+  // Top Bar
+  .top-bar {
+    .top-menu-links {
+      @apply flex gap-4;
+
+      a {
+        @apply hover:text-primary transition-colors;
+      }
+    }
+  }
+
+  // Main Header
+  .main-header {
+    .s-search-input {
+      @apply bg-gray-100 border-transparent focus:bg-white focus:border-primary transition-all rounded-full px-6;
+      height: 44px;
+    }
+  }
+
+  // Nav Bar
+  .nav-bar {
+    .categories-trigger {
+      // Dropdown styles
+    }
+  }
+}
+
+// تعديلات على القائمة الرئيسية لتناسب الشريط الجديد
+.main-nav-container {
+  @apply shadow-none bg-transparent min-h-0;
+
+  .inner {
+    @apply static shadow-none transform-none;
+  }
+}
+
+// تحسينات عامة
+.header-actions {
+  .badge-count {
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
