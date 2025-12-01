@@ -1,3 +1,13 @@
+{
+  "blocks": {
+    "header": {
+      "cart": "Cart"
+    },
+    "appBanner": {
+      "download_now": "download now"
+    }
+  },
+  "pages": {
     "cart": {
       "cart_options": "Cart Options"
     },
