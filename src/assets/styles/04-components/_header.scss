@@ -1,0 +1,54 @@
+.tharaa-header {
+    .header-top-bar {
+        @apply border-b border-gray-200;
+
+        a,
+        button {
+            @apply text-gray-500 hover:text-primary transition-colors duration-200;
+        }
+    }
+
+    .header-main {
+        .navbar-brand {
+            @apply max-w-[120px] md:max-w-[160px];
+        }
+
+        salla-search {
+            --salla-search-height: 42px;
+            --salla-search-border-radius: 8px;
+            --salla-search-bg: #f3f4f6;
+            --salla-search-border-color: transparent;
+
+            &:hover,
+            &:focus-within {
+                --salla-search-bg: #ffffff;
+                --salla-search-border-color: var(--color-primary);
+            }
+        }
+    }
+
+    .header-nav {
+
+        // Custom Main Menu Styles Override
+        .main-menu {
+            @apply flex gap-6;
+
+            .menu-item {
+                @apply text-white font-medium py-3 hover:opacity-90;
+
+                &.active {
+                    @apply font-bold;
+                }
+            }
+        }
+    }
+}
+
+// Mobile specific adjustments
+@media (max-width: 768px) {
+    .tharaa-header {
+        .header-main {
+            @apply py-3;
+        }
+    }
+}
