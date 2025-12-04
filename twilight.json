@@ -1023,6 +1023,16 @@
                     "maxLength": 30
                 }
             ]
+        },
+        {
+            "key": "af1abfe9-60c2-4277-9f2f-4582db47e97b",
+            "title": {
+                "en": "Project_feacture",
+                "ar": "قائمة منتجات متحركة"
+            },
+            "icon": "sicon-store",
+            "path": "home.project_feacture",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
