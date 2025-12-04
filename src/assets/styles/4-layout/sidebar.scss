@@ -1,0 +1,121 @@
+/* Sidebar Container */
+.th-cat-sidebar {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    /* إخفاء القائمة خارج الشاشة (RTL) */
+    width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 10000;
+    /* فوق كل شيء */
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+
+    /* عند الفتح */
+    &.is-open {
+        right: 0;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    &__body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px 0;
+    }
+}
+
+/* Overlay (الخلفية السوداء) */
+.th-cat-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+
+    &.is-open {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Menu List Styling */
+.th-cat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .th-cat-item {
+        border-bottom: 1px solid #f9fafb;
+
+        &__row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+
+            &:hover {
+                background-color: #f8f8f8;
+            }
+        }
+
+        .th-cat-link {
+            flex: 1;
+            color: var(--color-text-main, #333);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .th-toggle-sub {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+
+            /* دوران السهم عند الفتح */
+            &.is-expanded {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    /* Submenu Styling */
+    .th-cat-submenu {
+        background-color: #fcfcfc;
+        padding: 5px 20px 15px 20px;
+
+        li {
+            margin: 8px 0;
+        }
+
+        a {
+            color: var(--color-text-light, #666);
+            font-size: 13px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            text-decoration: none;
+
+            &:hover {
+                color: var(--color-primary);
+            }
+        }
+    }
+}
