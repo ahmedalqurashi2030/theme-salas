@@ -1057,6 +1057,71 @@
                     "required": false,
                     "minLength": 6,
                     "maxLength": 30
+                },
+                {
+                    "id": "title",
+                    "type": "static",
+                    "format": "title",
+                    "label": "Title",
+                    "value": "عنوان القسم",
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "description",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": "وصف قصير موجز",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "products",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "Collection",
+                    "description": "التبويبات",
+                    "labelHTML": null,
+                    "item_label": "التبويبات",
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "products.category_list",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "label": "Dropdown List",
+                            "description": "الاصناف",
+                            "labelHTML": null,
+                            "icon": "sicon-keyboard_arrow_down",
+                            "selected": [],
+                            "options": [],
+                            "source": "Categories",
+                            "multichoice": false,
+                            "searchable": true,
+                            "required": true,
+                            "value": []
+                        },
+                        {
+                            "id": "products.dropdown_list_1",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "label": "Dropdown List 1",
+                            "description": "منتجات مختاره",
+                            "labelHTML": null,
+                            "icon": "sicon-keyboard_arrow_down",
+                            "selected": [],
+                            "options": [],
+                            "source": "Products",
+                            "multichoice": true,
+                            "searchable": true,
+                            "required": true,
+                            "value": []
+                        }
+                    ],
+                    "value": [],
+                    "minLength": "20",
+                    "maxLength": "6"
                 }
             ]
         }
