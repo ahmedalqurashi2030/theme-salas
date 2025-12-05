@@ -8,7 +8,7 @@
     
     {# رأس القائمة #}
     <div class="th-cat-sidebar__header">
-        <h3 class="font-bold text-lg">{{ trans('blocks.header.categories') }}</h3>
+        <h3 class="font-bold text-lg">{{ trans('blocks.header.categories') }} الاقسام</h3>
         <button class="th-btn-close" onclick="tharaa.toggleCategorySidebar()">
             <i class="sicon-cancel text-xl text-gray-500 hover:text-red-500"></i>
         </button>
@@ -21,37 +21,34 @@
             {# التكرار عبر روابط "القائمة الرئيسية" في سلة #}
             {# store.menus.main.links هو الرابط بالقائمة التي في الصورة #}
             
-            {% for link in store.menus.main.links %}
-                <li class="th-cat-item">
-                    <div class="th-cat-item__row">
-                        <a href="{{ link.url }}" class="th-cat-link">
-                            {# يمكنك وضع أيقونة عامة هنا إذا أردت #}
-                            <span>{{ link.title }}</span>
-                        </a>
-                        
-                        {# إذا كان العنصر يحتوي على فروع (Sub Categories) #}
-                        {% if link.children|length > 0 %}
-                            <button class="th-toggle-sub" onclick="tharaa.toggleSubMenu(this)">
-                                <i class="sicon-keyboard-arrow-left"></i>
-                            </button>
-                        {% endif %}
-                    </div>
+           {% for item in store.menus.main.links %}
+    <li>
+        <a href="{{ item.url }}">
+            
+            {# 1. التحقق هل يوجد صورة مرفوعة؟ #}
+            {% if item.image %}
+                <!-- عرض الصورة كـ img -->
+                <img src="{{ item.image }}" alt="{{ item.title }}" class="th-menu-img">
+            
+            {# 2. إذا لم توجد صورة، هل توجد أيقونة نصية؟ #}
+            {% elseif item.icon %}
+                <!-- عرض كلاس الأيقونة -->
+                <i class="{{ item.icon }}"></i>
+            
+            {# 3. الحل البديل (Fallback) - مهم جداً للتصميم #}
+            {% else %}
+                 <!-- أيقونة افتراضية في حال لم يرفع التاجر شيئاً -->
+                <i class="sicon-star"></i>
+            {% endif %}
 
-                    {# عرض القائمة الفرعية #}
-                    {% if link.children|length > 0 %}
-                        <ul class="th-cat-submenu" style="display: none;">
-                            {% for sub in link.children %}
-                                <li>
-                                    <a href="{{ sub.url }}">
-                                        <i class="sicon-minus text-[10px] text-gray-300"></i> 
-                                        {{ sub.title }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
-            {% endfor %}
+            <span>{{ item.title }}</span>
+        </a>
+    </li>
+{% endfor %}
         </ul>
     </div>
 </aside>
+
+<script>
+    console.log({{ store.menus.main.links | json_encode | raw }});
+</script>
