@@ -1,162 +1,5 @@
-{#
-  هذا الملف يمثل قسم التصنيفات التفاعلي
-  يتم جلب البيانات من:
-  - section_titile (العنوان)
-  - products (قائمة التبويبات)
-#}
-
-<section class="lifestyle-section" id="section-{{ section_id }}">
-    <!-- الخلفيات الجمالية -->
-    <div class="halo halo-1"></div>
-    <div class="halo halo-2"></div>
-
-    <div class="section-container">
-        <!-- رأس القسم والفلاتر -->
-        <div class="section-header">
-            <div>
-                <h2>{{ section_titile|default('منتجات مختارة') }}</h2>
-                <p>تصفح أحدث المجموعات لدينا</p>
-            </div>
-            
-            <!-- الفلاتر (التبويبات) -->
-            <div class="category-filter">
-                <button class="active filter-btn" data-target="all">الكل</button>
-                {% for tab in products %}
-                    {% if tab.category_list and tab.dropdown_list_1|length > 0 %}
-                        <button class="filter-btn" data-target="cat-{{ tab.category_list.id }}">
-                            {{ tab.category_list.name }}
-                        </button>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-
-        <!-- منطقة المنتجات -->
-        <div class="products-band">
-            <div class="cards-strip-wrapper">
-                <div class="cards-strip">
-                    
-                    {# حلقة تكرار التبويبات #}
-                    {% for tab in products %}
-                        {# حلقة تكرار المنتجات داخل كل تبويب #}
-                        {% for product in tab.dropdown_list_1 %}
-                            
-                            <article class="product-card" data-category="cat-{{ tab.category_list.id }}">
-                                <div class="img-wrapper">
-                                    <!-- شارات المنتج -->
-                                    {% if product.promotion_title %}
-                                        <span class="badge-tag sale">{{ product.promotion_title }}</span>
-                                    {% elseif product.is_new %}
-                                        <span class="badge-tag new">جديد</span>
-                                    {% endif %}
-                                    
-                                    <!-- التقييم -->
-                                    {% if product.rating %}
-                                        <div class="rating-pill"><span>★</span> {{ product.rating.stars }}</div>
-                                    {% endif %}
-
-                                    <!-- زر المشاهدة السريعة -->
-                                    <button class="btn-quick-view" 
-                                        onclick="salla.product.showModal({{ product.id }})">
-                                        👁️
-                                    </button>
-                                    
-                                    <!-- زر المشاهدة السريعة المخصص (إذا كنت تريد استخدام نافذتنا الخاصة) -->
-                                    <!-- قم بإلغاء التعليق أدناه إذا كنت تريد استخدام النافذة المخصصة بدلاً من نافذة سلة الافتراضية -->
-                                    <button class="btn-quick-view custom-qv-trigger"
-                                            onclick="openCustomModal({
-                                                id: '{{ product.id }}',
-                                                img: '{{ product.image.url }}',
-                                                title: '{{ product.name }}',
-                                                price: '{{ product.price|money }}',
-                                                oldPrice: '{{ product.regular_price|money }}',
-                                                cat: '{{ tab.category_list.name }}',
-                                                desc: '{{ product.short_description|striptags }}',
-                                                url: '{{ product.url }}'
-                                            })">
-                                        👁️
-                                    </button>
-
-                                    <a href="{{ product.url }}">
-                                        <img src="{{ product.image.url }}" alt="{{ product.image.alt }}" loading="lazy">
-                                    </a>
-                                </div>
-
-                                <span class="cat-name">{{ tab.category_list.name }}</span>
-                                <h3 class="prod-title"><a href="{{ product.url }}">{{ product.name }}</a></h3>
-                                
-                                <div class="price-row">
-                                    <span class="curr-price">{{ product.price|money }}</span>
-                                    {% if product.is_on_sale %}
-                                        <span class="old-price">{{ product.regular_price|money }}</span>
-                                    {% endif %}
-                                </div>
-
-                                <div class="card-actions">
-                                    <button class="btn-card-add" onclick="salla.cart.addItem({ id: {{ product.id }}, quantity: 1 })">
-                                        <span>+</span> إضافة للسلة
-                                    </button>
-                                    <!-- زر المفضلة الخاص بسلة -->
-                                    <salla-button-wishlist class="btn-card-fav-wrapper" object-id="{{ product.id }}"></salla-button-wishlist>
-                                </div>
-                            </article>
-
-                        {% endfor %}
-                    {% endfor %}
-
-                </div>
-            </div>
-            <!-- شريط التقدم -->
-            <div class="scroll-bar"><div class="scroll-prog"></div></div>
-        </div>
-    </div>
-</section>
-
-<!-- ========================================= -->
-<!-- النافذة المنبثقة المخصصة (Custom Modal) -->
-<!-- ========================================= -->
-<div class="modal-wrap" id="customSallaModal">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeCustomModal()">✕</button>
-        <div class="modal-img-col"><img id="mImg" src="" alt=""></div>
-        <div class="modal-info-col">
-            <div class="m-header">
-                <div class="m-cat" id="mCat"></div>
-                <h2 class="m-title" id="mTitle"></h2>
-                <div class="m-price">
-                    <span id="mPrice"></span>
-                    <span id="mOldPrice" class="m-old-price"></span>
-                </div>
-            </div>
-            <p class="m-desc" id="mDesc"></p>
-
-            <!-- الكمية -->
-            <div class="qty-wrap">
-                <span class="qty-label">الكمية:</span>
-                <div class="qty-input-group">
-                    <button class="qty-btn" onclick="updateMQty(-1)">-</button>
-                    <input type="number" id="mQty" class="qty-field" value="1" readonly>
-                    <button class="qty-btn" onclick="updateMQty(1)">+</button>
-                </div>
-            </div>
-
-            <div class="m-actions">
-                <button class="m-btn btn-outline" id="mAddToCartBtn">إضافة للسلة</button>
-                <a href="#" id="mProductLink" class="m-btn btn-solid">تفاصيل المنتج</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-<style>
-    /* --- 1. متغيرات الألوان المحايدة الأنيقة --- */
- {#
-  هذا الملف يمثل قسم التصنيفات التفاعلي
-  يتم جلب البيانات من:
-  - section_titile (العنوان)
-  - products (قائمة التبويبات)
-#}
 
 <section class="lifestyle-section" id="section-{{ section_id }}">
     <!-- الخلفيات الجمالية -->
