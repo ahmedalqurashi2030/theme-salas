@@ -1,0 +1,19 @@
+<ul class="flex flex-col space-y-4">
+                {# هنا نستخدم الكود الذي استخرجناه من صورتك #}
+                {% for menu in menus %}
+                    <li>
+                        <a href="{{ menu.url }}" class="block text-gray-800 hover:text-primary {{ menu.link_attrs }}">
+                            {{ menu.title }}
+                        </a>
+                        
+                        {# التحقق إذا كان هناك عناصر فرعية #}
+                        {% if menu.has_children %}
+                            <ul class="mr-4 mt-2 space-y-2 text-sm text-gray-600">
+                                {% for child in menu.children %}
+                                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>

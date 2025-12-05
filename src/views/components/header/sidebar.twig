@@ -16,36 +16,28 @@
 
     {# جسم القائمة #}
     <div class="th-cat-sidebar__body">
-        <ul class="th-cat-list">
-            
-            {# التكرار عبر روابط "القائمة الرئيسية" في سلة #}
-            {# store.menus.main.links هو الرابط بالقائمة التي في الصورة #}
-            
-           {% for item in store.menus.main.links %}
-    <li>
-        <a href="{{ item.url }}">
-            
-            {# 1. التحقق هل يوجد صورة مرفوعة؟ #}
-            {% if item.image %}
-                <!-- عرض الصورة كـ img -->
-                <img src="{{ item.image }}" alt="{{ item.title }}" class="th-menu-img">
-            
-            {# 2. إذا لم توجد صورة، هل توجد أيقونة نصية؟ #}
-            {% elseif item.icon %}
-                <!-- عرض كلاس الأيقونة -->
-                <i class="{{ item.icon }}"></i>
-            
-            {# 3. الحل البديل (Fallback) - مهم جداً للتصميم #}
-            {% else %}
-                 <!-- أيقونة افتراضية في حال لم يرفع التاجر شيئاً -->
-                <i class="sicon-star"></i>
-            {% endif %}
-
-            <span>{{ item.title }}</span>
-        </a>
-    </li>
-{% endfor %}
+       <ul class="th-category-list">
+    
+    {# 1. التأكد أن القائمة ليست فارغة #}
+    {% for menu in menus %}
+                <li>
+                    <a href="{{ menu.url }}" class="block p-2 hover:bg-gray-100 {{ menu.link_attrs }}">
+                        {{ menu.title }}
+                    </a>
+                    
+                    {# إذا كانت القائمة تحتوي على عناصر فرعية #}
+                    {% if menu.has_children %}
+                        <ul class="mr-4 mt-1 space-y-1">
+                            {% for child in menu.children %}
+                                <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
         </ul>
+
+</ul>
     </div>
 </aside>
 

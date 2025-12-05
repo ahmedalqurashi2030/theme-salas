@@ -1,0 +1,32 @@
+{#
+| Variable             | Type                     | Description                                      |
+|----------------------|--------------------------|--------------------------------------------------|
+| menus                | Menu[] *Collection       | List of menus                                    |
+| menus[].has_children | Bool                     |                                                  |
+| menus[].url          | string                   |                                                  |
+| menus[].title        | string                   |                                                  |
+| menus[].attrs        | string                   | Menu dom attributes ex: `id="offers"`            |
+| menus[].link_attrs   | string                   | Menu link dom attributes ex: `class="offers-link"`|
+| menus[].children     | Menu[] *Collection       |                                                  |
+| menus[].products     | ?Product[] *Collection   | List of selected products or null                |
+#}
+
+<ul class="flex flex-col space-y-4">
+                {# هنا نستخدم الكود الذي استخرجناه من صورتك #}
+                {% for menu in menus %}
+                    <li>
+                        <a href="{{ menu.url }}" class="block text-gray-800 hover:text-primary {{ menu.link_attrs }}">
+                            {{ menu.title }}
+                        </a>
+                        
+                        {# التحقق إذا كان هناك عناصر فرعية #}
+                        {% if menu.has_children %}
+                            <ul class="mr-4 mt-2 space-y-2 text-sm text-gray-600">
+                                {% for child in menu.children %}
+                                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
