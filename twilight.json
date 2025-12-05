@@ -1033,6 +1033,16 @@
             "icon": "sicon-store",
             "path": "home.project_feacture",
             "fields": []
+        },
+        {
+            "key": "f924a739-5022-4d21-a4c3-c14c5b91cd41",
+            "title": {
+                "en": "Product Categories",
+                "ar": "تصنيفات المنتجات (تفاعلي)"
+            },
+            "icon": "sicon-store",
+            "path": "home.product-categories",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
