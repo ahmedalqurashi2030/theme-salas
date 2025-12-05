@@ -1041,7 +1041,7 @@
                 "ar": "تصنيفات المنتجات (تفاعلي)"
             },
             "icon": "sicon-store",
-            "path": "home.product-categories",
+            "path": "home.product_categories",
             "fields": [
                 {
                     "id": "section_titile",
