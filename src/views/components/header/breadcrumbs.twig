@@ -1,0 +1,15 @@
+{#
+| Variable             | Type                     | Description                                      |
+|----------------------|--------------------------|--------------------------------------------------|
+| breadcrumbs          | object[]                 | A list of breadcrumb for current page            |
+| breadcrumbs[].title  | string                   | A title of breadcrumb                            |
+| breadcrumbs[].url    | string                   | A url of breadcrumb                              |
+#}
+
+<nav class="breadcrumbs w-full py-3 snipy-5">
+  <ol class="flex items-center flex-wrap text-sm">
+    {% for breadcrumb in breadcrumbs %}
+      <a href="{{ breadcrumb.url }}">{{ breadcrumb.title }}</a>
+    {% endfor %}
+  </ol>
+</nav>

@@ -1052,6 +1052,9 @@ select{
 .mr-2{
     margin-right: 0.5rem;
 }
+.mr-4{
+    margin-right: 1rem;
+}
 .ms-auto{
     margin-left: auto;
 }
@@ -1084,9 +1087,6 @@ select{
 }
 .mt-8{
     margin-top: 2rem;
-}
-.mr-4{
-    margin-right: 1rem;
 }
 .line-clamp-1{
     overflow: hidden;
@@ -1199,9 +1199,6 @@ select{
 .h-px{
     height: 1px;
 }
-.h-6{
-    height: 1.5rem;
-}
 .max-h-0{
     max-height: 0px;
 }
@@ -1282,9 +1279,6 @@ select{
 }
 .w-full{
     width: 100%;
-}
-.w-6{
-    width: 1.5rem;
 }
 .min-w-0{
     min-width: 0px;
@@ -1510,6 +1504,15 @@ select{
     margin-bottom: calc(0.25rem * 0);
     margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
+.space-y-2 > :not([hidden]) ~ :not([hidden]){
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0.5rem * (1 - 0));
+    margin-top: calc(0.5rem * (1 - var(--tw-space-y-reverse)));
+    margin-top: calc(0.5rem * calc(1 - 0));
+    margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0.5rem * 0);
+    margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
 .space-y-4 > :not([hidden]) ~ :not([hidden]){
     --tw-space-y-reverse: 0;
     margin-top: calc(1rem * (1 - 0));
@@ -1545,15 +1548,6 @@ select{
     margin-top: calc(1px * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(1px * 0);
     margin-bottom: calc(1px * var(--tw-space-y-reverse));
-}
-.space-y-2 > :not([hidden]) ~ :not([hidden]){
-    --tw-space-y-reverse: 0;
-    margin-top: calc(0.5rem * (1 - 0));
-    margin-top: calc(0.5rem * (1 - var(--tw-space-y-reverse)));
-    margin-top: calc(0.5rem * calc(1 - 0));
-    margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-    margin-bottom: calc(0.5rem * 0);
-    margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 .divide-y > :not([hidden]) ~ :not([hidden]){
     --tw-divide-y-reverse: 0;
@@ -1709,9 +1703,6 @@ select{
     --tw-bg-opacity: 1;
     background-color: rgba(255, 255, 255, 1);
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
-}
-.bg-inherit{
-    background-color: inherit;
 }
 .bg-cover{
     background-size: cover;
@@ -2098,11 +2089,6 @@ select{
     color: rgba(255, 255, 255, 1);
     color: rgba(255, 255, 255, var(--tw-text-opacity, 1));
 }
-.text-gray-200{
-    --tw-text-opacity: 1;
-    color: rgba(229, 231, 235, 1);
-    color: rgba(229, 231, 235, var(--tw-text-opacity, 1));
-}
 .underline{
     text-decoration-line: underline;
 }
@@ -2140,6 +2126,12 @@ select{
     --tw-shadow: 5px 10px 30px #2B2D340D;;
     --tw-shadow-colored: 5px 10px 30px var(--tw-shadow-color);
     box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 5px 10px 30px #2B2D340D;;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
+}
+.shadow-lg{
+    --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+    box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
 }
 .shadow-md{
@@ -2189,6 +2181,11 @@ select{
 }
 .transition-shadow{
     transition-property: box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+.transition-transform{
+    transition-property: transform;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -24168,9 +24165,17 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 5px 10px 30px #2B2D340D;;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
 }
+.group:hover .group-hover\:block{
+    display: block;
+}
 .group:hover .group-hover\:-translate-x-1{
     --tw-translate-x: -0.25rem;
     transform: translate(-0.25rem, var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.group:hover .group-hover\:rotate-180{
+    --tw-rotate: 180deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(180deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 @media (min-width: 640px){
@@ -24474,9 +24479,6 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     }
     .lg\:hidden{
         display: none;
-    }
-    .lg\:h-auto{
-        height: auto;
     }
     .lg\:max-h-12{
         max-height: 3rem;

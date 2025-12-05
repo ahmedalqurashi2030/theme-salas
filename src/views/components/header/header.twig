@@ -90,32 +90,25 @@
     </div>
 
     {# 3. Navigation Bar (Categories + Menu) #}
-   <!-- 3. Navigation Bar (Categories + Menu) -->
-<div class="nav-bar bg-white border-t border-b border-gray-100 hidden lg:block">
-    <div class="container flex items-center">
-        
-        <!-- All Categories Button (Trigger) -->
-        <!-- تم إضافة onclick واستبدال الـ hover div -->
-        <div class="categories-trigger relative h-12 flex items-center px-4 bg-gray-50 border-r border-l border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors w-64 shrink-0" 
-             onclick="tharaa.toggleCategorySidebar()">
-            
-            <i class="sicon-layout-grid text-lg text-primary"></i>
-            <span class="mx-3 font-bold text-sm">{{ trans('blocks.header.categories') }}</span>
-            <i class="sicon-keyboard-arrow-down ms-auto text-gray-400"></i>
-        </div>
+    <div class="nav-bar bg-white border-t border-b border-gray-100 hidden lg:block">
+        <div class="container flex items-center">
+            <!-- All Categories Button -->
+            <div class="categories-trigger relative group h-12 flex items-center px-4 bg-gray-50 border-r border-l border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors w-64 shrink-0">
+                <i class="sicon-layout-grid text-lg text-primary"></i>
+                <span class="mx-3 font-bold text-sm">{{ trans('blocks.header.categories') }}</span>
+                <i class="sicon-keyboard-arrow-down ms-auto text-gray-400 group-hover:rotate-180 transition-transform"></i>
+                
+                <!-- Dropdown Placeholder (To be implemented with Mega Menu) -->
+                <div class="absolute top-full right-0 w-full bg-white shadow-lg border border-gray-100 hidden group-hover:block z-50">
+                    <!-- Categories List will go here -->
+                </div>
+            </div>
 
-        <!-- Main Menu -->
-        <div class="flex-1 px-4">
-           {# هنا تعرض روابط القائمة الأفقية إن وجدت #}
-           {# <custom-main-menu></custom-main-menu>  #}
-
-           {# Main Menu #}
-
-
-
-            <ul class="flex flex-col space-y-2">
-            {# حلقة التكرار على القائمة الرئيسية #}
-            {% for menu in menus %}
+            <!-- Main Menu -->
+            <div class="flex-1 px-4">
+                <custom-main-menu></custom-main-menu>
+            </div>
+               {% for menu in menus %}
                 <li>
                     <a href="{{ menu.url }}" class="block p-2 hover:bg-gray-100 {{ menu.link_attrs }}">
                         {{ menu.title }}
@@ -134,8 +127,4 @@
 
         </div>
     </div>
-</div>
-
-{# استدعاء مكون السايدبار الجديد الذي سننشئه في الخطوة القادمة #}
-{% include 'components.header.sidebar' %}
 </header>
