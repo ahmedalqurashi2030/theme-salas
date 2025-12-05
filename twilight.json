@@ -214,15 +214,6 @@
             "required": false,
             "value": false,
             "selected": false
-        },
-        {
-            "type": "menu",
-            "id": "mobile_menu_id",
-            "label": {
-                "ar": "القائمة الجانبية للجوال",
-                "en": "Mobile Menu"
-            },
-            "default": "main"
         }
     ],
     "components": [
