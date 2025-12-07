@@ -1133,7 +1133,7 @@
                 "ar": "روابط سريعة (thara)"
             },
             "icon": "sicon-store",
-            "path": "home.store_category",
+            "path": "home.store-category",
             "fields": []
         }
     ],
