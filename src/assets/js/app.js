@@ -3,7 +3,8 @@ import Swal from 'sweetalert2';
 import Anime from './partials/anime';
 import initTootTip from './partials/tooltip';
 import AppHelpers from "./app-helpers";
-import EnhancedLazyLoad from './partials/enhanced-lazy-load';
+// تم إزالة import EnhancedLazyLoad لأنه قد يتعارض مع نظام lazy loading الخاص بسلة
+// يمكن تفعيله لاحقاً إذا لزم الأمر
 
 class App extends AppHelpers {
   constructor() {
@@ -308,17 +309,27 @@ class App extends AppHelpers {
    * إضافة ARIA labels وتحسين التنقل بالكيبورد
    */
   initiateAccessibility() {
-    // إضافة ARIA labels للأزرار بدون نص
-    document.querySelectorAll('button:not([aria-label]):not(:has(span, img))').forEach(btn => {
+    // إضافة ARIA labels للأزرار بدون نص (تجنب الأزرار التي لديها aria-label بالفعل)
+    document.querySelectorAll('button:not([aria-label])').forEach(btn => {
+      // التحقق من وجود span أو img (دون استخدام :has() لدعم المتصفحات القديمة)
+      const hasSpan = btn.querySelector('span');
+      const hasImg = btn.querySelector('img');
+      if (hasSpan || hasImg) return;
+      
       const icon = btn.querySelector('i, svg');
       if (icon && !btn.textContent.trim()) {
         const iconClass = icon.className || '';
         // محاولة استخراج وصف من class الأيقونة
-        if (iconClass.includes('search')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.search') || 'بحث');
-        else if (iconClass.includes('cart')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.cart') || 'السلة');
-        else if (iconClass.includes('menu')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.main_menu') || 'القائمة');
-        else if (iconClass.includes('close')) btn.setAttribute('aria-label', 'إغلاق');
-        else if (iconClass.includes('heart') || iconClass.includes('wishlist')) btn.setAttribute('aria-label', 'إضافة للمفضلة');
+        try {
+          if (iconClass.includes('search')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.search') || 'بحث');
+          else if (iconClass.includes('cart')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.cart') || 'السلة');
+          else if (iconClass.includes('menu')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.main_menu') || 'القائمة');
+          else if (iconClass.includes('close')) btn.setAttribute('aria-label', 'إغلاق');
+          else if (iconClass.includes('heart') || iconClass.includes('wishlist')) btn.setAttribute('aria-label', 'إضافة للمفضلة');
+        } catch (e) {
+          // في حالة عدم توفر salla.lang، تجاهل الخطأ
+          console.warn('Accessibility: Could not set aria-label', e);
+        }
       }
     });
 
@@ -366,14 +377,23 @@ class App extends AppHelpers {
    * تحسين التمرير السلس
    */
   initiateSmoothScroll() {
-    // تحسين smooth scroll للروابط الداخلية
+    // تحسين smooth scroll للروابط الداخلية (تجنب الروابط الخاصة بسلة)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      // تجنب الروابط الخاصة بسلة (مثل modals, tabs, etc)
+      if (anchor.hasAttribute('data-modal-trigger') || 
+          anchor.hasAttribute('data-tab-trigger') ||
+          anchor.closest('salla-modal') ||
+          anchor.closest('.s-tabs')) {
+        return;
+      }
+      
       anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
         if (href === '#' || href === '') return;
         
         const target = document.querySelector(href);
-        if (target) {
+        if (target && !target.closest('salla-modal')) {
+          // التحقق من أن الهدف ليس modal أو component خاص بسلة
           e.preventDefault();
           const headerOffset = 80;
           const elementPosition = target.getBoundingClientRect().top;

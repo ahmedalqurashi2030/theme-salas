@@ -134,13 +134,23 @@ class Cart extends BasePage {
     animateCartUpdate(element, newValue) {
         if (!element || element.innerHTML === newValue) return;
         
-        element.style.transition = 'transform 0.2s ease';
-        element.style.transform = 'scale(1.1)';
-        element.innerHTML = newValue;
-        
-        setTimeout(() => {
-            element.style.transform = 'scale(1)';
-        }, 200);
+        // التأكد من أن العنصر موجود وصالح
+        try {
+            element.style.transition = 'transform 0.2s ease';
+            element.style.transform = 'scale(1.1)';
+            element.innerHTML = newValue;
+            
+            setTimeout(() => {
+                if (element && element.style) {
+                    element.style.transform = 'scale(1)';
+                }
+            }, 200);
+        } catch (e) {
+            // في حالة حدوث خطأ، فقط قم بتحديث القيمة بدون أنيميشن
+            if (element) {
+                element.innerHTML = newValue;
+            }
+        }
     }
 
     /**

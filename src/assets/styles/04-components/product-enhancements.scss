@@ -1,0 +1,215 @@
+/**
+ * Product Page Enhancements
+ * تحسينات صفحة المنتج
+ */
+
+// تحسينات صفحة المنتج
+.product-single {
+  // تحسين عرض الصور
+  .product-images {
+    .swiper-slide {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+  }
+
+  // تحسين زر الإضافة للسلة
+  salla-add-product-button {
+    button {
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // تحسين عرض الخيارات
+  .product-options {
+    .s-radio-images {
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+        border-color: var(--color-primary);
+      }
+    }
+  }
+
+  // تحسين التبويبات
+  .s-tabs {
+    .s-tabs-header-item {
+      transition: all 0.2s ease;
+      
+      &:hover {
+        color: var(--color-primary);
+      }
+      
+      &.active {
+        border-bottom-color: var(--color-primary);
+      }
+    }
+  }
+
+  // تحسين عرض السعر
+  .product-price {
+    transition: all 0.3s ease;
+    
+    .price-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    
+    .old-price {
+      opacity: 0.7;
+      text-decoration: line-through;
+    }
+  }
+
+  // تحسين عرض التقييمات
+  .product-rating {
+    .stars {
+      transition: color 0.2s ease;
+    }
+  }
+
+  // تحسين زر المفضلة
+  .s-product-card-wishlist-btn {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+    
+    &.s-product-card-wishlist-added {
+      color: #ef4444;
+      animation: heartBeat 0.5s ease;
+    }
+  }
+
+  @keyframes heartBeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  // تحسين عرض المنتجات ذات الصلة
+  .related-products {
+    .s-product-card {
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  // تحسين الشريط الثابت على الجوال
+  @media (max-width: 640px) {
+    .sticky-product-bar {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+      
+      &.show {
+        animation: slideUpFromBottom 0.3s ease-out;
+      }
+    }
+  }
+
+  @keyframes slideUpFromBottom {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+// تحسينات بطاقة المنتج
+.s-product-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  // تحسين الصورة في البطاقة
+  .s-product-card-image {
+    overflow: hidden;
+    
+    img {
+      transition: transform 0.5s ease;
+    }
+    
+    &:hover img {
+      transform: scale(1.1);
+    }
+  }
+
+  // تحسين العنوان
+  .s-product-card-title {
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  // تحسين الأزرار
+  .s-product-card-actions {
+    button {
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+// تحسينات عرض المنتجات في القوائم
+.products-grid,
+.products-list {
+  .s-product-card {
+    animation: fadeInUp 0.5s ease-out;
+    animation-fill-mode: both;
+    
+    @for $i from 1 through 12 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.1}s;
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

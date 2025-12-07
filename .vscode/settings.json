@@ -18,5 +18,8 @@
     "terminal.ansiRed": "#FB543F",
     "terminal.ansiWhite": "#A89984",
     "terminal.ansiYellow": "#FAC03B"
-  }
+  },
+  "liveServer.settings.CustomBrowser": "microsoft-edge",
+  "liveServer.settings.file": "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": ""
 }

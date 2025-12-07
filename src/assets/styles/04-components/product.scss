@@ -113,6 +113,7 @@
   }
 
   /* Add to cart sticky bar */
+  /* Add to cart sticky bar */
   @media (max-width: 640px) {
     .is-sticky-product-bar {
       &.product-single {
@@ -120,7 +121,11 @@
       }
 
       .sticky-product-bar {
-        @apply flex flex-wrap flex-col gap-2.5 sm:gap-4 fixed z-[2] bottom-0 left-0 p-3 w-full justify-between items-center shadow-[-1px_-2px_9px_0_rgba(0, 0, 0, 0.05)] transition duration-700 delay-500 translate-y-100 opacity-0 ease-elastic;
+        // قمت بإزالة shadow-.... من هنا
+        @apply flex flex-wrap flex-col gap-2.5 sm:gap-4 fixed z-[2] bottom-0 left-0 p-3 w-full justify-between items-center transition duration-700 delay-500 translate-y-100 opacity-0 ease-elastic;
+
+        // وأضفته هنا ككود CSS عادي ليعمل بدون مشاكل
+        box-shadow: -1px -2px 9px 0 rgba(0, 0, 0, 0.05);
 
         &__quantity,
         salla-add-product-button {
