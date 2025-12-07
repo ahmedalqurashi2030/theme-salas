@@ -1134,7 +1134,62 @@
             },
             "icon": "sicon-table",
             "path": "home.store-category",
-            "fields": []
+            "fields": [
+                {
+                    "id": "category_title",
+                    "type": "static",
+                    "format": "title",
+                    "label": "Title",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "description",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "category_item",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "اضف تصنيف",
+                    "description": null,
+                    "labelHTML": null,
+                    "item_label": null,
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "category_item.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "Image",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "required": false
+                        },
+                        {
+                            "id": "category_item.title",
+                            "type": "static",
+                            "format": "title",
+                            "label": "Title",
+                            "value": null,
+                            "variant": "h1",
+                            "icon": "sicon-format-text"
+                        }
+                    ],
+                    "value": [],
+                    "minLength": 1,
+                    "maxLength": 5
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
