@@ -1061,19 +1061,10 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "title",
-                    "type": "static",
-                    "format": "title",
-                    "label": "الوصف المختصر أسفل العنوان",
-                    "value": "عنوان القسم",
-                    "variant": "h1",
-                    "icon": "sicon-format-text"
-                },
-                {
                     "id": "section_description",
                     "type": "static",
                     "format": "description",
-                    "label": "Description",
+                    "label": "الوصف المختصر أسفل العنوان",
                     "value": "وصف قصير موجز",
                     "variant": "h1",
                     "icon": "sicon-format-size"
