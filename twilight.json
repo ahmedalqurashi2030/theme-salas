@@ -1199,10 +1199,11 @@
                             "icon": "sicon-keyboard_arrow_down",
                             "selected": [],
                             "options": [],
-                            "source": "Manual",
+                            "source": "Categories",
                             "multichoice": true,
                             "searchable": true,
-                            "required": true
+                            "required": true,
+                            "value": []
                         }
                     ],
                     "value": [],
