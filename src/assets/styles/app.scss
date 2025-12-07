@@ -60,6 +60,8 @@
 @import './02-generic/tooltip';
 @import './02-generic/animations';
 @import './02-generic/lazyload';
+@import './02-generic/accessibility';
+@import './02-generic/mobile-enhancements';
 @import './02-generic/rtl';
 @import './02-generic/ltr';
 @import './02-generic/mixins';
@@ -77,6 +79,8 @@
 @import './04-components/home-blocks';
 @import './04-components/slider';
 @import './04-components/product';
+@import './04-components/product-enhancements';
+@import './04-components/cart-enhancements';
 @import './04-components/brands';
 @import './04-components/no-content-placeholder';
 @import './04-components/gifting';
@@ -96,4 +100,4 @@
 
 
 @import './4-layout/sidebar';
-@import './thara/store_category';
+@import './tharaa/store_category';

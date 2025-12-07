@@ -87,17 +87,23 @@ class Cart extends BasePage {
         // update each item data
         cartData.items?.forEach(item => this.updateItemInfo(item));
 
-        app.subTotal.innerHTML = salla.money(cartData.sub_total);
+        // تحسينات بصرية عند التحديث
+        this.animateCartUpdate(app.subTotal, salla.money(cartData.sub_total));
         if(app.taxAmount) 
-          app.taxAmount.innerHTML = salla.money(cartData.tax_amount);
-        if (app.orderOptionsTotal) app.orderOptionsTotal.innerHTML = salla.money(cartData.options_total);
+          this.animateCartUpdate(app.taxAmount, salla.money(cartData.tax_amount));
+        if (app.orderOptionsTotal) 
+          this.animateCartUpdate(app.orderOptionsTotal, salla.money(cartData.options_total));
         
         app.toggleElementClassIf(app.totalDiscount, 'discounted', 'hidden', () => !!cartData.total_discount)
             .toggleElementClassIf(app.shippingCost, 'has_shipping', 'hidden', () => !!cartData.real_shipping_cost && !cartData.free_shipping_bar?.has_free_shipping) 
             .toggleElementClassIf(app.freeShipping, 'has_free', 'hidden', () => !!cartData.free_shipping_bar);
 
-        app.totalDiscount.querySelector('b').innerHTML = '- ' + salla.money(cartData.total_discount);
-        app.shippingCost.querySelector('b').innerHTML = salla.money(cartData.real_shipping_cost);
+        if (app.totalDiscount.querySelector('b')) {
+            this.animateCartUpdate(app.totalDiscount.querySelector('b'), '- ' + salla.money(cartData.total_discount));
+        }
+        if (app.shippingCost.querySelector('b')) {
+            this.animateCartUpdate(app.shippingCost.querySelector('b'), salla.money(cartData.real_shipping_cost));
+        }
 
         if (!cartData.free_shipping_bar) {
             return;
@@ -110,8 +116,31 @@ class Cart extends BasePage {
         app.freeShippingMsg.innerHTML = isFree
             ? salla.lang.get('pages.cart.has_free_shipping')
             : salla.lang.get('pages.cart.free_shipping_alert', { amount: salla.money(cartData.free_shipping_bar.remaining) });
-        app.freeShippingBar.children[0].style.width = cartData.free_shipping_bar.percent + '%';
+        
+        // تحسين شريط التقدم مع أنيميشن
+        const progressBar = app.freeShippingBar?.children[0];
+        if (progressBar) {
+            const newWidth = cartData.free_shipping_bar.percent + '%';
+            if (progressBar.style.width !== newWidth) {
+                progressBar.style.transition = 'width 0.5s ease';
+                progressBar.style.width = newWidth;
+            }
+        }
+    }
 
+    /**
+     * تحسين التحديثات البصرية للقيم
+     */
+    animateCartUpdate(element, newValue) {
+        if (!element || element.innerHTML === newValue) return;
+        
+        element.style.transition = 'transform 0.2s ease';
+        element.style.transform = 'scale(1.1)';
+        element.innerHTML = newValue;
+        
+        setTimeout(() => {
+            element.style.transform = 'scale(1)';
+        }, 200);
     }
 
     /**
@@ -138,8 +167,8 @@ class Cart extends BasePage {
         let item_total = item.detailed_offers?.length > 0 ? item.total_special_price : item.total;
         let total = salla.money(item_total);
         if (total !== totalElement.innerHTML) {
-            totalElement.innerHTML = total;
-            // app.anime(totalElement, { scale: [.88, 1] });
+            // تحسين بصري عند تحديث السعر
+            this.animateCartUpdate(totalElement, total);
         }
 
         app.toggleElementClassIf([offerElement, oldOffers], 'offer-applied', 'hidden', () => hasSpecialPrice && !newOffersActive)
@@ -206,7 +235,14 @@ class Cart extends BasePage {
 
     showCouponError(message, isApplying = true) {
         app.couponError.innerText = message || salla.lang.get('pages.checkout.error_occurred');
-        isApplying ? app.addClass(app.couponCodeInput, 'has-error') : null;
+        if (isApplying) {
+            app.addClass(app.couponCodeInput, 'has-error');
+            // تأثير اهتزاز عند الخطأ
+            app.couponCodeInput.classList.add('shake');
+            setTimeout(() => {
+                app.couponCodeInput.classList.remove('shake');
+            }, 500);
+        }
     }
 }
 
