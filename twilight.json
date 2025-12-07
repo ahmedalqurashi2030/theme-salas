@@ -1142,7 +1142,7 @@
                     "type": "static",
                     "format": "title",
                     "label": "Title",
-                    "value": null,
+                    "value": "jjj",
                     "variant": "h1",
                     "icon": "sicon-format-text"
                 },
@@ -1151,7 +1151,7 @@
                     "type": "static",
                     "format": "description",
                     "label": "Description",
-                    "value": null,
+                    "value": "lll",
                     "variant": "h1",
                     "icon": "sicon-format-size"
                 },
