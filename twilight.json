@@ -1132,7 +1132,7 @@
                 "en": "store category",
                 "ar": "روابط سريعة (thara)"
             },
-            "icon": "sicon-store",
+            "icon": "sicon-table",
             "path": "home.store-category",
             "fields": []
         }
