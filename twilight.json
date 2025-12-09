@@ -1097,6 +1097,21 @@
                             "public": true
                         },
                         {
+                            "id": "products.categoty_title",
+                            "type": "string",
+                            "format": "text",
+                            "label": "String",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": null,
+                            "multilanguage": false,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
                             "id": "products.dropdown_list_1",
                             "type": "items",
                             "format": "dropdown-list",
