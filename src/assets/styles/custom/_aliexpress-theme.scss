@@ -1,4 +1,4 @@
-// AliExpress Theme Customization - Refined V3 (Fixes)
+// AliExpress Theme Customization - V4 (Perfected)
 // Scoped strictly under .sx-aliexpress-header and .sx-aliexpress-sidebar
 
 // Color Palette
@@ -15,14 +15,37 @@ $ali-text-light: #666;
     border-radius: 999px;
 }
 
+// -------------------------------------------------------------
+// 1. BACKDROP OVERLAY
+// -------------------------------------------------------------
+.ali-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 990; // Below Sidebar (1000) but above everything else
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+
+    &.is-visible {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
 /* =========================================
-   1. Main Header Container (.sx-aliexpress-header)
+   2. Main Header Container (.sx-aliexpress-header)
 ========================================= */
 .sx-aliexpress-header {
     background-color: $ali-white;
     color: $ali-text-dark;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     direction: rtl; // Ensure RTL context
+    position: relative;
+    z-index: 995; // Ensure high stacking context
 
     // -- Row 1: Top Mini Bar --
     .ali-top-navbar {
@@ -58,7 +81,7 @@ $ali-text-light: #666;
 
     // -- Row 2: Main Header --
     .ali-main-header {
-        padding: 20px 0;
+        padding: 18px 0;
         background: $ali-white;
 
         .ali-main-row {
@@ -68,25 +91,25 @@ $ali-text-light: #666;
             gap: 20px;
         }
 
-        // LOGO FIX: Force constraints
+        // LOGO FIX
         .ali-logo-area {
             flex-shrink: 0;
 
             a.navbar-brand {
-                display: block; // Ensure it's a block
-                max-width: 180px; // Constraint width
+                display: block;
+                max-width: 160px;
             }
 
             img {
                 height: auto !important;
-                max-height: 50px !important; // Constraint height
-                width: auto !important;
+                max-height: 48px !important;
+                max-width: 100% !important;
                 display: block;
                 object-fit: contain;
             }
         }
 
-        // SEARCH BAR FIX
+        // SEARCH BAR
         .ali-search-area {
             flex: 1;
             max-width: 700px;
@@ -97,17 +120,9 @@ $ali-text-light: #666;
                 @include pill-shape;
                 overflow: hidden;
                 display: flex;
-                height: 42px;
+                height: 40px;
                 width: 100%;
 
-                // Try wrapper styling in case Shadow DOM parts incorrectly implemented in theme
-                input {
-                    border: none !important;
-                    padding: 0 15px !important;
-                    height: 100% !important;
-                }
-
-                // Web Component Parts
                 &::part(input) {
                     border: none;
                     outline: none;
@@ -120,7 +135,7 @@ $ali-text-light: #666;
                 &::part(button) {
                     background-color: $ali-black;
                     color: white;
-                    width: 70px;
+                    width: 75px;
                     border-radius: 0;
                     font-weight: bold;
                     transition: background 0.2s;
@@ -129,19 +144,14 @@ $ali-text-light: #666;
                         background-color: lighten($ali-black, 10%);
                     }
                 }
-
-                // Fallback for icons/svgs inside button
-                &::part(icon) {
-                    color: white;
-                }
             }
         }
 
-        // ACTIONS FIX
+        // ACTIONS
         .ali-actions-area {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
             flex-shrink: 0;
 
             .ali-action-btn,
@@ -150,17 +160,19 @@ $ali-text-light: #666;
                 flex-direction: column;
                 align-items: center;
                 font-size: 11px;
+                line-height: 1.2;
                 color: $ali-text-dark;
                 cursor: pointer;
                 transition: color 0.2s;
                 background: transparent;
                 border: none;
                 padding: 0;
+                margin: 0;
 
                 .header-btn__icon,
                 .icon {
-                    font-size: 24px;
-                    margin-bottom: 4px;
+                    font-size: 26px;
+                    margin-bottom: 3px;
                     color: $ali-text-dark;
                 }
 
@@ -176,14 +188,14 @@ $ali-text-light: #666;
         }
     }
 
-    // -- Row 3: Navigation Bar & Sidebar --
+    // -- Row 3: Navigation Bar & Sidebar Trigger --
     .ali-nav-bar {
         border-bottom: 2px solid $ali-gray-border;
-        margin-top: 10px;
+        margin-top: 5px;
         position: relative;
 
         .container {
-            position: relative; // Anchor for absolute dropdown
+            position: relative;
         }
 
         // "All Categories" Button Style
@@ -193,54 +205,63 @@ $ali-text-light: #666;
         }
 
         .ali-cat-btn {
-            background-color: transparent; // Default transparent or white
+            background-color: transparent;
             color: $ali-text-dark;
-            border-radius: 999px 999px 0 0; // Tab look
+            border-radius: 999px 999px 0 0;
             padding: 0 20px;
-            height: 45px;
+            height: 48px;
             display: flex;
             align-items: center;
             gap: 10px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
             border: none;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s ease;
             position: relative;
-            z-index: 20;
+            z-index: 1001; // Must be higher than dropdown to appear "connected" if active
 
-            i {
+            i.sicon-menu {
                 font-size: 20px;
             }
 
-            // Active state (mimic the image where it has a gray/white background)
-            &:hover,
-            &.is-active {
-                background-color: #fff;
+            &:hover {
                 color: $ali-red;
+                background: #fafafa;
             }
         }
 
-        // *** THE SIDEBAR DROPDOWN ***
+        // Active State (Connected to Dropdown)
+        .ali-all-cats.is-active .ali-cat-btn {
+            background-color: #fff;
+            color: $ali-red;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            // Optional: Add border logic if we want "tab" look
+            // border: 1px solid $ali-gray-border;
+            // border-bottom: none;
+        }
+
+        // *** THE SIDEBAR DROPDOWN (DESKTOP) ***
         .ali-cat-dropdown {
             position: absolute;
-            top: 45px; // Height of button
-            right: 0; // Align to RTL start
+            top: 100%; // Exactly below container
+            right: 0;
             width: 260px;
             background: #fff;
             border: 1px solid $ali-gray-border;
-            border-top: 2px solid $ali-text-dark; // Top accent
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-top: 2px solid $ali-text-dark;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             z-index: 1000;
 
+            // Hidden by default
             visibility: hidden;
             opacity: 0;
             transform: translateY(10px);
-            transition: 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        // Show Dropdown
-        .ali-all-cats:hover .ali-cat-dropdown {
+        // Show Dropdown when Active (Logic controlled by JS now)
+        .ali-all-cats.is-active .ali-cat-dropdown {
             visibility: visible;
             opacity: 1;
             transform: translateY(0);
@@ -252,23 +273,19 @@ $ali-text-light: #666;
             ul.main-menu,
             .level-0 {
                 display: flex;
-                flex-direction: column; // Vertical List
-                padding: 0;
+                flex-direction: column;
+                padding: 5px 0;
                 margin: 0;
                 list-style: none;
             }
 
-            // Main Menu Items
             li {
-                // Ensure stacking context for submenu
-                position: static; // CHANGE: Static position to allow submenu to take full height of container? 
-                // No, standard relative logic usually safer for flyouts.
-                // Let's stick to relative for the li, absolute for submenu.
+                position: static; // Keep static for Menu alignment logic? 
+                // No, we want Submenu to be related to the item.
                 position: relative;
-                border-bottom: 1px solid #f9f9f9;
 
                 a {
-                    padding: 12px 15px;
+                    padding: 10px 20px;
                     color: $ali-text-dark;
                     font-size: 13px;
                     display: flex;
@@ -278,7 +295,6 @@ $ali-text-light: #666;
                     transition: 0.1s;
                     width: 100%;
 
-                    // Image/Icon support
                     img {
                         width: 24px;
                         height: 24px;
@@ -287,16 +303,17 @@ $ali-text-light: #666;
                     }
 
                     i {
-                        width: 24px;
-                        text-align: center;
                         font-size: 18px;
                         color: #999;
+                        width: 24px;
+                        text-align: center;
                     }
 
                     &:hover {
                         background-color: #fff;
                         color: $ali-red;
-                        font-weight: bold;
+                        font-weight: 700;
+                        box-shadow: inset -3px 0 0 $ali-red; // Red indicator line RTL
 
                         i {
                             color: $ali-red;
@@ -309,39 +326,52 @@ $ali-text-light: #666;
                 .level-1 {
                     display: none; // Hidden
                     position: absolute;
-                    top: -2px; // Align with top of item
-                    right: 259px; // Sidebar width (260) - 1px border
-                    width: 700px; // Mega menu width
-                    min-height: 100%; // Try to match height
-                    min-height: 400px; // Fallback
+                    top: -2px;
+                    right: 259px; // Sidebar width adjustment
+                    width: 700px;
+                    min-height: 100%;
+                    min-height: 350px;
                     background: #fff;
                     border: 1px solid $ali-gray-border;
-                    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
-                    padding: 20px;
+                    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.05);
+                    padding: 25px;
                     z-index: 101;
 
-                    // Grid Layout for subitems
-                    display: none;
+                    // Grid Layout
                     grid-template-columns: repeat(3, 1fr);
-                    gap: 15px;
+                    gap: 20px;
                     align-content: start;
                 }
 
                 &:hover>ul,
                 &:hover>.level-1 {
-                    display: grid; // Show grid on hover
+                    display: grid;
+                }
+
+                // Submenu Item Styling
+                .sub-menu li a {
+                    font-weight: 400;
+                    color: #555;
+                    padding: 6px 0;
+                    font-size: 13px;
+
+                    &:hover {
+                        color: $ali-red;
+                        box-shadow: none;
+                        background: transparent;
+                    }
                 }
             }
         }
 
-        // Horizontal Menu Next to Button
+        // Horizontal Menu
         .ali-menu-wrapper {
             margin-right: 20px;
         }
     }
 }
 
-// RTL fixes
+// RTL/LTR Logic
 [dir="rtl"] {
     .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
         right: 0;
@@ -351,6 +381,10 @@ $ali-text-light: #666;
     .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu {
         right: 260px;
         left: auto;
+    }
+
+    .ali-all-cats.is-active .ali-cat-btn {
+        border-radius: 8px 8px 0 0;
     }
 }
 
@@ -367,17 +401,22 @@ $ali-text-light: #666;
 }
 
 /* =========================================
-   2. Mobile Sidebar (.sx-aliexpress-sidebar)
+   3. Mobile Sidebar (.sx-aliexpress-sidebar)
 ========================================= */
 .sx-aliexpress-sidebar {
     background-color: #fff;
-    width: 280px;
+    width: 300px; // Slightly wider for modern feel
     z-index: 99999;
 
     .mobile-menu__header {
         background: $ali-red;
-        padding: 15px;
+        padding: 20px;
         color: white;
+
+        .close-mobile-menu {
+            color: white;
+            opacity: 0.9;
+        }
     }
 
     .main-menu {
@@ -387,15 +426,46 @@ $ali-text-light: #666;
             border-bottom: 1px solid #f9f9f9;
 
             a {
-                padding: 12px 20px;
+                padding: 16px 20px; // Very large touch targets
                 color: $ali-text-dark;
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 15px;
+                font-size: 14px;
+                font-weight: 500;
 
-                &:hover {
+                // Mobile Images/Icons
+                img {
+                    width: 32px;
+                    height: 32px;
+                    object-fit: contain;
+                    border-radius: 50%;
+                    background: #fff;
+                    border: 1px solid #eee;
+                    padding: 2px;
+                }
+
+                i {
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 16px;
+                    color: #777;
+                    background: #f7f7f7;
+                    border-radius: 50%;
+                }
+
+                &:hover,
+                &:active {
                     color: $ali-red;
-                    background: #fefefe;
+                    background: #fafafa;
+
+                    i {
+                        color: $ali-red;
+                        background: #fff1f1;
+                    }
                 }
             }
         }
@@ -403,7 +473,7 @@ $ali-text-light: #666;
 }
 
 /* =========================================
-   3. Responsive Tweaks
+   4. Responsive Tweaks
 ========================================= */
 @media (max-width: 1024px) {
     .sx-aliexpress-header {

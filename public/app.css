@@ -1756,6 +1756,9 @@ select{
 .\!p-0{
     padding: 0px !important;
 }
+.p-0\.5{
+    padding: 0.125rem;
+}
 .p-1{
     padding: 0.25rem;
 }
@@ -24412,14 +24415,32 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     z-index: 5;
   }
 }
+.ali-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 990;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+.ali-backdrop.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
 /* =========================================
-   1. Main Header Container (.sx-aliexpress-header)
+   2. Main Header Container (.sx-aliexpress-header)
 ========================================= */
 .sx-aliexpress-header {
   background-color: #ffffff;
   color: #222;
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, sans-serif;
   direction: rtl;
+  position: relative;
+  z-index: 995;
 }
 .sx-aliexpress-header .ali-top-navbar {
   background-color: #fafafa;
@@ -24451,7 +24472,7 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   color: #ff4747;
 }
 .sx-aliexpress-header .ali-main-header {
-  padding: 20px 0;
+  padding: 18px 0;
   background: #ffffff;
 }
 .sx-aliexpress-header .ali-main-header .ali-main-row {
@@ -24465,12 +24486,12 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 }
 .sx-aliexpress-header .ali-main-header .ali-logo-area a.navbar-brand {
   display: block;
-  max-width: 180px;
+  max-width: 160px;
 }
 .sx-aliexpress-header .ali-main-header .ali-logo-area img {
   height: auto !important;
-  max-height: 50px !important;
-  width: auto !important;
+  max-height: 48px !important;
+  max-width: 100% !important;
 }
 .sx-aliexpress-header .ali-main-header .ali-logo-area img {
   display: block;
@@ -24487,13 +24508,8 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   border-radius: 999px;
   overflow: hidden;
   display: flex;
-  height: 42px;
+  height: 40px;
   width: 100%;
-}
-.sx-aliexpress-header .ali-main-header .ali-search-area salla-search input {
-  border: none !important;
-  padding: 0 15px !important;
-  height: 100% !important;
 }
 .sx-aliexpress-header .ali-main-header .ali-search-area salla-search::part(input) {
   border: none;
@@ -24506,7 +24522,7 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 .sx-aliexpress-header .ali-main-header .ali-search-area salla-search::part(button) {
   background-color: #191919;
   color: white;
-  width: 70px;
+  width: 75px;
   border-radius: 0;
   font-weight: bold;
   transition: background 0.2s;
@@ -24514,13 +24530,10 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 .sx-aliexpress-header .ali-main-header .ali-search-area salla-search::part(button):hover {
   background-color: rgb(50.5, 50.5, 50.5);
 }
-.sx-aliexpress-header .ali-main-header .ali-search-area salla-search::part(icon) {
-  color: white;
-}
 .sx-aliexpress-header .ali-main-header .ali-actions-area {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
   flex-shrink: 0;
 }
 .sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn,
@@ -24529,19 +24542,21 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   flex-direction: column;
   align-items: center;
   font-size: 11px;
+  line-height: 1.2;
   color: #222;
   cursor: pointer;
   transition: color 0.2s;
   background: transparent;
   border: none;
   padding: 0;
+  margin: 0;
 }
 .sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn .header-btn__icon,
 .sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn .icon,
 .sx-aliexpress-header .ali-main-header .ali-actions-area .ali-cart-btn .header-btn__icon,
 .sx-aliexpress-header .ali-main-header .ali-actions-area .ali-cart-btn .icon {
-  font-size: 24px;
-  margin-bottom: 4px;
+  font-size: 26px;
+  margin-bottom: 3px;
   color: #222;
 }
 .sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn:hover,
@@ -24556,7 +24571,7 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 }
 .sx-aliexpress-header .ali-nav-bar {
   border-bottom: 2px solid #e8e8e8;
-  margin-top: 10px;
+  margin-top: 5px;
   position: relative;
 }
 .sx-aliexpress-header .ali-nav-bar .container {
@@ -24571,41 +24586,46 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   color: #222;
   border-radius: 999px 999px 0 0;
   padding: 0 20px;
-  height: 45px;
+  height: 48px;
   display: flex;
   align-items: center;
   gap: 10px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   border: none;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
   position: relative;
-  z-index: 20;
+  z-index: 1001;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-btn i {
+.sx-aliexpress-header .ali-nav-bar .ali-cat-btn i.sicon-menu {
   font-size: 20px;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-btn:hover, .sx-aliexpress-header .ali-nav-bar .ali-cat-btn.is-active {
+.sx-aliexpress-header .ali-nav-bar .ali-cat-btn:hover {
+  color: #ff4747;
+  background: #fafafa;
+}
+.sx-aliexpress-header .ali-nav-bar .ali-all-cats.is-active .ali-cat-btn {
   background-color: #fff;
   color: #ff4747;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
   position: absolute;
-  top: 45px;
+  top: 100%;
   right: 0;
   width: 260px;
   background: #fff;
   border: 1px solid #e8e8e8;
   border-top: 2px solid #222;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   visibility: hidden;
   opacity: 0;
   transform: translateY(10px);
-  transition: 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-.sx-aliexpress-header .ali-nav-bar .ali-all-cats:hover .ali-cat-dropdown {
+.sx-aliexpress-header .ali-nav-bar .ali-all-cats.is-active .ali-cat-dropdown {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
@@ -24614,17 +24634,16 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown .level-0 {
   display: flex;
   flex-direction: column;
-  padding: 0;
+  padding: 5px 0;
   margin: 0;
   list-style: none;
 }
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li {
   position: static;
   position: relative;
-  border-bottom: 1px solid #f9f9f9;
 }
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a {
-  padding: 12px 15px;
+  padding: 10px 20px;
   color: #222;
   font-size: 13px;
   display: flex;
@@ -24643,39 +24662,51 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   border-radius: 50%;
 }
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a i {
-  width: 24px;
-  text-align: center;
   font-size: 18px;
   color: #999;
+  width: 24px;
+  text-align: center;
 }
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a:hover {
   background-color: #fff;
   color: #ff4747;
-  font-weight: bold;
+  font-weight: 700;
+  box-shadow: inset -3px 0 0 #ff4747;
 }
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a:hover i {
   color: #ff4747;
 }
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu,
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li .level-1 {
+  display: none;
   position: absolute;
   top: -2px;
   right: 259px;
   width: 700px;
   min-height: 100%;
-  min-height: 400px;
+  min-height: 350px;
   background: #fff;
   border: 1px solid #e8e8e8;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
-  padding: 20px;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 25px;
   z-index: 101;
-  display: none;
   grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  gap: 20px;
   align-content: start;
 }
 .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li:hover > ul, .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li:hover > .level-1 {
   display: grid;
+}
+.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li .sub-menu li a {
+  font-weight: 400;
+  color: #555;
+  padding: 6px 0;
+  font-size: 13px;
+}
+.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li .sub-menu li a:hover {
+  color: #ff4747;
+  box-shadow: none;
+  background: transparent;
 }
 .sx-aliexpress-header .ali-nav-bar .ali-menu-wrapper {
   margin-right: 20px;
@@ -24688,6 +24719,9 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   right: 260px;
   left: auto;
 }
+[dir=rtl] .ali-all-cats.is-active .ali-cat-btn {
+  border-radius: 8px 8px 0 0;
+}
 [dir=ltr] .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
   left: 0;
   right: auto;
@@ -24697,17 +24731,21 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   right: auto;
 }
 /* =========================================
-   2. Mobile Sidebar (.sx-aliexpress-sidebar)
+   3. Mobile Sidebar (.sx-aliexpress-sidebar)
 ========================================= */
 .sx-aliexpress-sidebar {
   background-color: #fff;
-  width: 280px;
+  width: 300px;
   z-index: 99999;
 }
 .sx-aliexpress-sidebar .mobile-menu__header {
   background: #ff4747;
-  padding: 15px;
+  padding: 20px;
   color: white;
+}
+.sx-aliexpress-sidebar .mobile-menu__header .close-mobile-menu {
+  color: white;
+  opacity: 0.9;
 }
 .sx-aliexpress-sidebar .main-menu {
   padding: 10px 0;
@@ -24716,18 +24754,45 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   border-bottom: 1px solid #f9f9f9;
 }
 .sx-aliexpress-sidebar .main-menu li a {
-  padding: 12px 20px;
+  padding: 16px 20px;
   color: #222;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  font-size: 14px;
+  font-weight: 500;
 }
-.sx-aliexpress-sidebar .main-menu li a:hover {
+.sx-aliexpress-sidebar .main-menu li a img {
+  width: 32px;
+  height: 32px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 2px;
+}
+.sx-aliexpress-sidebar .main-menu li a i {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #777;
+  background: #f7f7f7;
+  border-radius: 50%;
+}
+.sx-aliexpress-sidebar .main-menu li a:hover, .sx-aliexpress-sidebar .main-menu li a:active {
   color: #ff4747;
-  background: #fefefe;
+  background: #fafafa;
+}
+.sx-aliexpress-sidebar .main-menu li a:hover i, .sx-aliexpress-sidebar .main-menu li a:active i {
+  color: #ff4747;
+  background: #fff1f1;
 }
 /* =========================================
-   3. Responsive Tweaks
+   4. Responsive Tweaks
 ========================================= */
 @media (max-width: 1024px) {
   .sx-aliexpress-header .ali-main-header {
@@ -24840,6 +24905,11 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .group:hover .group-hover\:rotate-180{
+    --tw-rotate: 180deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(180deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.group.is-active .group-\[\.is-active\]\:rotate-180{
     --tw-rotate: 180deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(180deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
