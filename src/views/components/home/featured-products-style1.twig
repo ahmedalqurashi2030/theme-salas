@@ -48,11 +48,8 @@
 
 			<div class="tabs-wrapper flex flex-1">
 				{% for section in items %}
-					{# UPDATED: grid-cols-2 for mobile, lg:grid-cols-6 for desktop #}
-					<div
-						id="{{ component_id }}-{{ section.id }}" class="tabs__item grid-cols-2 lg:grid-cols-6 gap-4 {{ loop.first?'is-active':'' }}">
-						{# UPDATED: Slice to 12 products max to fill the rows nicely #}
-						{% for product in section.products|slice(0,12) %}
+					<div id="{{ component_id }}-{{ section.id }}" class="tabs__item grid-cols-2 {{ main_product?'':'lg:grid-cols-4'}} {{ loop.first?'is-active':'' }}">
+						{% for product in section.products|slice(0,main_product?4:8) %}
 							<custom-salla-product-card product="{{product}}"></custom-salla-product-card>
 						{% endfor %}
 					</div>
