@@ -25278,15 +25278,16 @@ custom-salla-product-card salla-add-product-button::part(button):hover {
   color: #fff;
 }
 .th-section {
-  display: block;
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, sans-serif;
+  font-family: "Tajawal", "Inter", sans-serif;
+  background-color: #fff;
+  /* 1. Grid System */
 }
 .th-section salla-products-list {
   display: grid !important;
 }
 .th-section salla-products-list {
-  grid-gap: 10px;
-  gap: 10px;
+  grid-gap: 12px;
+  gap: 12px;
   grid-template-columns: repeat(2, 1fr);
 }
 @media (min-width: 768px) {
@@ -25299,84 +25300,69 @@ custom-salla-product-card salla-add-product-button::part(button):hover {
     grid-template-columns: repeat(6, 1fr);
   }
 }
+.th-section {
+  /* 2. Card Styling */
+}
 .th-section .s-product-card-entry {
   background: #fff;
-  border: 1px solid #f2f2f2;
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
   overflow: hidden;
-  height: 100%;
-  position: relative;
-  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease;
+  min-height: 300px;
 }
 .th-section .s-product-card-entry:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-  transform: translateY(-4px);
-  border-color: #fff;
+  border-color: #ff4747;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+.th-section {
+  /* 3. Image */
 }
 .th-section .s-product-card-image {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px 12px 0 0;
-  background: #fff;
-  height: 160px;
+  height: 180px;
   width: 100%;
-}
-@media (min-width: 1024px) {
-  .th-section .s-product-card-image {
-    height: 180px;
-  }
+  position: relative;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .th-section .s-product-card-image img {
-  width: 100%;
-  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
-  transition: transform 0.5s ease;
-  padding: 8px;
+  padding: 10px;
+  transition: transform 0.4s ease;
 }
 .th-section .s-product-card-image:hover img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
-.th-section .s-product-card-promotion-title,
-.th-section .s-product-card-out-badge {
-  background-color: #ff4747;
-  color: white;
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 5px;
-  border-radius: 4px;
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  z-index: 5;
-}
-.th-section [dir=rtl] .s-product-card-promotion-title {
-  right: 8px;
-  left: auto;
+.th-section {
+  /* 4. Content */
 }
 .th-section .s-product-card-content {
-  padding: 5px 10px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
   flex-grow: 1;
+  gap: 6px;
 }
 .th-section .s-product-card-content-title {
   margin: 0;
-  min-height: 2.6em;
 }
 .th-section .s-product-card-content-title a {
-  font-size: 12px;
-  color: #191919;
-  line-height: 1.3;
+  font-size: 13px;
+  color: #222;
+  line-height: 1.4;
+  height: 36px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-weight: 400;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -25387,79 +25373,142 @@ custom-salla-product-card salla-add-product-button::part(button):hover {
   margin-top: auto;
   display: flex;
   align-items: baseline;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding-top: 6px;
+  gap: 5px;
 }
 .th-section .s-product-card-price,
-.th-section .s-product-card-sale-price h4,
-.th-section .s-product-card-starting-price h4 {
+.th-section .s-product-card-sale-price h4 {
   color: #ff4747 !important;
   font-size: 16px !important;
-  font-weight: 800 !important;
 }
 .th-section .s-product-card-price,
-.th-section .s-product-card-sale-price h4,
-.th-section .s-product-card-starting-price h4 {
-  margin: 0;
-  line-height: 1;
-  font-family: "Inter", sans-serif;
+.th-section .s-product-card-sale-price h4 {
+  font-weight: 800;
 }
 .th-section .s-product-card-sale-price span {
-  color: #999 !important;
   font-size: 11px !important;
 }
 .th-section .s-product-card-sale-price span {
+  color: #999;
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
-  font-weight: 400;
+}
+.th-section {
+  /* 5. Footer & Button */
 }
 .th-section .s-product-card-content-footer {
   margin-top: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
 }
 .th-section .s-product-card-content-footer salla-add-product-button {
-  flex: 1;
-}
-.th-section .s-product-card-content-footer .s-product-card-wishlist-btn {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-.th-section .s-product-card-content-footer .s-product-card-wishlist-btn {
-  color: #ccc;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.th-section .s-product-card-content-footer .s-product-card-wishlist-btn:hover {
-  background: #fff1f1 !important;
-}
-.th-section .s-product-card-content-footer .s-product-card-wishlist-btn:hover {
-  color: #ff4747;
-  border-radius: 50%;
+  width: 100%;
+  display: block;
 }
 .th-section salla-add-product-button::part(button) {
-  border-radius: 999px;
-  background: #ff4747;
-  border: 1px solid #ff4747;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 0;
-  height: 30px;
+  background-color: #ff4747 !important;
+  color: #fff !important;
+  border: 1px solid #ff4747 !important;
+}
+.th-section salla-add-product-button::part(button) {
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  height: 34px;
   width: 100%;
-  transition: 0.2s;
   cursor: pointer;
+  transition: background 0.2s;
+  /* استخدم قيمة ثابتة بدل darken */
 }
 .th-section salla-add-product-button::part(button):hover {
-  background-color: rgb(255, 45.5, 45.5);
-  border-color: rgb(255, 45.5, 45.5);
+  background-color: #e03b3b !important;
+}
+.th-section .s-product-card-wishlist-btn {
+  display: none;
+}
+.th-section {
+  /* --- باقي الشبكات --- */
+}
+.th-section .s-products-list-vertical-cards,
+.th-section .s-products-list-filters-results {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;
+}
+@media (min-width: 640px) {
+  .th-section .s-products-list-vertical-cards,
+  .th-section .s-products-list-filters-results {
+    gap: 1rem;
+  }
+}
+@media (min-width: 768px) {
+  .th-section .s-products-list-vertical-cards,
+  .th-section .s-products-list-filters-results {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .th-section .s-products-list-vertical-cards,
+  .th-section .s-products-list-filters-results {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.th-section .s-products-list-horizontal-cards {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .th-section .s-products-list-horizontal-cards {
+    gap: 2rem;
+  }
+}
+@media (min-width: 1024px) {
+  .th-section .s-products-list-horizontal-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.th-section .s-products-list-placeholder span {
+  margin-bottom: 1rem;
+  display: flex;
+  height: 8rem;
+  width: 8rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #f3f4f6;
+  font-size: 3rem;
+  color: #d1d5db;
+}
+.th-section .s-products-slider-wrapper {
+  margin-bottom: 2rem;
+}
+@media (min-width: 768px) {
+  .th-section .s-products-slider-wrapper {
+    margin-bottom: 5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .th-section .s-products-slider-wrapper {
+    overflow: hidden;
+  }
+}
+.th-section .s-products-slider-card {
+  width: 100%;
+  max-width: 250px;
+  padding: 0 0.5rem;
+}
+@media (min-width: 640px) {
+  .th-section .s-products-slider-card {
+    width: 50%;
+    max-width: 320px;
+  }
+}
+@media (min-width: 768px) {
+  .th-section .s-products-slider-card {
+    width: 33.3333%;
+  }
+}
+@media (min-width: 1024px) {
+  .th-section .s-products-slider-card {
+    width: 25%;
+  }
 }
 .before\:text-orange-300::before{
     content: var(--tw-content);
