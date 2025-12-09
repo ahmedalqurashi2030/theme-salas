@@ -7,80 +7,99 @@
 #}
 <header
 	class="store-header sx-aliexpress-header">
-	{# Top Nav #}
-	<div class="top-navbar">
+	{# 1. Top Navbar (Mini Bar) #}
+	<div class="ali-top-navbar top-navbar">
 		<div class="container flex justify-between">
 			<div
-				class="flex-1 flex items-center rtl:space-x-reverse space-x-2">
-				{# Footer Menu #}
+				class="flex items-center space-x-4 rtl:space-x-reverse">
+				{# Footer Menu (often used for Help/About in top bar) #}
 				{% component 'footer.menu' with {is_header:true} %}
 
-				<div
-					class="header-buttons">
-					{# Language & Currency Component #}
-					{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-						<button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray basis-0">
-							<span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
-							<span class="mx-1.5">|</span>
-							<span>{{ currency.symbol }}</span>
-						</button>
-						<salla-localization-modal></salla-localization-modal>
-					{% endif %}
-				</div>
+				{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+					<button type="button" onclick="salla.event.dispatch('localization::open')" class="ali-top-btn btn--rounded-gray">
+						<span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
+						<span class="mx-1.5">|</span>
+						<span>{{ currency.symbol }}</span>
+					</button>
+					<salla-localization-modal></salla-localization-modal>
+				{% endif %}
 
-				{# Scopes | Branches #}
 				{% if store.scope %}
-					<button class="btn--rounded-gray" onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
+					<button class="ali-top-btn btn--rounded-gray" onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
 						<i class="sicon-location rtl:ml-1 ltr:mr-1"></i>
 						{{ store.scope.name }}
 					</button>
 				{% endif %}
-
-				{# Search Component #}
-				{# <button onclick="salla.event.dispatch('search::open')" class="btn--circle-gray search-btn">
-								                <span class="sicon-search"></span>
-								                <span class="sm:hidden px-2 opacity-50">{{ trans('blocks.header.searchProducts') }}</span>
-								              </button> #}
-				<div class="header-search flex-1">
-					<salla-search inline oval height="36"></salla-search>
-				</div>
 			</div>
-
+			{# Optional Contact Info #}
 			{% component 'footer.contacts' with {is_header:true} %}
 		</div>
 	</div>
 
-	{# Main Nav #}
-	<div id="mainnav" class="main-nav-container shadow-default bg-white">
-		<div class="inner bg-inherit">
-			<div class="container">
-				<div class="flex items-stretch justify-between relative">
-					<div class="flex items-center">
-						<a class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu">
-							<i class="sicon-menu text-primary text-2xl rtl:ml-2.5 ltr:mr-2.5"></i>
-						</a>
-						<a class="navbar-brand" href="{{ store.url }}">
-							<img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }}">
-							{% if is_page('index') %}
-								<h1 class="sr-only">{{ store.name }}</h1>
-							{% else %}
-								<h2 class="sr-only">{{ store.name }}</h2>
-							{% endif %}
-						</a>
+	{# 2. Main Header Row (Logo | Search | Actions) #}
+	<div class="ali-main-header">
+		<div class="container">
+			<div
+				class="ali-main-row flex items-center justify-between">
+				{# Logo Area #}
+				<div class="ali-logo-area flex items-center">
+					<a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu">
+						<i class="sicon-menu text-2xl"></i>
+					</a>
+					<a class="navbar-brand" href="{{ store.url }}">
+						<img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }}">
+					</a>
+				</div>
+
+				{# Search Area (Moved here) #}
+				<div class="ali-search-area flex-1 mx-8 hidden lg:block">
+					<salla-search inline oval height="40"></salla-search>
+				</div>
+
+				{# Actions Area #}
+				<div class="ali-actions-area flex items-center justify-end space-x-6 rtl:space-x-reverse">
+					{% if user.type=='user' %}
+						<salla-user-menu avatar-only show-header></salla-user-menu>
+					{% else %}
+						<button class="ali-action-btn header-btn" onclick="salla.event.dispatch('login::open')">
+							<i class="header-btn__icon sicon-user-circle"></i>
+							<span class="ali-btn-label hidden lg:block">{{ trans('blocks.header.login') }}</span>
+						</button>
+					{% endif %}
+
+					<salla-cart-summary class="ali-cart-btn">
+						<i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+					</salla-cart-summary>
+				</div>
+			</div>
+
+			{# Mobile Search (Visible only on mobile) #}
+			<div class="ali-mobile-search lg:hidden mt-3 pb-3">
+				<salla-search inline oval height="36"></salla-search>
+			</div>
+		</div>
+	</div>
+
+	{# 3. Navigation Bar (Categories | Menu) #}
+	<div id="mainnav" class="ali-nav-bar hidden lg:block">
+		<div class="container">
+			<div class="flex items-center">
+				{# "All Categories" Button #}
+				{# "All Categories" Button & Dropdown #}
+					<div class="ali-all-cats relative group"> <button class="ali-cat-btn">
+						<i class="sicon-menu"></i>
+						<span>كل الأصناف</span>
+					</button>
+
+					{# Sidebar Dropdown (Visible on Group Hover) #}
+					<div class="ali-cat-dropdown">
 						{% component 'header.menu' %}
 					</div>
-					<div class="flex items-center justify-end">
-						{% if user.type=='user' %}
-							<salla-user-menu avatar-only show-header></salla-user-menu>
-						{% else %}
-							<button class="header-btn" onclick="salla.event.dispatch('login::open')">
-								<i class="header-btn__icon sicon-user-circle"></i>
-							</button>
-						{% endif %}
-						<salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4">
-							<i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-						</salla-cart-summary>
-					</div>
+				</div>
+
+				{# Horizontal Menu (Optional / Secondary) #}
+				<div
+					class="ali-menu-wrapper flex-1 hidden md:block">{# Placeholder for horizontal links #}
 				</div>
 			</div>
 		</div>

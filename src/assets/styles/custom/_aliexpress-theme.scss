@@ -1,37 +1,54 @@
-// AliExpress Theme Customization
-// Scoped strictly under specific classes to prevent global conflicts
+// AliExpress Theme Customization - Refined V3 (Fixes)
+// Scoped strictly under .sx-aliexpress-header and .sx-aliexpress-sidebar
 
-// AliExpress Palette
+// Color Palette
 $ali-red: #ff4747;
 $ali-black: #191919;
-$ali-gray-bg: #f2f2f2;
+$ali-white: #ffffff;
+$ali-gray-bg: #f5f5f5;
 $ali-gray-border: #e8e8e8;
-$ali-text-dark: #222222;
-$ali-text-light: #757575;
-$ali-radius: 8px;
-$ali-pill: 100px;
-$ali-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+$ali-text-dark: #222;
+$ali-text-light: #666;
+
+// Mixins
+@mixin pill-shape {
+    border-radius: 999px;
+}
 
 /* =========================================
-   1. Header Styling (.sx-aliexpress-header)
+   1. Main Header Container (.sx-aliexpress-header)
 ========================================= */
 .sx-aliexpress-header {
-    background-color: #fff;
-    border-bottom: 2px solid $ali-red; // Distinctive red bottom border for main header
-    font-family: system-ui, -apple-system, sans-serif;
+    background-color: $ali-white;
+    color: $ali-text-dark;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    direction: rtl; // Ensure RTL context
 
-    // --- Top Navigation Bar ---
-    .top-navbar {
-        background-color: #f5f5f5;
-        border-bottom: 1px solid #e8e8e8;
-        color: $ali-text-light;
+    // -- Row 1: Top Mini Bar --
+    .ali-top-navbar {
+        background-color: #fafafa;
+        border-bottom: 1px solid #f0f0f0;
         font-size: 11px;
         padding: 4px 0;
+        color: $ali-text-light;
 
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ali-top-btn,
         a,
         button {
             color: $ali-text-light;
-            transition: color 0.2s;
+            border: none;
+            background: transparent;
+            font-weight: 400;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
 
             &:hover {
                 color: $ali-red;
@@ -39,159 +56,346 @@ $ali-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
     }
 
-    // --- Main Header Container ---
-    // The area containing Logo, Search, and Icons
-    .main-nav-container {
-        padding: 15px 0 20px;
-        box-shadow: none !important; // Remove default shadow
-    }
+    // -- Row 2: Main Header --
+    .ali-main-header {
+        padding: 20px 0;
+        background: $ali-white;
 
-    // --- Logo ---
-    .navbar-brand img {
-        transition: transform 0.2s;
-
-        &:hover {
-            transform: scale(1.02);
-        }
-    }
-
-    // --- Search Bar (The Star of the Show) ---
-    .header-search {
-        // AliExpress Style: Prominent, Pill-shaped or Rounded Rect, Bordered
-        border: 2px solid $ali-red;
-        border-radius: $ali-pill;
-        background: #fff;
-        overflow: hidden;
-        margin: 0 30px; // Spacing from logo and icons
-        max-width: 650px;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        transition: box-shadow 0.2s;
-
-        &:focus-within {
-            box-shadow: 0 0 0 4px rgba(255, 71, 71, 0.15);
+        .ali-main-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
 
-        // Hacking Salla's Search component internals via deep styling or standard CSS
-        // Assuming salla-search renders standard inputs/buttons in shadow DOM or light DOM
-        salla-search {
-            width: 100%;
-            --color-primary: #{$ali-red}; // Tell web component to use our red
+        // LOGO FIX: Force constraints
+        .ali-logo-area {
+            flex-shrink: 0;
 
-            &::part(input) {
-                border: none;
-                padding: 0 20px;
-                color: $ali-text-dark;
-                font-size: 14px;
+            a.navbar-brand {
+                display: block; // Ensure it's a block
+                max-width: 180px; // Constraint width
             }
 
-            &::part(button) {
-                background-color: $ali-red;
-                color: #fff;
-                width: 50px; // Compact search button
-                border-radius: 0; // It's inside our pill wrapper
-                transition: background 0.3s;
+            img {
+                height: auto !important;
+                max-height: 50px !important; // Constraint height
+                width: auto !important;
+                display: block;
+                object-fit: contain;
+            }
+        }
+
+        // SEARCH BAR FIX
+        .ali-search-area {
+            flex: 1;
+            max-width: 700px;
+
+            salla-search {
+                --color-primary: #{$ali-black};
+                border: 2px solid $ali-black;
+                @include pill-shape;
+                overflow: hidden;
+                display: flex;
+                height: 42px;
+                width: 100%;
+
+                // Try wrapper styling in case Shadow DOM parts incorrectly implemented in theme
+                input {
+                    border: none !important;
+                    padding: 0 15px !important;
+                    height: 100% !important;
+                }
+
+                // Web Component Parts
+                &::part(input) {
+                    border: none;
+                    outline: none;
+                    padding: 0 20px;
+                    font-size: 14px;
+                    color: #333;
+                    background: transparent;
+                }
+
+                &::part(button) {
+                    background-color: $ali-black;
+                    color: white;
+                    width: 70px;
+                    border-radius: 0;
+                    font-weight: bold;
+                    transition: background 0.2s;
+
+                    &:hover {
+                        background-color: lighten($ali-black, 10%);
+                    }
+                }
+
+                // Fallback for icons/svgs inside button
+                &::part(icon) {
+                    color: white;
+                }
+            }
+        }
+
+        // ACTIONS FIX
+        .ali-actions-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+
+            .ali-action-btn,
+            .ali-cart-btn {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-size: 11px;
+                color: $ali-text-dark;
+                cursor: pointer;
+                transition: color 0.2s;
+                background: transparent;
+                border: none;
+                padding: 0;
+
+                .header-btn__icon,
+                .icon {
+                    font-size: 24px;
+                    margin-bottom: 4px;
+                    color: $ali-text-dark;
+                }
 
                 &:hover {
-                    background-color: darken($ali-red, 5%);
+                    color: $ali-red;
+
+                    .header-btn__icon,
+                    .icon {
+                        color: $ali-red;
+                    }
                 }
             }
         }
     }
 
-    // --- Header Action Buttons (Profile, Cart) ---
-    .header-buttons,
-    .flex.items-center.justify-end {
-        gap: 20px;
-    }
+    // -- Row 3: Navigation Bar & Sidebar --
+    .ali-nav-bar {
+        border-bottom: 2px solid $ali-gray-border;
+        margin-top: 10px;
+        position: relative;
 
-    .header-btn,
-    salla-cart-summary {
-        color: $ali-text-dark;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px; // Text label size
-
-        // Icon
-        .header-btn__icon,
-        .icon {
-            font-size: 24px !important;
-            margin-bottom: 2px;
-            color: $ali-text-dark;
+        .container {
+            position: relative; // Anchor for absolute dropdown
         }
 
-        &:hover {
-            color: $ali-red;
+        // "All Categories" Button Style
+        .ali-all-cats {
+            position: relative;
+            display: inline-block;
+        }
 
-            .header-btn__icon,
-            .icon {
+        .ali-cat-btn {
+            background-color: transparent; // Default transparent or white
+            color: $ali-text-dark;
+            border-radius: 999px 999px 0 0; // Tab look
+            padding: 0 20px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+            z-index: 20;
+
+            i {
+                font-size: 20px;
+            }
+
+            // Active state (mimic the image where it has a gray/white background)
+            &:hover,
+            &.is-active {
+                background-color: #fff;
                 color: $ali-red;
-                animation: bounce-slight 0.3s ease;
             }
         }
+
+        // *** THE SIDEBAR DROPDOWN ***
+        .ali-cat-dropdown {
+            position: absolute;
+            top: 45px; // Height of button
+            right: 0; // Align to RTL start
+            width: 260px;
+            background: #fff;
+            border: 1px solid $ali-gray-border;
+            border-top: 2px solid $ali-text-dark; // Top accent
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: 0.2s ease;
+        }
+
+        // Show Dropdown
+        .ali-all-cats:hover .ali-cat-dropdown {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        // Sidebar Internal Styling
+        .ali-cat-dropdown {
+
+            ul.main-menu,
+            .level-0 {
+                display: flex;
+                flex-direction: column; // Vertical List
+                padding: 0;
+                margin: 0;
+                list-style: none;
+            }
+
+            // Main Menu Items
+            li {
+                // Ensure stacking context for submenu
+                position: static; // CHANGE: Static position to allow submenu to take full height of container? 
+                // No, standard relative logic usually safer for flyouts.
+                // Let's stick to relative for the li, absolute for submenu.
+                position: relative;
+                border-bottom: 1px solid #f9f9f9;
+
+                a {
+                    padding: 12px 15px;
+                    color: $ali-text-dark;
+                    font-size: 13px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    text-decoration: none;
+                    transition: 0.1s;
+                    width: 100%;
+
+                    // Image/Icon support
+                    img {
+                        width: 24px;
+                        height: 24px;
+                        object-fit: contain;
+                        border-radius: 50%;
+                    }
+
+                    i {
+                        width: 24px;
+                        text-align: center;
+                        font-size: 18px;
+                        color: #999;
+                    }
+
+                    &:hover {
+                        background-color: #fff;
+                        color: $ali-red;
+                        font-weight: bold;
+
+                        i {
+                            color: $ali-red;
+                        }
+                    }
+                }
+
+                // Mega Menu / Submenu (Level 2)
+                ul.sub-menu,
+                .level-1 {
+                    display: none; // Hidden
+                    position: absolute;
+                    top: -2px; // Align with top of item
+                    right: 259px; // Sidebar width (260) - 1px border
+                    width: 700px; // Mega menu width
+                    min-height: 100%; // Try to match height
+                    min-height: 400px; // Fallback
+                    background: #fff;
+                    border: 1px solid $ali-gray-border;
+                    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+                    padding: 20px;
+                    z-index: 101;
+
+                    // Grid Layout for subitems
+                    display: none;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 15px;
+                    align-content: start;
+                }
+
+                &:hover>ul,
+                &:hover>.level-1 {
+                    display: grid; // Show grid on hover
+                }
+            }
+        }
+
+        // Horizontal Menu Next to Button
+        .ali-menu-wrapper {
+            margin-right: 20px;
+        }
     }
 }
 
-// Helper Animation
-@keyframes bounce-slight {
-
-    0%,
-    100% {
-        transform: translateY(0);
+// RTL fixes
+[dir="rtl"] {
+    .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
+        right: 0;
+        left: auto;
     }
 
-    50% {
-        transform: translateY(-3px);
+    .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu {
+        right: 260px;
+        left: auto;
     }
 }
 
+[dir="ltr"] {
+    .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
+        left: 0;
+        right: auto;
+    }
+
+    .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu {
+        left: 260px;
+        right: auto;
+    }
+}
 
 /* =========================================
-   2. Sidebar / Mobile Menu (.sx-aliexpress-sidebar)
+   2. Mobile Sidebar (.sx-aliexpress-sidebar)
 ========================================= */
 .sx-aliexpress-sidebar {
     background-color: #fff;
-    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    z-index: 99999;
 
-    // Header Part of Sidebar
     .mobile-menu__header {
-        // If exists, otherwise generic top area
         background: $ali-red;
+        padding: 15px;
         color: white;
     }
 
-    .close-mobile-menu {
-        top: 10px;
-        right: 15px; // RTL flip handled by direction
-        color: #999;
-
-        &:hover {
-            color: $ali-red;
-        }
-    }
-
-    // Menu List
     .main-menu {
         padding: 10px 0;
 
         li {
-            border-bottom: 1px solid #f2f2f2;
+            border-bottom: 1px solid #f9f9f9;
 
             a {
-                padding: 14px 20px;
+                padding: 12px 20px;
                 color: $ali-text-dark;
-                font-weight: 500;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                gap: 10px;
 
                 &:hover {
-                    background-color: #fff8f8; // Very light red tint
                     color: $ali-red;
-                    padding-inline-start: 25px; // Slide effect
+                    background: #fefefe;
                 }
             }
         }
@@ -199,20 +403,21 @@ $ali-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* =========================================
-   3. Mobile Responsive Tweaks
+   3. Responsive Tweaks
 ========================================= */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .sx-aliexpress-header {
-        .header-search {
-            margin: 10px 0 0 0;
-            order: 3; // Move search to bottom on mobile if flex container
-            width: 100%;
-            border-radius: 8px; // Less rounded on small screens to save space
-            border-width: 1px;
+        .ali-main-header {
+            padding: 10px 0;
         }
 
-        .main-nav-container .container>div {
-            flex-wrap: wrap; // Allow wrapping for search bar
+        .ali-logo-area a.navbar-brand {
+            max-width: 120px;
+        }
+
+        .ali-search-area,
+        .ali-nav-bar {
+            display: none !important;
         }
     }
 }
