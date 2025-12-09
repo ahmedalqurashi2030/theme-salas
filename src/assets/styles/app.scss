@@ -48,7 +48,7 @@
  * Swiper...............Specific styles for swiper slider addon.
  * MMenu................Specific styles for mmenu addon.
  *
-*/
+ */
 
 @import './01-settings/tailwind';
 @import './01-settings/fonts';
@@ -97,3 +97,6 @@
 
 @import './4-layout/sidebar';
 @import './tharaa/store_category';
+
+// Custom Styles
+@import './custom/alibaba-theme';
