@@ -25507,7 +25507,8 @@ custom-salla-product-card salla-add-product-button::part(button):hover {
 }
 @media (min-width: 1024px) {
   .th-section .s-products-slider-card {
-    width: 25%;
+    width: 16.6667%;
+    max-width: none;
   }
 }
 .before\:text-orange-300::before{

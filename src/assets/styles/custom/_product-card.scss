@@ -2,7 +2,7 @@ $ali-red: #ff4747;
 $ali-text-dark: #222;
 $ali-bg-gray: #f5f5f5;
 
-.th-section {
+.tharaa-theme {
   font-family: 'Tajawal', 'Inter', sans-serif;
   background-color: #fff;
 
@@ -180,12 +180,23 @@ $ali-bg-gray: #f5f5f5;
   }
 
   .s-products-slider-card {
-    width:100%;
-    max-width:250px;
-    padding:0 0.5rem;
+  width: 100%;
+  max-width: 250px;
+  padding: 0 0.5rem;
 
-    @media (min-width:640px) { width:50%; max-width:320px; }
-    @media (min-width:768px) { width:33.3333%; }
-    @media (min-width:1024px) { width:25%; }
+  @media (min-width: 640px) { 
+    width: 50%; 
+    max-width: 320px; 
   }
+
+  @media (min-width: 768px) { 
+    width: 33.3333%; 
+  }
+
+  @media (min-width: 1024px) { 
+    width: 16.6667%; // 6 بطاقات في الصف
+    max-width: none; // السماح بالتمدد حسب نسبة العرض
+  }
+}
+
 }
