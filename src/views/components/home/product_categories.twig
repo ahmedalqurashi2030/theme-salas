@@ -39,7 +39,7 @@
 						{# حلقة تكرار المنتجات داخل كل تبويب #}
 						{% for product in tab.dropdown_list_1 %}
 
-							<article class="product-card {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}" data-category="cat-{{ tab.category_list.id }}">
+							<article class="product-card ali-product-card {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}" data-category="cat-{{ tab.category_list.id }}">
 
 								<div
 									class="img-wrapper">
@@ -71,7 +71,7 @@
 									</a>
 								</div>
 
-								<span class="cat-name">{{ tab.category_list.name }}</span>
+								<span class="cat-name">{{ tab.categoty_title }}</span>
 								<h3 class="prod-title">
 									<a href="{{ product.url }}">{{ product.name }}</a>
 								</h3>
@@ -302,11 +302,11 @@
 	max-width: 220px; /* ضمان عدم كبرها كثيراً في الجوال */
 }
 
-/* العرض للكمبيوتر: 5 بطاقات */
+/* العرض للكمبيوتر: 6 بطاقات (تحديث علي اكسبرس) */
 @media(min-width: 1024px) {
 	.product-card {
-		width: calc((100% -(var(--gap-size) * 4)) / 5);
-		min-width: 200px;
+		width: calc((100% -(var(--gap-size) * 5)) / 6);
+		min-width: 150px; /* Reduced to fit 6 items */
 		max-width: none;
 	}
 }
