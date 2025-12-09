@@ -1056,7 +1056,7 @@
                     "icon": "sicon-format-text-alt",
                     "value": "منتجات مختاره",
                     "multilanguage": false,
-                    "required": false,
+                    "required": true,
                     "minLength": 6,
                     "maxLength": 30
                 },
@@ -1100,13 +1100,28 @@
                             "id": "products.categoty_title",
                             "type": "string",
                             "format": "text",
-                            "label": "String",
+                            "label": "عنوان الرابط",
                             "description": null,
                             "labelHTML": null,
                             "placeholder": "Placeholder text ..",
                             "icon": "sicon-format-text-alt",
                             "value": null,
                             "multilanguage": false,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "products.url",
+                            "type": "string",
+                            "format": "url",
+                            "inputType": "url",
+                            "label": "الربط",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://salla.sa",
+                            "icon": "sicon-link",
+                            "value": null,
                             "required": false,
                             "minLength": 6,
                             "maxLength": 30
@@ -1131,6 +1146,21 @@
                     "value": [],
                     "minLength": "3",
                     "maxLength": "8"
+                },
+                {
+                    "id": "url_1",
+                    "type": "string",
+                    "format": "url",
+                    "inputType": "url",
+                    "label": "URL 1",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://salla.sa",
+                    "icon": "sicon-link",
+                    "value": null,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
                 }
             ]
         },
