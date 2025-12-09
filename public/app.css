@@ -1,6 +1,6 @@
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/.pnpm/css-loader@6.11.0_webpack@5.99.9/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/.pnpm/postcss-loader@7.3.4_postcs_cf25b54d9897dba8c8a1b0c09cbd8d11/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@13.3.3_sass@1.85.1_webpack@5.99.9/node_modules/sass-loader/dist/cjs.js!./src/assets/styles/app.scss ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/assets/styles/app.scss ***!
+  \*******************************************************************************************************************************************************************************************/
 @charset "UTF-8";
 /*
  * IMPORTANT NOTE: Theme based on Tailwindcss but for the purpose of simplifing the DOM we use
@@ -292,7 +292,7 @@ body.mm-ocd-opened{overflow-y:hidden;overscroll-behavior:none}
     --tw-contain-style:  ;
 }
 /*
- ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com
+ ! tailwindcss v3.4.18 | MIT License | https://tailwindcss.com
 */
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -1322,6 +1322,9 @@ select{
 .flex-grow{
     flex-grow: 1;
 }
+.basis-0{
+    flex-basis: 0px;
+}
 .table-fixed{
     table-layout: fixed;
 }
@@ -1389,6 +1392,9 @@ select{
 }
 .items-baseline{
     align-items: baseline;
+}
+.items-stretch{
+    align-items: stretch;
 }
 .justify-start{
     justify-content: flex-start;
@@ -1707,6 +1713,9 @@ select{
     background-color: rgba(255, 255, 255, 1);
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
 }
+.bg-inherit{
+    background-color: inherit;
+}
 .bg-cover{
     background-size: cover;
 }
@@ -1901,6 +1910,9 @@ select{
 }
 .text-end{
     text-align: right;
+}
+.align-middle{
+    vertical-align: middle;
 }
 .text-2xl{
     font-size: 1.5rem;
@@ -2169,13 +2181,10 @@ select{
     filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .backdrop-filter{
-    -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
     backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 .transition{
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -2280,29 +2289,6 @@ select{
         line-height: 1.25rem;
     }
 }
-.\!btn{
-    display: inline-flex;
-    flex: 1 1 0%;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    border-radius: 0.375rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-bottom: 0.625rem;
-    padding-top: 0.5rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-}
-.\!btn:hover{
-    opacity: 0.8;
-}
 .btn{
     display: inline-flex;
     flex: 1 1 0%;
@@ -2317,9 +2303,7 @@ select{
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -2564,30 +2548,20 @@ textarea.s-input{
     box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 rgba(0,0,0,0));
 }
 .s-form-label{
-    margin-bottom: 0.25rem;
-    display: block;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    --tw-text-opacity: 1;
     color: rgba(17, 24, 39, 1);
     color: rgba(17, 24, 39, var(--tw-text-opacity, 1));
-}
-@media (max-width: 768px) {
-  .s-form-label {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-  }
-}
-.s-form-label{
     margin-bottom: 0.625rem;
     display: block;
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
     --tw-text-opacity: 1;
-    color: rgba(55, 65, 81, 1);
-    color: rgba(55, 65, 81, var(--tw-text-opacity, 1));
+    color: rgb(55 65 81 / 1);
+}
+@supports (color: rgb(0 0 0 / 0)) and (top: var(--f)){
+.s-form-label{
+        color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+    }
 }
 @media (min-width: 640px){
     .s-form-label{
@@ -2608,11 +2582,6 @@ textarea.s-input{
 .s-form-group{
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
-}
-@media (max-width: 768px) {
-  .s-form-group {
-    margin-bottom: 1.25rem;
-  }
 }
 .s-checkbox{
     cursor: pointer;
@@ -3100,12 +3069,6 @@ textarea.s-input{
     justify-content: space-between;
     padding-top: 0.625rem;
     padding-bottom: 0.625rem;
-}
-@media (max-width: 640px) {
-  .s-advertisement-content {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
 }
 .top-navbar .s-advertisement-content{
     display: flex;
@@ -3845,9 +3808,7 @@ input[type=radio].sr-only:checked ~ div.s-app-install-alert-cancel-button {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -3875,9 +3836,7 @@ input[type=radio].sr-only:checked ~ div.s-app-install-alert-cancel-button {
     align-items: center;
     justify-content: center;
     font-weight: 500;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -3913,9 +3872,7 @@ input[type=radio].sr-only:checked ~ div.s-app-install-alert-cancel-button {
     --tw-text-opacity: 1;
     color: rgba(197, 160, 89, 1);
     color: rgba(197, 160, 89, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -4257,9 +4214,7 @@ input[type=radio].sr-only:checked ~ div.s-app-install-alert-cancel-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -5340,9 +5295,7 @@ input[type=radio].sr-only:checked ~ div.s-conditional-offer-checkpoint-label {
     font-size: 0.875rem;
     line-height: 1.25rem;
     line-height: 1;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -5781,9 +5734,7 @@ input[type=radio].sr-only:checked ~ div.s-count-down-end-text {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -5829,9 +5780,7 @@ input[type=radio].sr-only:checked ~ div.s-count-down-end-text {
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -6691,9 +6640,7 @@ input[type=radio].sr-only:checked ~ div.s-file-upload-profile-image .s-file-uplo
     --tw-text-opacity: 1;
     color: rgba(156, 163, 175, 1);
     color: rgba(156, 163, 175, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -8523,9 +8470,7 @@ input[type=radio].sr-only:checked ~ div.s-map-my-location-button {
     font-size: 0.875rem;
     line-height: 1.25rem;
     line-height: 1;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -8615,9 +8560,7 @@ input[type=radio].sr-only:checked ~ div.s-map-my-location-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -8663,9 +8606,7 @@ input[type=radio].sr-only:checked ~ div.s-map-my-location-button {
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -9176,9 +9117,7 @@ input[type=radio].sr-only:checked ~ div.s-multiple-bundle-product-checkbox {
     --tw-text-opacity: 1;
     color: rgba(22, 163, 74, 1);
     color: rgba(22, 163, 74, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -9618,9 +9557,7 @@ input[type=radio].sr-only:checked ~ div.s-offer-corner-badge {
     --tw-text-opacity: 1;
     color: rgba(156, 163, 175, 1);
     color: rgba(156, 163, 175, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 500ms;
 }
@@ -9683,9 +9620,7 @@ input[type=radio].sr-only:checked ~ div.s-offer-corner-badge {
     --tw-text-opacity: 1;
     color: rgba(75, 85, 99, 1);
     color: rgba(75, 85, 99, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 500ms;
 }
@@ -10019,9 +9954,7 @@ input[type=radio].sr-only:checked ~ div.s-offer-bank-payment-discount-percent {
     --tw-text-opacity: 1;
     color: rgba(156, 163, 175, 1);
     color: rgba(156, 163, 175, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 500ms;
 }
@@ -10874,15 +10807,15 @@ input[type=radio].sr-only:checked ~ div.s-offer-bank-payment-discount-percent {
     padding-right: 1.5rem;
 }
 .s-order-totals-card-heading{
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }
 input[type=radio].s-order-totals-card-heading div.absolute {
   transition: all 0.3s;
@@ -14137,9 +14070,7 @@ input[type=radio].sr-only:checked ~ div.s-quick-order-expandable .s-form-group >
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -14156,23 +14087,6 @@ input[type=radio].sr-only:checked ~ div.s-quick-order-expandable .s-form-group >
     background-color: rgba(197, 160, 89, var(--tw-bg-opacity, 1));
     color: #ff6767;
     color: var(--color-primary-reverse);
-}
-@media (max-width: 1024px) {
-  .s-rating-modal-thanks-btn:not([class*=salla]) {
-    min-height: 48px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    touch-action: manipulation;
-  }
-}
-@media (max-width: 640px) {
-  .s-rating-modal-thanks-btn {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 0.5rem;
-  }
-}
-.s-rating-modal-thanks-btn{
     display: inline-flex;
     flex: 1 1 0%;
     align-items: center;
@@ -14186,18 +14100,12 @@ input[type=radio].sr-only:checked ~ div.s-quick-order-expandable .s-form-group >
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
 .s-rating-modal-thanks-btn:hover{
     opacity: 0.8;
-}
-.s-rating-modal-thanks-btn {
-  /* Disabled state */
-  /* Button Variants */
 }
 .s-rating-modal-thanks-btn .loader {
   width: 0;
@@ -14205,6 +14113,9 @@ input[type=radio].sr-only:checked ~ div.s-quick-order-expandable .s-form-group >
   height: 16px;
   transform: scale(0);
   transition: 0.3s;
+}
+.s-rating-modal-thanks-btn {
+  /* Disabled state */
 }
 .s-rating-modal-thanks-btn.btn:disabled{
     cursor: default;
@@ -14226,6 +14137,9 @@ input[type=radio].sr-only:checked ~ div.s-quick-order-expandable .s-form-group >
 }
 .s-rating-modal-thanks-btn:disabled .s-button-text{
     opacity: 0.7;
+}
+.s-rating-modal-thanks-btn {
+  /* Button Variants */
 }
 @media only screen and (min-width: 1024px) {
   .main-menu .sub-menu .s-rating-modal-thanks-btn {
@@ -15473,15 +15387,15 @@ input[type=radio].sr-only:checked ~ div.s-scopes-search-icon {
     padding-right: 0.5rem;
 }
 .s-scopes-sr-only{
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }
 input[type=radio].s-scopes-sr-only div.absolute {
   transition: all 0.3s;
@@ -15586,9 +15500,7 @@ input[type=radio].s-scopes-sr-only:checked ~ div.absolute {
     z-index: 99;
     max-height: 14rem;
     border-radius: 0.375rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -15755,9 +15667,7 @@ input[type=radio].sr-only:checked ~ div.s-search-results {
     padding-right: 1rem;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
@@ -16180,9 +16090,7 @@ input[type=radio].sr-only:checked ~ div.s-slider-v-centered .s-slider-block__tit
     border-color: rgba(209, 213, 219, var(--tw-border-opacity, 1));
     font-size: 1.25rem;
     line-height: 1.75rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -16393,9 +16301,7 @@ salla-slider div[slot='thumbs'] > div{
     margin-top: 0.625rem;
     max-height: 360px;
     width: 100vw;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -16493,9 +16399,7 @@ input[type=radio].sr-only:checked ~ div.s-slider-vertical .s-slider-thumbs-next 
     background-color: rgba(249, 250, 251, 1);
     background-color: rgba(249, 250, 251, var(--tw-bg-opacity, 1));
     padding: 0px;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -16678,9 +16582,7 @@ salla-slider .model-entry:before{
     border-width: 1px;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -18044,9 +17946,7 @@ input[type=radio].sr-only:checked ~ div.s-user-menu-red-dot .s-user-menu-avatar-
     --tw-text-opacity: 1;
     color: rgba(75, 85, 99, 1);
     color: rgba(75, 85, 99, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -19005,198 +18905,85 @@ input[type=radio].sr-only:checked ~ div.s-app-install-banner-cancel-button {
   top: 0;
   left: 0;
 }
-/**
- * Enhanced Animations
- * تحسينات الأنيميشن والتأثيرات البصرية
- */
-@keyframes fadeIn {
+@keyframes fadeInDown {
   from {
-    opacity: 0;
+    transform: translate3d(0, -15px, 0);
   }
   to {
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 }
-.fade-in {
-  animation: fadeIn 0.3s ease-in-out;
+.animated {
+  animation-duration: 400ms;
+  animation-fill-mode: both;
 }
-@keyframes slideInUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.animatedfadeInDown {
+  opacity: 0;
 }
-.slide-in-up {
-  animation: slideInUp 0.4s ease-out;
+.fadeInDown {
+  opacity: 0;
+  animation-name: fadeInDown;
+  -webkit-animation-name: fadeInDown;
 }
-@keyframes slideInRight {
-  from {
-    transform: translateX(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-[dir=rtl] .slide-in {
-  animation: slideInRight 0.4s ease-out;
-}
-[dir=ltr] .slide-in {
-  animation: slideInLeft 0.4s ease-out;
-}
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-.scale-in {
-  animation: scaleIn 0.3s ease-out;
-}
-@keyframes bounceSubtle {
-  0%, 100% {
-    transform: translateY(0);
+@keyframes toRightFromLeft {
+  49% {
+    transform: translate(100%);
   }
   50% {
-    transform: translateY(-5px);
+    opacity: 0;
+    transform: translate(-100%);
   }
-}
-.bounce-subtle {
-  animation: bounceSubtle 0.6s ease-in-out;
-}
-@keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  10%, 30%, 50%, 70%, 90% {
-    transform: translateX(-5px);
-  }
-  20%, 40%, 60%, 80% {
-    transform: translateX(5px);
-  }
-}
-.shake {
-  animation: shake 0.5s ease-in-out;
-}
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.spin {
-  animation: spin 1s linear infinite;
-}
-@keyframes pulse {
-  0%, 100% {
+  51% {
     opacity: 1;
   }
+}
+@keyframes toTopFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1 !important;
+    transform: translateX(0);
+  }
+}
+@keyframes delayKeyframe {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
   50% {
-    opacity: 0.5;
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
   }
 }
-.pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-a,
-button,
-input,
-select,
-textarea {
-  transition: all 0.2s ease;
-}
-.stagger-item {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-out forwards;
-}
-.stagger-item:nth-child(1) {
-  animation-delay: 0.1s;
-}
-.stagger-item:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.stagger-item:nth-child(3) {
-  animation-delay: 0.3s;
-}
-.stagger-item:nth-child(4) {
-  animation-delay: 0.4s;
-}
-.stagger-item:nth-child(5) {
-  animation-delay: 0.5s;
-}
-.stagger-item:nth-child(6) {
-  animation-delay: 0.6s;
-}
-.stagger-item:nth-child(7) {
-  animation-delay: 0.7s;
-}
-.stagger-item:nth-child(8) {
-  animation-delay: 0.8s;
-}
-.stagger-item:nth-child(9) {
-  animation-delay: 0.9s;
-}
-.stagger-item:nth-child(10) {
-  animation-delay: 1s;
-}
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(20px);
-}
-.page-transition-enter-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  opacity: 1;
-  transform: translateY(0);
-}
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-.btn-press {
-  transition: transform 0.1s ease;
-}
-.btn-press:active {
-  transform: scale(0.95);
-}
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+.rubberBand {
+  animation-name: rubberBand;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
 }
 .swiper-lazy{
     opacity: 0;
@@ -19240,289 +19027,6 @@ input[type=radio].sr-only:checked ~ div.lazy__bg {
 }
 .lazy__bg.loaded{
     opacity: 1;
-}
-img.lazy,
-img.lazy-load,
-img[data-src]{
-    transition-property: opacity;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-  opacity: 0.3;
-  background-color: #f3f4f6;
-  filter: blur(2px);
-  transition: filter 0.3s, opacity 0.3s;
-}
-img.lazy.lazy-loading,
-img.lazy-load.lazy-loading,
-img[data-src].lazy-loading{
-    opacity: 0.5;
-  filter: blur(3px);
-}
-img.lazy.lazy-loaded,
-img.lazy-load.lazy-loaded,
-img[data-src].lazy-loaded{
-    opacity: 1;
-  filter: blur(0);
-  animation: fadeInImage 0.5s ease-in-out;
-}
-img.lazy.lazy-error,
-img.lazy-load.lazy-error,
-img[data-src].lazy-error{
-    opacity: 0.5;
-  filter: none;
-}
-@keyframes fadeInImage {
-  from {
-    opacity: 0;
-    transform: scale(1.02);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-@keyframes pulse{
-    50%{
-        opacity: .5;
-    }
-}
-.lazy-skeleton{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    --tw-bg-opacity: 1;
-    background-color: rgba(229, 231, 235, 1);
-    background-color: rgba(229, 231, 235, var(--tw-bg-opacity, 1));
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s ease-in-out infinite;
-}
-@keyframes skeleton-loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-/**
- * Accessibility Improvements
- * تحسينات الوصولية
- */
-.skip-to-content {
-  position: absolute;
-  left: -9999px;
-  z-index: 9999;
-  padding: 0.75rem 1.5rem;
-  background: #414042;
-  background: var(--color-primary);
-  color: #ff6767;
-  color: var(--color-primary-reverse);
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-.skip-to-content:focus {
-  left: 50%;
-  transform: translateX(-50%);
-  top: 1rem;
-  outline: 3px solid #414042;
-  outline: 3px solid var(--color-primary);
-  outline-offset: 2px;
-}
-*:focus-visible {
-  outline: 2px solid #414042;
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-*:focus:not(:focus-visible) {
-  outline: none;
-}
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid #414042;
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-@media (prefers-contrast: high) {
-  * {
-    border-color: currentColor !important;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-button:not(.s-button-btn):not([class*=salla]),
-a:not([class*=salla]):not(salla-button a) {
-  min-height: 44px;
-  min-width: 44px;
-}
-@media (max-width: 768px) {
-  button:not(.s-button-btn):not([class*=salla]),
-  a:not([class*=salla]):not(salla-button a) {
-    min-height: 48px;
-    min-width: 48px;
-  }
-}
-.text-muted {
-  color: #6b7280;
-}
-[aria-live] {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-/**
- * Mobile Experience Enhancements
- * تحسينات تجربة الجوال
- */
-@media (max-width: 1024px) {
-  button:not(.s-button-btn):not([class*=salla]),
-  .btn:not([class*=salla]) {
-    min-height: 48px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    touch-action: manipulation;
-  }
-  .product-card,
-  .s-product-card {
-    margin-bottom: 1.5rem;
-  }
-  .dropdown__menu {
-    max-height: 70vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  input,
-  select,
-  textarea {
-    font-size: 16px;
-    padding: 0.75rem;
-  }
-  .sidebar,
-  .offcanvas {
-    -webkit-overflow-scrolling: touch;
-  }
-  body {
-    -webkit-overflow-scrolling: touch;
-  }
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-  }
-}
-@media (max-width: 640px) {
-  .container,
-  .container-fluid {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  h1 {
-    font-size: 1.75rem;
-  }
-  h2 {
-    font-size: 1.5rem;
-  }
-  h3 {
-    font-size: 1.25rem;
-  }
-  h4 {
-    font-size: 1.125rem;
-  }
-  .btn {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 0.5rem;
-  }
-  .s-product-card .s-product-card-title {
-    font-size: 0.95rem;
-    line-height: 1.4;
-  }
-  #mobile-menu {
-    width: 85vw;
-    max-width: 320px;
-  }
-}
-.touch-action-none {
-  touch-action: none;
-}
-.touch-action-pan-x {
-  touch-action: pan-x;
-}
-.touch-action-pan-y {
-  touch-action: pan-y;
-}
-body {
-  overflow-x: hidden;
-  width: 100%;
-}
-@media (max-width: 1024px) {
-  * {
-    will-change: auto;
-  }
-  .transition-slow {
-    transition-duration: 0.2s;
-  }
-}
-.swipeable {
-  touch-action: pan-y;
-  -webkit-overflow-scrolling: touch;
-}
-.icon-touch {
-  padding: 0.5rem;
-  min-width: 44px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-@media (max-width: 768px) {
-  .form-group {
-    margin-bottom: 1.25rem;
-  }
-  .form-label {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-  }
-}
-@media (max-width: 1024px) {
-  .menu-item {
-    padding: 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  }
-  .sub-menu {
-    padding-left: 1.5rem;
-  }
 }
 .rtl .rtl-range-slider,
 [dir=rtl] .rtl-range-slider {
@@ -19706,18 +19210,12 @@ salla-button.copied i:before {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
 .btn:hover{
     opacity: 0.8;
-}
-.btn {
-  /* Disabled state */
-  /* Button Variants */
 }
 .btn .loader {
   width: 0;
@@ -19855,9 +19353,7 @@ salla-button.copied i:before {
     --tw-text-opacity: 1;
     color: rgba(107, 114, 128, 1);
     color: rgba(107, 114, 128, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -19928,9 +19424,7 @@ input[type=radio].sr-only:checked ~ div.btn--close {
     color: rgba(255, 255, 255, 1);
     color: rgba(255, 255, 255, var(--tw-text-opacity, 1));
     opacity: 0;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -19967,6 +19461,9 @@ input[type=radio].sr-only:checked ~ div.btn--close {
         padding-left: 1.25rem;
     }
 }
+.btn {
+  /* Disabled state */
+}
 .btn.btn:disabled{
     cursor: default;
     border-width: 1px;
@@ -19987,6 +19484,9 @@ input[type=radio].sr-only:checked ~ div.btn--close {
 }
 .btn:disabled .s-button-text{
     opacity: 0.7;
+}
+.btn {
+  /* Button Variants */
 }
 .btn--danger{
     --tw-bg-opacity: 1;
@@ -20118,9 +19618,7 @@ salla-button.has-coupon button{
     --tw-text-opacity: 1;
     color: rgba(197, 160, 89, 1);
     color: rgba(197, 160, 89, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -20128,9 +19626,7 @@ salla-button.has-coupon button{
     color: var(--color-primary-dark);
 }
 #btn-show-more{
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -20756,9 +20252,7 @@ input[type=radio].sr-only:checked ~ div.main-header .header-actions .action-btn 
     border-width: 1px;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -20836,9 +20330,7 @@ input[type=radio].sr-only:checked ~ div.main-header .header-actions .action-btn 
         padding: 0.75rem;
         font-size: 0.875rem;
         line-height: 1.25rem;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
         transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 300ms;
     }
@@ -20906,9 +20398,7 @@ input[type=radio].sr-only:checked ~ div.main-header .header-actions .action-btn 
         --tw-shadow-colored: 5px 10px 30px var(--tw-shadow-color);
         box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 5px 10px 30px #2B2D340D;;
         box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
         transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 150ms;
     }
@@ -21588,13 +21078,11 @@ input[type=radio].sr-only:checked ~ div.dropdown__menu {
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
-    --tw-content: "";
-    content: "";
+    --tw-content: '';
+    content: '';
     content: var(--tw-content);
 }
 input[type=radio].sr-only div.s-block--hero-slider .swiper-slide .swiper-lazy:after {
@@ -21609,8 +21097,8 @@ input[type=radio].sr-only:checked ~ div.s-block--hero-slider .swiper-slide .swip
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    --tw-content: "";
-    content: "";
+    --tw-content: '';
+    content: '';
     content: var(--tw-content);
 }
 input[type=radio].sr-only div.s-block--hero-slider .swiper-slide .overlay-bg:after {
@@ -21769,8 +21257,8 @@ input[type=radio].sr-only:checked ~ div.s-block--hero-slider .swiper-slide .over
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
-    --tw-content: "";
-    content: "";
+    --tw-content: '';
+    content: '';
     content: var(--tw-content);
 }
 input[type=radio].sr-only div.has-overlay:after {
@@ -22088,29 +21576,12 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
 .s-block--slider-with-bg .s-slider-block__display-all:hover{
     opacity: 0.8;
-}
-@media (max-width: 1024px) {
-  .s-block--slider-with-bg .s-slider-block__display-all:not([class*=salla]) {
-    min-height: 48px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    touch-action: manipulation;
-  }
-}
-@media (max-width: 640px) {
-  .s-block--slider-with-bg .s-slider-block__display-all {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 0.5rem;
-  }
 }
 .s-block--slider-with-bg .s-slider-block__display-all{
     display: inline-flex;
@@ -22126,18 +21597,12 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
 .s-block--slider-with-bg .s-slider-block__display-all:hover{
     opacity: 0.8;
-}
-.s-block--slider-with-bg .s-slider-block__display-all {
-  /* Disabled state */
-  /* Button Variants */
 }
 .s-block--slider-with-bg .s-slider-block__display-all .loader {
   width: 0;
@@ -22145,6 +21610,9 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
   height: 16px;
   transform: scale(0);
   transition: 0.3s;
+}
+.s-block--slider-with-bg .s-slider-block__display-all {
+  /* Disabled state */
 }
 .s-block--slider-with-bg .s-slider-block__display-all.btn:disabled{
     cursor: default;
@@ -22167,21 +21635,22 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
 .s-block--slider-with-bg .s-slider-block__display-all:disabled .s-button-text{
     opacity: 0.7;
 }
-.s-block--slider-with-bg .s-slider-block__display-all{
-    border-width: 1px;
-    --tw-border-opacity: 1;
-    border-color: rgba(229, 231, 235, 1);
-    border-color: rgba(229, 231, 235, var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgba(255, 255, 255, 1);
-    background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
-    --tw-text-opacity: 1;
-    color: rgba(156, 163, 175, 1);
-    color: rgba(156, 163, 175, var(--tw-text-opacity, 1));
-    --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-    box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
+.s-block--slider-with-bg .s-slider-block__display-all {
+  /* Button Variants */
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgba(229, 231, 235, 1);
+  border-color: rgba(229, 231, 235, var(--tw-border-opacity, 1));
+  --tw-bg-opacity: 1;
+  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, 1);
+  color: rgba(156, 163, 175, var(--tw-text-opacity, 1));
+  --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow)
 }
 .s-block--slider-with-bg .s-slider-block__display-all:hover{
     --tw-border-opacity: 1;
@@ -22246,9 +21715,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
     padding: 0.75rem;
     text-align: center;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 500ms;
 }
@@ -22295,9 +21762,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
     --tw-text-opacity: 1;
     color: rgba(75, 85, 99, 1);
     color: rgba(75, 85, 99, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 500ms;
 }
@@ -22875,12 +22340,6 @@ model-viewer[style*=width]:before{
         max-width: 1280px;
     }
 }
-@media (max-width: 640px) {
-  .s-comments-product .s-comments-container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
 .top-navbar .s-comments-product .s-comments-container{
     display: flex;
     align-items: center;
@@ -23053,9 +22512,7 @@ input[type=radio].sr-only:checked ~ div.pie-wrapper {
         gap: 0.625rem;
         padding: 0.75rem;
         opacity: 0;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
         transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-delay: 500ms;
         transition-duration: 700ms;
@@ -23076,9 +22533,7 @@ input[type=radio].sr-only:checked ~ div.pie-wrapper {
         transform: translate(var(--tw-translate-x), 1.25rem) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
         transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
         opacity: 0;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
         transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 700ms;
         transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
@@ -23086,10 +22541,6 @@ input[type=radio].sr-only:checked ~ div.pie-wrapper {
   .is-sticky-product-bar .sticky-product-bar__price,
   .is-sticky-product-bar .sticky-product-bar .form-label{
         display: none;
-    }
-  .is-sticky-product-bar .sticky-product-bar__quantity{
-        margin: 0px;
-        transition-delay: 900ms;
     }
   .is-sticky-product-bar .sticky-product-bar__quantity salla-quantity-input{
         width: 100%;
@@ -23099,6 +22550,10 @@ input[type=radio].sr-only:checked ~ div.pie-wrapper {
     }
   .is-sticky-product-bar .sticky-product-bar__quantity salla-quantity-input .s-quantity-input-input{
         width: 80%;
+    }
+  .is-sticky-product-bar .sticky-product-bar__quantity{
+        margin: 0px;
+        transition-delay: 900ms;
     }
   .is-sticky-product-bar .sticky-product-bar salla-add-product-button{
         margin: 0px;
@@ -23473,400 +22928,6 @@ salla-quantity-input[max="1"] input{
 salla-quantity-input[max="1"] .s-quantity-input-button{
     cursor: not-allowed;
 }
-/**
- * Product Page Enhancements
- * تحسينات صفحة المنتج
- */
-.product-single .product-images .swiper-slide {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.product-single .product-images .swiper-slide:hover {
-  transform: scale(1.02);
-}
-.product-single salla-add-product-button button {
-  transition: all 0.3s ease;
-}
-.product-single salla-add-product-button button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-.product-single salla-add-product-button button:active {
-  transform: translateY(0);
-}
-.product-single .product-options .s-radio-images {
-  transition: all 0.2s ease;
-}
-.product-single .product-options .s-radio-images:hover {
-  transform: scale(1.05);
-  border-color: #414042;
-  border-color: var(--color-primary);
-}
-.product-single .s-tabs .s-tabs-header-item {
-  transition: all 0.2s ease;
-}
-.product-single .s-tabs .s-tabs-header-item:hover {
-  color: #414042;
-  color: var(--color-primary);
-}
-.product-single .s-tabs .s-tabs-header-item.active {
-  border-bottom-color: #414042;
-  border-bottom-color: var(--color-primary);
-}
-.product-single .product-price {
-  transition: all 0.3s ease;
-}
-.product-single .product-price .price-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #414042;
-  color: var(--color-primary);
-}
-.product-single .product-price .old-price {
-  opacity: 0.7;
-  -webkit-text-decoration: line-through;
-  text-decoration: line-through;
-}
-.product-single .product-rating .stars {
-  transition: color 0.2s ease;
-}
-.product-single .s-product-card-wishlist-btn {
-  transition: all 0.3s ease;
-}
-.product-single .s-product-card-wishlist-btn:hover {
-  transform: scale(1.1);
-}
-.product-single .s-product-card-wishlist-btn.s-product-card-wishlist-added {
-  color: #ef4444;
-  animation: heartBeat 0.5s ease;
-}
-@keyframes heartBeat {
-  0%, 100% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.2);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
-.product-single .related-products .s-product-card {
-  transition: all 0.3s ease;
-}
-.product-single .related-products .s-product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-@media (max-width: 640px) {
-  .product-single .sticky-product-bar {
-    -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.95);
-  }
-  .product-single .sticky-product-bar.show {
-    animation: slideUpFromBottom 0.3s ease-out;
-  }
-}
-@keyframes slideUpFromBottom {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-.s-product-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.s-product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-.s-product-card .s-product-card-image {
-  overflow: hidden;
-}
-.s-product-card .s-product-card-image img {
-  transition: transform 0.5s ease;
-}
-.s-product-card .s-product-card-image:hover img {
-  transform: scale(1.1);
-}
-.s-product-card .s-product-card-title {
-  transition: color 0.2s ease;
-}
-.s-product-card .s-product-card-title:hover {
-  color: #414042;
-  color: var(--color-primary);
-}
-.s-product-card .s-product-card-actions button {
-  transition: all 0.2s ease;
-}
-.s-product-card .s-product-card-actions button:hover {
-  transform: scale(1.1);
-}
-.products-grid .s-product-card,
-.products-list .s-product-card {
-  animation: fadeInUp 0.5s ease-out;
-  animation-fill-mode: both;
-}
-.products-grid .s-product-card:nth-child(1),
-.products-list .s-product-card:nth-child(1) {
-  animation-delay: 0.1s;
-}
-.products-grid .s-product-card:nth-child(2),
-.products-list .s-product-card:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.products-grid .s-product-card:nth-child(3),
-.products-list .s-product-card:nth-child(3) {
-  animation-delay: 0.3s;
-}
-.products-grid .s-product-card:nth-child(4),
-.products-list .s-product-card:nth-child(4) {
-  animation-delay: 0.4s;
-}
-.products-grid .s-product-card:nth-child(5),
-.products-list .s-product-card:nth-child(5) {
-  animation-delay: 0.5s;
-}
-.products-grid .s-product-card:nth-child(6),
-.products-list .s-product-card:nth-child(6) {
-  animation-delay: 0.6s;
-}
-.products-grid .s-product-card:nth-child(7),
-.products-list .s-product-card:nth-child(7) {
-  animation-delay: 0.7s;
-}
-.products-grid .s-product-card:nth-child(8),
-.products-list .s-product-card:nth-child(8) {
-  animation-delay: 0.8s;
-}
-.products-grid .s-product-card:nth-child(9),
-.products-list .s-product-card:nth-child(9) {
-  animation-delay: 0.9s;
-}
-.products-grid .s-product-card:nth-child(10),
-.products-list .s-product-card:nth-child(10) {
-  animation-delay: 1s;
-}
-.products-grid .s-product-card:nth-child(11),
-.products-list .s-product-card:nth-child(11) {
-  animation-delay: 1.1s;
-}
-.products-grid .s-product-card:nth-child(12),
-.products-list .s-product-card:nth-child(12) {
-  animation-delay: 1.2s;
-}
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-/**
- * Cart Page Enhancements
- * تحسينات صفحة السلة
- */
-.cart-page .cart-item {
-  transition: all 0.3s ease;
-  animation: slideInRight 0.4s ease-out;
-}
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-.cart-page .cart-item.removing {
-  animation: slideOutLeft 0.3s ease-out forwards;
-}
-@keyframes slideOutLeft {
-  to {
-    opacity: 0;
-    transform: translateX(-100%);
-    max-height: 0;
-    margin: 0;
-    padding: 0;
-  }
-}
-.cart-page .cart-item img {
-  transition: transform 0.3s ease;
-}
-.cart-page .cart-item img:hover {
-  transform: scale(1.1);
-}
-.cart-page .cart-item .btn--delete {
-  transition: all 0.2s ease;
-}
-.cart-page .cart-item .btn--delete:hover {
-  transform: scale(1.1);
-  background-color: #ef4444;
-}
-.cart-page .cart-item salla-quantity-input .s-quantity-input-container {
-  transition: all 0.2s ease;
-}
-.cart-page .cart-item salla-quantity-input .s-quantity-input-container:hover {
-  border-color: #414042;
-  border-color: var(--color-primary);
-}
-.cart-page .cart-summary {
-  position: sticky;
-  top: 100px;
-  transition: all 0.3s ease;
-}
-.cart-page .cart-summary button {
-  transition: all 0.3s ease;
-}
-.cart-page .cart-summary button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-.cart-page .cart-summary button:active {
-  transform: translateY(0);
-}
-.cart-page .free-shipping-bar .progress-bar {
-  transition: width 0.5s ease;
-  animation: progressPulse 2s ease-in-out infinite;
-}
-@keyframes progressPulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-.cart-page .no-content-placeholder {
-  animation: fadeIn 0.5s ease-out;
-}
-.cart-page .no-content-placeholder .icon {
-  animation: bounceSubtle 1s ease-in-out infinite;
-}
-.cart-page .coupon-section {
-  transition: all 0.3s ease;
-}
-.cart-page .coupon-section.applied {
-  background-color: rgba(34, 197, 94, 0.1);
-  border-color: #22c55e;
-  animation: successPulse 0.5s ease-out;
-}
-@keyframes successPulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@media (max-width: 768px) {
-  .cart-page .cart-item {
-    padding: 1rem;
-  }
-  .cart-page .cart-item .cart-item-image {
-    width: 80px;
-    height: 80px;
-  }
-  .cart-page .cart-summary {
-    position: relative;
-    top: 0;
-    margin-top: 2rem;
-  }
-}
-.s-cart-summary {
-  transition: all 0.3s ease;
-}
-.s-cart-summary:hover {
-  transform: scale(1.1);
-}
-.s-cart-summary.item-added {
-  animation: cartBounce 0.5s ease-out;
-}
-@keyframes cartBounce {
-  0%, 100% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.2) rotate(-5deg);
-  }
-  50% {
-    transform: scale(1.2) rotate(5deg);
-  }
-  75% {
-    transform: scale(1.1) rotate(-2deg);
-  }
-}
-.s-cart-summary .cart-count {
-  transition: all 0.3s ease;
-}
-.s-cart-summary .cart-count.updated {
-  animation: countPulse 0.3s ease-out;
-}
-@keyframes countPulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.3);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-.s-cart-drawer .cart-drawer-item {
-  transition: all 0.3s ease;
-}
-.s-cart-drawer .cart-drawer-item:hover {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-.s-cart-drawer .cart-drawer-item.removing {
-  opacity: 0;
-  transform: translateX(-100%);
-  max-height: 0;
-  margin: 0;
-  padding: 0;
-}
-.s-cart-drawer .cart-drawer-actions button {
-  transition: all 0.3s ease;
-}
-.s-cart-drawer .cart-drawer-actions button:hover {
-  transform: translateY(-2px);
-}
-.cart-message {
-  animation: slideDown 0.3s ease-out;
-}
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.cart-message.success {
-  background-color: rgba(34, 197, 94, 0.1);
-  border-color: #22c55e;
-  color: #16a34a;
-}
-.cart-message.error {
-  background-color: rgba(239, 68, 68, 0.1);
-  border-color: #ef4444;
-  color: #dc2626;
-}
 .brands-nav{
     display: flex;
     flex-wrap: wrap;
@@ -23907,9 +22968,7 @@ salla-quantity-input[max="1"] .s-quantity-input-button{
     --tw-text-opacity: 1;
     color: rgba(107, 114, 128, 1);
     color: rgba(107, 114, 128, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -23986,9 +23045,7 @@ salla-quantity-input[max="1"] .s-quantity-input-button{
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
     font-size: 0.875rem;
     line-height: 1.25rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -24036,9 +23093,7 @@ salla-quantity-input[max="1"] .s-quantity-input-button{
     --tw-text-opacity: 1;
     color: rgba(255, 255, 255, 1);
     color: rgba(255, 255, 255, var(--tw-text-opacity, 1));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 }
@@ -24540,8 +23595,8 @@ input[type=radio].sr-only:checked ~ div.points-ways__list .way-item__icon span {
   --tw-bg-opacity: 1;
   background-color: rgba(245, 247, 249, 1);
   background-color: rgba(245, 247, 249, var(--tw-bg-opacity, 1));
-  --tw-content: "";
-  content: "";
+  --tw-content: '';
+  content: '';
   content: var(--tw-content);
 }
 input[type=radio].sr-only div.landing-page > header:before {
@@ -24623,9 +23678,7 @@ input[type=radio].sr-only:checked ~ div.landing-page > header:before {
         --tw-shadow-colored: -1px -2px 9px 0 var(--tw-shadow-color);
         box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), -1px -2px 9px 0 rgba(0,0,0,0.05);
         box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
         transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-delay: 500ms;
         transition-duration: 700ms;
@@ -24927,7 +23980,6 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   list-style: none;
   padding: 0;
   margin: 0;
-  /* Submenu Styling */
 }
 .th-cat-list .th-cat-item {
   border-bottom: 1px solid #f9fafb;
@@ -24964,6 +24016,9 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 }
 .th-cat-list .th-cat-item .th-toggle-sub.is-expanded {
   transform: rotate(-90deg);
+}
+.th-cat-list {
+  /* Submenu Styling */
 }
 .th-cat-list .th-cat-submenu {
   background-color: #fcfcfc;
@@ -25244,8 +24299,7 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.6);
-  -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -25368,9 +24422,7 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
@@ -25458,6 +24510,9 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     }
     .sm\:grid{
         display: grid;
+    }
+    .sm\:hidden{
+        display: none;
     }
     .sm\:h-auto{
         height: auto;
@@ -25899,6 +24954,9 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 .ltr\:mr-auto:where([dir="ltr"], [dir="ltr"] *){
     margin-right: auto;
 }
+.ltr\:mr-2\.5:where([dir="ltr"], [dir="ltr"] *){
+    margin-right: 0.625rem;
+}
 .ltr\:rounded-l-none:where([dir="ltr"], [dir="ltr"] *){
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
@@ -26019,6 +25077,16 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 }
 .rtl\:mr-3:where([dir="rtl"], [dir="rtl"] *){
     margin-right: 0.75rem;
+}
+.rtl\:ml-2\.5:where([dir="rtl"], [dir="rtl"] *){
+    margin-left: 0.625rem;
+}
+.rtl\:ml-\[unset\]:where([dir="rtl"], [dir="rtl"] *){
+    margin-left: 0;
+    margin-left: initial;
+}
+.rtl\:mr-4:where([dir="rtl"], [dir="rtl"] *){
+    margin-right: 1rem;
 }
 .rtl\:-scale-x-100:where([dir="rtl"], [dir="rtl"] *){
     --tw-scale-x: -1;

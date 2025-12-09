@@ -1,19 +1,43 @@
-<ul class="flex flex-col space-y-4">
-                {# هنا نستخدم الكود الذي استخرجناه من صورتك #}
-                {% for menu in menus %}
-                    <li>
-                        <a href="{{ menu.url }}" class="block text-gray-800 hover:text-primary {{ menu.link_attrs }}">
-                            {{ menu.title }}
-                        </a>
-                        
-                        {# التحقق إذا كان هناك عناصر فرعية #}
-                        {% if menu.has_children %}
-                            <ul class="mr-4 mt-2 space-y-2 text-sm text-gray-600">
-                                {% for child in menu.children %}
-                                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </li>
+{# MOBILE #}
+    <li class="lg:hidden text-sm font-bold" {{ menu.attrs }}>
+        {% if not menu.has_children %}
+            <a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="text-gray-500">{{ menu.title }}</a>
+        {% else %}
+            <span>{{ menu.title }}</span>
+            <ul>
+                <li class="text-sm font-bold"><a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="text-gray-500">{{ menu.title }}</a></li>
+                {% for submenu in menu.children %}
+                    {% include _self with {menu:submenu} %}
                 {% endfor %}
             </ul>
+        {% endif %}
+    </li>
+
+{# DESKTOP #}
+    <li class="!hidden lg:!block {{ is_root_menu?'root-level lg:!inline-block':'relative' }}
+        {{ menu.products?' mega-menu': '' }}
+        {{ menu.has_children?' has-children': '' }}"
+        {{ menu.attrs|raw }}>
+        <a {{ menu.link_attrs|raw }} href="{{ menu.url }}">
+            <span>{{ menu.title }}</span>
+        </a>
+        {% if menu.has_children %}
+            <div class="sub-menu {{ menu.products?'w-full left-0 flex': 'w-56' }}">
+                <ul class="{{ menu.products?'w-56 shrink-0 m-8 rtl:ml-0 ltr:mr-0': '' }}">
+                    {% for submenu in menu.children %}
+                        {% include _self with {menu:submenu, is_root_menu:false} %}
+                    {% endfor %}
+                </ul>
+                {% if menu.products %}
+                    <div class="grow p-8">
+                        <div class="grid gap-4 grid-cols-4">
+                            {% for product in menu.products|slice(0, 4) %}
+                                <salla-product-card shadow-on-hover product="{{product}}"></salla-product-card>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        {% endif %}
+    </li>

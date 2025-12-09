@@ -1,0 +1,130 @@
+{#
+| Variable         | Type    | Description                     |
+|------------------|---------|---------------------------------|
+| cart             | object  |                                 |
+| cart.items_count | int     |                                 |
+| cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
+#}
+<header class="tharaa-header store-header">
+    {# 1. Top Bar (Desktop Only) #}
+    <div class="top-bar hidden lg:block bg-gray-50 border-b border-gray-100 text-xs py-2">
+        <div class="container flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <!-- Language & Currency -->
+                {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                    <button type="button" onclick="salla.event.dispatch('localization::open')" class="flex items-center gap-2 hover:text-primary transition-colors">
+                        <span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
+                        <span>{{ currency.symbol }}</span>
+                        <i class="sicon-keyboard-arrow-down text-[10px]"></i>
+                    </button>
+                    <salla-localization-modal></salla-localization-modal>
+                {% endif %}
+                
+                <!-- Important Links (Top) -->
+                {% if theme.settings.get('important_links') %}
+                    <salla-menu source="footer" class="top-menu-links"></salla-menu>
+                {% endif %}
+            </div>
+
+            <div class="flex items-center gap-4">
+                <salla-contacts is-header></salla-contacts>
+            </div>
+        </div>
+    </div>
+
+    {# 2. Main Header (Logo + Search + Actions) #}
+    <div class="main-header py-4 bg-white relative z-20">
+        <div class="container flex items-center justify-between gap-4 lg:gap-8">
+            
+            <!-- Mobile Menu Toggle -->
+            <a class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu" aria-label="Open-menu">
+                <i class="sicon-menu text-2xl text-gray-700"></i>
+            </a>
+
+            <!-- Logo -->
+            <a class="navbar-brand shrink-0" href="{{ store.url }}">
+                <img fetchpriority="high" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo" class="max-h-10 lg:max-h-12">
+                <h1 class="sr-only">{{ store.name }}</h1>
+            </a>
+
+            <!-- Search Bar (Central & Prominent) -->
+            <div class="header-search flex-1 max-w-2xl hidden lg:block">
+                <salla-search inline height="44" class="w-full"></salla-search>
+            </div>
+
+            <!-- User Actions -->
+            <div class="header-actions flex items-center gap-3 lg:gap-6 shrink-0">
+                <!-- Mobile Search Trigger -->
+                <button class="lg:hidden btn-icon" onclick="salla.event.dispatch('search::open')">
+                    <i class="sicon-search text-xl"></i>
+                </button>
+
+                <!-- User Account -->
+                <div class="hidden lg:block">
+                    {% if user.type=='user' %}
+                        <salla-user-menu show-header></salla-user-menu>
+                    {% else %}
+                        <button class="flex items-center gap-2 hover:text-primary transition-colors text-start" onclick="salla.event.dispatch('login::open')">
+                            <i class="sicon-user text-2xl"></i>
+                            <div class="flex flex-col text-xs leading-none">
+                                <span class="text-gray-400 mb-1">{{ trans('blocks.header.welcome') }}</span>
+                                <span class="font-bold">{{ trans('blocks.header.sign_in') }}</span>
+                            </div>
+                        </button>
+                    {% endif %}
+                </div>
+
+                <!-- Cart -->
+                <salla-cart-summary class="flex items-center gap-2 hover:text-primary transition-colors">
+                    <div class="relative">
+                        <i slot="icon" class="sicon-shopping-bag text-2xl"></i>
+                        <span class="badge-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">{{ cart.items_count }}</span>
+                    </div>
+                    <div class="hidden lg:flex flex-col text-xs leading-none">
+                        <span class="text-gray-400 mb-1">{{ trans('blocks.header.cart') }}</span>
+                        <span class="font-bold">{{ cart.total }}</span>
+                    </div>
+                </salla-cart-summary>
+            </div>
+        </div>
+    </div>
+
+    {# 3. Navigation Bar (Categories + Menu) #}
+    <div class="nav-bar bg-white border-t border-b border-gray-100 hidden lg:block">
+        <div class="container flex items-center">
+            <!-- All Categories Button -->
+            <div class="categories-trigger relative group h-12 flex items-center px-4 bg-gray-50 border-r border-l border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors w-64 shrink-0">
+                <i class="sicon-layout-grid text-lg text-primary"></i>
+                <span class="mx-3 font-bold text-sm">{{ trans('blocks.header.categories') }}</span>
+                <i class="sicon-keyboard-arrow-down ms-auto text-gray-400 group-hover:rotate-180 transition-transform"></i>
+                
+                <!-- Dropdown Placeholder (To be implemented with Mega Menu) -->
+                <div class="absolute top-full right-0 w-full bg-white shadow-lg border border-gray-100 hidden group-hover:block z-50">
+                    <!-- Categories List will go here -->
+                </div>
+            </div>
+
+            <!-- Main Menu -->
+            <div class="flex-1 px-4">
+                <custom-main-menu></custom-main-menu>
+            </div>
+               {% for menu in menus %}
+                <li>
+                    <a href="{{ menu.url }}" class="block p-2 hover:bg-gray-100 {{ menu.link_attrs }}">
+                        {{ menu.title }}
+                    </a>
+                    
+                    {# إذا كانت القائمة تحتوي على عناصر فرعية #}
+                    {% if menu.has_children %}
+                        <ul class="mr-4 mt-1 space-y-1">
+                            {% for child in menu.children %}
+                                <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+        </div>
+    </div>
+</header>
