@@ -1,214 +1,109 @@
-/**
- * Enhanced Animations
- * تحسينات الأنيميشن والتأثيرات البصرية
- */
-
-// Fade in animation
-@keyframes fadeIn {
+@keyframes fadeInDown {
   from {
-    opacity: 0;
+    transform: translate3d(0, -15px, 0)
   }
+
   to {
-    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    opacity: 1
   }
 }
 
-.fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-// Slide in from bottom
-@keyframes slideInUp {
+@-webkit-keyframes fadeInDown {
   from {
-    transform: translateY(20px);
-    opacity: 0;
+    transform: translate3d(0, -15px, 0)
   }
+
   to {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    opacity: 1
   }
 }
 
-.slide-in-up {
-  animation: slideInUp 0.4s ease-out;
+.animated {
+  animation-duration: 400ms;
+  animation-fill-mode: both;
 }
 
-// Slide in from right (RTL) or left (LTR)
-@keyframes slideInRight {
-  from {
-    transform: translateX(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.animatedfadeInDown {
+  opacity: 0
 }
 
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.fadeInDown {
+  opacity: 0;
+  animation-name: fadeInDown;
+  -webkit-animation-name: fadeInDown;
 }
 
-[dir="rtl"] .slide-in {
-  animation: slideInRight 0.4s ease-out;
-}
-
-[dir="ltr"] .slide-in {
-  animation: slideInLeft 0.4s ease-out;
-}
-
-// Scale in animation
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.scale-in {
-  animation: scaleIn 0.3s ease-out;
-}
-
-// Bounce animation (subtle)
-@keyframes bounceSubtle {
-  0%, 100% {
-    transform: translateY(0);
+// toRightFromLeft
+@keyframes toRightFromLeft {
+  49% {
+    transform: translate(100%);
   }
   50% {
-    transform: translateY(-5px);
+    opacity: 0;
+    transform: translate(-100%);
   }
-}
-
-.bounce-subtle {
-  animation: bounceSubtle 0.6s ease-in-out;
-}
-
-// Shake animation for errors
-@keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  10%, 30%, 50%, 70%, 90% {
-    transform: translateX(-5px);
-  }
-  20%, 40%, 60%, 80% {
-    transform: translateX(5px);
-  }
-}
-
-.shake {
-  animation: shake 0.5s ease-in-out;
-}
-
-// Loading spinner animation
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.spin {
-  animation: spin 1s linear infinite;
-}
-
-// Pulse animation (for loading states)
-@keyframes pulse {
-  0%, 100% {
+  51% {
     opacity: 1;
   }
+}
+
+// toRightFromLeft
+@keyframes toTopFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1 !important;
+    transform: translateX(0);
+  }
+}
+
+@keyframes delayKeyframe {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
   50% {
-    opacity: 0.5;
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
   }
 }
 
-.pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-// Hover lift effect
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-}
-
-// Smooth transition for all interactive elements
-a,
-button,
-input,
-select,
-textarea {
-  transition: all 0.2s ease;
-}
-
-// Stagger animation for lists
-.stagger-item {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-out forwards;
-
-  @for $i from 1 through 10 {
-    &:nth-child(#{$i}) {
-      animation-delay: #{$i * 0.1}s;
-    }
-  }
-}
-
-// Page transition
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.page-transition-enter-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-// Card hover effect
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-                0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  }
-}
-
-// Button press effect
-.btn-press {
-  transition: transform 0.1s ease;
-
-  &:active {
-    transform: scale(0.95);
-  }
-}
-
-// Respect user's motion preferences
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+.rubberBand {
+  animation-name: rubberBand;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
 }

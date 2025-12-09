@@ -3,8 +3,6 @@ import Swal from 'sweetalert2';
 import Anime from './partials/anime';
 import initTootTip from './partials/tooltip';
 import AppHelpers from "./app-helpers";
-// تم إزالة import EnhancedLazyLoad لأنه قد يتعارض مع نظام lazy loading الخاص بسلة
-// يمكن تفعيله لاحقاً إذا لزم الأمر
 
 class App extends AppHelpers {
   constructor() {
@@ -27,8 +25,6 @@ class App extends AppHelpers {
     this.changeMenuDirection()
     initTootTip();
     this.loadModalImgOnclick();
-    this.initiateAccessibility();
-    this.initiateSmoothScroll();
 
     salla.comment.event.onAdded(() => window.location.reload());
 
@@ -301,110 +297,6 @@ class App extends AppHelpers {
 
     salla.cart.event.onItemAdded((response, prodId) => {
       app.element('salla-cart-summary').animateToCart(app.element(`#product-${prodId} img`));
-    });
-  }
-
-  /**
-   * تحسينات الوصولية (Accessibility)
-   * إضافة ARIA labels وتحسين التنقل بالكيبورد
-   */
-  initiateAccessibility() {
-    // إضافة ARIA labels للأزرار بدون نص (تجنب الأزرار التي لديها aria-label بالفعل)
-    document.querySelectorAll('button:not([aria-label])').forEach(btn => {
-      // التحقق من وجود span أو img (دون استخدام :has() لدعم المتصفحات القديمة)
-      const hasSpan = btn.querySelector('span');
-      const hasImg = btn.querySelector('img');
-      if (hasSpan || hasImg) return;
-      
-      const icon = btn.querySelector('i, svg');
-      if (icon && !btn.textContent.trim()) {
-        const iconClass = icon.className || '';
-        // محاولة استخراج وصف من class الأيقونة
-        try {
-          if (iconClass.includes('search')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.search') || 'بحث');
-          else if (iconClass.includes('cart')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.cart') || 'السلة');
-          else if (iconClass.includes('menu')) btn.setAttribute('aria-label', salla.lang.get('blocks.header.main_menu') || 'القائمة');
-          else if (iconClass.includes('close')) btn.setAttribute('aria-label', 'إغلاق');
-          else if (iconClass.includes('heart') || iconClass.includes('wishlist')) btn.setAttribute('aria-label', 'إضافة للمفضلة');
-        } catch (e) {
-          // في حالة عدم توفر salla.lang، تجاهل الخطأ
-          console.warn('Accessibility: Could not set aria-label', e);
-        }
-      }
-    });
-
-    // تحسين التنقل بالكيبورد في القوائم
-    document.querySelectorAll('.dropdown__menu, .sub-menu').forEach(menu => {
-      const items = menu.querySelectorAll('a, button');
-      items.forEach((item, index) => {
-        item.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            const next = items[index + 1] || items[0];
-            next?.focus();
-          } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            const prev = items[index - 1] || items[items.length - 1];
-            prev?.focus();
-          } else if (e.key === 'Escape') {
-            menu.closest('.dropdown')?.classList.remove('is-opened');
-            menu.previousElementSibling?.focus();
-          }
-        });
-      });
-    });
-
-    // إضافة skip to content link
-    if (!document.querySelector('.skip-to-content')) {
-      const skipLink = document.createElement('a');
-      skipLink.href = '#main-content';
-      skipLink.className = 'skip-to-content';
-      skipLink.textContent = 'تخطي إلى المحتوى الرئيسي';
-      skipLink.style.cssText = 'position: absolute; left: -9999px; z-index: 9999; padding: 1em; background: var(--color-primary); color: white; text-decoration: none;';
-      skipLink.addEventListener('focus', function() {
-        this.style.left = '50%';
-        this.style.transform = 'translateX(-50%)';
-        this.style.top = '1em';
-      });
-      skipLink.addEventListener('blur', function() {
-        this.style.left = '-9999px';
-      });
-      document.body.insertBefore(skipLink, document.body.firstChild);
-    }
-  }
-
-  /**
-   * تحسين التمرير السلس
-   */
-  initiateSmoothScroll() {
-    // تحسين smooth scroll للروابط الداخلية (تجنب الروابط الخاصة بسلة)
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      // تجنب الروابط الخاصة بسلة (مثل modals, tabs, etc)
-      if (anchor.hasAttribute('data-modal-trigger') || 
-          anchor.hasAttribute('data-tab-trigger') ||
-          anchor.closest('salla-modal') ||
-          anchor.closest('.s-tabs')) {
-        return;
-      }
-      
-      anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href === '#' || href === '') return;
-        
-        const target = document.querySelector(href);
-        if (target && !target.closest('salla-modal')) {
-          // التحقق من أن الهدف ليس modal أو component خاص بسلة
-          e.preventDefault();
-          const headerOffset = 80;
-          const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
     });
   }
 }

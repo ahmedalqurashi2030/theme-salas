@@ -1,0 +1,1 @@
+C:\Program Files\Microsoft\Edge\Application\msedge.exe
