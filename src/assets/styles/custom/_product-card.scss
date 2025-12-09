@@ -1,234 +1,203 @@
 // 📦 TH Framework - Product Section & Card
 // =========================================
 
-// تعريف متغيرات سريعة (تأكد أنها موجودة في ملف variables الخاص بك)
-$th-card-bg: #ffffff;
-$th-card-radius: 12px;
-$th-primary: #FF5722; // لونك الرئيسي
-$th-text-dark: #1f2937;
-$th-text-gray: #6b7280;
-$th-shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-$th-shadow-hover: 0 12px 24px rgba(0,0,0,0.1);
-$th-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
 .th-section {
-  background-color: #f9fafb; // خلفية هادئة للقسم كامل
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+    display: block; // Web component display
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 
-  // -----------------------------------------
-  // 1. تحسين التبويبات (Tabs)
-  // -----------------------------------------
-  .tabs {
-    border-bottom: none;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 2rem;
-
-    .tab-trigger {
-      // إلغاء ستايل سلة الافتراضي
-      background: transparent;
-      border: 1px solid #e5e7eb;
-      border-radius: 50px;
-      padding: 8px 24px;
-      font-weight: 600;
-      color: $th-text-gray;
-      transition: $th-transition;
-
-      // حالة التفعيل
-      &.is-active {
-        background-color: $th-text-dark;
-        color: #fff;
-        border-color: $th-text-dark;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      }
-
-      &:hover:not(.is-active) {
-        border-color: $th-text-dark;
-        color: $th-text-dark;
-      }
-    }
-  }
-
-  // -----------------------------------------
-  // 2. كارت المنتج (The Product Card)
-  // -----------------------------------------
-  .s-product-card-entry {
-    background: $th-card-bg;
-    border-radius: $th-card-radius;
-    border: 1px solid transparent; // تجهيز للحدود
-    box-shadow: $th-shadow-sm;
-    overflow: hidden;
-    transition: $th-transition;
-    position: relative;
-    height: 100%; // لضمان تساوي الطول
-    display: flex;
-    flex-direction: column;
-
-    // تأثير التحويم (Hover Effect)
-    &:hover {
-      transform: translateY(-6px); // رفع الكارت للأعلى
-      box-shadow: $th-shadow-hover;
-      border-color: rgba($th-primary, 0.1);
-
-      // إظهار زر الإضافة للسلة بشكل مميز عند الهوفر
-      .s-product-card-content-footer {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    // -----------------------------------------
-    // 3. صورة المنتج
-    // -----------------------------------------
-    .s-product-card-image {
-      height: 260px; // توحيد ارتفاع الصور
-      position: relative;
-      overflow: hidden;
-      background-color: #f3f4f6;
-
-      img {
-        width: 100%;
+    .s-product-card-entry {
+        background: #fff;
+        border: 1px solid #f2f2f2; // Very subtle border
+        border-radius: 12px; // Modern rounded corners
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        overflow: hidden;
         height: 100%;
-        object-fit: cover; // ضمان عدم تمطط الصورة
-        transition: transform 0.5s ease;
-      }
+        position: relative;
+        padding-bottom: 15px; // Extra space at bottom
 
-      // تكبير الصورة قليلاً عند الهوفر
-      &:hover img {
-        transform: scale(1.05);
-      }
+        &:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); // Floating effect
+            transform: translateY(-4px);
+            border-color: #fff;
+        }
+    }
 
-      // زر المفضلة (القلب)
-      .s-product-card-wishlist-btn {
+    // -- Image Area --
+    .s-product-card-image {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px 12px 0 0;
+        background: #fff; // White background
+        height: 180px; // Fixed height anchor
+
+        @media (min-width: 1024px) {
+            height: 220px;
+        }
+
+        // Taller on desktop
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; // Contain ensures full product visibility 
+            transition: transform 0.5s ease;
+            padding: 10px; // Padding for 'contain' look
+        }
+
+        // Zoom on hover
+        &:hover img {
+            transform: scale(1.05);
+        }
+    }
+
+    // -- Badges (Sale/Out of Stock) --
+    .s-product-card-promotion-title,
+    .s-product-card-out-badge {
+        background-color: $ali-red;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 4px;
         position: absolute;
         top: 10px;
-        left: 10px; // اجعلها left لتدعم RTL تلقائياً عبر المتصفح أو استخدم right حسب التصميم
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        opacity: 0; // مخفي افتراضياً
-        transform: translateX(-10px);
-        transition: $th-transition;
-
-        button {
-          color: $th-text-dark;
-        }
-
-        &:hover button {
-          color: red;
-        }
-      }
+        left: 10px; // LTR
+        z-index: 5;
     }
 
-    // إظهار زر المفضلة عند هوفر الكارت
-    &:hover .s-product-card-wishlist-btn {
-      opacity: 1;
-      transform: translateX(0);
+    [dir="rtl"] .s-product-card-promotion-title {
+        right: 10px;
+        left: auto;
     }
 
-    // -----------------------------------------
-    // 4. محتوى الكارت (النصوص)
-    // -----------------------------------------
+    // -- Content Area --
     .s-product-card-content {
-      padding: 16px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+        padding: 5px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
 
-      // العنوان
-      &-title a {
-        font-size: 15px;
-        font-weight: 700;
-        color: $th-text-dark;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; // سطرين فقط
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        margin-bottom: 8px;
-        transition: color 0.2s;
+    // Title
+    .s-product-card-content-title {
+        margin: 0;
+        min-height: 2.8em; // Reserve space for 2 lines
 
-        &:hover {
-          color: $th-primary;
+        a {
+            font-size: 13px;
+            color: $ali-text-dark;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; // Limit to 2 lines like AliExpress
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-weight: 400; // Regular weight
+            text-decoration: none;
+
+            &:hover {
+                color: $ali-red;
+            }
         }
-      }
+    }
 
-      // السعر
-      .s-product-card-sale-price {
+    // Subtitle (if exists)
+    .s-product-card-content-subtitle {
+        font-size: 11px;
+        color: #999;
+        display: none; // Hide subtitle for cleaner look
+    }
+
+    // Price Section (Crucial for AliExpress look)
+    .s-product-card-content-sub {
+        margin-top: 4px;
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    // Current Price
+    .s-product-card-price,
+    .s-product-card-sale-price h4,
+    .s-product-card-starting-price h4 {
+        color: $ali-red !important;
+        font-size: 18px !important;
+        font-weight: 800 !important;
+        margin: 0;
+        line-height: 1;
+        font-family: 'Inter', sans-serif; // Number font
+    }
+
+    // Old Price (Strikethrough)
+    .s-product-card-sale-price span {
+        color: #999 !important;
+        font-size: 12px !important;
+        text-decoration: line-through;
+        font-weight: 400;
+    }
+
+    // Rating / Sold
+    .s-product-card-rating {
+        font-size: 11px;
+        color: #777;
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-top: auto; // دفع السعر للأسفل
+        gap: 3px;
 
-        h4 { // السعر الحالي
-          font-size: 18px;
-          font-weight: 800;
-          color: $th-primary;
-          margin: 0;
+        i {
+            color: #FFAA00;
+            font-size: 10px;
         }
-
-        span { // السعر القديم
-          font-size: 13px;
-          color: $th-text-gray;
-          text-decoration: line-through;
-          opacity: 0.7;
-        }
-      }
     }
 
-    // -----------------------------------------
-    // 5. زر الإضافة للسلة (الفوتر)
-    // -----------------------------------------
+    // -- Footer Actions (Compact Add to Cart) --
     .s-product-card-content-footer {
-      padding: 0 16px 16px;
-      margin-top: 0;
-      
-      // خيار: إما أن يكون ظاهراً دائماً أو يظهر عند الهوفر
-      // هنا سنجعله ظاهراً لكن بتصميم نظيف
-      
-      salla-add-product-button {
-        width: 100%;
-      }
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-      // تخصيص زر سلة الداخلي
-      .s-button-element {
-        width: 100%;
-        border-radius: 8px;
-        background-color: $th-text-dark; // لون داكن فخم
-        color: #fff;
-        border: none;
-        height: 42px;
+        // Add Button Styling
+        salla-add-product-button {
+            flex: 1;
+        }
+
+        // Wishlist Button - Make it small/subtle
+        .s-product-card-wishlist-btn {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            color: #ccc;
+            width: 30px;
+            height: 30px;
+
+            &:hover {
+                color: $ali-red;
+                background: #fff1f1 !important;
+            }
+
+            &.s-product-card-wishlist-added {
+                color: $ali-red;
+            }
+        }
+    }
+
+    // Target inner button for Add To Cart
+    salla-add-product-button::part(button) {
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid $ali-red;
+        color: $ali-red;
+        font-size: 12px;
         font-weight: 600;
-        font-size: 14px;
-        transition: $th-transition;
+        padding: 4px 0;
+        height: 32px;
+        width: 100%;
+        transition: 0.2s;
 
         &:hover {
-          background-color: $th-primary; // يتحول للون الرئيسي عند الهوفر
-          transform: translateY(-2px);
+            background-color: $ali-red;
+            color: #fff;
         }
-      }
     }
-  }
-}
-
-// -----------------------------------------
-// RTL Fixes (إصلاحات الاتجاه العربي)
-// -----------------------------------------
-[dir="rtl"] .th-product-section {
-  .s-product-card-wishlist-btn {
-    left: auto;
-    right: 10px; // عكس مكان القلب
-    transform: translateX(10px);
-  }
-  
-  .s-product-card-entry:hover .s-product-card-wishlist-btn {
-    transform: translateX(0);
-  }
 }
