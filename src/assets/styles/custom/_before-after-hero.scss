@@ -1,116 +1,209 @@
 .th-before-after-hero {
   padding: 60px 0;
-  border-radius: 12px;
-  overflow: hidden;
   position: relative;
+}
 
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+.th-before-after-hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
 
-    @media (min-width: 1024px) {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-
-  &__content {
-    flex: 1;
-    max-width: 480px;
-
-    @media (max-width: 1023px) {
-      text-align: center;
-      margin: 0 auto;
-    }
-  }
-
-  &__eyebrow {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-primary, #008080);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  &__title {
-    font-size: 30px;
-    font-weight: 800;
-    margin-bottom: 20px;
-    color: #222;
-    line-height: 1.3;
-  }
-
-  &__desc {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 25px;
-  }
-
-  &__btn {
-    display: inline-block;
-    padding: 12px 28px;
-    border-radius: 8px;
-    background-color: var(--color-primary, #008080);
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-    transition: 0.3s ease;
-    &:hover {
-      background-color: darken(#008080, 10%);
-    }
-  }
-
-  &__images {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    @media (min-width: 1024px) {
-      flex-direction: row;
-      justify-content: flex-end;
-      gap: 30px;
-    }
-  }
-
-  &__image-pair {
-    display: flex;
+@media (min-width: 1024px) {
+  .th-before-after-hero__inner {
     flex-direction: row;
-    gap: 20px;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
   }
+}
 
-  &__image {
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: inherit;
-    }
-  }
+.th-before-after-hero__content {
+  flex: 1;
+  max-width: 480px;
+}
 
-  &__label {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0,0,0,0.6);
-    color: #fff;
-    font-size: 13px;
-    padding: 5px 12px;
-    border-radius: 6px;
-    &--before {
-      background-color: #444;
-    }
-    &--after {
-      background-color: #0a7c6f;
-    }
+@media (max-width: 1023px) {
+  .th-before-after-hero__content {
+    text-align: center;
+    margin: 0 auto;
   }
+}
+
+.th-before-after-hero__eyebrow {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary, #008080);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.th-before-after-hero__title {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: #222;
+  line-height: 1.3;
+}
+
+.th-before-after-hero__desc {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.th-before-after-hero__btn {
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* الجزء البصري (السلايدر + المنتج) */
+.th-before-after-hero__visual {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* السلايدر */
+.th-before-after-hero__compare {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 360px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 767px) {
+  .th-before-after-hero__compare {
+    max-width: 100%;
+    height: 260px;
+  }
+}
+
+.th-before-after-hero__base,
+.th-before-after-hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.th-before-after-hero__base {
+  z-index: 1;
+}
+
+.th-before-after-hero__overlay {
+  z-index: 2;
+  width: 50%;
+  overflow: hidden;
+}
+
+.th-before-after-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* المقبض */
+.th-before-after-hero__handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 0;
+  height: 100%;
+  border: none;
+  background: transparent;
+  cursor: ew-resize;
+  padding: 0;
+}
+
+.th-before-after-hero__handle-circle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+.th-before-after-hero__handle-arrow {
+  font-size: 16px;
+  line-height: 1;
+  color: #111827;
+}
+
+.th-before-after-hero__handle-arrow--left {
+  margin-inline-end: 4px;
+}
+
+.th-before-after-hero__handle-arrow--right {
+  margin-inline-start: 4px;
+}
+
+/* البادجات (قبل / بعد) */
+.th-before-after-hero__badge {
+  position: absolute;
+  top: 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  z-index: 4;
+}
+
+.th-before-after-hero__badge--before {
+  inset-inline-start: 16px;
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.th-before-after-hero__badge--after {
+  inset-inline-end: 16px;
+  background: rgba(5, 150, 105, 0.9);
+}
+
+/* صورة المنتج العائمة */
+.th-before-after-hero__products {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  width: 180px;
+  max-width: 45%;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .th-before-after-hero__products {
+    width: 130px;
+    transform: translate(-50%, -60%);
+  }
+}
+
+.th-before-after-hero__products-bg {
+  position: absolute;
+  inset: -30%;
+  border-radius: 999px;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.9), transparent 70%);
+  filter: blur(4px);
+}
+
+.th-before-after-hero__products-img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
 }

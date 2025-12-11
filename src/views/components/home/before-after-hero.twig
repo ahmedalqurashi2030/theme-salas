@@ -3,75 +3,399 @@
   Path: home.before-after-hero
 ================================================ #}
 
-{% set bg_color    = component.bg_color    ?? '#ffffff' %}
-{% set title       = component.title       ?? '' %}
-{% set eyebrow     = component.subtitle    ?? '' %}
-{% set description = component.description ?? '' %}
-{% set button_text = component.button_text ?? '' %}
-{% set button_link = component.button_link ?? '' %}
+{% set bg_color       = component.bg_color       ?? '#ffffff' %}
+{% set title          = component.title          ?? '' %}
+{% set eyebrow        = component.subtitle       ?? '' %}
+{% set description    = component.description    ?? '' %}
+{% set button_text    = component.button_text    ?? '' %}
+{% set button_link    = component.button_link    ?? '' %}
 
-{% set before_label = component.before_label ?? '' %}
-{% set before_image = component.before_image ?? '' %}
-{% set after_label  = component.after_label  ?? '' %}
-{% set after_image  = component.after_image  ?? '' %}
+{% set before_label   = component.before_label   ?? '' %}
+{% set before_image   = component.before_image   ?? '' %}
+{% set after_label    = component.after_label    ?? '' %}
+{% set after_image    = component.after_image    ?? '' %}
+{% set product_image  = component.image          ?? '' %}
 
-<section class="th-before-after-hero s-block container"
+<section class="th-before-after-hero s-block"
          style="background-color: {{ bg_color }};">
-    <div class="th-before-after-hero__inner">
-        <div class="th-before-after-hero__content">
-            {% if eyebrow %}
-                <span class="th-before-after-hero__eyebrow">
-                    {{ eyebrow }}
-                </span>
-            {% endif %}
+    <div class="container">
+        <div class="th-before-after-hero__inner">
+            {# الجزء النصي (الهيرو) #}
+            <div class="th-before-after-hero__content">
+                {% if eyebrow %}
+                    <span class="th-before-after-hero__eyebrow">
+                        {{ eyebrow }}
+                    </span>
+                {% endif %}
 
-            {% if title %}
-                <h2 class="th-before-after-hero__title">
-                    {{ title }}
-                </h2>
-            {% endif %}
+                {% if title %}
+                    <h2 class="th-before-after-hero__title">
+                        {{ title }}
+                    </h2>
+                {% endif %}
 
-            {% if description %}
-                <p class="th-before-after-hero__desc">
-                    {{ description|raw }}
-                </p>
-            {% endif %}
+                {% if description %}
+                    <p class="th-before-after-hero__desc">
+                        {{ description|raw }}
+                    </p>
+                {% endif %}
 
-            {% if button_text and button_link %}
-                <a href="{{ button_link }}"
-                   class="th-before-after-hero__btn s-button s-button--primary">
-                    {{ button_text }}
-                </a>
-            {% endif %}
-        </div>
+                {% if button_text and button_link %}
+                    <a href="{{ button_link }}"
+                       class="th-before-after-hero__btn s-button s-button--primary">
+                        {{ button_text }}
+                    </a>
+                {% endif %}
+            </div>
 
-        {# صورة قبل / بعد (واحدة فقط) #}
-        {% if before_image or after_image %}
-            <div class="th-before-after-hero__images">
-                {% if before_image %}
-                    <div class="th-before-after-hero__image th-before-after-hero__image--before">
-                        <img src="{{ before_image }}"
-                             alt="{{ before_label|default('قبل') }}">
+            {# الجزء البصري: سلايدر قبل/بعد + صورة المنتج العائمة #}
+            {% if before_image or after_image %}
+                <div class="th-before-after-hero__visual">
+                    {# 2. صورة المنتجات العائمة في الوسط – اختيارية #}
+                    {% if product_image %}
+                        <div class="th-before-after-hero__products">
+                            <div class="th-before-after-hero__products-bg"></div>
+                            <img src="{{ product_image }}"
+                                 alt=""
+                                 loading="lazy"
+                                 class="th-before-after-hero__products-img">
+                        </div>
+                    {% endif %}
+
+                    <div class="th-before-after-hero__compare js-ba-slider">
+                        {# طبقة الأساس = بعد #}
+                        <div class="th-before-after-hero__base">
+                            <img src="{{ after_image ?: before_image }}"
+                                 alt="{{ after_label|default('بعد') }}"
+                                 class="th-before-after-hero__img">
+                        </div>
+
+                        {# الطبقة المتحركة = قبل #}
+                        <div class="th-before-after-hero__overlay">
+                            <img src="{{ before_image ?: after_image }}"
+                                 alt="{{ before_label|default('قبل') }}"
+                                 class="th-before-after-hero__img">
+                        </div>
+
+                        {# المقبض #}
+                        <button type="button"
+                                class="th-before-after-hero__handle"
+                                aria-label="تحريك المقارنة">
+                            <span class="th-before-after-hero__handle-circle">
+                                <span class="th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--left">
+                                    ‹
+                                </span>
+                                <span class="th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--right">
+                                    ›
+                                </span>
+                            </span>
+                        </button>
+
+                        {# تسميات قبل / بعد (اختيارية) #}
                         {% if before_label %}
-                            <span class="th-before-after-hero__label th-before-after-hero__label--before">
+                            <span class="th-before-after-hero__badge th-before-after-hero__badge--before">
                                 {{ before_label }}
                             </span>
                         {% endif %}
-                    </div>
-                {% endif %}
 
-                {% if after_image %}
-                    <div class="th-before-after-hero__image th-before-after-hero__image--after">
-                        <img src="{{ after_image }}"
-                             alt="{{ after_label|default('بعد') }}">
                         {% if after_label %}
-                            <span class="th-before-after-hero__label th-before-after-hero__label--after">
+                            <span class="th-before-after-hero__badge th-before-after-hero__badge--after">
                                 {{ after_label }}
                             </span>
                         {% endif %}
                     </div>
-                {% endif %}
-            </div>
-        {% endif %}
+                </div>
+            {% endif %}
+        </div>
     </div>
 </section>
+
+{# =========================
+  JavaScript – Before/After
+  انقل هذا الجزء لملف JS عام مثل app.js أو اتركه هنا مؤقتًا للاختبار
+========================= #}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var sliders = document.querySelectorAll('.js-ba-slider');
+    if (!sliders.length) return;
+
+    sliders.forEach(function (slider) {
+        var overlay = slider.querySelector('.th-before-after-hero__overlay');
+        var handle  = slider.querySelector('.th-before-after-hero__handle');
+
+        if (!overlay || !handle) return;
+
+        var isDragging = false;
+
+        function moveTo(clientX) {
+            var rect = slider.getBoundingClientRect();
+            var pos = ((clientX - rect.left) / rect.width) * 100;
+
+            if (pos < 0) pos = 0;
+            if (pos > 100) pos = 100;
+
+            overlay.style.width = pos + '%';
+            handle.style.left = pos + '%';
+        }
+
+        function onMove(e) {
+            if (!isDragging) return;
+            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            moveTo(clientX);
+        }
+
+        function endDrag() {
+            isDragging = false;
+            slider.classList.remove('is-dragging');
+
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchend', endDrag);
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            isDragging = true;
+            slider.classList.add('is-dragging');
+
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('touchmove', onMove, { passive: false });
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchend', endDrag);
+
+            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            moveTo(clientX);
+        }
+
+        // سحب بالمقبض
+        handle.addEventListener('mousedown', startDrag);
+        handle.addEventListener('touchstart', startDrag, { passive: false });
+
+        // النقر داخل منطقة السلايدر يحرك الخط
+        slider.addEventListener('click', function (e) {
+            if (e.target === handle || e.target.closest('.th-before-after-hero__handle')) {
+                return;
+            }
+            moveTo(e.clientX);
+        });
+
+        // الوضع الابتدائي 50%
+        var rect = slider.getBoundingClientRect();
+        moveTo(rect.left + rect.width / 2);
+    });
+});
+</script>
+
+<style>
+    .th-before-after-hero {
+  padding: 60px 0;
+  position: relative;
+}
+
+.th-before-after-hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (min-width: 1024px) {
+  .th-before-after-hero__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.th-before-after-hero__content {
+  flex: 1;
+  max-width: 480px;
+}
+
+@media (max-width: 1023px) {
+  .th-before-after-hero__content {
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+.th-before-after-hero__eyebrow {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary, #008080);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.th-before-after-hero__title {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: #222;
+  line-height: 1.3;
+}
+
+.th-before-after-hero__desc {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.th-before-after-hero__btn {
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* الجزء البصري (السلايدر + المنتج) */
+.th-before-after-hero__visual {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* السلايدر */
+.th-before-after-hero__compare {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 360px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 767px) {
+  .th-before-after-hero__compare {
+    max-width: 100%;
+    height: 260px;
+  }
+}
+
+.th-before-after-hero__base,
+.th-before-after-hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.th-before-after-hero__base {
+  z-index: 1;
+}
+
+.th-before-after-hero__overlay {
+  z-index: 2;
+  width: 50%;
+  overflow: hidden;
+}
+
+.th-before-after-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* المقبض */
+.th-before-after-hero__handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 0;
+  height: 100%;
+  border: none;
+  background: transparent;
+  cursor: ew-resize;
+  padding: 0;
+}
+
+.th-before-after-hero__handle-circle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+.th-before-after-hero__handle-arrow {
+  font-size: 16px;
+  line-height: 1;
+  color: #111827;
+}
+
+.th-before-after-hero__handle-arrow--left {
+  margin-inline-end: 4px;
+}
+
+.th-before-after-hero__handle-arrow--right {
+  margin-inline-start: 4px;
+}
+
+/* البادجات (قبل / بعد) */
+.th-before-after-hero__badge {
+  position: absolute;
+  top: 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  z-index: 4;
+}
+
+.th-before-after-hero__badge--before {
+  inset-inline-start: 16px;
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.th-before-after-hero__badge--after {
+  inset-inline-end: 16px;
+  background: rgba(5, 150, 105, 0.9);
+}
+
+/* صورة المنتج العائمة */
+.th-before-after-hero__products {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  width: 180px;
+  max-width: 45%;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .th-before-after-hero__products {
+    width: 130px;
+    transform: translate(-50%, -60%);
+  }
+}
+
+.th-before-after-hero__products-bg {
+  position: absolute;
+  inset: -30%;
+  border-radius: 999px;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.9), transparent 70%);
+  filter: blur(4px);
+}
+
+.th-before-after-hero__products-img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+</style>
