@@ -1,0 +1,143 @@
+<!-- قسم عروض آبل (ثيم ثراء) -->
+<section class="s-block th-hero-promo">
+    <div class="container">
+        
+        <!-- البطاقة الرئيسية العائمة -->
+        <div class="th-hero-promo__card">
+            
+            <!-- خلفية الديكور المشعة -->
+            <div class="th-hero-promo__glow-decoration" aria-hidden="true"></div>
+
+            <!-- الجزء العلوي: النصوص والصورة -->
+            <header class="th-hero-promo__header">
+                
+                <!-- 1. المحتوى النصي -->
+                <div class="th-hero-promo__content">
+                    <span class="th-hero-promo__badge">تصفية نهاية العام</span>
+                    
+                    <h2 class="th-hero-promo__title">
+                        عروض آبل الخارقة <br>وصلت الآن.
+                    </h2>
+                    
+                    <p class="th-hero-promo__subtitle">
+                        احصل على خصومات فورية تصل إلى 20% عند شراء أجهزة Mac و iPad و iPhone المختارة لفترة محدودة.
+                    </p>
+                    
+                    <!-- العداد التنازلي -->
+                    <div class="th-timer">
+                        <div class="th-timer__item">
+                            <span class="th-timer__value" id="th-ss">45</span>
+                            <span class="th-timer__label">ثانية</span>
+                        </div>
+                        <div class="th-timer__item">
+                            <span class="th-timer__value" id="th-mm">12</span>
+                            <span class="th-timer__label">دقيقة</span>
+                        </div>
+                        <div class="th-timer__item">
+                            <span class="th-timer__value" id="th-hh">05</span>
+                            <span class="th-timer__label">ساعة</span>
+                        </div>
+                        <div class="th-timer__item">
+                            <span class="th-timer__value" id="th-dd">02</span>
+                            <span class="th-timer__label">يوم</span>
+                        </div>
+                    </div>
+
+                    <a href="#" class="th-hero-promo__btn">
+                        <span>تصفح المجموعة</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+
+                <!-- 2. الصورة الرئيسية (30%) -->
+                <figure class="th-hero-promo__visual">
+                    <img src="https://i.ibb.co/68v8zN6/Apple-Set-Transparent.png" 
+                         alt="مجموعة منتجات آبل" 
+                         class="th-hero-promo__image">
+                </figure>
+            </header>
+
+            <!-- الجزء السفلي: شريط المنتجات -->
+            <div class="th-hero-promo__footer">
+                <h3 class="th-hero-promo__section-label">الأكثر طلباً هذا الأسبوع</h3>
+                
+                <div class="th-promo-products" id="thPromoProductsContainer">
+                    
+                    <!-- تكرار كارت المنتج -->
+                    {% for i in 1..5 %} 
+                    <!-- (مثال للحلقة التكرارية في سلة) -->
+                    <article class="th-product-mini">
+                        <div class="th-product-mini__visual">
+                            <!-- صور توضيحية -->
+                            {% if i == 1 %}<img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c51f.png" alt="Product" class="th-product-mini__img">{% endif %}
+                            {% if i == 2 %}<img src="https://pngimg.com/d/apple_watch_PNG108990.png" alt="Product" class="th-product-mini__img">{% endif %}
+                            {% if i == 3 %}<img src="https://pngimg.com/d/macbook_PNG6.png" alt="Product" class="th-product-mini__img">{% endif %}
+                            {% if i == 4 %}<img src="https://assets.stickpng.com/images/635a6b0c239d42f83c072e94.png" alt="Product" class="th-product-mini__img">{% endif %}
+                            {% if i == 5 %}<img src="https://purepng.com/public/uploads/large/purepng.com-imac-screen-215appleimac215-inch-screen-215-inchdesktoppccomputermonitor-17015283489280x60m.png" alt="Product" class="th-product-mini__img">{% endif %}
+                        </div>
+                        
+                        <div class="th-product-mini__details">
+                            <h4 class="th-product-mini__title">
+                                {% if i == 1 %}iPad Mini 6{% elseif i == 2 %}Watch Ultra{% elseif i == 3 %}MacBook Air{% elseif i == 4 %}iPhone 14 Plus{% else %}iMac 24{% endif %}
+                            </h4>
+                            <div class="th-product-mini__price">2,499 ر.س</div>
+                        </div>
+                        
+                        <button class="th-product-mini__add-btn" aria-label="أضف للسلة">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </article>
+                    {% endfor %}
+
+                </div>
+
+                <!-- شريط التمرير (للجوال فقط) -->
+                <div class="th-promo-products__scroll-indicator">
+                    <div class="th-promo-products__scroll-thumb" id="thScrollThumb"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ملاحظة: يفضل وضع السكريبت في ملف JS منفصل -->
+<script>
+    (function(){
+        // منطق العداد
+        var endDate = new Date(); 
+        endDate.setDate(endDate.getDate() + 2);
+        
+        setInterval(function() {
+            var now = new Date().getTime(); 
+            var d = endDate - now;
+            
+            var elD = document.getElementById("th-dd");
+            var elH = document.getElementById("th-hh");
+            var elM = document.getElementById("th-mm");
+            var elS = document.getElementById("th-ss");
+
+            if(elD) elD.innerText = Math.floor(d / (86400000)) < 10 ? "0" + Math.floor(d / (86400000)) : Math.floor(d / (86400000));
+            if(elH) elH.innerText = Math.floor((d % (86400000)) / (3600000)) < 10 ? "0" + Math.floor((d % (86400000)) / (3600000)) : Math.floor((d % (86400000)) / (3600000));
+            if(elM) elM.innerText = Math.floor((d % (3600000)) / (60000)) < 10 ? "0" + Math.floor((d % (3600000)) / (60000)) : Math.floor((d % (3600000)) / (60000));
+            if(elS) elS.innerText = Math.floor((d % (60000)) / 1000) < 10 ? "0" + Math.floor((d % (60000)) / 1000) : Math.floor((d % (60000)) / 1000);
+        }, 1000);
+
+        // منطق السكرول
+        var prodContainer = document.getElementById('thPromoProductsContainer');
+        var scrollThumb = document.getElementById('thScrollThumb');
+        var track = document.querySelector('.th-promo-products__scroll-indicator');
+
+        if(prodContainer && scrollThumb && track) {
+            prodContainer.addEventListener('scroll', function() {
+                var containerScrollWidth = prodContainer.scrollWidth - prodContainer.clientWidth;
+                var scrollVal = Math.abs(prodContainer.scrollLeft);
+                var maxTrackMovement = track.clientWidth - scrollThumb.clientWidth;
+                var moveInPx = (scrollVal / containerScrollWidth) * maxTrackMovement;
+                
+                // التأكد من الاتجاه في RTL
+                scrollThumb.style.transform = "translateX(-" + moveInPx + "px)";
+            });
+        }
+    })();
+</script>
