@@ -1,0 +1,402 @@
+/* --- Variables Scope for Tharaa Theme Identity --- */
+.th-hero-promo {
+  --th-color-primary: #0071e3;
+  --th-color-dark: #1d1d1f;
+  --th-color-text-sub: #555555;
+  --th-bg-gradient-main: linear-gradient(90deg, #feeef1 0%, #eef8ff 100%);
+  --th-bg-glass: rgba(255, 255, 255, 0.65);
+  --th-bg-glass-card: rgba(255, 255, 255, 0.55);
+  --th-radius-xl: 32px;
+  --th-radius-md: 20px;
+  --th-radius-sm: 16px;
+  --th-space-container: 40px; /* موبايل */
+  --th-shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.06);
+
+  /* تباعد داخلي للحاوية من الأعلى والأسفل */
+  padding: 50px 0;
+  overflow: hidden;
+
+  /* --- Elements --- */
+  &__card {
+    position: relative;
+    width: 100%;
+    background: var(--th-bg-gradient-main);
+    border-radius: var(--th-radius-xl);
+    padding: var(--th-space-container) 20px;
+    box-shadow: var(--th-shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    isolation: isolate; /* Create new stacking context */
+
+    @media (min-width: 992px) {
+      padding: 60px;
+      gap: 60px;
+    }
+  }
+
+  &__glow-decoration {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* --- Header Area (Text + Main Image) --- */
+  &__header {
+    display: flex;
+    flex-direction: column-reverse; /* موبايل: النص تحت الصورة أو فوقها حسب التصميم المطلوب، هنا نعكس للترتيب البصري */
+    gap: 30px;
+    position: relative;
+    text-align: center;
+
+    @media (min-width: 992px) {
+      flex-direction: row; /* ديسكتوب: صف */
+      text-align: right;   /* عودة للوضع الطبيعي في RTL */
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  /* 1. Text Content */
+  &__content {
+    width: 100%;
+    flex: 1; /* يأخذ باقي المساحة في الديسكتوب */
+  }
+
+  &__badge {
+    display: inline-block;
+    background: rgba(0, 113, 227, 0.1);
+    color: var(--th-color-primary);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 113, 227, 0.15);
+  }
+
+  &__title {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    color: var(--th-color-dark);
+
+    @media (min-width: 768px) {
+      font-size: 36px;
+    }
+    
+    @media (min-width: 992px) {
+      font-size: 44px;
+    }
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    color: var(--th-color-text-sub);
+    line-height: 1.6;
+    margin-bottom: 30px;
+    margin-inline: auto; /* Center in mobile */
+    max-width: 90%;
+
+    @media (min-width: 992px) {
+      font-size: 18px;
+      margin-inline: 0; /* Align start in desktop */
+    }
+  }
+
+  /* 2. Button */
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--th-color-dark);
+    color: #fff;
+    padding: 14px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+
+    &:hover {
+      background-color: var(--th-color-primary);
+      transform: translateY(-3px);
+      color: #fff;
+    }
+  }
+
+  /* 3. Main Visual Image (The 30% Logic) */
+  &__visual {
+    width: 100%;
+    max-width: 280px; /* تحجيم للموبايل */
+    margin: 0 auto;
+    position: relative;
+    padding: 0; /* Reset generic figure padding */
+    margin: 0; /* Reset generic figure margin */
+
+    /* Desktop: 30% Constraint */
+    @media (min-width: 992px) {
+      flex: 0 0 30%; 
+      max-width: 30%;
+      display: flex;
+      justify-content: flex-end; /* لضمان المحاذاة */
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15));
+    animation: th-float 6s ease-in-out infinite;
+
+    /* موبايل */
+    max-width: 80%;
+    margin: 0 auto;
+
+    @media (min-width: 992px) {
+      max-width: 100%;
+      margin: 0;
+    }
+  }
+
+  /* --- Footer Area (Products) --- */
+  &__footer {
+    position: relative;
+    z-index: 5;
+  }
+
+  &__section-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6e6e73;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    
+    @media (min-width: 992px) {
+      text-align: right;
+    }
+  }
+
+  /* --- Modules --- */
+  
+  /* 1. Timer */
+  .th-timer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 35px;
+
+    @media (min-width: 992px) {
+      justify-content: flex-start;
+    }
+
+    &__item {
+      background: var(--th-bg-glass);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: var(--th-radius-sm);
+      width: 70px;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s;
+      
+      @media (min-width: 768px) {
+        width: 75px; 
+        height: 85px;
+      }
+    }
+
+    &__value {
+      font-size: 24px;
+      font-weight: 800;
+      color: #333;
+      line-height: 1;
+
+      @media (min-width: 768px) {
+        font-size: 28px;
+      }
+    }
+
+    &__label {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+  }
+
+  /* 2. Products Container */
+  .th-promo-products {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding-bottom: 20px;
+    
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Snap Logic */
+    scroll-snap-type: x mandatory;
+
+    /* Desktop Grid */
+    @media (min-width: 992px) {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      overflow-x: visible;
+      padding-bottom: 10px;
+    }
+
+    /* 2.1 Scroll Indicator (Mobile Only) */
+    &__scroll-indicator {
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+
+      @media (min-width: 992px) {
+        display: none;
+      }
+    }
+
+    &__scroll-thumb {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 30%;
+      background: var(--th-color-primary);
+      border-radius: 4px;
+      transition: transform 0.1s linear;
+      will-change: transform;
+    }
+  }
+
+  /* 3. Product Mini Card */
+  .th-product-mini {
+    flex: 0 0 auto;
+    width: 220px; /* عرض ثابت للموبايل */
+    scroll-snap-align: start;
+    
+    background: var(--th-bg-glass-card);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--th-radius-md);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+
+    @media (min-width: 992px) {
+      width: auto; /* تلقائي في الجريد */
+    }
+
+    &:hover {
+      background: #fff;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+      /* Trigger sub-elements hover effects */
+      .th-product-mini__add-btn {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .th-product-mini__img {
+        transform: scale(1.1);
+      }
+    }
+
+    &__visual {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s;
+    }
+
+    &__details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: right;
+    }
+
+    &__title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    &__price {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--th-color-primary);
+    }
+
+    &__add-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--th-color-primary);
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      /* Mobile: Visible always, Desktop: Hidden until hover */
+      opacity: 1;
+      
+      @media (min-width: 992px) {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+    }
+  }
+
+  /* --- Keyframes --- */
+  @keyframes th-float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+  }
+}

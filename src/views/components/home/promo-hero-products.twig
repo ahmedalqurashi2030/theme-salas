@@ -1,553 +1,387 @@
-<!-- قسم عروض آبل (ثيم ثراء) -->
-<section class="s-block th-hero-promo ">
-    <div class="container">
-        
-        <!-- البطاقة الرئيسية العائمة -->
-        <div class="th-hero-promo__card">
+<!-- قسم عروض آبل (هيكل ثراء الاحترافي + الخلفية الأصلية) -->
+<section class="s-block th-hero-promo">
+    <style>
+        /* --- تعريف المتغيرات (Scoped Variables) --- */
+        .th-hero-promo {
+            /* الألوان الأساسية */
+            --th-primary: #0071e3;
+            --th-text-main: #1d1d1f;
+            --th-text-sub: #555555;
             
-            <!-- خلفية الديكور المشعة -->
-            <div class="th-hero-promo__glow-decoration" aria-hidden="true"></div>
+            /* 🔥🔥 هذا هو التدرج اللوني المطلوب بالضبط (وردي إلى أزرق) 🔥🔥 */
+            --th-bg-gradient: linear-gradient(90deg, #feeef1 0%, #eef8ff 100%);
+            
+            /* إعدادات الزجاج والظلال */
+            --th-glass-bg: rgba(255, 255, 255, 0.65);
+            --th-glass-border: 1px solid rgba(255, 255, 255, 0.6);
+            --th-radius-xl: 32px;
+            --th-radius-md: 20px;
+            --th-radius-sm: 16px;
+            --th-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+            
+            /* إعدادات الخط والاتجاه */
+            font-family: 'Tajawal', sans-serif;
+            direction: rtl;
+            text-align: right;
+            padding: 40px 0;
+            box-sizing: border-box;
+            width: 100%;
+        }
 
-            <!-- الجزء العلوي: النصوص والصورة -->
+        /* تصفير الهوامش لضمان العرض الصحيح */
+        .th-hero-promo * { box-sizing: border-box; margin: 0; padding: 0; }
+        .th-hero-promo a { text-decoration: none; }
+
+        /* --- 1. الحاوية الرئيسية (Card) --- */
+        .th-hero-promo__card {
+            background: var(--th-bg-gradient); /* تطبيق الخلفية هنا */
+            border-radius: var(--th-radius-xl);
+            padding: 50px;
+            box-shadow: var(--th-shadow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        /* زخرفة إضاءة خفيفة في الخلفية لزيادة الجمالية */
+        .th-hero-promo__glow {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+            top: -10%; left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* --- 2. منطقة الرأس (Header Area) --- */
+        .th-hero-promo__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* عمود النصوص (يأخذ المساحة المتبقية) */
+        .th-hero-promo__content-col {
+            flex: 1;
+        }
+
+        /* عمود الصورة (محدد بـ 35% لضمان التوازن) */
+        .th-hero-promo__visual-col {
+            flex: 0 0 35%;
+            max-width: 35%;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        /* العناصر النصية */
+        .th-hero-promo__badge {
+            display: inline-block;
+            background: rgba(0, 113, 227, 0.1);
+            color: var(--th-primary);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-weight: 700; font-size: 13px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 113, 227, 0.15);
+        }
+
+        .th-hero-promo__title {
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--th-text-main);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .th-hero-promo__subtitle {
+            font-size: 16px;
+            color: var(--th-text-sub);
+            margin-bottom: 30px;
+            max-width: 90%;
+            line-height: 1.6;
+        }
+
+        /* العداد */
+        .th-timer {
+            display: flex; gap: 10px; margin-bottom: 35px;
+        }
+        .th-timer__item {
+            background: var(--th-glass-bg);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: var(--th-glass-border);
+            border-radius: var(--th-radius-sm);
+            width: 70px; height: 80px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+        }
+        .th-timer__val { font-size: 26px; font-weight: 800; color: #333; line-height: 1; }
+        .th-timer__lbl { font-size: 12px; color: #666; margin-top: 4px; }
+
+        /* الزر */
+        .th-btn {
+            background: var(--th-text-main);
+            color: #fff;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 700; font-size: 15px;
+            display: inline-flex; align-items: center; gap: 10px;
+            transition: 0.3s;
+            border: none; cursor: pointer;
+        }
+        .th-btn:hover {
+            background: var(--th-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* الصورة الرئيسية */
+        .th-hero-promo__main-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 25px 50px rgba(0,0,0,0.15));
+            animation: thFloat 6s ease-in-out infinite;
+        }
+
+        /* --- 3. منطقة المنتجات (Footer Area) --- */
+        .th-hero-promo__footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        .th-hero-promo__label {
+            font-size: 14px; font-weight: 700; color: #888;
+            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .th-products-list {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .th-product-card {
+            background: rgba(255,255,255,0.5); /* شفافية خفيفة لتظهر الخلفية الملونة */
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: var(--th-radius-md);
+            padding: 15px;
+            display: flex; align-items: center; gap: 10px;
+            transition: 0.3s; cursor: pointer;
+            min-height: 90px;
+        }
+        .th-product-card:hover {
+            background: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .th-product-card__img { width: 45px; height: 45px; object-fit: contain; transition: 0.3s; }
+        .th-product-card:hover .th-product-card__img { transform: scale(1.1); }
+
+        .th-product-card__info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+        .th-product-card__title { font-size: 12px; font-weight: 700; color: #333; }
+        .th-product-card__price { font-size: 13px; font-weight: 700; color: var(--th-primary); }
+
+        .th-product-card__add {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: var(--th-primary); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; border: none; opacity: 0; transition: 0.3s;
+        }
+        .th-product-card:hover .th-product-card__add { opacity: 1; }
+
+        /* شريط التمرير (Mobile Only) */
+        .th-scroll-bar {
+            display: none;
+            width: 100px; height: 4px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+            margin: 15px auto 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .th-scroll-thumb {
+            position: absolute; top: 0; right: 0;
+            height: 100%; width: 30%;
+            background: var(--th-primary);
+            border-radius: 4px;
+        }
+
+        /* --- Keyframes --- */
+        @keyframes thFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- Responsive (Mobile) --- */
+        @media (max-width: 992px) {
+            .th-hero-promo__card { padding: 40px 20px; gap: 40px; }
+            .th-hero-promo__header { flex-direction: column-reverse; text-align: center; }
+            
+            .th-hero-promo__content-col { width: 100%; }
+            .th-hero-promo__visual-col { flex: unset; max-width: 80%; width: 100%; justify-content: center; }
+            
+            .th-hero-promo__title { font-size: 28px; }
+            .th-hero-promo__subtitle { margin: 0 auto 30px; }
+            .th-timer { justify-content: center; }
+            
+            .th-products-list {
+                display: flex; overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 10px;
+                scrollbar-width: none;
+            }
+            .th-products-list::-webkit-scrollbar { display: none; }
+            .th-product-card { min-width: 210px; scroll-snap-align: start; }
+            .th-product-card__add { opacity: 1; }
+            .th-scroll-bar { display: block; }
+        }
+    </style>
+
+    <div class="container">
+        <div class="th-hero-promo__card">
+            <div class="th-hero-promo__glow"></div>
+
+            <!-- Header: Text + Image -->
             <header class="th-hero-promo__header">
                 
-                <!-- 1. المحتوى النصي -->
-                <div class="th-hero-promo__content">
+                <!-- Text Column -->
+                <div class="th-hero-promo__content-col">
                     <span class="th-hero-promo__badge">تصفية نهاية العام</span>
-                    
-                    <h2 class="th-hero-promo__title">
-                        عروض آبل الخارقة <br>وصلت الآن.
-                    </h2>
-                    
+                    <h2 class="th-hero-promo__title">عروض آبل الخارقة <br>وصلت الآن.</h2>
                     <p class="th-hero-promo__subtitle">
                         احصل على خصومات فورية تصل إلى 20% عند شراء أجهزة Mac و iPad و iPhone المختارة لفترة محدودة.
                     </p>
                     
-                    <!-- العداد التنازلي -->
                     <div class="th-timer">
-                        <div class="th-timer__item">
-                            <span class="th-timer__value" id="th-ss">45</span>
-                            <span class="th-timer__label">ثانية</span>
-                        </div>
-                        <div class="th-timer__item">
-                            <span class="th-timer__value" id="th-mm">12</span>
-                            <span class="th-timer__label">دقيقة</span>
-                        </div>
-                        <div class="th-timer__item">
-                            <span class="th-timer__value" id="th-hh">05</span>
-                            <span class="th-timer__label">ساعة</span>
-                        </div>
-                        <div class="th-timer__item">
-                            <span class="th-timer__value" id="th-dd">02</span>
-                            <span class="th-timer__label">يوم</span>
-                        </div>
+                        <div class="th-timer__item"><span class="th-timer__val" id="th-ss">45</span><span class="th-timer__lbl">ثانية</span></div>
+                        <div class="th-timer__item"><span class="th-timer__val" id="th-mm">12</span><span class="th-timer__lbl">دقيقة</span></div>
+                        <div class="th-timer__item"><span class="th-timer__val" id="th-hh">05</span><span class="th-timer__lbl">ساعة</span></div>
+                        <div class="th-timer__item"><span class="th-timer__val" id="th-dd">02</span><span class="th-timer__lbl">يوم</span></div>
                     </div>
 
-                    <a href="#" class="th-hero-promo__btn">
-                        <span>تصفح المجموعة</span>
+                    <a href="#" class="th-btn">
+                        تصفح المجموعة
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 </div>
 
-                <!-- 2. الصورة الرئيسية (30%) -->
-                <figure class="th-hero-promo__visual">
-                    <img src="https://i.ibb.co/68v8zN6/Apple-Set-Transparent.png" 
-                         alt="مجموعة منتجات آبل" 
-                         class="th-hero-promo__image">
-                </figure>
+                <!-- Image Column (35%) -->
+                <div class="th-hero-promo__visual-col">
+                    <img src="https://i.ibb.co/68v8zN6/Apple-Set-Transparent.png" alt="Apple Products" class="th-hero-promo__main-img">
+                </div>
             </header>
 
-            <!-- الجزء السفلي: شريط المنتجات -->
-            <div class="th-hero-promo__footer">
-                <h3 class="th-hero-promo__section-label">الأكثر طلباً هذا الأسبوع</h3>
+            <!-- Footer: Products -->
+            <footer class="th-hero-promo__footer">
+                <h3 class="th-hero-promo__label">الأكثر طلباً هذا الأسبوع</h3>
                 
-                <div class="th-promo-products" id="thPromoProductsContainer">
+                <div class="th-products-list" id="thProductScroll">
                     
-                    <!-- تكرار كارت المنتج -->
-                    {% for i in 1..5 %} 
-                    <!-- (مثال للحلقة التكرارية في سلة) -->
-                    <article class="th-product-mini">
-                        <div class="th-product-mini__visual">
-                            <!-- صور توضيحية -->
-                            {% if i == 1 %}<img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c51f.png" alt="Product" class="th-product-mini__img">{% endif %}
-                            {% if i == 2 %}<img src="https://pngimg.com/d/apple_watch_PNG108990.png" alt="Product" class="th-product-mini__img">{% endif %}
-                            {% if i == 3 %}<img src="https://pngimg.com/d/macbook_PNG6.png" alt="Product" class="th-product-mini__img">{% endif %}
-                            {% if i == 4 %}<img src="https://assets.stickpng.com/images/635a6b0c239d42f83c072e94.png" alt="Product" class="th-product-mini__img">{% endif %}
-                            {% if i == 5 %}<img src="https://purepng.com/public/uploads/large/purepng.com-imac-screen-215appleimac215-inch-screen-215-inchdesktoppccomputermonitor-17015283489280x60m.png" alt="Product" class="th-product-mini__img">{% endif %}
+                    <!-- Product 1 -->
+                    <article class="th-product-card">
+                        <img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c51f.png" class="th-product-card__img">
+                        <div class="th-product-card__info">
+                            <span class="th-product-card__title">iPad Mini 6</span>
+                            <span class="th-product-card__price">2,499 ر.س</span>
                         </div>
-                        
-                        <div class="th-product-mini__details">
-                            <h4 class="th-product-mini__title">
-                                {% if i == 1 %}iPad Mini 6{% elseif i == 2 %}Watch Ultra{% elseif i == 3 %}MacBook Air{% elseif i == 4 %}iPhone 14 Plus{% else %}iMac 24{% endif %}
-                            </h4>
-                            <div class="th-product-mini__price">2,499 ر.س</div>
-                        </div>
-                        
-                        <button class="th-product-mini__add-btn" aria-label="أضف للسلة">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
+                        <button class="th-product-card__add"><i class="fa-solid fa-plus"></i></button>
                     </article>
-                    {% endfor %}
+
+                    <!-- Product 2 -->
+                    <article class="th-product-card">
+                        <img src="https://pngimg.com/d/apple_watch_PNG108990.png" class="th-product-card__img">
+                        <div class="th-product-card__info">
+                            <span class="th-product-card__title">Watch Ultra</span>
+                            <span class="th-product-card__price">3,199 ر.س</span>
+                        </div>
+                        <button class="th-product-card__add"><i class="fa-solid fa-plus"></i></button>
+                    </article>
+
+                    <!-- Product 3 -->
+                    <article class="th-product-card">
+                        <img src="https://pngimg.com/d/macbook_PNG6.png" class="th-product-card__img">
+                        <div class="th-product-card__info">
+                            <span class="th-product-card__title">MacBook Air</span>
+                            <span class="th-product-card__price">4,599 ر.س</span>
+                        </div>
+                        <button class="th-product-card__add"><i class="fa-solid fa-plus"></i></button>
+                    </article>
+
+                    <!-- Product 4 -->
+                    <article class="th-product-card">
+                        <img src="https://assets.stickpng.com/images/635a6b0c239d42f83c072e94.png" class="th-product-card__img">
+                        <div class="th-product-card__info">
+                            <span class="th-product-card__title">iPhone 14</span>
+                            <span class="th-product-card__price">3,799 ر.س</span>
+                        </div>
+                        <button class="th-product-card__add"><i class="fa-solid fa-plus"></i></button>
+                    </article>
+
+                    <!-- Product 5 -->
+                    <article class="th-product-card">
+                        <img src="https://purepng.com/public/uploads/large/purepng.com-imac-screen-215appleimac215-inch-screen-215-inchdesktoppccomputermonitor-17015283489280x60m.png" class="th-product-card__img">
+                        <div class="th-product-card__info">
+                            <span class="th-product-card__title">iMac 24</span>
+                            <span class="th-product-card__price">5,899 ر.س</span>
+                        </div>
+                        <button class="th-product-card__add"><i class="fa-solid fa-plus"></i></button>
+                    </article>
 
                 </div>
 
-                <!-- شريط التمرير (للجوال فقط) -->
-                <div class="th-promo-products__scroll-indicator">
-                    <div class="th-promo-products__scroll-thumb" id="thScrollThumb"></div>
+                <!-- Mobile Scroll Bar -->
+                <div class="th-scroll-bar">
+                    <div class="th-scroll-thumb" id="thScrollThumb"></div>
                 </div>
-            </div>
-
+            </footer>
         </div>
     </div>
 </section>
 
-
-
-
-<style>
-    /* --- Variables Scope for Tharaa Theme Identity --- */
-.th-hero-promo {
-  --th-color-primary: #0071e3;
-  --th-color-dark: #1d1d1f;
-  --th-color-text-sub: #555555;
-  --th-bg-gradient-main: linear-gradient(90deg, #feeef1 0%, #eef8ff 100%);
-  --th-bg-glass: rgba(255, 255, 255, 0.65);
-  --th-bg-glass-card: rgba(255, 255, 255, 0.55);
-  --th-radius-xl: 32px;
-  --th-radius-md: 20px;
-  --th-radius-sm: 16px;
-  --th-space-container: 40px; /* موبايل */
-  --th-shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.06);
-
-  /* تباعد داخلي للحاوية من الأعلى والأسفل */
-  padding: 50px 0;
-  overflow: hidden;
-
-  /* --- Elements --- */
-  &__card {
-    position: relative;
-    width: 100%;
-    background: var(--th-bg-gradient-main);
-    border-radius: var(--th-radius-xl);
-    padding: var(--th-space-container) 20px;
-    box-shadow: var(--th-shadow-soft);
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    isolation: isolate; /* Create new stacking context */
-
-    @media (min-width: 992px) {
-      padding: 60px;
-      gap: 60px;
-    }
-  }
-
-  &__glow-decoration {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
-    top: -10%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: -1;
-    pointer-events: none;
-  }
-
-  /* --- Header Area (Text + Main Image) --- */
-  &__header {
-    display: flex;
-    flex-direction: column-reverse; /* موبايل: النص تحت الصورة أو فوقها حسب التصميم المطلوب، هنا نعكس للترتيب البصري */
-    gap: 30px;
-    position: relative;
-    text-align: center;
-
-    @media (min-width: 992px) {
-      flex-direction: row; /* ديسكتوب: صف */
-      text-align: right;   /* عودة للوضع الطبيعي في RTL */
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-
-  /* 1. Text Content */
-  &__content {
-    width: 100%;
-    flex: 1; /* يأخذ باقي المساحة في الديسكتوب */
-  }
-
-  &__badge {
-    display: inline-block;
-    background: rgba(0, 113, 227, 0.1);
-    color: var(--th-color-primary);
-    padding: 6px 16px;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 15px;
-    border: 1px solid rgba(0, 113, 227, 0.15);
-  }
-
-  &__title {
-    font-size: 28px;
-    font-weight: 900;
-    line-height: 1.2;
-    margin-bottom: 15px;
-    color: var(--th-color-dark);
-
-    @media (min-width: 768px) {
-      font-size: 36px;
-    }
-    
-    @media (min-width: 992px) {
-      font-size: 44px;
-    }
-  }
-
-  &__subtitle {
-    font-size: 16px;
-    color: var(--th-color-text-sub);
-    line-height: 1.6;
-    margin-bottom: 30px;
-    margin-inline: auto; /* Center in mobile */
-    max-width: 90%;
-
-    @media (min-width: 992px) {
-      font-size: 18px;
-      margin-inline: 0; /* Align start in desktop */
-    }
-  }
-
-  /* 2. Button */
-  &__btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background-color: var(--th-color-dark);
-    color: #fff;
-    padding: 14px 35px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 700;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-
-    &:hover {
-      background-color: var(--th-color-primary);
-      transform: translateY(-3px);
-      color: #fff;
-    }
-  }
-
-  /* 3. Main Visual Image (The 30% Logic) */
-  &__visual {
-    width: 100%;
-    max-width: 280px; /* تحجيم للموبايل */
-    margin: 0 auto;
-    position: relative;
-    padding: 0; /* Reset generic figure padding */
-    margin: 0; /* Reset generic figure margin */
-
-    /* Desktop: 30% Constraint */
-    @media (min-width: 992px) {
-      flex: 0 0 30%; 
-      max-width: 30%;
-      display: flex;
-      justify-content: flex-end; /* لضمان المحاذاة */
-    }
-  }
-
-  &__image {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15));
-    animation: th-float 6s ease-in-out infinite;
-
-    /* موبايل */
-    max-width: 80%;
-    margin: 0 auto;
-
-    @media (min-width: 992px) {
-      max-width: 100%;
-      margin: 0;
-    }
-  }
-
-  /* --- Footer Area (Products) --- */
-  &__footer {
-    position: relative;
-    z-index: 5;
-  }
-
-  &__section-label {
-    font-size: 14px;
-    font-weight: 700;
-    color: #6e6e73;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: center;
-    
-    @media (min-width: 992px) {
-      text-align: right;
-    }
-  }
-
-  /* --- Modules --- */
-  
-  /* 1. Timer */
-  .th-timer {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 35px;
-
-    @media (min-width: 992px) {
-      justify-content: flex-start;
-    }
-
-    &__item {
-      background: var(--th-bg-glass);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: var(--th-radius-sm);
-      width: 70px;
-      height: 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s;
-      
-      @media (min-width: 768px) {
-        width: 75px; 
-        height: 85px;
-      }
-    }
-
-    &__value {
-      font-size: 24px;
-      font-weight: 800;
-      color: #333;
-      line-height: 1;
-
-      @media (min-width: 768px) {
-        font-size: 28px;
-      }
-    }
-
-    &__label {
-      font-size: 12px;
-      color: #666;
-      margin-top: 4px;
-      font-weight: 500;
-    }
-  }
-
-  /* 2. Products Container */
-  .th-promo-products {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    padding-bottom: 20px;
-    
-    /* Hide scrollbar */
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    
-    /* Snap Logic */
-    scroll-snap-type: x mandatory;
-
-    /* Desktop Grid */
-    @media (min-width: 992px) {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      overflow-x: visible;
-      padding-bottom: 10px;
-    }
-
-    /* 2.1 Scroll Indicator (Mobile Only) */
-    &__scroll-indicator {
-      display: block;
-      width: 100px;
-      height: 4px;
-      background: rgba(0, 0, 0, 0.05);
-      border-radius: 4px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-
-      @media (min-width: 992px) {
-        display: none;
-      }
-    }
-
-    &__scroll-thumb {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 30%;
-      background: var(--th-color-primary);
-      border-radius: 4px;
-      transition: transform 0.1s linear;
-      will-change: transform;
-    }
-  }
-
-  /* 3. Product Mini Card */
-  .th-product-mini {
-    flex: 0 0 auto;
-    width: 220px; /* عرض ثابت للموبايل */
-    scroll-snap-align: start;
-    
-    background: var(--th-bg-glass-card);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: var(--th-radius-md);
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-
-    @media (min-width: 992px) {
-      width: auto; /* تلقائي في الجريد */
-    }
-
-    &:hover {
-      background: #fff;
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-
-      /* Trigger sub-elements hover effects */
-      .th-product-mini__add-btn {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      .th-product-mini__img {
-        transform: scale(1.1);
-      }
-    }
-
-    &__visual {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &__img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      transition: transform 0.3s;
-    }
-
-    &__details {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      text-align: right;
-    }
-
-    &__title {
-      font-size: 12px;
-      font-weight: 700;
-      color: #333;
-      margin: 0;
-      line-height: 1.3;
-    }
-
-    &__price {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--th-color-primary);
-    }
-
-    &__add-btn {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: var(--th-color-primary);
-      color: #fff;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      
-      /* Mobile: Visible always, Desktop: Hidden until hover */
-      opacity: 1;
-      
-      @media (min-width: 992px) {
-        opacity: 0;
-        transform: translateX(-10px);
-      }
-    }
-  }
-
-  /* --- Keyframes --- */
-  @keyframes th-float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
-    100% { transform: translateY(0px); }
-  }
-}
-</style>
-
-
-<!-- ملاحظة: يفضل وضع السكريبت في ملف JS منفصل -->
 <script>
-    (function(){
-        // منطق العداد
-        var endDate = new Date(); 
-        endDate.setDate(endDate.getDate() + 2);
-        
-        setInterval(function() {
-            var now = new Date().getTime(); 
-            var d = endDate - now;
-            
-            var elD = document.getElementById("th-dd");
-            var elH = document.getElementById("th-hh");
-            var elM = document.getElementById("th-mm");
-            var elS = document.getElementById("th-ss");
+    // Timer Logic
+    var thEnd = new Date(); thEnd.setDate(thEnd.getDate() + 2);
+    setInterval(function() {
+        var now = new Date().getTime();
+        var d = thEnd - now;
+        var dd = Math.floor(d / (86400000));
+        var hh = Math.floor((d % (86400000)) / (3600000));
+        var mm = Math.floor((d % (3600000)) / (60000));
+        var ss = Math.floor((d % (60000)) / 1000);
 
-            if(elD) elD.innerText = Math.floor(d / (86400000)) < 10 ? "0" + Math.floor(d / (86400000)) : Math.floor(d / (86400000));
-            if(elH) elH.innerText = Math.floor((d % (86400000)) / (3600000)) < 10 ? "0" + Math.floor((d % (86400000)) / (3600000)) : Math.floor((d % (86400000)) / (3600000));
-            if(elM) elM.innerText = Math.floor((d % (3600000)) / (60000)) < 10 ? "0" + Math.floor((d % (3600000)) / (60000)) : Math.floor((d % (3600000)) / (60000));
-            if(elS) elS.innerText = Math.floor((d % (60000)) / 1000) < 10 ? "0" + Math.floor((d % (60000)) / 1000) : Math.floor((d % (60000)) / 1000);
-        }, 1000);
+        var elD = document.getElementById("th-dd");
+        var elH = document.getElementById("th-hh");
+        var elM = document.getElementById("th-mm");
+        var elS = document.getElementById("th-ss");
 
-        // منطق السكرول
-        var prodContainer = document.getElementById('thPromoProductsContainer');
-        var scrollThumb = document.getElementById('thScrollThumb');
-        var track = document.querySelector('.th-promo-products__scroll-indicator');
+        if(elD) elD.innerText = dd < 10 ? "0"+dd : dd;
+        if(elH) elH.innerText = hh < 10 ? "0"+hh : hh;
+        if(elM) elM.innerText = mm < 10 ? "0"+mm : mm;
+        if(elS) elS.innerText = ss < 10 ? "0"+ss : ss;
+    }, 1000);
 
-        if(prodContainer && scrollThumb && track) {
-            prodContainer.addEventListener('scroll', function() {
-                var containerScrollWidth = prodContainer.scrollWidth - prodContainer.clientWidth;
-                var scrollVal = Math.abs(prodContainer.scrollLeft);
-                var maxTrackMovement = track.clientWidth - scrollThumb.clientWidth;
-                var moveInPx = (scrollVal / containerScrollWidth) * maxTrackMovement;
-                
-                // التأكد من الاتجاه في RTL
-                scrollThumb.style.transform = "translateX(-" + moveInPx + "px)";
-            });
-        }
-    })();
+    // Mobile Scroll Logic
+    var scroller = document.getElementById('thProductScroll');
+    var thumb = document.getElementById('thScrollThumb');
+    var track = document.querySelector('.th-scroll-bar');
+
+    if(scroller && thumb && track) {
+        scroller.addEventListener('scroll', function() {
+            var scrollW = scroller.scrollWidth - scroller.clientWidth;
+            var scrolled = Math.abs(scroller.scrollLeft);
+            var trackW = track.clientWidth - thumb.clientWidth;
+            var move = (scrolled / scrollW) * trackW;
+            thumb.style.transform = 'translateX(-' + move + 'px)';
+        });
+    }
 </script>
-
