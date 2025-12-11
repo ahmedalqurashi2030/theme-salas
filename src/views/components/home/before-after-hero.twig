@@ -1,0 +1,77 @@
+{# ================================================
+  Tharaa Theme – Before / After Hero Section
+  Path: home.before-after-hero
+================================================ #}
+
+{% set bg_color    = component.bg_color    ?? '#ffffff' %}
+{% set title       = component.title       ?? '' %}
+{% set eyebrow     = component.subtitle    ?? '' %}
+{% set description = component.description ?? '' %}
+{% set button_text = component.button_text ?? '' %}
+{% set button_link = component.button_link ?? '' %}
+
+{% set before_label = component.before_label ?? '' %}
+{% set before_image = component.before_image ?? '' %}
+{% set after_label  = component.after_label  ?? '' %}
+{% set after_image  = component.after_image  ?? '' %}
+
+<section class="th-before-after-hero s-block container"
+         style="background-color: {{ bg_color }};">
+    <div class="th-before-after-hero__inner">
+        <div class="th-before-after-hero__content">
+            {% if eyebrow %}
+                <span class="th-before-after-hero__eyebrow">
+                    {{ eyebrow }}
+                </span>
+            {% endif %}
+
+            {% if title %}
+                <h2 class="th-before-after-hero__title">
+                    {{ title }}
+                </h2>
+            {% endif %}
+
+            {% if description %}
+                <p class="th-before-after-hero__desc">
+                    {{ description|raw }}
+                </p>
+            {% endif %}
+
+            {% if button_text and button_link %}
+                <a href="{{ button_link }}"
+                   class="th-before-after-hero__btn s-button s-button--primary">
+                    {{ button_text }}
+                </a>
+            {% endif %}
+        </div>
+
+        {# صورة قبل / بعد (واحدة فقط) #}
+        {% if before_image or after_image %}
+            <div class="th-before-after-hero__images">
+                {% if before_image %}
+                    <div class="th-before-after-hero__image th-before-after-hero__image--before">
+                        <img src="{{ before_image }}"
+                             alt="{{ before_label|default('قبل') }}">
+                        {% if before_label %}
+                            <span class="th-before-after-hero__label th-before-after-hero__label--before">
+                                {{ before_label }}
+                            </span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if after_image %}
+                    <div class="th-before-after-hero__image th-before-after-hero__image--after">
+                        <img src="{{ after_image }}"
+                             alt="{{ after_label|default('بعد') }}">
+                        {% if after_label %}
+                            <span class="th-before-after-hero__label th-before-after-hero__label--after">
+                                {{ after_label }}
+                            </span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
