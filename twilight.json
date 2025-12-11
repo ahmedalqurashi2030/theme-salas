@@ -1358,7 +1358,7 @@
                     "required": false
                 },
                 {
-                    "id": "collection",
+                    "id": "comparison_items",
                     "type": "collection",
                     "format": "collection",
                     "label": "Collection",
@@ -1368,7 +1368,7 @@
                     "icon": "sicon-list-add",
                     "fields": [
                         {
-                            "id": "collection.before_label",
+                            "id": "comparison_items.collection.before_label",
                             "type": "string",
                             "format": "text",
                             "label": "نص أسفل صورة قبل",
@@ -1383,7 +1383,7 @@
                             "maxLength": 30
                         },
                         {
-                            "id": "collection.before_image",
+                            "id": "comparison_items.collection.before_image",
                             "type": "string",
                             "format": "image",
                             "label": "صورة قبل",
@@ -1395,7 +1395,14 @@
                             "required": true
                         },
                         {
-                            "id": "collection.after_label",
+                            "id": "comparison_items.ns_asfl_sort_baad",
+                            "type": "static",
+                            "format": "line",
+                            "label": "نص أسفل صورة بعد",
+                            "icon": "sicon-minus"
+                        },
+                        {
+                            "id": "comparison_items.collection.after_label",
                             "type": "string",
                             "format": "text",
                             "label": "نص أسفل صورة بعد",
@@ -1410,7 +1417,7 @@
                             "maxLength": 30
                         },
                         {
-                            "id": "collection.after_image",
+                            "id": "comparison_items.collection.after_image",
                             "type": "string",
                             "format": "image",
                             "label": "صورة بعد",
