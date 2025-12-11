@@ -1418,6 +1418,42 @@
             "path": "home.promo-hero-products",
             "fields": [
                 {
+                    "id": "aanoan_alqsm",
+                    "type": "static",
+                    "format": "title",
+                    "label": "عنوان القسم",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "description",
+                    "type": "string",
+                    "format": "richtext",
+                    "label": "وصف القسم",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Your text here ..",
+                    "icon": "sicon-touch-type",
+                    "value": "نص وصفي أسفل العنوان يشرح العرض أو الفكرة.",
+                    "multilanguage": true,
+                    "required": false,
+                    "minLength": 60,
+                    "maxLength": 1000
+                },
+                {
+                    "id": "hero_image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة الهيرو",
+                    "description": "الصورة الرئيسية الكبيرة بجانب النص.",
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://hostname.com/image.png",
+                    "icon": "sicon-image",
+                    "value": null,
+                    "required": false
+                },
+                {
                     "id": "countdown_label",
                     "type": "string",
                     "format": "text",
@@ -1428,7 +1464,7 @@
                     "icon": "sicon-format-text-alt",
                     "value": "ينتهي العرض خلال",
                     "multilanguage": false,
-                    "required": false,
+                    "required": true,
                     "minLength": 6,
                     "maxLength": 30
                 },
@@ -1443,20 +1479,20 @@
                     "icon": "sicon-list-add",
                     "fields": [
                         {
-                            "id": "products.products_source",
-                            "type": "items",
-                            "format": "dropdown-list",
-                            "label": "اختار المنتجات",
-                            "description": "اختار المنتجات اللي تريد عرضها",
+                            "id": "products.products_limit",
+                            "type": "number",
+                            "format": "float",
+                            "inputType": "number",
+                            "label": "عدد المنتجات المعروضة",
+                            "description": null,
                             "labelHTML": null,
-                            "icon": "sicon-keyboard_arrow_down",
-                            "selected": [],
-                            "options": [],
-                            "source": "Products",
-                            "multichoice": true,
-                            "searchable": true,
+                            "placeholder": "Input a number between -10.10 and 100.",
+                            "icon": "sicon-hashtag",
+                            "value": 10,
                             "required": true,
-                            "value": []
+                            "step": 0.1,
+                            "minimum": -10.1,
+                            "maximum": 100
                         },
                         {
                             "id": "products.show_price",
@@ -1476,47 +1512,47 @@
                     "maxLength": 5
                 },
                 {
-                    "id": "products_limit",
-                    "type": "number",
-                    "format": "float",
-                    "inputType": "number",
-                    "label": "عدد المنتجات المعروضة",
-                    "description": null,
+                    "id": "countdown_end",
+                    "type": "string",
+                    "format": "datetime",
+                    "inputType": "datetime-local",
+                    "label": "وقت نهاية العرض",
+                    "description": "يستخدم لحساب العدّ التنازلي، اتركه فارغًا لإخفاء العدّ عند انتهاء الحملة.",
                     "labelHTML": null,
-                    "placeholder": "Input a number between -10.10 and 100.",
-                    "icon": "sicon-hashtag",
-                    "value": 10,
-                    "required": true,
-                    "step": 0.1,
-                    "minimum": -10.1,
-                    "maximum": 100
+                    "icon": "sicon-calendar-time",
+                    "value": "2021-10-01T15:23",
+                    "required": true
                 },
                 {
-                    "id": "hero_image",
-                    "type": "string",
-                    "format": "image",
-                    "label": "صورة الهيرو",
-                    "description": "الصورة الرئيسية الكبيرة بجانب النص.",
+                    "id": "show_countdown",
+                    "type": "items",
+                    "format": "checkbox-list",
+                    "label": "تفعيل العدّ التنازلي",
+                    "description": "عند التفعيل يظهر عدّ تنازلي لنهاية العرض في هذا القسم.",
                     "labelHTML": null,
-                    "placeholder": "e.g. https://hostname.com/image.png",
-                    "icon": "sicon-image",
-                    "value": null,
-                    "required": false
-                },
-                {
-                    "id": "description",
-                    "type": "string",
-                    "format": "richtext",
-                    "label": "وصف القسم",
-                    "description": null,
-                    "labelHTML": null,
-                    "placeholder": "Your text here ..",
-                    "icon": "sicon-touch-type",
-                    "value": "نص وصفي أسفل العنوان يشرح العرض أو الفكرة.",
-                    "multilanguage": true,
-                    "required": false,
-                    "minLength": 60,
-                    "maxLength": 1000
+                    "icon": "sicon-list-check",
+                    "selected": [
+                        {
+                            "label": null,
+                            "value": "Value 1",
+                            "key": "3d029457-f679-4f62-b488-ad4066ff3f6b"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": null,
+                            "value": "Value 1",
+                            "key": "3d029457-f679-4f62-b488-ad4066ff3f6b"
+                        },
+                        {
+                            "label": null,
+                            "value": "Value 2",
+                            "key": "1cb348e8-2f42-4fd0-aa93-bbf12a032d56"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": true,
+                    "required": true
                 },
                 {
                     "id": "button_text",
@@ -1547,41 +1583,6 @@
                     "required": false,
                     "minLength": 6,
                     "maxLength": 30
-                },
-                {
-                    "id": "aanoan_alqsm",
-                    "type": "static",
-                    "format": "title",
-                    "label": "عنوان القسم",
-                    "value": null,
-                    "variant": "h1",
-                    "icon": "sicon-format-text"
-                },
-                {
-                    "id": "countdown_end",
-                    "type": "string",
-                    "format": "datetime",
-                    "inputType": "datetime-local",
-                    "label": "وقت نهاية العرض",
-                    "description": "يستخدم لحساب العدّ التنازلي، اتركه فارغًا لإخفاء العدّ عند انتهاء الحملة.",
-                    "labelHTML": null,
-                    "icon": "sicon-calendar-time",
-                    "value": "2021-10-01T15:23",
-                    "required": true
-                },
-                {
-                    "id": "show_countdown",
-                    "type": "items",
-                    "format": "checkbox-list",
-                    "label": ") تفعيل العدّ التنازلي",
-                    "description": "عند التفعيل يظهر عدّ تنازلي لنهاية العرض في هذا القسم.",
-                    "labelHTML": null,
-                    "icon": "sicon-list-check",
-                    "selected": [],
-                    "options": [],
-                    "source": "Manual",
-                    "multichoice": false,
-                    "required": true
                 }
             ]
         }
