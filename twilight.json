@@ -1274,7 +1274,7 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "imag",
+                    "id": "image",
                     "type": "string",
                     "format": "image",
                     "label": "صورة القسم",
@@ -1394,7 +1394,7 @@
                     "placeholder": "e.g. https://hostname.com/image.png",
                     "icon": "sicon-image",
                     "value": null,
-                    "required": true
+                    "required": false
                 }
             ]
         },
