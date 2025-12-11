@@ -1418,6 +1418,21 @@
             "path": "home.promo-hero-products",
             "fields": [
                 {
+                    "id": "countdown_label",
+                    "type": "string",
+                    "format": "text",
+                    "label": "نص العدّ التنازلي",
+                    "description": "ينتهي العرض خلال\" أو \"العرض متاح حتى",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "ينتهي العرض خلال",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
                     "id": "products",
                     "type": "collection",
                     "format": "collection",
