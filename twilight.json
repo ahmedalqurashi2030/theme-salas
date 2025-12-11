@@ -1257,7 +1257,23 @@
             },
             "icon": "sicon-store",
             "path": "home.before-after-hero",
-            "fields": []
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان القسم",
+                    "description": "العنوان الرئيسي الظاهر بجانب الصور.",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": true,
+                    "required": true,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         },
         {
             "key": "485fe7e4-53ff-43b0-b59f-2b87de85438a",
