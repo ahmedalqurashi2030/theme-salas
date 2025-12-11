@@ -1442,23 +1442,23 @@
                             "searchable": true,
                             "required": true,
                             "value": []
+                        },
+                        {
+                            "id": "products.show_price",
+                            "type": "boolean",
+                            "format": "checkbox",
+                            "label": "إظهار التقييم",
+                            "description": null,
+                            "labelHTML": null,
+                            "icon": "sicon-check-square",
+                            "value": true,
+                            "selected": false,
+                            "required": false
                         }
                     ],
                     "value": [],
                     "minLength": 1,
                     "maxLength": 5
-                },
-                {
-                    "id": "show_price",
-                    "type": "boolean",
-                    "format": "checkbox",
-                    "label": "إظهار التقييم",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-check-square",
-                    "value": true,
-                    "selected": false,
-                    "required": false
                 },
                 {
                     "id": "products_limit",
@@ -1534,20 +1534,6 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "show_countdown",
-                    "type": "items",
-                    "format": "checkbox-list",
-                    "label": ") تفعيل العدّ التنازلي",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-list-check",
-                    "selected": [],
-                    "options": [],
-                    "source": "Manual",
-                    "multichoice": true,
-                    "required": true
-                },
-                {
                     "id": "aanoan_alqsm",
                     "type": "static",
                     "format": "title",
@@ -1555,6 +1541,32 @@
                     "value": null,
                     "variant": "h1",
                     "icon": "sicon-format-text"
+                },
+                {
+                    "id": "countdown_end",
+                    "type": "string",
+                    "format": "datetime",
+                    "inputType": "datetime-local",
+                    "label": "وقت نهاية العرض",
+                    "description": "يستخدم لحساب العدّ التنازلي، اتركه فارغًا لإخفاء العدّ عند انتهاء الحملة.",
+                    "labelHTML": null,
+                    "icon": "sicon-calendar-time",
+                    "value": "2021-10-01T15:23",
+                    "required": true
+                },
+                {
+                    "id": "show_countdown",
+                    "type": "items",
+                    "format": "checkbox-list",
+                    "label": ") تفعيل العدّ التنازلي",
+                    "description": "عند التفعيل يظهر عدّ تنازلي لنهاية العرض في هذا القسم.",
+                    "labelHTML": null,
+                    "icon": "sicon-list-check",
+                    "selected": [],
+                    "options": [],
+                    "source": "Manual",
+                    "multichoice": false,
+                    "required": true
                 }
             ]
         }
