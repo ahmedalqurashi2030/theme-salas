@@ -1469,7 +1469,23 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "products",
+                    "id": "products.products_limit",
+                    "type": "number",
+                    "format": "float",
+                    "inputType": "number",
+                    "label": "عدد المنتجات المعروضة",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Input a number between -10.10 and 100.",
+                    "icon": "sicon-hashtag",
+                    "value": 10,
+                    "required": true,
+                    "step": 0.1,
+                    "minimum": -10.1,
+                    "maximum": 100
+                },
+                {
+                    "id": "products_itme",
                     "type": "collection",
                     "format": "collection",
                     "label": "المنتجات المختاره",
@@ -1479,37 +1495,37 @@
                     "icon": "sicon-list-add",
                     "fields": [
                         {
-                            "id": "products.products_limit",
-                            "type": "number",
-                            "format": "float",
-                            "inputType": "number",
-                            "label": "عدد المنتجات المعروضة",
+                            "id": "products_itme.products",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "label": "المنتجات",
                             "description": null,
                             "labelHTML": null,
-                            "placeholder": "Input a number between -10.10 and 100.",
-                            "icon": "sicon-hashtag",
-                            "value": 10,
-                            "required": true,
-                            "step": 0.1,
-                            "minimum": -10.1,
-                            "maximum": 100
-                        },
-                        {
-                            "id": "products.show_price",
-                            "type": "boolean",
-                            "format": "checkbox",
-                            "label": "إظهار التقييم",
-                            "description": null,
-                            "labelHTML": null,
-                            "icon": "sicon-check-square",
-                            "value": true,
-                            "selected": false,
-                            "required": false
+                            "icon": "sicon-keyboard_arrow_down",
+                            "selected": [],
+                            "options": [],
+                            "source": "Products",
+                            "multichoice": true,
+                            "searchable": true,
+                            "required": false,
+                            "value": []
                         }
                     ],
                     "value": [],
                     "minLength": 1,
                     "maxLength": 5
+                },
+                {
+                    "id": "products.show_price",
+                    "type": "boolean",
+                    "format": "checkbox",
+                    "label": "إظهار التقييم",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-check-square",
+                    "value": true,
+                    "selected": false,
+                    "required": false
                 },
                 {
                     "id": "countdown_end",
