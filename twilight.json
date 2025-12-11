@@ -1422,9 +1422,16 @@
                     "type": "static",
                     "format": "title",
                     "label": "عنوان القسم",
-                    "value": null,
+                    "value": "عنوان القسم 5555",
                     "variant": "h1",
                     "icon": "sicon-format-text"
+                },
+                {
+                    "id": "line_1",
+                    "type": "static",
+                    "format": "line",
+                    "label": "Line 1",
+                    "icon": "sicon-minus"
                 },
                 {
                     "id": "description",
@@ -1440,6 +1447,22 @@
                     "required": false,
                     "minLength": 60,
                     "maxLength": 1000
+                },
+                {
+                    "id": "descriptionss",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": "lug777777777777777777",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "line",
+                    "type": "static",
+                    "format": "line",
+                    "label": "Line",
+                    "icon": "sicon-minus"
                 },
                 {
                     "id": "hero_image",
@@ -1467,22 +1490,6 @@
                     "required": true,
                     "minLength": 6,
                     "maxLength": 30
-                },
-                {
-                    "id": "products.products_limit",
-                    "type": "number",
-                    "format": "float",
-                    "inputType": "number",
-                    "label": "عدد المنتجات المعروضة",
-                    "description": null,
-                    "labelHTML": null,
-                    "placeholder": "Input a number between -10.10 and 100.",
-                    "icon": "sicon-hashtag",
-                    "value": 10,
-                    "required": true,
-                    "step": 0.1,
-                    "minimum": -10.1,
-                    "maximum": 100
                 },
                 {
                     "id": "products_itme",
@@ -1516,6 +1523,18 @@
                     "maxLength": 5
                 },
                 {
+                    "id": "show_countdown",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "تفعيل العدّ التنازلي",
+                    "description": "عند التفعيل يظهر عدّ تنازلي لنهاية العرض في هذا القسم.",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
                     "id": "show_price",
                     "type": "boolean",
                     "format": "switch",
@@ -1538,18 +1557,6 @@
                     "icon": "sicon-calendar-time",
                     "value": "2021-10-01T15:23",
                     "required": true
-                },
-                {
-                    "id": "show_countdown",
-                    "type": "boolean",
-                    "format": "switch",
-                    "label": "تفعيل العدّ التنازلي",
-                    "description": "عند التفعيل يظهر عدّ تنازلي لنهاية العرض في هذا القسم.",
-                    "labelHTML": null,
-                    "icon": "sicon-toggle-off",
-                    "value": true,
-                    "selected": false,
-                    "required": false
                 },
                 {
                     "id": "button_text",
