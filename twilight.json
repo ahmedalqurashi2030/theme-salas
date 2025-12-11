@@ -1385,13 +1385,6 @@
                     "required": true
                 },
                 {
-                    "id": ".ns_asfl_sort_baad",
-                    "type": "static",
-                    "format": "line",
-                    "label": "نص أسفل صورة بعد",
-                    "icon": "sicon-minus"
-                },
-                {
                     "id": "after_label",
                     "type": "string",
                     "format": "text",
@@ -1416,7 +1409,7 @@
                     "placeholder": "e.g. https://hostname.com/image.png",
                     "icon": "sicon-image",
                     "value": "بعد 4 أسابيع",
-                    "required": true
+                    "required": false
                 }
             ]
         },
