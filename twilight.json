@@ -1385,7 +1385,7 @@
                     "maxLength": 30
                 },
                 {
-                    "id": ".after_image",
+                    "id": "after_image",
                     "type": "string",
                     "format": "image",
                     "label": "صورة بعد",
