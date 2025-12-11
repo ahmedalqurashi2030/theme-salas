@@ -1274,21 +1274,6 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "subtitle",
-                    "type": "string",
-                    "format": "text",
-                    "label": "وسم علوي فوق العنوان",
-                    "description": "يظهر كنص صغير فوق العنوان (اختياري)",
-                    "labelHTML": null,
-                    "placeholder": "Placeholder text ..",
-                    "icon": "sicon-format-text-alt",
-                    "value": "Blemish control cleanser",
-                    "multilanguage": false,
-                    "required": false,
-                    "minLength": 6,
-                    "maxLength": 30
-                },
-                {
                     "id": "imag",
                     "type": "string",
                     "format": "image",
@@ -1408,8 +1393,8 @@
                     "labelHTML": null,
                     "placeholder": "e.g. https://hostname.com/image.png",
                     "icon": "sicon-image",
-                    "value": "بعد 4 أسابيع",
-                    "required": false
+                    "value": null,
+                    "required": true
                 }
             ]
         },
