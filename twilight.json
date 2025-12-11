@@ -1516,13 +1516,13 @@
                     "maxLength": 5
                 },
                 {
-                    "id": "products.show_price",
+                    "id": "show_price",
                     "type": "boolean",
-                    "format": "checkbox",
+                    "format": "switch",
                     "label": "إظهار التقييم",
                     "description": null,
                     "labelHTML": null,
-                    "icon": "sicon-check-square",
+                    "icon": "sicon-toggle-off",
                     "value": true,
                     "selected": false,
                     "required": false
@@ -1541,34 +1541,15 @@
                 },
                 {
                     "id": "show_countdown",
-                    "type": "items",
-                    "format": "checkbox-list",
+                    "type": "boolean",
+                    "format": "switch",
                     "label": "تفعيل العدّ التنازلي",
                     "description": "عند التفعيل يظهر عدّ تنازلي لنهاية العرض في هذا القسم.",
                     "labelHTML": null,
-                    "icon": "sicon-list-check",
-                    "selected": [
-                        {
-                            "label": null,
-                            "value": "Value 1",
-                            "key": "3d029457-f679-4f62-b488-ad4066ff3f6b"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": null,
-                            "value": "Value 1",
-                            "key": "3d029457-f679-4f62-b488-ad4066ff3f6b"
-                        },
-                        {
-                            "label": null,
-                            "value": "Value 2",
-                            "key": "1cb348e8-2f42-4fd0-aa93-bbf12a032d56"
-                        }
-                    ],
-                    "source": "Manual",
-                    "multichoice": true,
-                    "required": true
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
                 },
                 {
                     "id": "button_text",
