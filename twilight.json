@@ -1247,6 +1247,16 @@
                     "maxLength": 5
                 }
             ]
+        },
+        {
+            "key": "5d19b08d-c8d1-4422-95ab-d4c86d7bdc04",
+            "title": {
+                "en": "Before / After Section 1",
+                "ar": "قسم قبل / بعد 1"
+            },
+            "icon": "sicon-store",
+            "path": "home.before-after-hero",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
