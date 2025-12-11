@@ -1418,20 +1418,19 @@
             "path": "home.promo-hero-products",
             "fields": [
                 {
-                    "id": "aanoan_alqsm",
-                    "type": "static",
-                    "format": "title",
+                    "id": "title",
+                    "type": "string",
+                    "format": "text",
                     "label": "عنوان القسم",
-                    "value": "عنوان القسم 5555",
-                    "variant": "h1",
-                    "icon": "sicon-format-text"
-                },
-                {
-                    "id": "line_1",
-                    "type": "static",
-                    "format": "line",
-                    "label": "Line 1",
-                    "icon": "sicon-minus"
+                    "description": "عنوان القسم",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
                 },
                 {
                     "id": "description",
@@ -1447,22 +1446,6 @@
                     "required": false,
                     "minLength": 60,
                     "maxLength": 1000
-                },
-                {
-                    "id": "descriptionss",
-                    "type": "static",
-                    "format": "description",
-                    "label": "Description",
-                    "value": "lug777777777777777777",
-                    "variant": "h1",
-                    "icon": "sicon-format-size"
-                },
-                {
-                    "id": "line",
-                    "type": "static",
-                    "format": "line",
-                    "label": "Line",
-                    "icon": "sicon-minus"
                 },
                 {
                     "id": "hero_image",
@@ -1492,35 +1475,20 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "products_itme",
-                    "type": "collection",
-                    "format": "collection",
+                    "id": "products",
+                    "type": "items",
+                    "format": "dropdown-list",
                     "label": "المنتجات المختاره",
                     "description": null,
                     "labelHTML": null,
-                    "item_label": null,
-                    "icon": "sicon-list-add",
-                    "fields": [
-                        {
-                            "id": "products_itme.products",
-                            "type": "items",
-                            "format": "dropdown-list",
-                            "label": "المنتجات",
-                            "description": null,
-                            "labelHTML": null,
-                            "icon": "sicon-keyboard_arrow_down",
-                            "selected": [],
-                            "options": [],
-                            "source": "Products",
-                            "multichoice": true,
-                            "searchable": true,
-                            "required": false,
-                            "value": []
-                        }
-                    ],
-                    "value": [],
-                    "minLength": 1,
-                    "maxLength": 5
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [],
+                    "options": [],
+                    "source": "Products",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": true,
+                    "value": []
                 },
                 {
                     "id": "show_countdown",
@@ -1532,7 +1500,7 @@
                     "icon": "sicon-toggle-off",
                     "value": true,
                     "selected": false,
-                    "required": false
+                    "required": true
                 },
                 {
                     "id": "show_price",
@@ -1544,7 +1512,7 @@
                     "icon": "sicon-toggle-off",
                     "value": true,
                     "selected": false,
-                    "required": false
+                    "required": true
                 },
                 {
                     "id": "countdown_end",
