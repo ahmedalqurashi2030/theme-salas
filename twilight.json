@@ -1358,80 +1358,65 @@
                     "required": false
                 },
                 {
-                    "id": "comparison_items",
-                    "type": "collection",
-                    "format": "collection",
-                    "label": "Collection",
-                    "description": null,
+                    "id": "before_label",
+                    "type": "string",
+                    "format": "text",
+                    "label": "نص أسفل صورة قبل",
+                    "description": "عنوان / وصف صغير يظهر أسفل صورة \"قبل",
                     "labelHTML": null,
-                    "item_label": null,
-                    "icon": "sicon-list-add",
-                    "fields": [
-                        {
-                            "id": "comparison_items.collection.before_label",
-                            "type": "string",
-                            "format": "text",
-                            "label": "نص أسفل صورة قبل",
-                            "description": "عنوان / وصف صغير يظهر أسفل صورة \"قبل",
-                            "labelHTML": null,
-                            "placeholder": "Placeholder text ..",
-                            "icon": "sicon-format-text-alt",
-                            "value": "قبل الاستخدام",
-                            "multilanguage": false,
-                            "required": false,
-                            "minLength": 6,
-                            "maxLength": 30
-                        },
-                        {
-                            "id": "comparison_items.collection.before_image",
-                            "type": "string",
-                            "format": "image",
-                            "label": "صورة قبل",
-                            "description": "الصورة التي تمثل الحالة قبل استخدام المنتج.",
-                            "labelHTML": null,
-                            "placeholder": "e.g. https://hostname.com/image.png",
-                            "icon": "sicon-image",
-                            "value": null,
-                            "required": true
-                        },
-                        {
-                            "id": "comparison_items.ns_asfl_sort_baad",
-                            "type": "static",
-                            "format": "line",
-                            "label": "نص أسفل صورة بعد",
-                            "icon": "sicon-minus"
-                        },
-                        {
-                            "id": "comparison_items.collection.after_label",
-                            "type": "string",
-                            "format": "text",
-                            "label": "نص أسفل صورة بعد",
-                            "description": "عنوان / وصف صغير يظهر أسفل صورة \"بعد",
-                            "labelHTML": null,
-                            "placeholder": "Placeholder text ..",
-                            "icon": "sicon-format-text-alt",
-                            "value": "بعد 4 أسابيع",
-                            "multilanguage": true,
-                            "required": false,
-                            "minLength": 6,
-                            "maxLength": 30
-                        },
-                        {
-                            "id": "comparison_items.collection.after_image",
-                            "type": "string",
-                            "format": "image",
-                            "label": "صورة بعد",
-                            "description": "الصورة التي تمثل النتيجة بعد الاستخدام",
-                            "labelHTML": null,
-                            "placeholder": "e.g. https://hostname.com/image.png",
-                            "icon": "sicon-image",
-                            "value": "بعد 4 أسابيع",
-                            "required": true
-                        }
-                    ],
-                    "value": [],
-                    "minLength": 1,
-                    "maxLength": 5
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "قبل الاستخدام",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "before_image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة قبل",
+                    "description": "الصورة التي تمثل الحالة قبل استخدام المنتج.",
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://hostname.com/image.png",
+                    "icon": "sicon-image",
+                    "value": null,
+                    "required": true
+                },
+                {
+                    "id": ".ns_asfl_sort_baad",
+                    "type": "static",
+                    "format": "line",
+                    "label": "نص أسفل صورة بعد",
+                    "icon": "sicon-minus"
+                },
+                {
+                    "id": "after_label",
+                    "type": "string",
+                    "format": "text",
+                    "label": "نص أسفل صورة بعد",
+                    "description": "عنوان / وصف صغير يظهر أسفل صورة \"بعد",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "بعد 4 أسابيع",
+                    "multilanguage": true,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": ".after_image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة بعد",
+                    "description": "الصورة التي تمثل النتيجة بعد الاستخدام",
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://hostname.com/image.png",
+                    "icon": "sicon-image",
+                    "value": "بعد 4 أسابيع",
+                    "required": true
                 }
             ]
         },
