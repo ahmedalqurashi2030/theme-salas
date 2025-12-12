@@ -1,231 +1,353 @@
 {# src/views/components/header/header.twig #}
 
-<header class="store-header th-header sticky top-0 z-[999]">
+<header class="th-header">
     
     {# 1. الشريط العلوي #}
-    <div class="th-topbar py-2 hidden md:block">
-        <div class="container flex justify-between items-center">
-            <div class="flex gap-4 opacity-90">
-                <span><i class="sicon-shipping-fast mx-1"></i> شحن مجاني للطلبات +299 ر.س</span>
-            </div>
-            <div class="flex items-center gap-4">
-                {% component 'footer.menu' with {is_header:true} %}
-                {# اللغة والعملة #}
-                {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-                    <button onclick="salla.event.dispatch('localization::open')" class="hover:text-gold transition">
-                        {{ user.language.name }} | {{ currency.symbol }}
-                    </button>
-                {% endif %}
-            </div>
+    <div class="th-top-bar">
+        <div class="container">
+            شحن مجاني للطلبات التي تزيد عن 299 ريال | تسوق الآن واستمتع بالخصومات
         </div>
     </div>
 
     {# 2. الهيدر الرئيسي #}
-    <div class="th-main-header py-3">
-        <div class="container flex items-center justify-between gap-8">
+    <div class="th-main-header">
+        <div class="th-header-container">
             
             {# زر الموبايل #}
-            <button class="lg:hidden text-2xl text-gray-800" onclick="toggleMobileMenu()">
+            <button class="lg:hidden text-2xl" onclick="toggleDrawer()">
                 <i class="sicon-menu"></i>
             </button>
 
             {# الشعار #}
-            <a href="{{ store.url }}" class="shrink-0">
-                <img src="{{ store.logo }}" alt="{{ store.name }}" class="h-10 md:h-12 w-auto object-contain">
+            <a href="{{ store.url }}" class="th-logo">
+                <img src="{{ store.logo }}" alt="{{ store.name }}">
             </a>
 
-            {# البحث (تصميم حديث) #}
-            <div class="flex-1 max-w-2xl hidden lg:block">
-                <salla-search inline oval height="46" placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
+            {# البحث #}
+            <div class="th-search-box hidden lg:block">
+                <salla-search inline oval placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
             </div>
 
             {# الأيقونات #}
-            <div class="flex items-center gap-6">
-                <button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')"><i class="sicon-search"></i></button>
-                
+            <div class="th-header-icons">
+                {# زر بحث للموبايل #}
+                <button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')">
+                    <i class="sicon-search"></i>
+                </button>
+
+                {# حسابي #}
                 <div class="hidden lg:block">
                     <salla-user-menu avatar-only show-header></salla-user-menu>
                 </div>
+                <button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')">
+                    <i class="sicon-user"></i>
+                </button>
 
-                <a href="{{ link('wishlist') }}" class="th-icon-btn hidden lg:flex">
+                {# المفضلة #}
+                <a href="{{ link('wishlist') }}" class="th-icon-item hidden lg:flex">
                     <i class="sicon-heart"></i>
-                    <span class="th-icon-label">المفضلة</span>
+                    <span class="desktop-only">المفضلة</span>
                 </a>
 
-                <salla-cart-summary class="th-icon-btn cursor-pointer">
+                {# السلة #}
+                <salla-cart-summary class="th-icon-item">
                     <div slot="icon" class="relative">
                         <i class="sicon-shopping-bag"></i>
-                        <span class="th-badge">{{ cart.items_count }}</span>
+                        <span class="absolute -top-1 -right-1 bg-[#d4af37] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                            {{ cart.items_count }}
+                        </span>
                     </div>
-                    <span class="th-icon-label hidden lg:block">السلة</span>
+                    <span class="desktop-only">السلة</span>
                 </salla-cart-summary>
             </div>
         </div>
     </div>
 
-    {# 3. الناف بار #}
-    <div class="th-navbar hidden lg:block">
-        <div class="container h-full">
-            {% component 'header.menu' %}
+    {# 3. شريط التنقل (Desktop Nav) #}
+    <nav class="th-nav-bar">
+        <div class="th-nav-container">
+            
+            {# MEGA MENU: جميع الأقسام #}
+            <div class="th-all-cats-btn">
+                <i class="sicon-layout-grid"></i> جميع الأقسام
+                
+                <div class="th-mega-menu">
+                    <div class="th-mega-sidebar">
+                        {% for category in store.categories|slice(0, 8) %}
+                            <div class="th-mega-tab {{ loop.first ? 'active' : '' }}" onmouseover="openTab(event, 'cat-{{ category.id }}')">
+                                {{ category.name }} <i class="sicon-keyboard_arrow_left text-[10px]"></i>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="th-mega-content">
+                        {% for category in store.categories|slice(0, 8) %}
+                            <div id="cat-{{ category.id }}" class="th-tab-pane {{ loop.first ? 'active' : '' }}">
+                                <div class="grid grid-cols-3 gap-4">
+                                    {% for child in category.children|slice(0, 12) %}
+                                        <a href="{{ child.url }}" class="flex items-center gap-2 hover:text-[#d4af37] transition">
+                                            {% if child.image %}
+                                                <img src="{{ child.image }}" class="w-8 h-8 rounded-full object-cover">
+                                            {% endif %}
+                                            <span class="text-sm font-bold">{{ child.name }}</span>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {# الروابط الرئيسية (Cascading Menu) #}
+            <ul class="th-nav-links">
+                {% for menu in menus.main_menu %}
+                    {% include 'components.header._menu-item' with { menu: menu, is_root: true } %}
+                {% endfor %}
+            </ul>
+
         </div>
-    </div>
+    </nav>
 
 </header>
 
-{# استدعاء المودالز الضرورية #}
-<salla-localization-modal></salla-localization-modal>
-{% if store.scope %} <salla-scopes></salla-scopes> {% endif %}
+{# 4. قائمة الموبايل (Mobile Drawer) #}
+<div class="th-mobile-overlay" id="overlay" onclick="toggleDrawer()"></div>
+<div class="th-mobile-drawer" id="drawer">
+    <div class="drawer-header p-5 flex justify-between items-center border-b border-gray-100">
+        <h3 class="font-bold text-lg">القائمة</h3>
+        <button onclick="toggleDrawer()" class="text-xl">&times;</button>
+    </div>
+    <div class="drawer-body">
+        <a href="{{ store.url }}" class="block p-4 border-b border-gray-50 font-bold">الرئيسية</a>
+        
+        {# تكرار القوائم للموبايل #}
+        {% for menu in menus.main_menu %}
+            {% include 'components.header._menu-item' with { menu: menu, is_mobile: true } %}
+        {% endfor %}
+
+        {# جميع الأقسام للموبايل #}
+        <div>
+            <div class="th-acc-header" onclick="toggleAcc(this)">
+                <span class="font-bold">جميع الأقسام</span>
+                <i class="sicon-add text-xs"></i>
+            </div>
+            <div class="th-acc-content">
+                {% for category in store.categories %}
+                    <a href="{{ category.url }}" class="block p-3 pr-8 text-sm text-gray-600 border-b border-gray-50">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <a href="{{ link('offers') }}" class="block p-4 border-b border-gray-50 font-bold text-red-500">التخفيضات</a>
+    </div>
+</div>
+
+{# Scripts #}
+<script>
+    function openTab(evt, tabId) {
+        document.querySelectorAll('.th-tab-pane').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.th-mega-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    function toggleDrawer() {
+        document.getElementById("drawer").classList.toggle("open");
+        document.getElementById("overlay").classList.toggle("open");
+    }
+
+    function toggleAcc(header) {
+        var content = header.nextElementSibling;
+        var icon = header.querySelector("i");
+        
+        if (content.classList.contains("show")) {
+            content.classList.remove("show");
+            icon.classList.remove("sicon-minus");
+            icon.classList.add("sicon-add");
+        } else {
+            content.classList.add("show");
+            icon.classList.remove("sicon-add");
+            icon.classList.add("sicon-minus");
+        }
+    }
+</script>
 
 
 <style>
-  /* --- متغيرات الألوان --- */
+
+
+    /* =========================================
+   THARAA THEME - EXACT REPLICA STYLES
+   ========================================= */
 :root {
-    --color-gold: #d4af37;
-    --color-dark: #222;
-    --color-gray-light: #f9f9f9;
+    --th-primary: #222222;
+    --th-accent: #d4af37;
+    --th-bg-light: #f4f6f8;
+    --th-white: #ffffff;
+    --th-border: #e5e5e5;
+    --th-font: 'Tajawal', sans-serif;
+    --th-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --th-transition: all 0.3s ease;
 }
 
-/* --- تنسيقات الهيدر العامة --- */
-.th-header {
-    font-family: 'Tajawal', sans-serif; /* تأكد من وجود الخط */
-}
+/* إعدادات عامة */
+.th-header { font-family: var(--th-font); color: var(--th-primary); }
+.th-header ul { list-style: none; padding: 0; margin: 0; }
+.th-header a { text-decoration: none; color: inherit; transition: var(--th-transition); }
 
-.th-topbar {
-    background-color: var(--color-dark);
-    color: #fff;
+/* 1. الشريط العلوي */
+.th-top-bar {
+    background: var(--th-primary);
+    color: var(--th-white);
+    text-align: center;
+    padding: 8px;
     font-size: 12px;
-    padding: 8px 0;
+    font-weight: 500;
 }
 
-.th-topbtn {
+/* 2. الهيدر الرئيسي */
+.th-main-header {
+    background: var(--th-white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    border-bottom: 1px solid var(--th-border);
+}
+
+.th-header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
-    opacity: 0.8;
-    transition: 0.3s;
-}
-.th-topbtn:hover { opacity: 1; }
-
-.th-logo img {
-    height: 45px;
-    width: auto;
+    gap: 40px;
 }
 
-/* --- زر السلة --- */
-.th-cart-btn {
-    position: relative;
-    cursor: pointer;
-}
-.th-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: var(--color-gold);
-    color: #fff;
-    font-size: 10px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
+/* الشعار */
+.th-logo img { max-height: 45px; width: auto; }
+
+/* البحث */
+.th-search-box { flex-grow: 1; position: relative; }
+salla-search {
+    --salla-border-radius: 50px;
+    --salla-bg-surface: var(--th-bg-light);
+    --salla-height: 45px;
 }
 
-/* --- الناف بار وزر جميع الأقسام --- */
-.th-navbar {
-    height: 55px;
-    position: relative;
-    z-index: 20; /* أقل من الهيدر المثبت */
+/* الأيقونات */
+.th-header-icons { display: flex; gap: 25px; align-items: center; }
+.th-icon-item {
+    display: flex; flex-direction: column; align-items: center;
+    font-size: 11px; gap: 4px; font-weight: 600; color: #333; cursor: pointer;
 }
+.th-icon-item i { font-size: 22px; transition: 0.2s; }
+.th-icon-item:hover i { color: var(--th-accent); transform: translateY(-2px); }
 
+/* 3. شريط التنقل (Nav Bar) */
+.th-nav-bar { border-bottom: 1px solid var(--th-border); background: #fff; height: 55px; }
 .th-nav-container {
-    height: 100%;
+    max-width: 1400px; margin: 0 auto; padding: 0 20px;
+    display: flex; align-items: center; height: 100%; gap: 30px;
 }
 
-.th-all-cats-wrapper {
-    height: 100%;
-    position: relative;
-}
-
+/* زر جميع الأقسام */
 .th-all-cats-btn {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 20px;
-    background-color: var(--color-gray-light);
-    border-left: 1px solid #eee;
-    border-right: 1px solid #eee;
-    cursor: pointer;
-    font-weight: 800;
-    font-size: 14px;
-    color: var(--color-dark);
-    transition: 0.3s;
-    width: 200px; /* عرض ثابت للجمالية */
+    height: 100%; display: flex; align-items: center; gap: 10px;
+    padding: 0 20px; background: #f9f9f9;
+    border-left: 1px solid var(--th-border); border-right: 1px solid var(--th-border);
+    font-weight: 700; cursor: pointer; position: relative;
+}
+.th-all-cats-btn:hover { background: var(--th-accent); color: #fff; }
+
+/* الروابط الرئيسية */
+.th-nav-links { display: flex; gap: 25px; height: 100%; align-items: center; }
+.th-nav-item {
+    height: 100%; display: flex; align-items: center; position: relative;
+    cursor: pointer; font-weight: 500; font-size: 15px;
+}
+.th-nav-item > a { padding: 10px 0; display: flex; align-items: center; gap: 5px; }
+.th-nav-item:hover > a { color: var(--th-accent); }
+
+/* القائمة المتسلسلة (Cascading Menu) */
+.th-cascading-dropdown {
+    position: absolute; top: 100%; right: 0; width: 260px;
+    background: var(--th-white); border: 1px solid var(--th-border);
+    border-radius: 0 0 8px 8px; box-shadow: var(--th-shadow);
+    padding: 10px 0; opacity: 0; visibility: hidden;
+    transform: translateY(10px); transition: var(--th-transition); z-index: 1100;
+}
+.th-nav-item:hover .th-cascading-dropdown {
+    opacity: 1; visibility: visible; transform: translateY(0);
 }
 
-.th-all-cats-wrapper:hover .th-all-cats-btn {
-    background-color: var(--color-gold);
-    color: #fff;
+.th-cascading-link {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px; font-size: 14px; color: #555;
 }
+.th-cascading-item:hover > .th-cascading-link { background: #fcfcfc; color: var(--th-accent); }
 
-/* --- الميجا منيو (Mega Menu) --- */
+/* القائمة الفرعية الجانبية (Nested) */
+.th-nested-menu {
+    position: absolute; top: -5px; right: 100%; width: 230px;
+    background: var(--th-white); border: 1px solid var(--th-border);
+    border-radius: 8px; box-shadow: var(--th-shadow); padding: 10px 0;
+    margin-right: 5px; display: none; animation: slideInSide 0.3s ease;
+}
+.th-cascading-item:hover > .th-nested-menu { display: block; }
+@keyframes slideInSide { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+
+/* الميجا منيو (Mega Menu) */
 .th-mega-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 900px;
-    background: #fff;
-    border: 1px solid #eee;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-    border-radius: 0 0 8px 8px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    z-index: 100;
-    min-height: 400px;
+    position: absolute; top: 100%; right: 0; width: 900px;
+    background: #fff; border: 1px solid var(--th-border); border-top: none;
+    display: flex; box-shadow: var(--th-shadow);
+    opacity: 0; visibility: hidden; transform: translateY(10px);
+    transition: var(--th-transition); z-index: 1000; min-height: 400px;
 }
+.th-all-cats-btn:hover .th-mega-menu { opacity: 1; visibility: visible; transform: translateY(0); }
 
-.th-all-cats-wrapper:hover .th-mega-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
+.th-mega-sidebar { width: 25%; background: #fcfcfc; border-left: 1px solid var(--th-border); }
 .th-mega-tab {
-    padding: 12px 20px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    color: #555;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #f0f0f0;
-    transition: 0.2s;
+    padding: 15px 20px; cursor: pointer; font-size: 14px;
+    border-bottom: 1px solid #eee; display: flex; justify-content: space-between;
 }
-
 .th-mega-tab:hover, .th-mega-tab.active {
-    background-color: #fff;
-    color: var(--color-gold);
-    border-right: 3px solid var(--color-gold);
-    padding-right: 17px; /* تعويض البوردر */
+    background: #fff; color: var(--th-accent);
+    border-right: 3px solid var(--th-accent); font-weight: bold;
 }
+.th-mega-content { width: 75%; padding: 30px; }
+.th-tab-pane { display: none; animation: fadeIn 0.3s; }
+.th-tab-pane.active { display: block; }
 
-.th-mega-pane {
-    display: none;
-    animation: fadeIn 0.3s ease;
+/* الموبايل (Mobile Drawer) */
+.th-mobile-drawer {
+    position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+    background: #fff; z-index: 2001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto; box-shadow: -5px 0 20px rgba(0,0,0,0.1);
 }
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+.th-mobile-drawer.open { right: 0; }
+.th-mobile-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 2000; display: none;
 }
+.th-mobile-overlay.open { display: block; }
 
-/* --- إصلاحات عامة --- */
-.text-gold { color: var(--color-gold) !important; }
-.hover\:text-gold:hover { color: var(--color-gold) !important; }
+/* Mobile Accordion */
+.th-acc-header {
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; background: #fff; padding: 15px 20px; border-bottom: 1px solid #f9f9f9;
+}
+.th-acc-content { max-height: 0; overflow: hidden; transition: 0.3s; background: #f8f8f8; }
+.th-acc-content.show { max-height: 1000px; }
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .th-nav-bar, .th-search-box, .desktop-only { display: none; }
+    .th-header-container { justify-content: space-between; padding: 10px 15px; }
+    .th-logo img { max-height: 35px; }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 
 </style>

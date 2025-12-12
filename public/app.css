@@ -972,6 +972,9 @@ select{
 .z-\[2\]{
     z-index: 2;
 }
+.z-\[999\]{
+    z-index: 999;
+}
 .col-span-2{
     grid-column: span 2 / span 2;
 }
@@ -1312,6 +1315,9 @@ select{
 }
 .w-6{
     width: 1.5rem;
+}
+.w-auto{
+    width: auto;
 }
 .min-w-0{
     min-width: 0px;
@@ -1765,6 +1771,11 @@ select{
     background-color: rgba(255, 255, 255, 1);
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
 }
+.bg-\[\#d4af37\]{
+    --tw-bg-opacity: 1;
+    background-color: rgba(212, 175, 55, 1);
+    background-color: rgba(212, 175, 55, var(--tw-bg-opacity, 1));
+}
 .bg-cover{
     background-size: cover;
 }
@@ -1966,6 +1977,9 @@ select{
 .pr-10{
     padding-right: 2.5rem;
 }
+.pr-8{
+    padding-right: 2rem;
+}
 .text-center{
     text-align: center;
 }
@@ -2016,6 +2030,9 @@ select{
 .text-xs{
     font-size: 0.75rem;
     line-height: 1rem;
+}
+.text-\[9px\]{
+    font-size: 9px;
 }
 .font-bold{
     font-weight: 700;
@@ -2170,6 +2187,11 @@ select{
     --tw-text-opacity: 1;
     color: rgba(255, 255, 255, 1);
     color: rgba(255, 255, 255, var(--tw-text-opacity, 1));
+}
+.text-gray-300{
+    --tw-text-opacity: 1;
+    color: rgba(209, 213, 219, 1);
+    color: rgba(209, 213, 219, var(--tw-text-opacity, 1));
 }
 .underline{
     text-decoration-line: underline;
@@ -25316,6 +25338,11 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     color: rgba(239, 68, 68, 1);
     color: rgba(239, 68, 68, var(--tw-text-opacity, 1));
 }
+.hover\:text-\[\#d4af37\]:hover{
+    --tw-text-opacity: 1;
+    color: rgba(212, 175, 55, 1);
+    color: rgba(212, 175, 55, var(--tw-text-opacity, 1));
+}
 .hover\:underline:hover{
     text-decoration-line: underline;
 }
@@ -25493,6 +25520,9 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     }
     .md\:h-\[400px\]{
         height: 400px;
+    }
+    .md\:h-12{
+        height: 3rem;
     }
     .md\:\!w-2\/4{
         width: 50% !important;
