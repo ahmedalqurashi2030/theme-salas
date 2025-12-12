@@ -2,89 +2,96 @@
 | Variable             | Type                   | Description                                        |
 |----------------------|------------------------|----------------------------------------------------|
 | menus                | Menu[] *Collection     | List of menus                                      |
-| menus[].has_children | Bool                   |                                                    |
-| menus[].url          | string                 |                                                    |
-| menus[].title        | string                 |                                                    |
-| menus[].attrs        | string                 | Menu dom attributes ex: ` id="offers"`             |
-| menus[].link_attrs   | string                 | Menu link dom attributes ex: `class="offers-link"` |
-| menus[].children     | Menu[] *Collection     |                                                    |
-| menus[].products     | ?Product[] *Collection | List of selected products or null                  |
 #}
 
-{# نجهّز أقسام الميجا من نفس قائمة سلة (العناصر اللي لها Children) #}
-{% set mega_roots = [] %}
-{% for _id, m in menus %}
-  {% if m.has_children %}
-    {% set mega_roots = mega_roots|merge([m]) %}
-  {% endif %}
+{# تجميع العناصر التي تحتوي على أبناء لاستخدامها في الميجا منيو #}
+{% set mega_items = [] %}
+{% for m in menus %}
+    {% if m.has_children %}
+        {% set mega_items = mega_items|merge([m]) %}
+    {% endif %}
 {% endfor %}
 
-<nav id="mobile-menu" class="mobile-menu th-hdr__menu" data-th-menu>
+<nav id="mobile-menu" class="mobile-menu th-nav-container">
+    
+    <div class="flex items-center h-full gap-6">
+        
+        {# 1. زر جميع الأقسام (Mega Menu Trigger) #}
+        <div class="th-all-cats-wrapper group">
+            <div class="th-all-cats-btn">
+                <i class="sicon-layout-grid"></i>
+                <span>جميع الأقسام</span>
+                <i class="sicon-keyboard_arrow_down text-xs opacity-50 mt-1 mr-auto"></i>
+            </div>
 
-  <div class="th-hdr__navWrap">
-
-    {# زر "جميع الأقسام" + Mega Tabs (Desktop Only) #}
-    {% if mega_roots|length %}
-      <div class="th-hdr__allCats hidden lg:flex" data-th-mega>
-        <button type="button" class="th-hdr__allCatsBtn" data-th-mega-toggle aria-expanded="false">
-          <i class="sicon-menu th-hdr__allCatsIco"></i>
-          <span>جميع الأقسام</span>
-        </button>
-
-        <div class="th-hdr__mega" data-th-mega-panel hidden>
-          <div class="th-hdr__megaSide">
-            {% for m in mega_roots|slice(0, 10) %}
-              <button type="button"
-                      class="th-hdr__megaTab {{ loop.first ? 'is-active' : '' }}"
-                      data-th-tab-btn data-th-tab-target="th-mega-{{ loop.index }}">
-                <span>{{ m.title }}</span>
-                <span aria-hidden="true">‹</span>
-              </button>
-            {% endfor %}
-          </div>
-
-          <div class="th-hdr__megaContent">
-            {% for m in mega_roots|slice(0, 10) %}
-              <div class="th-hdr__megaPane {{ loop.first ? 'is-active' : '' }}" id="th-mega-{{ loop.index }}" data-th-tab-pane>
-                <div class="th-hdr__megaGrid">
-                  {% for child in m.children %}
-                    <div class="th-hdr__megaGroup">
-                      <a class="th-hdr__megaTitle" href="{{ child.url }}">{{ child.title }}</a>
-
-                      {% if child.has_children %}
-                        {% for sub in child.children|slice(0, 12) %}
-                          <a class="th-hdr__megaLink" href="{{ sub.url }}">{{ sub.title }}</a>
+            {# محتوى الميجا منيو (Tabs Style) #}
+            <div class="th-mega-menu">
+                <div class="flex h-full">
+                    {# القائمة الجانبية #}
+                    <div class="w-1/4 bg-gray-50 border-l border-gray-100 py-2">
+                        {% for item in mega_items %}
+                            <div class="th-mega-tab {{ loop.first ? 'active' : '' }}" onmouseover="tharaaOpenTab(event, 'mega-{{ loop.index }}')">
+                                {{ item.title }}
+                                <i class="sicon-keyboard_arrow_left text-[10px]"></i>
+                            </div>
                         {% endfor %}
-                      {% endif %}
                     </div>
-                  {% endfor %}
+                    {# المحتوى #}
+                    <div class="w-3/4 p-6 bg-white overflow-y-auto">
+                        {% for item in mega_items %}
+                            <div id="mega-{{ loop.index }}" class="th-mega-pane {{ loop.first ? 'active' : '' }}">
+                                <div class="grid grid-cols-3 gap-6">
+                                    {% for child in item.children %}
+                                        <div>
+                                            <a href="{{ child.url }}" class="font-bold text-gray-800 mb-2 block hover:text-gold">{{ child.title }}</a>
+                                            {% if child.has_children %}
+                                                <ul class="space-y-1">
+                                                    {% for sub in child.children %}
+                                                        <li><a href="{{ sub.url }}" class="text-sm text-gray-500 hover:text-gold">{{ sub.title }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {# منتجات مقترحة #}
+                                {% if item.products %}
+                                    <div class="mt-6 pt-6 border-t border-gray-100">
+                                        <h4 class="font-bold mb-4 text-sm">منتجات مميزة</h4>
+                                        <div class="grid grid-cols-4 gap-4">
+                                            {% for product in item.products|slice(0, 4) %}
+                                                <salla-product-card shadow-on-hover product="{{ product }}" class="text-xs"></salla-product-card>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-
-                {% if m.products %}
-                  <div class="th-hdr__megaProducts">
-                    <div class="th-hdr__megaProductsGrid">
-                      {% for product in m.products|slice(0, 4) %}
-                        <salla-product-card shadow-on-hover product="{{ product }}"></salla-product-card>
-                      {% endfor %}
-                    </div>
-                  </div>
-                {% endif %}
-              </div>
-            {% endfor %}
-          </div>
+            </div>
         </div>
-      </div>
-    {% endif %}
 
-    <ul class="main-menu th-hdr__links">
-      {% for menu_id, menu in menus %}
-        {% include 'components.header._menu-item' with {is_root_menu:true} %}
-      {% endfor %}
-    </ul>
+        {# 2. الروابط الرئيسية (Cascading Menu) #}
+        <ul class="flex items-center gap-6 h-full">
+            {% for menu in menus %}
+                {% include 'components.header._menu-item' with { is_root: true } %}
+            {% endfor %}
+        </ul>
 
-  </div>
+    </div>
 
-  <button class="btn--close close-mobile-menu sicon-cancel lg:hidden" aria-label="إغلاق القائمة"></button>
+    {# زر إغلاق الموبايل #}
+    <button class="btn--close close-mobile-menu sicon-cancel lg:hidden"></button>
 </nav>
+<button class="btn--close-sm close-mobile-menu sicon-cancel lg:hidden"></button>
 
-<button class="btn--close-sm close-mobile-menu sicon-cancel lg:hidden" aria-label="إغلاق القائمة"></button>
+{# سكريبت التبويبات #}
+<script>
+function tharaaOpenTab(evt, id) {
+    document.querySelectorAll('.th-mega-pane').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.th-mega-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).style.display = 'block';
+    evt.currentTarget.classList.add('active');
+}
+</script>

@@ -6,359 +6,246 @@
 | cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
 
-<header class="store-header th-hdr">
+<header class="store-header th-header">
 
-  {# 0) Promo Bar (يمكن ربطه بإعدادات لاحقًا) #}
-  <div class="th-hdr__promo">
-    <div class="container">
-      شحن مجاني للطلبات التي تزيد عن 299 ريال | تسوّق الآن واستمتع بالخصومات
-    </div>
-  </div>
+    {# 1. الشريط العلوي (Top Bar) #}
+    <div class="th-topbar">
+        <div class="container flex justify-between items-center h-full">
+            <div class="flex items-center gap-4">
+                {# القائمة العلوية (روابط الفوتر) #}
+                {% component 'footer.menu' with {is_header:true} %}
+                
+                {# العملة واللغة #}
+                {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                    <button type="button" onclick="salla.event.dispatch('localization::open')" class="th-topbtn">
+                        <span class="flag iti__flag iti__{{ user.language.country_code }}"></span>
+                        <span class="mx-1">|</span> <span>{{ currency.symbol }}</span>
+                    </button>
+                    <salla-localization-modal></salla-localization-modal>
+                {% endif %}
+            </div>
 
-  {# 1) Top Utilities (نستفيد من بنية سلة الحالية) #}
-  <div class="top-navbar th-hdr__top">
-    <div class="container flex justify-between">
-      <div class="flex-1 flex items-center rtl:space-x-reverse space-x-2">
-        {# Footer Menu #}
-        {% component 'footer.menu' with {is_header:true} %}
-
-        <div class="header-buttons">
-          {# Language & Currency Component #}
-          {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-            <button type="button"
-                    onclick="salla.event.dispatch('localization::open')"
-                    class="btn--rounded-gray basis-0">
-              <span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
-              <span class="mx-1.5">|</span> <span>{{ currency.symbol }}</span>
-            </button>
-            <salla-localization-modal></salla-localization-modal>
-          {% endif %}
+            {# نص ترويجي أو روابط التواصل #}
+            <div class="hidden md:block text-xs opacity-90">
+                شحن مجاني للطلبات التي تزيد عن 299 ريال
+            </div>
         </div>
-
-        {# Scopes | Branches #}
-        {% if store.scope %}
-          <button class="btn--rounded-gray"
-                  onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
-            <i class="sicon-location rtl:ml-1 ltr:mr-1"></i> {{ store.scope.name }}
-          </button>
-        {% endif %}
-      </div>
-
-      {% component 'footer.contacts' with {is_header:true} %}
     </div>
-  </div>
 
-  {# 2) Main Header + Nav Bar #}
-  <div id="mainnav" class="main-nav-container shadow-default bg-white th-hdr__main">
-    <div class="inner bg-inherit">
-
-      {# 2.1 Main Row (Logo + Search + Actions) #}
-      <div class="container">
-        <div class="th-hdr__mainRow">
-
-          {# Mobile Burger (يبقى نفس ربط سلة) #}
-          <a class="lg:hidden mburger mburger--collapse leading-none th-hdr__burger" href="#mobile-menu" aria-label="فتح القائمة">
-            <i class="sicon-menu text-primary text-2xl rtl:ml-2.5 ltr:mr-2.5"></i>
-          </a>
-
-          {# Logo #}
-          <a class="navbar-brand th-hdr__brand" href="{{ store.url }}">
-            <img fetchpriority="high" width="100%" height="100%" loading="eager"
-                 src="{{ store.logo }}" alt="{{ store.name }}">
-            {% if is_page('index') %}
-              <h1 class="sr-only">{{ store.name }}</h1>
-            {% else %}
-              <h2 class="sr-only">{{ store.name }}</h2>
-            {% endif %}
-          </a>
-
-          {# Desktop Search (على الموبايل نخليه زر يفتح المودال) #}
-          <div class="th-hdr__search hidden lg:block">
-            <salla-search inline oval height="44"></salla-search>
-          </div>
-
-          <div class="th-hdr__actions">
-            {# Mobile search button #}
-            <button type="button" class="th-hdr__iconBtn lg:hidden" onclick="salla.event.dispatch('search::open')" aria-label="بحث">
-              <i class="sicon-search"></i>
-            </button>
-
-            {% if user.type == 'user' %}
-              <salla-user-menu avatar-only show-header class="th-hdr__user"></salla-user-menu>
-            {% else %}
-              <button class="header-btn th-hdr__iconBtn" onclick="salla.event.dispatch('login::open')" aria-label="تسجيل الدخول">
-                <i class="header-btn__icon sicon-user-circle"></i>
-              </button>
-            {% endif %}
-
-            <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4 th-hdr__cart">
-              <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-            </salla-cart-summary>
-          </div>
-
-        </div>
-      </div>
-
-      {# 2.2 Nav Row (All Categories Mega + Links + Mobile Drawer) #}
-      <div class="th-hdr__navRow">
+    {# 2. الهيدر الأوسط (Main Header) #}
+    <div class="th-main-header bg-white sticky top-0 z-30 shadow-sm">
         <div class="container">
-          {% component 'header.menu' %}
-        </div>
-      </div>
+            <div class="flex items-center justify-between gap-6 py-3">
+                
+                {# زر الموبايل #}
+                <a class="lg:hidden text-2xl text-gray-800" href="#mobile-menu">
+                    <i class="sicon-menu"></i>
+                </a>
 
+                {# الشعار #}
+                <a class="th-logo" href="{{ store.url }}">
+                    <img src="{{ store.logo }}" alt="{{ store.name }}">
+                    <h1 class="sr-only">{{ store.name }}</h1>
+                </a>
+
+                {# البحث (يظهر فقط في الكمبيوتر) #}
+                <div class="flex-1 max-w-2xl hidden lg:block">
+                    <salla-search inline oval height="42" placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
+                </div>
+
+                {# الأيقونات #}
+                <div class="flex items-center gap-4">
+                    {# زر بحث للموبايل #}
+                    <button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')">
+                        <i class="sicon-search"></i>
+                    </button>
+
+                    {# تسجيل الدخول #}
+                    <div class="hidden lg:block">
+                        <salla-user-menu avatar-only show-header></salla-user-menu>
+                    </div>
+                    <button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')">
+                        <i class="sicon-user"></i>
+                    </button>
+
+                    {# السلة #}
+                    <salla-cart-summary class="th-cart-btn">
+                        <div slot="icon" class="relative">
+                            <i class="sicon-shopping-bag text-2xl"></i>
+                            <span class="th-badge">{{ cart.items_count }}</span>
+                        </div>
+                    </salla-cart-summary>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    {# 3. شريط القوائم (Navigation Bar) #}
+    <div class="th-navbar bg-white border-t border-gray-100 hidden lg:block">
+        <div class="container">
+            {% component 'header.menu' %}
+        </div>
+    </div>
+
 </header>
 
+{# استدعاء المودالز #}
 {% if store.scope %}
-  <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
+    <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
 {% endif %}
 
 
+
 <style>
-    /* =========================
-   Tharaa Header (Scoped)
-   ========================= */
-
-.store-header.th-hdr{
-  --th-primary: #222222;
-  --th-accent: #d4af37;
-  --th-border: #e5e5e5;
-  --th-bg: #f4f6f8;
-  --th-shadow: 0 10px 30px rgba(0,0,0,.08);
-  --th-tr: 220ms ease;
-
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  /* --- متغيرات الألوان --- */
+:root {
+    --color-gold: #d4af37;
+    --color-dark: #222;
+    --color-gray-light: #f9f9f9;
 }
 
-/* Promo */
-.th-hdr__promo{
-  background: var(--th-primary);
-  color:#fff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 8px 0;
-  text-align:center;
+/* --- تنسيقات الهيدر العامة --- */
+.th-header {
+    font-family: 'Tajawal', sans-serif; /* تأكد من وجود الخط */
 }
 
-/* Main row */
-.th-hdr__mainRow{
-  display:flex;
-  align-items:center;
-  gap: 16px;
-  padding: 12px 0;
-}
-.th-hdr__brand{ display:inline-flex; align-items:center; }
-.th-hdr__search{ flex: 1; min-width: 320px; }
-.th-hdr__actions{ display:flex; align-items:center; gap: 10px; justify-content:flex-end; }
-
-.th-hdr__iconBtn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  background: var(--th-bg);
-  border: 1px solid transparent;
-  transition: all var(--th-tr);
-}
-.th-hdr__iconBtn:hover{
-  background:#fff;
-  border-color: var(--th-accent);
+.th-topbar {
+    background-color: var(--color-dark);
+    color: #fff;
+    font-size: 12px;
+    padding: 8px 0;
 }
 
-/* Nav row */
-.th-hdr__navRow{
-  border-top: 1px solid var(--th-border);
-  border-bottom: 1px solid var(--th-border);
-  background: #fff;
+.th-topbtn {
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+.th-topbtn:hover { opacity: 1; }
+
+.th-logo img {
+    height: 45px;
+    width: auto;
 }
 
-/* Menu wrapper */
-#mobile-menu.th-hdr__menu{ background: transparent; }
-.th-hdr__navWrap{
-  display:flex;
-  align-items:stretch;
-  gap: 18px;
-  height: 56px;
+/* --- زر السلة --- */
+.th-cart-btn {
+    position: relative;
+    cursor: pointer;
+}
+.th-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--color-gold);
+    color: #fff;
+    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
 }
 
-/* All Cats */
-.th-hdr__allCats{ position: relative; height: 100%; }
-.th-hdr__allCatsBtn{
-  height: 100%;
-  display:inline-flex;
-  align-items:center;
-  gap: 10px;
-  padding: 0 18px;
-  background: #f9f9f9;
-  border: 1px solid var(--th-border);
-  border-top: 0;
-  border-bottom: 0;
-  font-weight: 900;
-  transition: all var(--th-tr);
-}
-.th-hdr__allCatsBtn:hover{ background: var(--th-accent); color:#fff; }
-
-/* Mega */
-.th-hdr__mega{
-  position:absolute;
-  top: 100%;
-  right: 0;
-  width: 900px;
-  min-height: 420px;
-  background:#fff;
-  border: 1px solid var(--th-border);
-  border-top: 0;
-  box-shadow: var(--th-shadow);
-  display:flex;
-  overflow:hidden;
-  border-radius: 0 0 10px 10px;
-}
-.th-hdr__megaSide{
-  width: 26%;
-  background:#fcfcfc;
-  border-left: 1px solid var(--th-border);
-}
-.th-hdr__megaTab{
-  width:100%;
-  border:0;
-  background:transparent;
-  padding: 14px 16px;
-  text-align:right;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  cursor:pointer;
-  border-bottom:1px solid #eee;
-  font-weight:900;
-}
-.th-hdr__megaTab.is-active{
-  background:#fff;
-  color: var(--th-accent);
-  border-right: 3px solid var(--th-accent);
-}
-.th-hdr__megaContent{ width: 74%; padding: 22px; }
-.th-hdr__megaPane{ display:none; }
-.th-hdr__megaPane.is-active{ display:block; }
-.th-hdr__megaGrid{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-.th-hdr__megaTitle{
-  display:inline-block;
-  font-weight: 900;
-  margin-bottom: 10px;
-  padding-bottom: 6px;
-  border-bottom: 2px solid #eee;
-}
-.th-hdr__megaLink{
-  display:block;
-  color:#666;
-  font-size: 13px;
-  margin-bottom: 8px;
-}
-.th-hdr__megaLink:hover{ color: var(--th-accent); transform: translateX(-5px); }
-.th-hdr__megaProducts{ margin-top: 18px; padding-top: 18px; border-top: 1px solid #f0f0f0; }
-.th-hdr__megaProductsGrid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-
-/* Links (Desktop) */
-.main-menu.th-hdr__links{
-  display:flex;
-  align-items:center;
-  gap: 22px;
-  height: 100%;
-  margin:0;
-  padding:0;
-  list-style:none;
-  flex:1;
-}
-.th-hdr__item{ position: relative; height: 100%; display:flex; align-items:center; }
-.th-hdr__link{
-  display:inline-flex;
-  align-items:center;
-  gap: 6px;
-  height: 100%;
-  font-weight: 800;
-  color: var(--th-primary);
-  text-decoration:none;
-  padding: 0 2px;
-}
-.th-hdr__link:hover{ color: var(--th-accent); }
-.th-hdr__chev{ font-size: 11px; opacity: .7; }
-
-/* Dropdown base */
-.th-hdr__dropdown{
-  position:absolute;
-  top: 100%;
-  right: 0;
-  background:#fff;
-  border: 1px solid var(--th-border);
-  box-shadow: var(--th-shadow);
-  border-radius: 0 0 10px 10px;
-  padding: 10px 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: opacity var(--th-tr), transform var(--th-tr), visibility var(--th-tr);
-  z-index: 1100;
-}
-.th-hdr__item.has-children:hover > .th-hdr__dropdown{
-  opacity:1;
-  visibility:visible;
-  transform: translateY(0);
+/* --- الناف بار وزر جميع الأقسام --- */
+.th-navbar {
+    height: 55px;
+    position: relative;
+    z-index: 20; /* أقل من الهيدر المثبت */
 }
 
-/* Cascading flyout for nested levels */
-.th-hdr__dropdown .th-hdr__item.has-children > .th-hdr__dropdown{
-  top: -8px;
-  right: 100%;
-  margin-right: 8px;
-  border-radius: 10px;
-  transform: translateX(10px);
-}
-.th-hdr__dropdown .th-hdr__item.has-children:hover > .th-hdr__dropdown{
-  transform: translateX(0);
+.th-nav-container {
+    height: 100%;
 }
 
-/* Lists */
-.th-hdr__dropdownList{ list-style:none; margin:0; padding:0; }
-.th-hdr__dropdownList > .th-hdr__item{ height:auto; }
-.th-hdr__dropdownList > .th-hdr__item > .th-hdr__link{
-  height:auto;
-  padding: 10px 16px;
-  width: 100%;
-  justify-content: space-between;
-  color:#555;
-}
-.th-hdr__dropdownList > .th-hdr__item > .th-hdr__link:hover{
-  background:#fcfcfc;
-  color: var(--th-accent);
+.th-all-cats-wrapper {
+    height: 100%;
+    position: relative;
 }
 
-/* Mega dropdown (from menu.products) */
-.th-hdr__dropdown--mega{
-  width: 980px;
-  padding: 0;
-  border-radius: 0 0 10px 10px;
+.th-all-cats-btn {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px;
+    background-color: var(--color-gray-light);
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--color-dark);
+    transition: 0.3s;
+    width: 200px; /* عرض ثابت للجمالية */
 }
 
-/* Mobile: نحافظ على آلية سلة/الثيم (بدون تغيير position/transform للـ mobile-menu) */
-@media (max-width: 1024px){
-  .th-hdr__navWrap{ display:block; height:auto; }
-  .main-menu.th-hdr__links{ display:block; height:auto; padding: 12px 0; }
-
-  .th-hdr__m-item{ border-bottom: 1px solid #f2f2f2; }
-  .th-hdr__m-row{ display:flex; align-items:center; justify-content:space-between; }
-  .th-hdr__m-link{ display:block; padding: 14px 16px; font-weight: 900; color: var(--th-primary); }
-  .th-hdr__m-toggle{ width: 44px; height: 44px; background: transparent; border: 0; font-size: 18px; }
-  .th-hdr__m-sub{ background:#f8f8f8; }
-  .th-hdr__m-sub .th-hdr__m-link{ font-weight: 700; padding-right: 28px; font-size: 14px; color:#555; }
+.th-all-cats-wrapper:hover .th-all-cats-btn {
+    background-color: var(--color-gold);
+    color: #fff;
 }
+
+/* --- الميجا منيو (Mega Menu) --- */
+.th-mega-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 900px;
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    border-radius: 0 0 8px 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+    min-height: 400px;
+}
+
+.th-all-cats-wrapper:hover .th-mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.th-mega-tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+    transition: 0.2s;
+}
+
+.th-mega-tab:hover, .th-mega-tab.active {
+    background-color: #fff;
+    color: var(--color-gold);
+    border-right: 3px solid var(--color-gold);
+    padding-right: 17px; /* تعويض البوردر */
+}
+
+.th-mega-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- إصلاحات عامة --- */
+.text-gold { color: var(--color-gold) !important; }
+.hover\:text-gold:hover { color: var(--color-gold) !important; }
+
 
 </style>
 <script>

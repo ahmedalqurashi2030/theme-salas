@@ -1,68 +1,49 @@
-{# ===========================
-   Tharaa Menu Item (Upgraded)
-   - يحافظ على بنية سلة (attrs/link_attrs/children/products)
-   - يضيف: Mobile Accordion + Cascading Flyout + Mega styling
-   =========================== #}
+{#
+| Variable   | Type | Description |
+|------------|------|-------------|
+| menu       | Menu | Menu Object |
+| is_root    | Bool | Is Root Level |
+#}
 
-{# =================
-   MOBILE (Accordion)
-   ================= #}
-<li class="lg:hidden th-hdr__m-item" {{ menu.attrs|raw }}>
-  {% if not menu.has_children %}
-    <a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="th-hdr__m-link">{{ menu.title }}</a>
-  {% else %}
-    <div class="th-hdr__m-row">
-      <a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="th-hdr__m-link th-hdr__m-link--parent">{{ menu.title }}</a>
-      <button type="button"
-              class="th-hdr__m-toggle"
-              data-th-acc-toggle
-              aria-expanded="false"
-              aria-label="فتح/إغلاق">
-        <span class="th-hdr__m-plus">+</span>
-      </button>
-    </div>
-
-    <ul class="th-hdr__m-sub" data-th-acc-panel hidden>
-      {% for submenu in menu.children %}
-        {% include _self with {menu:submenu} %}
-      {% endfor %}
-    </ul>
-  {% endif %}
+{# --- نسخة الموبايل (Accordion) --- #}
+<li class="lg:hidden border-b border-gray-100" {{ menu.attrs|raw }}>
+    {% if not menu.has_children %}
+        <a href="{{ menu.url }}" class="block py-3 px-4 font-bold text-gray-700">{{ menu.title }}</a>
+    {% else %}
+        <div class="flex items-center justify-between pr-4 pl-2 py-3">
+            <a href="{{ menu.url }}" class="font-bold text-gray-700">{{ menu.title }}</a>
+            <button class="w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full" onclick="this.parentElement.nextElementSibling.classList.toggle('hidden')">
+                <i class="sicon-keyboard_arrow_down"></i>
+            </button>
+        </div>
+        <ul class="hidden bg-gray-50 px-4 pb-2">
+            {% for child in menu.children %}
+                {% include _self with { menu: child, is_root: false } %}
+            {% endfor %}
+        </ul>
+    {% endif %}
 </li>
 
-{# =================
-   DESKTOP (Cascading)
-   ================= #}
-<li class="!hidden lg:!block th-hdr__item
-    {{ is_root_menu ? 'root-level lg:!inline-block' : 'relative' }}
-    {{ menu.products ? ' mega-menu' : '' }}
-    {{ menu.has_children ? ' has-children' : '' }}"
-    {{ menu.attrs|raw }}>
+{# --- نسخة الكمبيوتر (Cascading Dropdown) --- #}
+<li class="hidden lg:flex h-full items-center relative group/item {{ is_root ? '' : 'w-full' }}" {{ menu.attrs|raw }}>
+    
+    <a href="{{ menu.url }}" class="{{ is_root ? 'h-full flex items-center gap-1 font-bold text-sm text-gray-800 hover:text-gold px-1' : 'flex items-center justify-between w-full px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 hover:text-gold transition' }}">
+        <span>{{ menu.title }}</span>
+        {% if menu.has_children %}
+            <i class="{{ is_root ? 'sicon-keyboard_arrow_down mt-1 text-[10px]' : 'sicon-keyboard_arrow_left text-[10px]' }}"></i>
+        {% endif %}
+    </a>
 
-  <a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="th-hdr__link">
-    <span class="th-hdr__linkText">{{ menu.title }}</span>
     {% if menu.has_children %}
-      <span class="th-hdr__chev {{ is_root_menu ? 'is-down' : 'is-side' }}" aria-hidden="true">{{ is_root_menu ? '⌄' : '‹' }}</span>
-    {% endif %}
-  </a>
-
-  {% if menu.has_children %}
-    <div class="sub-menu th-hdr__dropdown {{ menu.products ? 'th-hdr__dropdown--mega w-full left-0 flex' : 'w-56' }}">
-      <ul class="th-hdr__dropdownList {{ menu.products ? 'w-56 shrink-0 m-8 rtl:ml-0 ltr:mr-0' : '' }}">
-        {% for submenu in menu.children %}
-          {% include _self with {menu:submenu, is_root_menu:false} %}
-        {% endfor %}
-      </ul>
-
-      {% if menu.products %}
-        <div class="grow p-8 th-hdr__dropdownProducts">
-          <div class="grid gap-4 grid-cols-4">
-            {% for product in menu.products|slice(0, 4) %}
-              <salla-product-card shadow-on-hover product="{{ product }}"></salla-product-card>
-            {% endfor %}
-          </div>
+        {# تحديد مكان القائمة: إذا كان جذر تكون تحته، وإذا كان فرع تكون بجانبه #}
+        <div class="absolute bg-white border border-gray-100 shadow-lg rounded-lg min-w-[220px] py-2 opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all duration-200 z-50
+            {{ is_root ? 'top-full right-0 mt-0' : 'top-0 right-full mr-1' }}">
+            
+            <ul class="flex flex-col">
+                {% for child in menu.children %}
+                    {% include _self with { menu: child, is_root: false } %}
+                {% endfor %}
+            </ul>
         </div>
-      {% endif %}
-    </div>
-  {% endif %}
+    {% endif %}
 </li>
