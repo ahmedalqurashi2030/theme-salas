@@ -85,19 +85,48 @@
 		<div class="container">
 			<div
 				class="flex items-center">
-				{# "All Categories" Button & Dropdown #}
-				<div
-					id="ali-category-trigger" class="ali-all-cats relative group">
-					{# Note: Removed 'onclick' to rely on the script below for desktop toggling #}
+				{# "All Categories" Button & Dropdown (Desktop Logic) #}
+				<div id="ali-category-trigger" class="ali-all-cats relative group">
 					<button class="ali-cat-btn" type="button" onclick="toggleAliSidebar()">
 						<i class="sicon-menu"></i>
 						<span>كل الأصناف</span>
 						<i class="sicon-keyboard_arrow_down text-xs opacity-50 transition-transform duration-300 transform group-[.is-active]:rotate-180"></i>
 					</button>
 
-					{# Sidebar Dropdown (Desktop) #}
+					{# Sidebar Dropdown (Desktop Custom Loop) #}
 					<div id="ali-cat-dropdown" class="ali-cat-dropdown">
-						{% component 'header.menu' %}
+						<ul
+							class="main-menu custom-ali-list">
+							{# Use core Salla variable for menus #}
+							{% for item in menus.main_menu.items %}
+								<li>
+									<a href="{{ item.url }}" class="flex items-center gap-3">
+										{% if item.image %}
+											<img src="{{ item.image }}" class="w-6 h-6 object-contain rounded-full" alt="{{ item.title }}">
+										{% endif %}
+										<span>{{ item.title }}</span>
+										{% if item.children|length > 0 %}
+											<i class="sicon-keyboard_arrow_left ltr:rotate-180 text-xs text-gray-400 ms-auto"></i>
+										{% endif %}
+									</a>
+
+									{# Mega Menu / Submenu #}
+									{% if item.children|length > 0 %}
+										<ul class="sub-menu">
+											{% for sub in item.children %}
+												<li>
+													<a href="{{ sub.url }}">{{ sub.title }}</a>
+													{# Level 3 if needed #}
+												</li>
+											{% endfor %}
+
+											{# Optional Products in Mega Menu #}
+											{# If Salla provides products in menu item #}
+										</ul>
+									{% endif %}
+								</li>
+							{% endfor %}
+						</ul>
 					</div>
 				</div>
 
@@ -110,6 +139,12 @@
 		</div>
 	</div>
 
+	{# 4. Mobile Menu Component (Hidden on Desktop) #}
+	{# This ensures the Offcanvas works on mobile without polluting desktop markup #}
+	<div class="hidden">
+		{% component 'header.menu' %}
+	</div>
+
 	{# Custom Script for AliExpress Sidebar Toggle #}
 	<script>
 		function toggleAliSidebar() {
@@ -117,14 +152,20 @@ var trigger = document.getElementById('ali-category-trigger');
 var backdrop = document.getElementById('ali-backdrop');
 var isMobile = window.innerWidth < 1024;
 
-if (isMobile) { // Mobile: Use Salla default drawer
+if (isMobile) { // Mobile: Use Salla default drawer event or selector
+salla.event.dispatch('mobile-menu::open');
+// Or fallback to direct DOM manipulation if event not standard
 var mobileMenu = document.querySelector('#mobile-menu');
 if (mobileMenu) 
 mobileMenu.classList.add('is-open');
 
 } else { // Desktop: Toggle Dropdown & Backdrop
+if (trigger) 
 trigger.classList.toggle('is-active');
+
+if (backdrop) 
 backdrop.classList.toggle('is-visible');
+
 }
 }
 
@@ -139,7 +180,6 @@ backdrop.classList.remove('is-visible');
 
 }
 
-// Close on Escape key
 document.addEventListener('keydown', function (event) {
 if (event.key === "Escape") 
 closeAliSidebar();
