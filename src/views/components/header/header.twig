@@ -50,19 +50,19 @@
 					<i class="sicon-menu"></i>
 				</a>
 
-				{# Logo #}
+				{# Logo (Right) #}
 				<div class="cth-logo">
 					<a href="{{ store.url }}">
 						<img src="{{ store.logo }}" alt="{{ store.name }}" loading="eager">
 					</a>
 				</div>
 
-				{# Search #}
+				{# Search (Center) #}
 				<div class="cth-search-wrapper hidden lg:block">
-					<salla-search inline oval height="42"></salla-search>
+					<salla-search inline oval height="48" placeholder="{{ trans('blocks.header.search_placeholder')|default('ابحث عن عطر، ماركة، أو منتج...') }}"></salla-search>
 				</div>
 
-				{# Actions #}
+				{# Actions (Left) #}
 				<div
 					class="cth-actions">
 					{# User #}
@@ -70,14 +70,21 @@
 						<salla-user-menu avatar-only show-header></salla-user-menu>
 					{% else %}
 						<button class="cth-action-item" onclick="salla.event.dispatch('login::open')">
-							<i class="sicon-user-circle"></i>
-							<span class="hidden lg:block">{{ trans('blocks.header.login') }}</span>
+							<i class="sicon-user"></i>
+							<span>{{ trans('blocks.header.login')|default('حسابي') }}</span>
 						</button>
 					{% endif %}
+
+					{# Wishlist #}
+					<button class="cth-action-item" onclick="salla.event.dispatch('wishlist::open')">
+						<i class="sicon-heart"></i>
+						<span>{{ trans('blocks.header.wishlist')|default('المفضلة') }}</span>
+					</button>
 
 					{# Cart #}
 					<salla-cart-summary class="cth-action-item">
 						<i slot="icon" class="sicon-shopping-bag"></i>
+						<span slot="label">{{ trans('blocks.header.cart')|default('السلة') }}</span>
 					</salla-cart-summary>
 				</div>
 			</div>
@@ -179,6 +186,7 @@
 const header = document.getElementById('custom-tharaa-header');
 if (! header) 
 return;
+
 
 
 const trigger = header.querySelector('#cth-trigger button'); // target the button inside

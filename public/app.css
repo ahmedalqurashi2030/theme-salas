@@ -1866,6 +1866,9 @@ select{
 .pb-16{
     padding-bottom: 4rem;
 }
+.pb-2{
+    padding-bottom: 0.5rem;
+}
 .pb-4{
     padding-bottom: 1rem;
 }
@@ -1916,9 +1919,6 @@ select{
 }
 .pt-8{
     padding-top: 2rem;
-}
-.pb-2{
-    padding-bottom: 0.5rem;
 }
 .text-center{
     text-align: center;
@@ -3132,6 +3132,11 @@ textarea.s-input{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+#custom-tharaa-header .cth-nav-bar .s-advertisement-content.cth-nav-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 .s-advertisement-content-main{
     flex: 1 1 0%;
@@ -22965,6 +22970,11 @@ input[type=radio].sr-only:checked ~ div.product-entry--special .product-rating {
   justify-content: space-between;
   align-items: center;
 }
+#custom-tharaa-header .cth-nav-bar .s-comments-product .s-comments-container.cth-nav-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
 .share-btns-list{
     position: absolute;
     top: 3rem;
@@ -24709,10 +24719,11 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 }
 /* 
    CUSTOM THARAA HEADER 
-   Scoped strictly to #custom-tharaa-header to avoid conflicts.
+   Scoped strictly to #custom-tharaa-header.
 */
 #custom-tharaa-header {
-  --cth-red: #ff4747;
+  --cth-gold: #c09d58;
+  /* Tharaa Gold */
   --cth-black: #191919;
   --cth-white: #ffffff;
   --cth-gray-bg: #f5f5f5;
@@ -24727,7 +24738,7 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   direction: rtl;
   position: relative;
   z-index: 995;
-  /* Reset some default Salla styling within this scope */
+  /* Reset */
 }
 #custom-tharaa-header ul {
   list-style: none;
@@ -24772,26 +24783,27 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 }
 #custom-tharaa-header .cth-top-bar .cth-top-links a:hover,
 #custom-tharaa-header .cth-top-bar .cth-top-links button:hover {
-  color: var(--cth-red);
+  color: var(--cth-gold);
 }
 #custom-tharaa-header {
   /* 2. MAIN HEADER */
 }
 #custom-tharaa-header .cth-main-header {
-  padding: 20px 0;
+  padding: 15px 0;
   background: var(--cth-white);
 }
 #custom-tharaa-header .cth-main-header .cth-main-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 20px;
 }
 #custom-tharaa-header .cth-main-header {
-  /* Logo */
+  /* Logo (Right) */
 }
 #custom-tharaa-header .cth-main-header .cth-logo {
   flex-shrink: 0;
+  width: 140px;
 }
 #custom-tharaa-header .cth-main-header .cth-logo img {
   height: 48px;
@@ -24801,85 +24813,122 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   display: block;
 }
 #custom-tharaa-header .cth-main-header {
-  /* Search */
+  /* Search (Center) */
 }
 #custom-tharaa-header .cth-main-header .cth-search-wrapper {
   flex: 1;
-  max-width: 680px;
-  /* Salla Search Component Override */
+  max-width: 600px;
+  margin: 0 30px;
 }
 #custom-tharaa-header .cth-main-header .cth-search-wrapper salla-search {
-  --color-primary: var(--cth-black);
+  --color-primary: #555;
   display: flex;
-  border: 2px solid var(--cth-black);
-  border-radius: 999px;
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 8px;
   overflow: hidden;
-  height: 42px;
+  height: 48px;
 }
 #custom-tharaa-header .cth-main-header .cth-search-wrapper salla-search::part(input) {
   border: none;
   background: transparent;
-  padding: 0 20px;
-  font-size: 14px;
+  padding: 0 15px;
+  font-size: 13px;
+  color: #333;
 }
 #custom-tharaa-header .cth-main-header .cth-search-wrapper salla-search::part(button) {
-  background: var(--cth-black);
-  color: white;
-  width: 80px;
+  background: transparent;
+  color: #777;
+  width: 50px;
   border-radius: 0;
+  font-size: 20px;
 }
 #custom-tharaa-header .cth-main-header {
-  /* Actions */
+  /* Actions (Left) */
 }
 #custom-tharaa-header .cth-main-header .cth-actions {
   display: flex;
   align-items: center;
-  gap: 25px;
+  justify-content: flex-end;
+  gap: 20px;
+  min-width: 200px;
 }
 #custom-tharaa-header .cth-main-header .cth-actions .cth-action-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-size: 11px;
+  font-weight: 700;
   color: var(--cth-text);
-  gap: 2px;
+  gap: 4px;
   cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  min-width: 45px;
 }
 #custom-tharaa-header .cth-main-header .cth-actions .cth-action-item i {
-  font-size: 26px;
+  font-size: 22px;
+  color: var(--cth-black);
+  margin-bottom: 2px;
+}
+#custom-tharaa-header .cth-main-header .cth-actions .cth-action-item span {
+  line-height: 1;
+  white-space: nowrap;
 }
 #custom-tharaa-header .cth-main-header .cth-actions .cth-action-item:hover {
-  color: var(--cth-red);
+  color: var(--cth-gold);
+}
+#custom-tharaa-header .cth-main-header .cth-actions .cth-action-item:hover i {
+  color: var(--cth-gold);
+}
+#custom-tharaa-header .cth-main-header .cth-actions salla-cart-summary.cth-action-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+#custom-tharaa-header .cth-main-header .cth-actions salla-cart-summary.cth-action-item span {
+  display: block !important;
 }
 #custom-tharaa-header {
   /* 3. NAV BAR & SIDEBAR */
 }
 #custom-tharaa-header .cth-nav-bar {
-  border-bottom: 2px solid var(--cth-border);
+  border-bottom: 1px solid var(--cth-border);
   position: relative;
+  background: #fff;
+  height: 50px;
+  /* Force height alignment */
 }
-#custom-tharaa-header .cth-nav-bar .cth-nav-container {
+#custom-tharaa-header .cth-nav-bar .container.cth-nav-container {
   display: flex;
   align-items: center;
+  height: 100%;
 }
 #custom-tharaa-header {
-  /* "All Categories" Trigger */
+  /* "All Categories" Trigger (GOLD) */
 }
 #custom-tharaa-header .cth-cat-trigger {
   position: relative;
   z-index: 1001;
+  height: 100%;
 }
 #custom-tharaa-header .cth-cat-trigger button {
-  height: 45px;
+  height: 100%;
   padding: 0 25px;
   display: flex;
   align-items: center;
   gap: 10px;
   font-weight: 700;
-  font-size: 15px;
-  color: var(--cth-text);
-  border-radius: 999px 999px 0 0;
+  font-size: 14px;
+  color: #fff;
+  /* White Text */
+  background-color: var(--cth-gold);
+  /* Gold Background */
   transition: all 0.2s;
+  border-radius: 4px 4px 0 0;
+  /* Slight rounding on top */
 }
 #custom-tharaa-header .cth-cat-trigger button i.menu-icon {
   font-size: 20px;
@@ -24887,16 +24936,17 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 #custom-tharaa-header .cth-cat-trigger button i.arrow-icon {
   font-size: 12px;
   margin-right: auto;
-  opacity: 0.5;
+  opacity: 0.8;
+}
+#custom-tharaa-header .cth-cat-trigger button:hover {
+  background: rgb(184.7891304348, 146.0608695652, 69.7108695652);
 }
 #custom-tharaa-header .cth-cat-trigger {
   /* Active State */
 }
 #custom-tharaa-header .cth-cat-trigger.is-active button {
-  background: #fff;
-  color: var(--cth-red);
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
-  /* Visual connection to dropdown */
+  background-color: var(--cth-gold);
+  color: #fff;
 }
 #custom-tharaa-header {
   /* DROPDOWN SIDEBAR (Desktop) */
@@ -24904,19 +24954,17 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 #custom-tharaa-header .cth-sidebar-dropdown {
   position: absolute;
   top: 100%;
+  /* Below header */
   right: 0;
-  width: 260px;
+  width: 250px;
   background: #fff;
-  border: 1px solid var(--cth-border);
-  border-top: 2px solid var(--cth-text);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   z-index: 1000;
-  /* Hidden State */
   visibility: hidden;
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.25s ease;
-  /* Show when active */
+  transition: all 0.2s ease;
 }
 .cth-cat-trigger.is-active #custom-tharaa-header .cth-sidebar-dropdown {
   visibility: visible;
@@ -24924,84 +24972,116 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   transform: translateY(0);
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu {
-  padding: 8px 0;
+  padding: 0;
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li {
   position: relative;
+  border-bottom: 1px solid #fafafa;
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a {
-  padding: 12px 20px;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: 13px;
+  color: #555;
+  transition: 0.1s;
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a img {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   -o-object-fit: contain;
      object-fit: contain;
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a i {
   font-size: 18px;
-  color: #999;
+  color: #aaa;
   width: 24px;
   text-align: center;
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a:hover {
   background: #fff;
-  color: var(--cth-red);
+  color: var(--cth-gold);
   font-weight: 700;
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a:hover i {
-  color: var(--cth-red);
+  color: var(--cth-gold);
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a:hover {
-  /* Left Red Line */
-  box-shadow: inset -3px 0 0 var(--cth-red);
+  /* Left Gold Line (Tharaa Style) */
+  border-right: 3px solid var(--cth-gold);
+  padding-right: 17px;
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li {
-  /* HOVER: Show Mega Menu */
+  /* Open Mega Menu on Hover */
 }
 #custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li:hover > .cth-mega-menu {
   display: grid;
 }
 #custom-tharaa-header {
-  /* MEGA MENU (Flyout) */
+  /* MEGA MENU (Side Panel) */
 }
 #custom-tharaa-header .cth-mega-menu {
   display: none;
   position: absolute;
   top: 0;
-  right: 258px;
-  width: 700px;
+  right: 250px;
+  /* Exact width of sidebar */
+  width: 800px;
+  /* Wide content area */
   min-height: 100%;
+  /* Match sidebar height minimum */
+  min-height: 450px;
   background: #fff;
-  border: 1px solid var(--cth-border);
+  border: 1px solid #f0f0f0;
+  border-right: none;
+  /* Merge with sidebar visually */
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
-  padding: 25px;
+  padding: 30px;
   z-index: 1001;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 Columns of links */
+  gap: 30px;
   align-content: start;
+  /* Align to top */
 }
 #custom-tharaa-header .cth-mega-menu .mega-title {
   font-weight: 700;
-  color: var(--cth-text);
-  margin-bottom: 10px;
+  color: #333;
+  margin-bottom: 12px;
   display: block;
   border-bottom: 1px solid #eee;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
+  font-size: 14px;
 }
 #custom-tharaa-header .cth-mega-menu ul li a {
-  padding: 5px 0;
-  color: #555;
+  font-weight: 400 !important;
+  border: none !important;
+}
+#custom-tharaa-header .cth-mega-menu ul li a {
+  padding: 6px 0;
+  color: #666;
   font-size: 13px;
+  display: block;
 }
 #custom-tharaa-header .cth-mega-menu ul li a:hover {
-  color: var(--cth-red);
+  color: var(--cth-gold);
+  transform: translateX(-5px);
+  background: transparent;
   box-shadow: none;
-  font-weight: 400;
+  border: none;
+  padding-right: 0;
+}
+#custom-tharaa-header {
+  /* Horizontal Menu */
+}
+#custom-tharaa-header .cth-horiz-menu ul li a {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0 15px;
+}
+#custom-tharaa-header .cth-horiz-menu ul li a:hover {
+  color: var(--cth-gold);
 }
 #custom-tharaa-header {
   /* BACKDROP */
@@ -25031,10 +25111,13 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     display: none;
   }
   #custom-tharaa-header .cth-logo img {
-    height: 32px;
+    height: 36px;
   }
   #custom-tharaa-header .cth-burger-btn {
     display: block !important;
+  }
+  #custom-tharaa-header .cth-main-header .cth-main-row {
+    gap: 15px;
   }
 }
 #custom-tharaa-header .cth-burger-btn {
