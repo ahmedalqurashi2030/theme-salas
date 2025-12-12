@@ -25555,9 +25555,6 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     .lg\:flex{
         display: flex;
     }
-    .lg\:\!inline-flex{
-        display: inline-flex !important;
-    }
     .lg\:hidden{
         display: none;
     }

@@ -1,68 +1,58 @@
-{# ===========================
-   Tharaa Menu Item (Upgraded)
-   - يحافظ على بنية سلة (attrs/link_attrs/children/products)
-   - يضيف: Mobile Accordion + Cascading Flyout + Mega styling
-   =========================== #}
+{# 
+  ملف: src/views/components/header/_menu-item.twig 
+  الوصف: عنصر قائمة واحد (يدعم التكرار)
+#}
 
-{# =================
-   MOBILE (Accordion)
-   ================= #}
-<li class="lg:hidden th-hdr__m-item" {{ menu.attrs|raw }}>
-  {% if not menu.has_children %}
-    <a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="th-hdr__m-link">{{ menu.title }}</a>
-  {% else %}
-    <div class="th-hdr__m-row">
-      <a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="th-hdr__m-link th-hdr__m-link--parent">{{ menu.title }}</a>
-      <button type="button"
-              class="th-hdr__m-toggle"
-              data-th-acc-toggle
-              aria-expanded="false"
-              aria-label="فتح/إغلاق">
-        <span class="th-hdr__m-plus">+</span>
-      </button>
-    </div>
+<li class="nav-item h-full flex items-center relative group/menu {{ menu.has_children ? 'has-children' : '' }}">
+    
+    {# الرابط الرئيسي #}
+    <a href="{{ menu.url }}" {{ menu.link_attrs|raw }} class="text-sm font-bold text-gray-700 hover:text-gold flex items-center gap-1 py-4">
+        {{ menu.title }}
+        {% if menu.has_children %}
+            <i class="sicon-keyboard_arrow_down text-[10px] mt-1"></i>
+        {% endif %}
+    </a>
 
-    <ul class="th-hdr__m-sub" data-th-acc-panel hidden>
-      {% for submenu in menu.children %}
-        {% include _self with {menu:submenu} %}
-      {% endfor %}
-    </ul>
-  {% endif %}
-</li>
-
-{# =================
-   DESKTOP (Cascading)
-   ================= #}
-<li class="!hidden lg:!block th-hdr__item
-    {{ is_root_menu ? 'root-level lg:!inline-block' : 'relative' }}
-    {{ menu.products ? ' mega-menu' : '' }}
-    {{ menu.has_children ? ' has-children' : '' }}"
-    {{ menu.attrs|raw }}>
-
-  <a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="th-hdr__link">
-    <span class="th-hdr__linkText">{{ menu.title }}</span>
+    {# القائمة المنسدلة (Cascading Dropdown) #}
     {% if menu.has_children %}
-      <span class="th-hdr__chev {{ is_root_menu ? 'is-down' : 'is-side' }}" aria-hidden="true">{{ is_root_menu ? '⌄' : '‹' }}</span>
-    {% endif %}
-  </a>
+        <div class="cascading-dropdown absolute top-full right-0 w-60 bg-white border border-gray-100 rounded-b-lg shadow-lg py-2 opacity-0 invisible group-hover/menu:opacity-100 group-hover/menu:visible transform translate-y-2 group-hover/menu:translate-y-0 transition-all duration-200 z-40">
+            <ul class="flex flex-col">
+                {% for submenu in menu.children %}
+                    <li class="cascading-item relative group/sub">
+                        <a href="{{ submenu.url }}" class="flex items-center justify-between px-5 py-3 text-sm text-gray-600 hover:bg-gray-50 hover:text-gold transition">
+                            <div class="flex items-center gap-3">
+                                {# محاولة عرض أيقونة إذا كانت متوفرة أو صورة التصنيف #}
+                                {% if submenu.image %} 
+                                    <img src="{{ submenu.image }}" class="w-5 h-5 object-contain opacity-60 group-hover/sub:opacity-100">
+                                {% else %}
+                                    {# أيقونة افتراضية للحفاظ على التصميم #}
+                                    <i class="sicon-layout-grid text-gray-400 group-hover/sub:text-gold text-lg"></i>
+                                {% endif %}
+                                <span>{{ submenu.title }}</span>
+                            </div>
+                            
+                            {% if submenu.has_children %}
+                                <i class="sicon-keyboard_arrow_left text-[10px] text-gray-400"></i>
+                            {% endif %}
+                        </a>
 
-  {% if menu.has_children %}
-    <div class="sub-menu th-hdr__dropdown {{ menu.products ? 'th-hdr__dropdown--mega w-full left-0 flex' : 'w-56' }}">
-      <ul class="th-hdr__dropdownList {{ menu.products ? 'w-56 shrink-0 m-8 rtl:ml-0 ltr:mr-0' : '' }}">
-        {% for submenu in menu.children %}
-          {% include _self with {menu:submenu, is_root_menu:false} %}
-        {% endfor %}
-      </ul>
-
-      {% if menu.products %}
-        <div class="grow p-8 th-hdr__dropdownProducts">
-          <div class="grid gap-4 grid-cols-4">
-            {% for product in menu.products|slice(0, 4) %}
-              <salla-product-card shadow-on-hover product="{{ product }}"></salla-product-card>
-            {% endfor %}
-          </div>
+                        {# المستوى الثالث (Nested Menu) #}
+                        {% if submenu.has_children %}
+                            <div class="nested-menu absolute top-0 right-full w-56 bg-white border border-gray-100 rounded-lg shadow-md py-2 mr-1 hidden group-hover/sub:block z-50">
+                                <ul>
+                                    {% for subsub in submenu.children %}
+                                        <li>
+                                            <a href="{{ subsub.url }}" class="block px-5 py-2 text-sm text-gray-600 hover:text-gold hover:bg-gray-50">
+                                                {{ subsub.title }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-      {% endif %}
-    </div>
-  {% endif %}
+    {% endif %}
 </li>

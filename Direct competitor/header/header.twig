@@ -361,3 +361,94 @@
 }
 
 </style>
+<script>
+// Tharaa Header/Menu enhancements (Tabs + Mobile Accordion)
+// Paste into your main JS bundle (e.g. src/assets/js/app.js)
+
+
+
+    // Tharaa Header/Menu enhancements (Tabs + Mobile Accordion)
+// Paste into your main JS bundle (e.g. src/assets/js/app.js)
+
+(function () {
+  function ready(fn){ if(document.readyState !== 'loading'){ fn(); } else { document.addEventListener('DOMContentLoaded', fn); } }
+
+  ready(function () {
+    const menu = document.querySelector('#mobile-menu[data-th-menu]');
+    if (!menu) return;
+
+    // 1) Mobile accordion
+    menu.addEventListener('click', function (e) {
+      const btn = e.target.closest('[data-th-acc-toggle]');
+      if (!btn) return;
+
+      const panel = btn.closest('.th-hdr__m-item')?.querySelector('[data-th-acc-panel]');
+      if (!panel) return;
+
+      const isOpen = !panel.hidden;
+      panel.hidden = isOpen;
+      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+
+      const plus = btn.querySelector('.th-hdr__m-plus');
+      if (plus) plus.textContent = isOpen ? '+' : '−';
+    });
+
+    // 2) Mega tabs (desktop)
+    const megaRoot = menu.querySelector('[data-th-mega]');
+    if (!megaRoot) return;
+
+    const btns = megaRoot.querySelectorAll('[data-th-tab-btn]');
+    const panes = megaRoot.querySelectorAll('[data-th-tab-pane]');
+
+    function activate(btn){
+      const id = btn.getAttribute('data-th-tab-target');
+      if (!id) return;
+
+      btns.forEach(b => b.classList.remove('is-active'));
+      panes.forEach(p => p.classList.remove('is-active'));
+
+      btn.classList.add('is-active');
+      const pane = megaRoot.querySelector('#' + CSS.escape(id));
+      if (pane) pane.classList.add('is-active');
+    }
+
+    btns.forEach(btn => {
+      btn.addEventListener('mouseenter', () => activate(btn));
+      btn.addEventListener('focus', () => activate(btn));
+      btn.addEventListener('click', () => activate(btn));
+    });
+
+    // 3) Mega open/close (click + hover)
+    const toggle = megaRoot.querySelector('[data-th-mega-toggle]');
+    const panel = megaRoot.querySelector('[data-th-mega-panel]');
+    if (!toggle || !panel) return;
+
+    function setOpen(open){
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      megaRoot.classList.toggle('is-open', open);
+    }
+
+    // Hover open (desktop feel)
+    megaRoot.addEventListener('mouseenter', () => setOpen(true));
+    megaRoot.addEventListener('mouseleave', () => setOpen(false));
+
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      setOpen(panel.hidden);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!megaRoot.contains(e.target)) setOpen(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  });
+})();
+
+
+
+</script>
+
