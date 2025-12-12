@@ -1,49 +1,49 @@
-{#
-| Variable   | Type | Description |
-|------------|------|-------------|
-| menu       | Menu | Menu Object |
-| is_root    | Bool | Is Root Level |
-#}
+{# src/views/components/header/_menu-item.twig #}
 
-{# --- نسخة الموبايل (Accordion) --- #}
-<li class="lg:hidden border-b border-gray-100" {{ menu.attrs|raw }}>
-    {% if not menu.has_children %}
-        <a href="{{ menu.url }}" class="block py-3 px-4 font-bold text-gray-700">{{ menu.title }}</a>
-    {% else %}
-        <div class="flex items-center justify-between pr-4 pl-2 py-3">
-            <a href="{{ menu.url }}" class="font-bold text-gray-700">{{ menu.title }}</a>
-            <button class="w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full" onclick="this.parentElement.nextElementSibling.classList.toggle('hidden')">
-                <i class="sicon-keyboard_arrow_down"></i>
-            </button>
-        </div>
-        <ul class="hidden bg-gray-50 px-4 pb-2">
-            {% for child in menu.children %}
-                {% include _self with { menu: child, is_root: false } %}
-            {% endfor %}
-        </ul>
-    {% endif %}
-</li>
-
-{# --- نسخة الكمبيوتر (Cascading Dropdown) --- #}
-<li class="hidden lg:flex h-full items-center relative group/item {{ is_root ? '' : 'w-full' }}" {{ menu.attrs|raw }}>
-    
-    <a href="{{ menu.url }}" class="{{ is_root ? 'h-full flex items-center gap-1 font-bold text-sm text-gray-800 hover:text-gold px-1' : 'flex items-center justify-between w-full px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 hover:text-gold transition' }}">
-        <span>{{ menu.title }}</span>
-        {% if menu.has_children %}
-            <i class="{{ is_root ? 'sicon-keyboard_arrow_down mt-1 text-[10px]' : 'sicon-keyboard_arrow_left text-[10px]' }}"></i>
+{% if is_mobile %}
+    {# --- تصميم الموبايل (Accordion) --- #}
+    <li class="border-b border-gray-50 last:border-0">
+        {% if not menu.has_children %}
+            <a href="{{ menu.url }}" class="block py-3 px-2 font-bold text-gray-700 hover:text-gold">{{ menu.title }}</a>
+        {% else %}
+            <div class="group" x-data="{ open: false }">
+                <div class="flex items-center justify-between py-3 px-2 cursor-pointer" @click="open = !open">
+                    <a href="{{ menu.url }}" class="font-bold text-gray-700">{{ menu.title }}</a>
+                    <span class="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full transition-transform duration-300" :class="open ? 'rotate-180' : ''">
+                        <i class="sicon-keyboard_arrow_down text-xs"></i>
+                    </span>
+                </div>
+                <ul x-show="open" x-collapse class="bg-gray-50 rounded-lg px-4 py-2 mb-2 space-y-2 hidden" :class="open ? '!block' : ''">
+                    {% for child in menu.children %}
+                        <li><a href="{{ child.url }}" class="block text-sm text-gray-600 py-1">{{ child.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endif %}
-    </a>
+    </li>
 
-    {% if menu.has_children %}
-        {# تحديد مكان القائمة: إذا كان جذر تكون تحته، وإذا كان فرع تكون بجانبه #}
-        <div class="absolute bg-white border border-gray-100 shadow-lg rounded-lg min-w-[220px] py-2 opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all duration-200 z-50
-            {{ is_root ? 'top-full right-0 mt-0' : 'top-0 right-full mr-1' }}">
-            
-            <ul class="flex flex-col">
-                {% for child in menu.children %}
-                    {% include _self with { menu: child, is_root: false } %}
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-</li>
+{% else %}
+    {# --- تصميم الكمبيوتر (Cascading Dropdown) --- #}
+    <li class="h-full flex items-center relative group/item {{ is_root ? '' : 'w-full' }}">
+        
+        <a href="{{ menu.url }}" class="{{ is_root ? 'h-full flex items-center gap-1 font-bold text-sm text-gray-800 hover:text-gold px-1 transition' : 'flex items-center justify-between w-full px-5 py-3 text-sm text-gray-600 hover:bg-gray-50 hover:text-gold transition' }}">
+            <span>{{ menu.title }}</span>
+            {% if menu.has_children %}
+                <i class="{{ is_root ? 'sicon-keyboard_arrow_down mt-1 text-[10px]' : 'sicon-keyboard_arrow_left text-[10px]' }} opacity-60"></i>
+            {% endif %}
+        </a>
+
+        {% if menu.has_children %}
+            {# القائمة المنسدلة #}
+            <div class="th-dropdown min-w-[240px] py-2
+                {{ is_root ? 'top-full right-0' : 'th-dropdown-side' }}">
+                
+                <ul class="flex flex-col">
+                    {% for child in menu.children %}
+                        {% include _self with { menu: child, is_root: false, is_mobile: false } %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </li>
+{% endif %}
