@@ -87,7 +87,7 @@
 				class="flex items-center">
 				{# "All Categories" Button & Dropdown (Desktop Logic) #}
 				<div id="ali-category-trigger" class="ali-all-cats relative group">
-					<button class="ali-cat-btn" type="button" onclick="toggleAliSidebar()">
+					<button class="ali-cat-btn" type="button" onclick="window.toggleAliSidebar()">
 						<i class="sicon-menu"></i>
 						<span>كل الأصناف</span>
 						<i class="sicon-keyboard_arrow_down text-xs opacity-50 transition-transform duration-300 transform group-[.is-active]:rotate-180"></i>
@@ -119,9 +119,6 @@
 													{# Level 3 if needed #}
 												</li>
 											{% endfor %}
-
-											{# Optional Products in Mega Menu #}
-											{# If Salla provides products in menu item #}
 										</ul>
 									{% endif %}
 								</li>
@@ -131,7 +128,7 @@
 				</div>
 
 				{# Backdrop Overlay #}
-				<div id="ali-backdrop" class="ali-backdrop" onclick="closeAliSidebar()"></div>
+				<div id="ali-backdrop" class="ali-backdrop" onclick="window.closeAliSidebar()"></div>
 
 				{# Horizontal Menu (Optional) #}
 				<div class="ali-menu-wrapper flex-1 hidden md:block"></div>
@@ -145,21 +142,20 @@
 		{% component 'header.menu' %}
 	</div>
 
+	{# Strict Requirement: Hook Header End #}
+	{% hook 'header:end' %}
+
 	{# Custom Script for AliExpress Sidebar Toggle #}
 	<script>
-		function toggleAliSidebar() {
+		document.addEventListener('DOMContentLoaded', function () {
+window.toggleAliSidebar = function () {
 var trigger = document.getElementById('ali-category-trigger');
 var backdrop = document.getElementById('ali-backdrop');
 var isMobile = window.innerWidth < 1024;
 
-if (isMobile) { // Mobile: Use Salla default drawer event or selector
+if (isMobile) {
 salla.event.dispatch('mobile-menu::open');
-// Or fallback to direct DOM manipulation if event not standard
-var mobileMenu = document.querySelector('#mobile-menu');
-if (mobileMenu) 
-mobileMenu.classList.add('is-open');
-
-} else { // Desktop: Toggle Dropdown & Backdrop
+} else {
 if (trigger) 
 trigger.classList.toggle('is-active');
 
@@ -167,9 +163,9 @@ if (backdrop)
 backdrop.classList.toggle('is-visible');
 
 }
-}
+};
 
-function closeAliSidebar() {
+window.closeAliSidebar = function () {
 var trigger = document.getElementById('ali-category-trigger');
 var backdrop = document.getElementById('ali-backdrop');
 if (trigger) 
@@ -178,12 +174,13 @@ trigger.classList.remove('is-active');
 if (backdrop) 
 backdrop.classList.remove('is-visible');
 
-}
+};
 
 document.addEventListener('keydown', function (event) {
 if (event.key === "Escape") 
-closeAliSidebar();
+window.closeAliSidebar();
 
+});
 });
 	</script>
 </header>
