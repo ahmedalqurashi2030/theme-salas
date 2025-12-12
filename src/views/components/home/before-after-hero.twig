@@ -1,401 +1,318 @@
 {# ================================================
-  Tharaa Theme – Before / After Hero Section
-  Path: home.before-after-hero
+   Hero Section: Card Style (Banner)
+   Theme: Global Skincare Style
 ================================================ #}
 
-{% set bg_color       = component.bg_color       ?? '#ffffff' %}
-{% set title          = component.title          ?? '' %}
-{% set eyebrow        = component.subtitle       ?? '' %}
-{% set description    = component.description    ?? '' %}
-{% set button_text    = component.button_text    ?? '' %}
-{% set button_link    = component.button_link    ?? '' %}
+{% set bg_color       = component.bg_color       ?? '#B5DCDD' %}
+{% set text_color     = component.text_color     ?? '#2F6F74' %}
+{% set title          = component.title          ?? 'كفى لحب الشباب أن يسيطر على حياتك' %}
+{% set subtitle       = component.subtitle       ?? 'Blemish Control Cleanser' %}
+{% set description    = component.description    ?? 'يعمل هذا الغسول على التخلص من الزيوت الزائدة وتحسين مظهر المسام.' %}
+{% set btn_text       = component.button_text    ?? 'تسوق الآن' %}
+{% set btn_link       = component.button_link    ?? '#' %}
 
-{% set before_label   = component.before_label   ?? '' %}
-{% set before_image   = component.before_image   ?? '' %}
-{% set after_label    = component.after_label    ?? '' %}
-{% set after_image    = component.after_image    ?? '' %}
-{% set product_image  = component.image          ?? '' %}
+{# الصور #}
+{% set img_before     = component.before_image   ?? 'https://img.freepik.com/free-photo/young-woman-with-acne-problem-face_23-2149448375.jpg' %}
+{% set img_after      = component.after_image    ?? 'https://img.freepik.com/free-photo/beautiful-face-young-woman-with-clean-fresh-skin_23-2149448386.jpg' %}
+{% set product_img    = component.image          ?? 'https://img.freepik.com/free-photo/cosmetic-bottle-packaging-mockup_1150-40282.jpg?w=360&t=st=168666-1' %}
 
-<section class="th-before-after-hero s-block"
-         style="background-color: {{ bg_color }};">
+<section class="store-hero-section">
     <div class="container">
-        <div class="th-before-after-hero__inner">
-            {# الجزء النصي (الهيرو) #}
-            <div class="th-before-after-hero__content">
-                {% if eyebrow %}
-                    <span class="th-before-after-hero__eyebrow">
-                        {{ eyebrow }}
-                    </span>
-                {% endif %}
+        
+        {# --- هنا التغيير: الخلفية تطبق على هذا العنصر فقط --- #}
+        <div class="hero-card" style="--card-bg: {{ bg_color }}; --card-text: {{ text_color }};">
+            
+            <div class="hero-wrapper">
+                
+                {# --- الجزء النصي --- #}
+                <div class="hero-content">
+                    {% if subtitle %}
+                        <span class="hero-badge">{{ subtitle }}</span>
+                    {% endif %}
+                    
+                    <h2 class="hero-title">{{ title }}</h2>
+                    
+                    <p class="hero-desc">{{ description|raw }}</p>
+                    
+                    {% if btn_text %}
+                        <a href="{{ btn_link }}" class="hero-btn">
+                            {{ btn_text }}
+                        </a>
+                    {% endif %}
+                </div>
 
-                {% if title %}
-                    <h2 class="th-before-after-hero__title">
-                        {{ title }}
-                    </h2>
-                {% endif %}
-
-                {% if description %}
-                    <p class="th-before-after-hero__desc">
-                        {{ description|raw }}
-                    </p>
-                {% endif %}
-
-                {% if button_text and button_link %}
-                    <a href="{{ button_link }}"
-                       class="th-before-after-hero__btn s-button s-button--primary">
-                        {{ button_text }}
-                    </a>
-                {% endif %}
-            </div>
-
-            {# الجزء البصري: سلايدر قبل/بعد + صورة المنتج العائمة #}
-            {% if before_image or after_image %}
-                <div class="th-before-after-hero__visual">
-                    {# 2. صورة المنتجات العائمة في الوسط – اختيارية #}
-                    {% if product_image %}
-                        <div class="th-before-after-hero__products">
-                            <div class="th-before-after-hero__products-bg"></div>
-                            <img src="{{ product_image }}"
-                                 alt=""
-                                 loading="lazy"
-                                 class="th-before-after-hero__products-img">
+                {# --- الجزء البصري (السلايدر + المنتج) --- #}
+                <div class="hero-visual">
+                    
+                    {# صورة المنتج العائمة #}
+                    {% if product_img %}
+                        <div class="floating-product">
+                            <img src="{{ product_img }}" alt="Product" loading="lazy">
                         </div>
                     {% endif %}
 
-                    <div class="th-before-after-hero__compare js-ba-slider">
-                        {# طبقة الأساس = بعد #}
-                        <div class="th-before-after-hero__base">
-                            <img src="{{ after_image ?: before_image }}"
-                                 alt="{{ after_label|default('بعد') }}"
-                                 class="th-before-after-hero__img">
+                    {# حاوية المقارنة #}
+                    <div class="comparison-slider js-comp-slider">
+                        {# بعد #}
+                        <div class="comp-layer layer-base">
+                            <img src="{{ img_after }}" alt="After">
+                            <span class="comp-label label-after">بعد</span>
                         </div>
-
-                        {# الطبقة المتحركة = قبل #}
-                        <div class="th-before-after-hero__overlay">
-                            <img src="{{ before_image ?: after_image }}"
-                                 alt="{{ before_label|default('قبل') }}"
-                                 class="th-before-after-hero__img">
+                        {# قبل #}
+                        <div class="comp-layer layer-overlay">
+                            <img src="{{ img_before }}" alt="Before">
+                            <span class="comp-label label-before">قبل</span>
                         </div>
-
                         {# المقبض #}
-                        <button type="button"
-                                class="th-before-after-hero__handle"
-                                aria-label="تحريك المقارنة">
-                            <span class="th-before-after-hero__handle-circle">
-                                <span class="th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--left">
-                                    ‹
-                                </span>
-                                <span class="th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--right">
-                                    ›
-                                </span>
-                            </span>
-                        </button>
-
-                        {# تسميات قبل / بعد (اختيارية) #}
-                        {% if before_label %}
-                            <span class="th-before-after-hero__badge th-before-after-hero__badge--before">
-                                {{ before_label }}
-                            </span>
-                        {% endif %}
-
-                        {% if after_label %}
-                            <span class="th-before-after-hero__badge th-before-after-hero__badge--after">
-                                {{ after_label }}
-                            </span>
-                        {% endif %}
+                        <div class="comp-handle">
+                            <div class="handle-circle">
+                                <i class="sicon-arrow-left"></i>
+                                <i class="sicon-arrow-right"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            {% endif %}
-        </div>
+
+            </div>
+        </div> 
+        {# نهاية البطاقة #}
+
     </div>
 </section>
 
-{# =========================
-  JavaScript – Before/After
-  انقل هذا الجزء لملف JS عام مثل app.js أو اتركه هنا مؤقتًا للاختبار
-========================= #}
+
+
+
+<style>
+
+
+
+    :root {
+    --card-radius: 32px; /* زوايا دائرية كبيرة للبطاقة */
+    --slider-height-desktop: 420px;
+    --slider-height-mobile: 300px;
+}
+
+/* القسم الرئيسي (خلفيته شفافة أو بيضاء حسب الثيم العام) */
+.store-hero-section {
+    padding: 40px 0;
+    background-color: transparent; 
+    font-family: 'Tajawal', sans-serif;
+}
+
+/* --- البطاقة الداخلية الملونة --- */
+.hero-card {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    border-radius: var(--card-radius);
+    padding: 60px; /* مسافة داخلية كبيرة للتنفس */
+    position: relative;
+    overflow: visible; /* مهم جداً للسماح للمنتج بالظهور لو خرج قليلاً */
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08); /* ظل خفيف للبطاقة */
+}
+
+/* الحاوية المرنة */
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+/* --- النصوص --- */
+.hero-content {
+    flex: 1;
+    max-width: 45%;
+    z-index: 2;
+}
+
+.hero-badge {
+    background: rgba(255,255,255,0.25);
+    color: var(--card-text);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.hero-title {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    color: #fff; /* يمكن تغييره لـ var(--card-text) لو الخلفية فاتحة جداً */
+}
+
+.hero-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    color: #fff;
+}
+
+.hero-btn {
+    display: inline-flex;
+    background: #fff;
+    color: var(--card-text);
+    padding: 12px 36px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+.hero-btn:hover { transform: translateY(-3px); }
+
+
+/* --- الجزء البصري --- */
+.hero-visual {
+    flex: 1;
+    position: relative;
+    height: var(--slider-height-desktop);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* المنتج العائم - تم تحسين مكانه للبطاقة */
+.floating-product {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    z-index: 10;
+    width: 200px;
+    pointer-events: none;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.2));
+}
+.floating-product img { width: 100%; height: auto; }
+
+/* السلايدر داخل البطاقة */
+.comparison-slider {
+    position: relative;
+    width: 100%;
+    max-width: 550px;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: col-resize;
+    border: 4px solid rgba(255,255,255,0.4); /* إطار أبيض شفاف */
+    background: #fff;
+}
+
+.comp-layer {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+}
+.comp-layer img {
+    width: 100%; height: 100%; object-fit: cover;
+    pointer-events: none; user-select: none;
+}
+
+.layer-overlay {
+    width: 50%;
+    z-index: 5;
+    border-right: 2px solid #fff;
+}
+/* تصحيح عرض الصورة داخل الجزء المقصوص */
+.layer-overlay img {
+    width: 100vw; max-width: 550px;
+}
+
+/* العلامات (قبل/بعد) */
+.comp-label {
+    position: absolute; top: 15px;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px; font-weight: bold;
+    color: #fff; background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(2px);
+}
+.label-after { left: 15px; }
+.label-before { right: 15px; }
+
+/* المقبض */
+.comp-handle {
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 2px; z-index: 8;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+}
+.handle-circle {
+    width: 40px; height: 40px;
+    background: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-size: 12px; gap: 5px;
+}
+
+/* --- التجاوب مع الجوال --- */
+@media (max-width: 992px) {
+    .hero-card {
+        padding: 40px 20px; /* تقليل الحواف الداخلية */
+        border-radius: 20px;
+        text-align: center;
+    }
+    
+    .hero-wrapper {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .hero-content { max-width: 100%; }
+    .hero-title { font-size: 28px; }
+    
+    .hero-visual { height: var(--slider-height-mobile); width: 100%; }
+    
+    .floating-product { width: 140px; }
+    
+    .comparison-slider { border-width: 2px; }
+    .layer-overlay img { max-width: 100%; width: 100vw; }
+}
+</style>
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    var sliders = document.querySelectorAll('.js-ba-slider');
-    if (!sliders.length) return;
+document.addEventListener("DOMContentLoaded", function() {
+    const sliders = document.querySelectorAll('.js-comp-slider');
+    
+    sliders.forEach(sliderWrapper => {
+        const overlay = sliderWrapper.querySelector('.layer-overlay');
+        const overlayImg = overlay.querySelector('img');
+        const handle = sliderWrapper.querySelector('.comp-handle');
+        let isDown = false;
 
-    sliders.forEach(function (slider) {
-        var overlay = slider.querySelector('.th-before-after-hero__overlay');
-        var handle  = slider.querySelector('.th-before-after-hero__handle');
+        function fixImageWidth() {
+            // عرض الصورة يجب أن يساوي عرض السلايدر بالكامل
+            overlayImg.style.width = sliderWrapper.offsetWidth + 'px';
+        }
+        
+        // Resize Observer أدق من window.resize
+        const resizeObserver = new ResizeObserver(() => fixImageWidth());
+        resizeObserver.observe(sliderWrapper);
 
-        if (!overlay || !handle) return;
+        function moveSlider(x) {
+            const rect = sliderWrapper.getBoundingClientRect();
+            let position = x - rect.left;
+            if (position < 0) position = 0;
+            if (position > rect.width) position = rect.width;
 
-        var isDragging = false;
-
-        function moveTo(clientX) {
-            var rect = slider.getBoundingClientRect();
-            var pos = ((clientX - rect.left) / rect.width) * 100;
-
-            if (pos < 0) pos = 0;
-            if (pos > 100) pos = 100;
-
-            overlay.style.width = pos + '%';
-            handle.style.left = pos + '%';
+            overlay.style.width = position + "px";
+            handle.style.left = position + "px";
         }
 
-        function onMove(e) {
-            if (!isDragging) return;
-            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            moveTo(clientX);
-        }
+        // Mouse
+        sliderWrapper.addEventListener('mousedown', (e) => { isDown = true; moveSlider(e.clientX); });
+        window.addEventListener('mouseup', () => isDown = false);
+        window.addEventListener('mousemove', (e) => { if(isDown) { e.preventDefault(); moveSlider(e.clientX); }});
 
-        function endDrag() {
-            isDragging = false;
-            slider.classList.remove('is-dragging');
-
-            document.removeEventListener('mousemove', onMove);
-            document.removeEventListener('touchmove', onMove);
-            document.removeEventListener('mouseup', endDrag);
-            document.removeEventListener('touchend', endDrag);
-        }
-
-        function startDrag(e) {
-            e.preventDefault();
-            isDragging = true;
-            slider.classList.add('is-dragging');
-
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('touchmove', onMove, { passive: false });
-            document.addEventListener('mouseup', endDrag);
-            document.addEventListener('touchend', endDrag);
-
-            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            moveTo(clientX);
-        }
-
-        // سحب بالمقبض
-        handle.addEventListener('mousedown', startDrag);
-        handle.addEventListener('touchstart', startDrag, { passive: false });
-
-        // النقر داخل منطقة السلايدر يحرك الخط
-        slider.addEventListener('click', function (e) {
-            if (e.target === handle || e.target.closest('.th-before-after-hero__handle')) {
-                return;
-            }
-            moveTo(e.clientX);
-        });
-
-        // الوضع الابتدائي 50%
-        var rect = slider.getBoundingClientRect();
-        moveTo(rect.left + rect.width / 2);
+        // Touch
+        sliderWrapper.addEventListener('touchstart', (e) => { isDown = true; moveSlider(e.touches[0].clientX); }, {passive: true});
+        window.addEventListener('touchend', () => isDown = false);
+        sliderWrapper.addEventListener('touchmove', (e) => { if(isDown) moveSlider(e.touches[0].clientX); }, {passive: false});
     });
 });
 </script>
-
-<style>
-    .th-before-after-hero {
-  padding: 60px 0;
-  position: relative;
-}
-
-.th-before-after-hero__inner {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-@media (min-width: 1024px) {
-  .th-before-after-hero__inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-.th-before-after-hero__content {
-  flex: 1;
-  max-width: 480px;
-}
-
-@media (max-width: 1023px) {
-  .th-before-after-hero__content {
-    text-align: center;
-    margin: 0 auto;
-  }
-}
-
-.th-before-after-hero__eyebrow {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-primary, #008080);
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-.th-before-after-hero__title {
-  font-size: 30px;
-  font-weight: 800;
-  margin-bottom: 16px;
-  color: #222;
-  line-height: 1.3;
-}
-
-.th-before-after-hero__desc {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 24px;
-}
-
-.th-before-after-hero__btn {
-  padding: 12px 28px;
-  border-radius: 999px;
-  font-weight: 600;
-}
-
-/* الجزء البصري (السلايدر + المنتج) */
-.th-before-after-hero__visual {
-  flex: 1;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* السلايدر */
-.th-before-after-hero__compare {
-  position: relative;
-  width: 100%;
-  max-width: 520px;
-  height: 360px;
-  border-radius: 24px;
-  overflow: hidden;
-  background: #000;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-}
-
-@media (max-width: 767px) {
-  .th-before-after-hero__compare {
-    max-width: 100%;
-    height: 260px;
-  }
-}
-
-.th-before-after-hero__base,
-.th-before-after-hero__overlay {
-  position: absolute;
-  inset: 0;
-}
-
-.th-before-after-hero__base {
-  z-index: 1;
-}
-
-.th-before-after-hero__overlay {
-  z-index: 2;
-  width: 50%;
-  overflow: hidden;
-}
-
-.th-before-after-hero__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* المقبض */
-.th-before-after-hero__handle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  width: 0;
-  height: 100%;
-  border: none;
-  background: transparent;
-  cursor: ew-resize;
-  padding: 0;
-}
-
-.th-before-after-hero__handle-circle {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-}
-
-.th-before-after-hero__handle-arrow {
-  font-size: 16px;
-  line-height: 1;
-  color: #111827;
-}
-
-.th-before-after-hero__handle-arrow--left {
-  margin-inline-end: 4px;
-}
-
-.th-before-after-hero__handle-arrow--right {
-  margin-inline-start: 4px;
-}
-
-/* البادجات (قبل / بعد) */
-.th-before-after-hero__badge {
-  position: absolute;
-  top: 16px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-  z-index: 4;
-}
-
-.th-before-after-hero__badge--before {
-  inset-inline-start: 16px;
-  background: rgba(15, 23, 42, 0.85);
-}
-
-.th-before-after-hero__badge--after {
-  inset-inline-end: 16px;
-  background: rgba(5, 150, 105, 0.9);
-}
-
-/* صورة المنتج العائمة */
-.th-before-after-hero__products {
-  position: absolute;
-  z-index: 5;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -55%);
-  width: 180px;
-  max-width: 45%;
-  pointer-events: none;
-}
-
-@media (max-width: 767px) {
-  .th-before-after-hero__products {
-    width: 130px;
-    transform: translate(-50%, -60%);
-  }
-}
-
-.th-before-after-hero__products-bg {
-  position: absolute;
-  inset: -30%;
-  border-radius: 999px;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.9), transparent 70%);
-  filter: blur(4px);
-}
-
-.th-before-after-hero__products-img {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-</style>
