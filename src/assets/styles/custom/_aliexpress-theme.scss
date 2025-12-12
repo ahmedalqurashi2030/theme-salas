@@ -1,697 +1,162 @@
-// AliExpress Theme Customization - V4 (Perfected)
-// Scoped strictly under .sx-aliexpress-header and .sx-aliexpress-sidebar
+/* Premium Header (Scoped) */
+.th-hdr {
+  --th-primary:#222;
+  --th-accent:#d4af37;
+  --th-bg:#f4f6f8;
+  --th-border:#e5e5e5;
+  --th-shadow:0 10px 30px rgba(0,0,0,.08);
+  --th-tr:220ms ease;
 
-// Color Palette
-$ali-red: #ff4747;
-$ali-black: #191919;
-$ali-white: #ffffff;
-$ali-gray-bg: #f5f5f5;
-$ali-gray-border: #e8e8e8;
-$ali-text-dark: #222;
-$ali-text-light: #666;
+  .th-hdr__shipping-bar{
+    background: var(--th-primary);
+    color:#fff;
+    font-weight:700;
+    font-size:12px;
+  }
+  .th-hdr__shipping-inner{ padding:8px 0; text-align:center; }
 
-// Mixins
-@mixin pill-shape {
+  .th-hdr__burger-icon{ font-size: 22px; color: var(--th-primary); }
+
+  .th-hdr__search-wrap{
+    width:min(680px,100%);
+    background: var(--th-bg);
+    border:2px solid var(--th-bg);
     border-radius: 999px;
-}
-
-// -------------------------------------------------------------
-// 1. BACKDROP OVERLAY
-// -------------------------------------------------------------
-.ali-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 990; // Below Sidebar (1000) but above everything else
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-
-    &.is-visible {
-        opacity: 1;
-        visibility: visible;
-    }
-}
-
-/* =========================================
-   2. Main Header Container (.sx-aliexpress-header)
-========================================= */
-.sx-aliexpress-header {
-    background-color: $ali-white;
-    color: $ali-text-dark;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    direction: rtl; // Ensure RTL context
-    position: relative;
-    z-index: 995; // Ensure high stacking context
-
-    // -- Row 1: Top Mini Bar --
-    .ali-top-navbar {
-        background-color: #fafafa;
-        border-bottom: 1px solid #f0f0f0;
-        font-size: 11px;
-        padding: 4px 0;
-        color: $ali-text-light;
-
-        .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .ali-top-btn,
-        a,
-        button {
-            color: $ali-text-light;
-            border: none;
-            background: transparent;
-            font-weight: 400;
-            font-size: 11px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-
-            &:hover {
-                color: $ali-red;
-            }
-        }
-    }
-
-    // -- Row 2: Main Header --
-    .ali-main-header {
-        padding: 18px 0;
-        background: $ali-white;
-
-        .ali-main-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        // LOGO FIX
-        .ali-logo-area {
-            flex-shrink: 0;
-
-            a.navbar-brand {
-                display: block;
-                max-width: 160px;
-            }
-
-            img {
-                height: auto !important;
-                max-height: 48px !important;
-                max-width: 100% !important;
-                display: block;
-                object-fit: contain;
-            }
-        }
-
-        // SEARCH BAR
-        .ali-search-area {
-            flex: 1;
-            max-width: 700px;
-
-            salla-search {
-                --color-primary: #{$ali-black};
-                border: 2px solid $ali-black;
-                @include pill-shape;
-                overflow: hidden;
-                display: flex;
-                height: 40px;
-                width: 100%;
-
-                &::part(input) {
-                    border: none;
-                    outline: none;
-                    padding: 0 20px;
-                    font-size: 14px;
-                    color: #333;
-                    background: transparent;
-                }
-
-                &::part(button) {
-                    background-color: $ali-black;
-                    color: white;
-                    width: 75px;
-                    border-radius: 0;
-                    font-weight: bold;
-                    transition: background 0.2s;
-
-                    &:hover {
-                        background-color: lighten($ali-black, 10%);
-                    }
-                }
-            }
-        }
-
-        // ACTIONS
-        .ali-actions-area {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            flex-shrink: 0;
-
-            .ali-action-btn,
-            .ali-cart-btn {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                font-size: 11px;
-                line-height: 1.2;
-                color: $ali-text-dark;
-                cursor: pointer;
-                transition: color 0.2s;
-                background: transparent;
-                border: none;
-                padding: 0;
-                margin: 0;
-
-                .header-btn__icon,
-                .icon {
-                    font-size: 26px;
-                    margin-bottom: 3px;
-                    color: $ali-text-dark;
-                }
-
-                &:hover {
-                    color: $ali-red;
-
-                    .header-btn__icon,
-                    .icon {
-                        color: $ali-red;
-                    }
-                }
-            }
-        }
-    }
-
-    // -- Row 3: Navigation Bar & Sidebar Trigger --
-    .ali-nav-bar {
-        border-bottom: 2px solid $ali-gray-border;
-        margin-top: 5px;
-        position: relative;
-
-        .container {
-            position: relative;
-        }
-
-        // "All Categories" Button Style
-        .ali-all-cats {
-            position: relative;
-            display: inline-block;
-        }
-
-        .ali-cat-btn {
-            background-color: transparent;
-            color: $ali-text-dark;
-            border-radius: 999px 999px 0 0;
-            padding: 0 20px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 15px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            z-index: 1001; // Must be higher than dropdown to appear "connected" if active
-
-            i.sicon-menu {
-                font-size: 20px;
-            }
-
-            &:hover {
-                color: $ali-red;
-                background: #fafafa;
-            }
-        }
-
-        // Active State (Connected to Dropdown)
-        .ali-all-cats.is-active .ali-cat-btn {
-            background-color: #fff;
-            color: $ali-red;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-            // Optional: Add border logic if we want "tab" look
-            // border: 1px solid $ali-gray-border;
-            // border-bottom: none;
-        }
-
-        // *** THE SIDEBAR DROPDOWN (DESKTOP) ***
-        .ali-cat-dropdown {
-            position: absolute;
-            top: 100%; // Exactly below container
-            right: 0;
-            width: 260px;
-            background: #fff;
-            border: 1px solid $ali-gray-border;
-            border-top: 2px solid $ali-text-dark;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-
-            // Hidden by default
-            visibility: hidden;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        // Show Dropdown when Active (Logic controlled by JS now)
-        .ali-all-cats.is-active .ali-cat-dropdown {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        // Sidebar Internal Styling
-        .ali-cat-dropdown {
-
-            ul.main-menu,
-            .level-0 {
-                display: flex;
-                flex-direction: column;
-                padding: 5px 0;
-                margin: 0;
-                list-style: none;
-            }
-
-            li {
-                position: static; // Keep static for Menu alignment logic? 
-                // No, we want Submenu to be related to the item.
-                position: relative;
-
-                a {
-                    padding: 10px 20px;
-                    color: $ali-text-dark;
-                    font-size: 13px;
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    text-decoration: none;
-                    transition: 0.1s;
-                    width: 100%;
-
-                    img {
-                        width: 24px;
-                        height: 24px;
-                        object-fit: contain;
-                        border-radius: 50%;
-                    }
-
-                    i {
-                        font-size: 18px;
-                        color: #999;
-                        width: 24px;
-                        text-align: center;
-                    }
-
-                    &:hover {
-                        background-color: #fff;
-                        color: $ali-red;
-                        font-weight: 700;
-                        box-shadow: inset -3px 0 0 $ali-red; // Red indicator line RTL
-
-                        i {
-                            color: $ali-red;
-                        }
-                    }
-                }
-
-                // Mega Menu / Submenu (Level 2)
-                ul.sub-menu,
-                .level-1 {
-                    display: none; // Hidden
-                    position: absolute;
-                    top: -2px;
-                    right: 259px; // Sidebar width adjustment
-                    width: 700px;
-                    min-height: 100%;
-                    min-height: 350px;
-                    background: #fff;
-                    border: 1px solid $ali-gray-border;
-                    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.05);
-                    padding: 25px;
-                    z-index: 101;
-
-                    // Grid Layout
-                    grid-template-columns: repeat(3, 1fr);
-                    gap: 20px;
-                    align-content: start;
-                }
-
-                &:hover>ul,
-                &:hover>.level-1 {
-                    display: grid;
-                }
-
-                // Submenu Item Styling
-                .sub-menu li a {
-                    font-weight: 400;
-                    color: #555;
-                    padding: 6px 0;
-                    font-size: 13px;
-
-                    &:hover {
-                        color: $ali-red;
-                        box-shadow: none;
-                        background: transparent;
-                    }
-                }
-            }
-        }
-
-        // Horizontal Menu
-        .ali-menu-wrapper {
-            margin-right: 20px;
-        }
-    }
-}
-
-// RTL/LTR Logic
-[dir="rtl"] {
-    .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
-        right: 0;
-        left: auto;
-    }
-
-    .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu {
-        right: 260px;
-        left: auto;
-    }
-
-    .ali-all-cats.is-active .ali-cat-btn {
-        border-radius: 8px 8px 0 0;
-    }
-}
-
-[dir="ltr"] {
-    .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
-        left: 0;
-        right: auto;
-    }
-
-    .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu {
-        left: 260px;
-        right: auto;
-    }
-}
-
-/* =========================================
-   3. Mobile Sidebar (.sx-aliexpress-sidebar)
-========================================= */
-.sx-aliexpress-sidebar {
-    background-color: #fff;
-    width: 300px; // Slightly wider for modern feel
-    z-index: 99999;
-
-    .mobile-menu__header {
-        background: $ali-red;
-        padding: 20px;
-        color: white;
-
-        .close-mobile-menu {
-            color: white;
-            opacity: 0.9;
-        }
-    }
-
-    .main-menu {
-        padding: 10px 0;
-
-        li {
-            border-bottom: 1px solid #f9f9f9;
-
-            a {
-                padding: 16px 20px; // Very large touch targets
-                color: $ali-text-dark;
-                display: flex;
-                align-items: center;
-                gap: 15px;
-                font-size: 14px;
-                font-weight: 500;
-
-                // Mobile Images/Icons
-                img {
-                    width: 32px;
-                    height: 32px;
-                    object-fit: contain;
-                    border-radius: 50%;
-                    background: #fff;
-                    border: 1px solid #eee;
-                    padding: 2px;
-                }
-
-                i {
-                    width: 32px;
-                    height: 32px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 16px;
-                    color: #777;
-                    background: #f7f7f7;
-                    border-radius: 50%;
-                }
-
-                &:hover,
-                &:active {
-                    color: $ali-red;
-                    background: #fafafa;
-
-                    i {
-                        color: $ali-red;
-                        background: #fff1f1;
-                    }
-                }
-            }
-        }
-    }
-}
-
-/* =========================================
-   4. Responsive Tweaks
-========================================= */
-@media (max-width: 1024px) {
-    .sx-aliexpress-header {
-        .ali-main-header {
-            padding: 10px 0;
-        }
-
-        .ali-logo-area a.navbar-brand {
-            max-width: 120px;
-        }
-
-        .ali-search-area,
-        .ali-nav-bar {
-            display: none !important;
-        }
-    }
-}
-
-/* =========================================
-   5. AliExpress Product Card (custom-salla-product-card)
-========================================= */
-custom-salla-product-card {
-    display: block; // Web component display
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-
-    .s-product-card-entry {
-        background: #fff;
-        border: 1px solid #f2f2f2; // Very subtle border
-        border-radius: 12px; // Modern rounded corners
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        overflow: hidden;
-        height: 100%;
-        position: relative;
-        padding-bottom: 15px; // Extra space at bottom
-
-        &:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); // Floating effect
-            transform: translateY(-4px);
-            border-color: #fff;
-        }
-    }
-
-    // -- Image Area --
-    .s-product-card-image {
-        position: relative;
-        overflow: hidden;
-        border-radius: 12px 12px 0 0;
-        background: #fff; // White background
-        height: 180px; // Fixed height anchor
-
-        @media (min-width: 1024px) {
-            height: 220px;
-        }
-
-        // Taller on desktop
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; // Contain ensures full product visibility 
-            transition: transform 0.5s ease;
-            padding: 10px; // Padding for 'contain' look
-        }
-
-        // Zoom on hover
-        &:hover img {
-            transform: scale(1.05);
-        }
-    }
-
-    // -- Badges (Sale/Out of Stock) --
-    .s-product-card-promotion-title,
-    .s-product-card-out-badge {
-        background-color: $ali-red;
-        color: white;
-        font-size: 10px;
-        font-weight: 700;
-        padding: 2px 6px;
-        border-radius: 4px;
-        position: absolute;
-        top: 10px;
-        left: 10px; // LTR
-        z-index: 5;
-    }
-
-    [dir="rtl"] .s-product-card-promotion-title {
-        right: 10px;
-        left: auto;
-    }
-
-    // -- Content Area --
-    .s-product-card-content {
-        padding: 5px 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
-
-    // Title
-    .s-product-card-content-title {
-        margin: 0;
-        min-height: 2.8em; // Reserve space for 2 lines
-
-        a {
-            font-size: 13px;
-            color: $ali-text-dark;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2; // Limit to 2 lines like AliExpress
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            font-weight: 400; // Regular weight
-            text-decoration: none;
-
-            &:hover {
-                color: $ali-red;
-            }
-        }
-    }
-
-    // Subtitle (if exists)
-    .s-product-card-content-subtitle {
-        font-size: 11px;
-        color: #999;
-        display: none; // Hide subtitle for cleaner look
-    }
-
-    // Price Section (Crucial for AliExpress look)
-    .s-product-card-content-sub {
-        margin-top: 4px;
-        display: flex;
-        align-items: baseline;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
-
-    // Current Price
-    .s-product-card-price,
-    .s-product-card-sale-price h4,
-    .s-product-card-starting-price h4 {
-        color: $ali-red !important;
-        font-size: 18px !important;
-        font-weight: 800 !important;
-        margin: 0;
-        line-height: 1;
-        font-family: 'Inter', sans-serif; // Number font
-    }
-
-    // Old Price (Strikethrough)
-    .s-product-card-sale-price span {
-        color: #999 !important;
-        font-size: 12px !important;
-        text-decoration: line-through;
-        font-weight: 400;
-    }
-
-    // Rating / Sold
-    .s-product-card-rating {
-        font-size: 11px;
-        color: #777;
-        display: flex;
-        align-items: center;
-        gap: 3px;
-
-        i {
-            color: #FFAA00;
-            font-size: 10px;
-        }
-    }
-
-    // -- Footer Actions (Compact Add to Cart) --
-    .s-product-card-content-footer {
-        margin-top: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        // Add Button Styling
-        salla-add-product-button {
-            flex: 1;
-        }
-
-        // Wishlist Button - Make it small/subtle
-        .s-product-card-wishlist-btn {
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            color: #ccc;
-            width: 30px;
-            height: 30px;
-
-            &:hover {
-                color: $ali-red;
-                background: #fff1f1 !important;
-            }
-
-            &.s-product-card-wishlist-added {
-                color: $ali-red;
-            }
-        }
-    }
-
-    // Target inner button for Add To Cart
-    salla-add-product-button::part(button) {
-        border-radius: 999px;
-        background: #fff;
-        border: 1px solid $ali-red;
-        color: $ali-red;
-        font-size: 12px;
-        font-weight: 600;
-        padding: 4px 0;
-        height: 32px;
-        width: 100%;
-        transition: 0.2s;
-
-        &:hover {
-            background-color: $ali-red;
-            color: #fff;
-        }
-    }
+    padding: 4px 8px;
+    transition: border-color var(--th-tr), background var(--th-tr);
+  }
+  .th-hdr__search-wrap:focus-within{
+    background:#fff;
+    border-color: var(--th-accent);
+  }
+
+  /* Desktop menu look */
+  .th-hdr__menu{ display:flex; align-items:stretch; gap: 22px; }
+  .th-hdr__nav-link{
+    display:inline-flex; align-items:center; gap:6px;
+    height: 100%;
+    font-weight:700;
+    font-size:15px;
+    padding: 0 2px;
+    transition: color var(--th-tr), transform var(--th-tr);
+  }
+  .th-hdr__nav-item:hover > .th-hdr__nav-link{ color: var(--th-accent); transform: translateY(-1px); }
+
+  /* Dropdown base */
+  .th-hdr__dropdown{
+    position:absolute;
+    top:100%;
+    right:0;
+    background:#fff;
+    border:1px solid var(--th-border);
+    box-shadow: var(--th-shadow);
+    border-radius: 0 0 10px 10px;
+    padding: 10px 0;
+    opacity:0;
+    visibility:hidden;
+    transform: translateY(10px);
+    transition: opacity var(--th-tr), transform var(--th-tr), visibility var(--th-tr);
+    z-index: 1100;
+  }
+
+  /* Show dropdown on hover */
+  .th-hdr__nav-item.has-children:hover > .th-hdr__dropdown{
+    opacity:1; visibility:visible; transform: translateY(0);
+  }
+
+  /* Cascading / flyout for nested items */
+  .th-hdr__sub-item > .th-hdr__dropdown{
+    top: -6px;
+    right: 100%;
+    margin-right: 8px;
+    border-radius: 10px;
+  }
+
+  .th-hdr__submenu{ list-style:none; margin:0; padding:0; }
+  .th-hdr__submenu .th-hdr__nav-link{
+    width:100%;
+    justify-content: space-between;
+    padding: 12px 18px;
+    font-weight:700;
+    font-size:14px;
+    color:#555;
+  }
+  .th-hdr__submenu .th-hdr__nav-item:hover > .th-hdr__nav-link{
+    background:#fcfcfc;
+    color: var(--th-accent);
+  }
+
+  .th-hdr__arrow-down, .th-hdr__arrow-left { font-size: 12px; opacity:.7; }
+
+  /* All Categories Mega */
+  .th-hdr__allcats{ position:relative; }
+  .th-hdr__allcats-btn{
+    display:inline-flex; align-items:center;
+    height:100%;
+    padding: 0 18px;
+    border-left:1px solid var(--th-border);
+    border-right:1px solid var(--th-border);
+    background: #f9f9f9;
+    font-weight:800;
+    transition: background var(--th-tr), color var(--th-tr);
+  }
+  .th-hdr__allcats-btn:hover{ background: var(--th-accent); color:#fff; }
+
+  .th-hdr__mega{
+    position:absolute;
+    top:100%;
+    right:0;
+    width:900px;
+    min-height:420px;
+    display:flex;
+    border:1px solid var(--th-border);
+    border-top:0;
+    background:#fff;
+    box-shadow: var(--th-shadow);
+    border-radius: 0 0 12px 12px;
+    overflow:hidden;
+  }
+  .th-hdr__mega-side{
+    width:26%;
+    background:#fcfcfc;
+    border-left:1px solid var(--th-border);
+  }
+  .th-hdr__mega-tab{
+    width:100%;
+    text-align:right;
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #eee;
+    font-weight:800;
+  }
+  .th-hdr__mega-tab.is-active{
+    background:#fff;
+    color: var(--th-accent);
+    border-right:3px solid var(--th-accent);
+  }
+  .th-hdr__mega-content{ width:74%; padding:22px; }
+  .th-hdr__mega-pane{ display:none; }
+  .th-hdr__mega-pane.is-active{ display:block; }
+
+  .th-hdr__mega-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .th-hdr__mega-title{
+    display:inline-block;
+    font-weight:900;
+    padding-bottom:6px;
+    margin-bottom:10px;
+    border-bottom:2px solid #eee;
+  }
+  .th-hdr__mega-link{ display:block; color:#666; font-size:13px; margin-bottom:8px; }
+  .th-hdr__mega-link:hover{ color: var(--th-accent); transform: translateX(-5px); }
+
+  /* Mobile search already in topbar */
+  @media (max-width: 992px){
+    .th-hdr__shipping-bar{ font-size:11px; }
+  }
 }

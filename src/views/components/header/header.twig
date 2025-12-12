@@ -5,214 +5,113 @@
 | cart.items_count | int     |                                 |
 | cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
-<header
-	id="custom-tharaa-header">
-	{# Hook: Salla requirement #}
-	{{ content_for_header }}
 
-	{# 1. TOP BAR #}
-	<div class="cth-top-bar">
-		<div
-			class="container">
-			{# Left Side: Footer/Help Menu (Dynamic) #}
-			<div class="cth-top-menu">
-				{% component 'footer.menu' with {is_header:true} %}
-			</div>
+<header class="store-header th-hdr">
 
-			{# Right Side: Currency, Language, Location #}
-			<div class="cth-top-links">
-				{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-					<button type="button" onclick="salla.event.dispatch('localization::open')">
-						<span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
-						<span class="mx-1.5">|</span>
-						<span>{{ currency.symbol }}</span>
-					</button>
-					<salla-localization-modal></salla-localization-modal>
-				{% endif %}
+    {# (اختياري) إعلان سلة إذا كان متوفر — بدون ما يسبب خطأ لو غير موجود #}
+    {% if advertisement is defined and advertisement %}
+        {% include 'components.header.advertisement' ignore missing with {advertisement: advertisement} %}
+    {% endif %}
 
-				{% if store.scope %}
-					<button onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
-						<i class="sicon-location"></i>
-						{{ store.scope.name }}
-					</button>
-				{% endif %}
-			</div>
-		</div>
-	</div>
+    {# Top Shipping Bar (ستايل مثل تصميمك) #}
+    <div class="th-hdr__shipping-bar">
+        <div class="container th-hdr__shipping-inner">
+            شحن مجاني للطلبات التي تزيد عن 299 ريال | تسوّق الآن واستمتع بالخصومات
+        </div>
+    </div>
 
-	{# 2. MAIN HEADER #}
-	<div class="cth-main-header">
-		<div class="container">
-			<div
-				class="cth-main-row">
-				{# Mobile Burger Trigger #}
-				<a href="#mobile-menu" class="cth-burger-btn lg:hidden">
-					<i class="sicon-menu"></i>
-				</a>
+    {# Top Nav (نحافظ على محتوى سلة الأصلي) #}
+    <div class="top-navbar th-hdr__top-navbar">
+        <div class="container flex justify-between th-hdr__top-inner">
 
-				{# Logo (Right) #}
-				<div class="cth-logo">
-					<a href="{{ store.url }}">
-						<img src="{{ store.logo }}" alt="{{ store.name }}" loading="eager">
-					</a>
-				</div>
+            <div class="flex-1 flex items-center rtl:space-x-reverse space-x-2 th-hdr__top-left">
 
-				{# Search (Center) #}
-				<div class="cth-search-wrapper hidden lg:block">
-					<salla-search inline oval height="48" placeholder="{{ trans('blocks.header.search_placeholder')|default('ابحث عن عطر، ماركة، أو منتج...') }}"></salla-search>
-				</div>
+                {# Footer Menu #}
+                {% component 'footer.menu' with {is_header:true} %}
 
-				{# Actions (Left) #}
-				<div
-					class="cth-actions">
-					{# User #}
-					{% if user.type == 'user' %}
-						<salla-user-menu avatar-only show-header></salla-user-menu>
-					{% else %}
-						<button class="cth-action-item" onclick="salla.event.dispatch('login::open')">
-							<i class="sicon-user"></i>
-							<span>{{ trans('blocks.header.login')|default('حسابي') }}</span>
-						</button>
-					{% endif %}
+                <div class="header-buttons">
+                    {# Language & Currency Component #}
+                    {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                        <button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray basis-0">
+                            <span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
+                            <span class="mx-1.5">|</span> <span>{{ currency.symbol }}</span>
+                        </button>
+                        <salla-localization-modal></salla-localization-modal>
+                    {% endif %}
+                </div>
 
-					{# Wishlist #}
-					<button class="cth-action-item" onclick="salla.event.dispatch('wishlist::open')">
-						<i class="sicon-heart"></i>
-						<span>{{ trans('blocks.header.wishlist')|default('المفضلة') }}</span>
-					</button>
+                {# Scopes | Branches #}
+                {% if store.scope %}
+                    <button class="btn--rounded-gray"
+                            onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
+                        <i class="sicon-location rtl:ml-1 ltr:mr-1"></i> {{ store.scope.name }}
+                    </button>
+                {% endif %}
 
-					{# Cart #}
-					<salla-cart-summary class="cth-action-item">
-						<i slot="icon" class="sicon-shopping-bag"></i>
-						<span slot="label">{{ trans('blocks.header.cart')|default('السلة') }}</span>
-					</salla-cart-summary>
-				</div>
-			</div>
+                {# Search (Mobile فقط هنا) #}
+                <div class="header-search flex-1 lg:hidden th-hdr__search-mobile">
+                    <salla-search inline oval height="36"></salla-search>
+                </div>
+            </div>
 
-			{# Mobile Search #}
-			<div class="lg:hidden mt-4 pb-2">
-				<salla-search inline oval height="38"></salla-search>
-			</div>
-		</div>
-	</div>
+            {% component 'footer.contacts' with {is_header:true} %}
+        </div>
+    </div>
 
-	{# 3. NAV BAR #}
-	<div class="cth-nav-bar hidden lg:block">
-		<div
-			class="container cth-nav-container">
-			{# Sidebar Trigger & Dropdown #}
-			<div class="cth-cat-wrapper relative group">
-				<div id="cth-trigger" class="cth-cat-trigger">
-					<button type="button">
-						<i class="sicon-menu menu-icon"></i>
-						<span>{{ trans('blocks.header.categories')|default('كل الأصناف') }}</span>
-						<i class="sicon-keyboard_arrow_down arrow-icon"></i>
-					</button>
-				</div>
+    {# Main Nav (Premium Layout) #}
+    <div id="mainnav" class="main-nav-container shadow-default bg-white th-hdr__main">
+        <div class="inner bg-inherit">
+            <div class="container">
+                <div class="flex items-stretch justify-between relative th-hdr__main-inner">
 
-				{# Dynamic Sidebar Menu #}
-				<div id="cth-dropdown" class="cth-sidebar-dropdown">
-					<ul class="cth-vertical-menu">
-						{# Iterate Main Menu Items #}
-						{# Note: 'menus.main_menu' is usually 'menus.main_menu.items' or just 'menus.main_menu' #}
-						{# In Tharaa usually: component 'header.menu' handles this. But we need custom markup. #}
-						{# Variables: site.menus.main_menu #}
+                    {# Left: Burger + Logo + Menu #}
+                    <div class="flex items-center th-hdr__left">
+                        <a class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu">
+                            <i class="sicon-menu th-hdr__burger-icon rtl:ml-2.5 ltr:mr-2.5"></i>
+                        </a>
 
-							{% for item in menus.main_menu %}
-								<li>
-									<a
-									href="{{ item.url }}"> <!-- Icon Logic -->
-									{% if item.icon %}
-										<i class="{{ item.icon }}" style="width:24px;text-align:center;"></i>
-									{% elseif item.image %}
-										<img src="{{ item.image }}" alt="{{ item.title }}" style="width:20px;height:20px;">
-									{% else %}
-										<i class="sicon-layout" style="width:24px;text-align:center;"></i>
-									{% endif %}
+                        <a class="navbar-brand th-hdr__brand" href="{{ store.url }}">
+                            <img fetchpriority="high" width="100%" height="100%" loading="eager"
+                                 src="{{ store.logo }}" alt="{{ store.name }}">
+                            {% if is_page('index') %}
+                                <h1 class="sr-only">{{ store.name }}</h1>
+                            {% else %}
+                                <h2 class="sr-only">{{ store.name }}</h2>
+                            {% endif %}
+                        </a>
 
-									<span>{{ item.title }}</span>
+                        {# Menu Component (لا نخفيه لأن فيه mobile-menu) #}
+                        {% component 'header.menu' %}
+                    </div>
 
-									{% if item.children|length > 0 %}
-										<i class="sicon-keyboard_arrow_left ltr:rotate-180 opacity-50 text-xs" style="margin-right:auto;"></i>
-									{% endif %}
-								</a>
+                    {# Center: Search (Desktop فقط) #}
+                    <div class="hidden lg:flex flex-1 justify-center px-6 th-hdr__search-desktop">
+                        <div class="th-hdr__search-wrap">
+                            <salla-search inline oval height="44"></salla-search>
+                        </div>
+                    </div>
 
-								{# Mega Menu (Level 2) #}
-								{% if item.children|length > 0 %}
-									<div class="cth-mega-menu">
-										{% for sub in item.children %}
-											<div class="mega-column">
-												<a href="{{ sub.url }}" class="mega-title">{{ sub.title }}</a>
-												{% if sub.children|length > 0 %}
-													<ul>
-														{% for child in sub.children %}
-															<li>
-																<a href="{{ child.url }}">{{ child.title }}</a>
-															</li>
-														{% endfor %}
-													</ul>
-												{% endif %}
-											</div>
-										{% endfor %}
-									</div>
-								{% endif %}
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-			</div>
+                    {# Right: User + Cart (نحافظ على سلوك سلة) #}
+                    <div class="flex items-center justify-end th-hdr__actions">
+                        {% if user.type=='user' %}
+                            <salla-user-menu avatar-only show-header></salla-user-menu>
+                        {% else %}
+                            <button class="header-btn th-hdr__icon-btn" onclick="salla.event.dispatch('login::open')">
+                                <i class="header-btn__icon sicon-user-circle"></i>
+                            </button>
+                        {% endif %}
 
-			{# Horizontal Menu #}
-			<div class="cth-horiz-menu flex-1 margin-start-4">
-				<ul class="flex gap-6 items-center">{# Use header_menu if available or hardcode important links #}
-					{# Usually we iterate the same menu but exclude first item, or use a separate menu #}
-				</ul>
-			</div>
-		</div>
-	</div>
+                        <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4 th-hdr__cart">
+                            <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+                        </salla-cart-summary>
+                    </div>
 
-	{# Backdrop #}
-	<div id="cth-backdrop" class="cth-backdrop"></div>
-
-	{% hook 'header:end' %}
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
+
 {% if store.scope %}
-	<salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
+    <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
 {% endif %}
-
-{# Scoped JavaScript #}
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-const header = document.getElementById('custom-tharaa-header');
-if (! header) 
-return;
-
-
-
-const trigger = header.querySelector('#cth-trigger button'); // target the button inside
-const triggerWrapper = header.querySelector('#cth-trigger');
-const backdrop = document.getElementById('cth-backdrop');
-
-if (trigger && backdrop) { // Toggle Sidebar
-trigger.addEventListener('click', (e) => {
-e.stopPropagation();
-triggerWrapper.classList.toggle('is-active');
-backdrop.classList.toggle('is-visible');
-});
-
-// Close on Backdrop Click
-backdrop.addEventListener('click', () => {
-triggerWrapper.classList.remove('is-active');
-backdrop.classList.remove('is-visible');
-});
-
-// Close on Click Outside
-document.addEventListener('click', (e) => {
-if (! triggerWrapper.contains(e.target) && !document.getElementById('cth-dropdown').contains(e.target)) {
-triggerWrapper.classList.remove('is-active');
-backdrop.classList.remove('is-visible');
-}
-});
-}
-});
-</script>
