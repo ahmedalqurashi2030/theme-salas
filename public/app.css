@@ -995,10 +995,6 @@ select{
     margin-left: 0.75rem;
     margin-right: 0.75rem;
 }
-.mx-8{
-    margin-left: 2rem;
-    margin-right: 2rem;
-}
 .-mb-52{
     margin-bottom: -13rem;
 }
@@ -1179,9 +1175,6 @@ select{
 .h-56{
     height: 14rem;
 }
-.h-6{
-    height: 1.5rem;
-}
 .h-62{
     height: 248px;
 }
@@ -1283,9 +1276,6 @@ select{
 }
 .w-56{
     width: 14rem;
-}
-.w-6{
-    width: 1.5rem;
 }
 .w-64{
     width: 16rem;
@@ -1876,9 +1866,6 @@ select{
 .pb-16{
     padding-bottom: 4rem;
 }
-.pb-3{
-    padding-bottom: 0.75rem;
-}
 .pb-4{
     padding-bottom: 1rem;
 }
@@ -1929,6 +1916,9 @@ select{
 }
 .pt-8{
     padding-top: 2rem;
+}
+.pb-2{
+    padding-bottom: 0.5rem;
 }
 .text-center{
     text-align: center;
@@ -3138,13 +3128,10 @@ textarea.s-input{
         padding-right: 0.625rem;
     }
 }
-.sx-aliexpress-header .ali-top-navbar .s-advertisement-content {
+#custom-tharaa-header .cth-top-bar .s-advertisement-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.sx-aliexpress-header .ali-nav-bar .s-advertisement-content {
-  position: relative;
 }
 .s-advertisement-content-main{
     flex: 1 1 0%;
@@ -22973,13 +22960,10 @@ input[type=radio].sr-only:checked ~ div.product-entry--special .product-rating {
         padding-right: 0.625rem;
     }
 }
-.sx-aliexpress-header .ali-top-navbar .s-comments-product .s-comments-container {
+#custom-tharaa-header .cth-top-bar .s-comments-product .s-comments-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.sx-aliexpress-header .ali-nav-bar .s-comments-product .s-comments-container {
-  position: relative;
 }
 .share-btns-list{
     position: absolute;
@@ -24723,573 +24707,340 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     z-index: 5;
   }
 }
-.ali-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 990;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-}
-.ali-backdrop.is-visible {
-  opacity: 1;
-  visibility: visible;
-}
-/* =========================================
-   2. Main Header Container (.sx-aliexpress-header)
-========================================= */
-.sx-aliexpress-header {
+/* 
+   CUSTOM THARAA HEADER 
+   Scoped strictly to #custom-tharaa-header to avoid conflicts.
+*/
+#custom-tharaa-header {
+  --cth-red: #ff4747;
+  --cth-black: #191919;
+  --cth-white: #ffffff;
+  --cth-gray-bg: #f5f5f5;
+  --cth-border: #e8e8e8;
+  --cth-text: #222;
+  --cth-text-light: #666;
+  --cth-font: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, sans-serif;
   background-color: #ffffff;
-  color: #222;
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, sans-serif;
+  background-color: var(--cth-white);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, sans-serif;
+  font-family: var(--cth-font);
   direction: rtl;
   position: relative;
   z-index: 995;
+  /* Reset some default Salla styling within this scope */
 }
-.sx-aliexpress-header .ali-top-navbar {
+#custom-tharaa-header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#custom-tharaa-header a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.2s;
+}
+#custom-tharaa-header button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+#custom-tharaa-header {
+  /* 1. TOP BAR */
+}
+#custom-tharaa-header .cth-top-bar {
   background-color: #fafafa;
   border-bottom: 1px solid #f0f0f0;
   font-size: 11px;
-  padding: 4px 0;
-  color: #666;
+  padding: 6px 0;
+  color: var(--cth-text-light);
 }
-.sx-aliexpress-header .ali-top-navbar .container {
+#custom-tharaa-header .cth-top-bar .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.sx-aliexpress-header .ali-top-navbar .ali-top-btn,
-.sx-aliexpress-header .ali-top-navbar a,
-.sx-aliexpress-header .ali-top-navbar button {
-  color: #666;
-  border: none;
-  background: transparent;
-  font-weight: 400;
-  font-size: 11px;
-  display: inline-flex;
+#custom-tharaa-header .cth-top-bar .cth-top-links {
+  display: flex;
+  gap: 15px;
+}
+#custom-tharaa-header .cth-top-bar .cth-top-links a,
+#custom-tharaa-header .cth-top-bar .cth-top-links button {
+  display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
-.sx-aliexpress-header .ali-top-navbar .ali-top-btn:hover,
-.sx-aliexpress-header .ali-top-navbar a:hover,
-.sx-aliexpress-header .ali-top-navbar button:hover {
-  color: #ff4747;
+#custom-tharaa-header .cth-top-bar .cth-top-links a:hover,
+#custom-tharaa-header .cth-top-bar .cth-top-links button:hover {
+  color: var(--cth-red);
 }
-.sx-aliexpress-header .ali-main-header {
-  padding: 18px 0;
-  background: #ffffff;
+#custom-tharaa-header {
+  /* 2. MAIN HEADER */
 }
-.sx-aliexpress-header .ali-main-header .ali-main-row {
+#custom-tharaa-header .cth-main-header {
+  padding: 20px 0;
+  background: var(--cth-white);
+}
+#custom-tharaa-header .cth-main-header .cth-main-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 30px;
 }
-.sx-aliexpress-header .ali-main-header .ali-logo-area {
+#custom-tharaa-header .cth-main-header {
+  /* Logo */
+}
+#custom-tharaa-header .cth-main-header .cth-logo {
   flex-shrink: 0;
 }
-.sx-aliexpress-header .ali-main-header .ali-logo-area a.navbar-brand {
-  display: block;
-  max-width: 160px;
-}
-.sx-aliexpress-header .ali-main-header .ali-logo-area img {
-  height: auto !important;
-  max-height: 48px !important;
-  max-width: 100% !important;
-}
-.sx-aliexpress-header .ali-main-header .ali-logo-area img {
-  display: block;
+#custom-tharaa-header .cth-main-header .cth-logo img {
+  height: 48px;
+  width: auto;
   -o-object-fit: contain;
      object-fit: contain;
+  display: block;
 }
-.sx-aliexpress-header .ali-main-header .ali-search-area {
+#custom-tharaa-header .cth-main-header {
+  /* Search */
+}
+#custom-tharaa-header .cth-main-header .cth-search-wrapper {
   flex: 1;
-  max-width: 700px;
+  max-width: 680px;
+  /* Salla Search Component Override */
 }
-.sx-aliexpress-header .ali-main-header .ali-search-area salla-search {
-  --color-primary: #191919;
-  border: 2px solid #191919;
+#custom-tharaa-header .cth-main-header .cth-search-wrapper salla-search {
+  --color-primary: var(--cth-black);
+  display: flex;
+  border: 2px solid var(--cth-black);
   border-radius: 999px;
   overflow: hidden;
-  display: flex;
-  height: 40px;
-  width: 100%;
+  height: 42px;
 }
-.sx-aliexpress-header .ali-main-header .ali-search-area salla-search::part(input) {
+#custom-tharaa-header .cth-main-header .cth-search-wrapper salla-search::part(input) {
   border: none;
-  outline: none;
+  background: transparent;
   padding: 0 20px;
   font-size: 14px;
-  color: #333;
-  background: transparent;
 }
-.sx-aliexpress-header .ali-main-header .ali-search-area salla-search::part(button) {
-  background-color: #191919;
+#custom-tharaa-header .cth-main-header .cth-search-wrapper salla-search::part(button) {
+  background: var(--cth-black);
   color: white;
-  width: 75px;
+  width: 80px;
   border-radius: 0;
-  font-weight: bold;
-  transition: background 0.2s;
 }
-.sx-aliexpress-header .ali-main-header .ali-search-area salla-search::part(button):hover {
-  background-color: rgb(50.5, 50.5, 50.5);
+#custom-tharaa-header .cth-main-header {
+  /* Actions */
 }
-.sx-aliexpress-header .ali-main-header .ali-actions-area {
+#custom-tharaa-header .cth-main-header .cth-actions {
   display: flex;
   align-items: center;
   gap: 25px;
-  flex-shrink: 0;
 }
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn,
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-cart-btn {
+#custom-tharaa-header .cth-main-header .cth-actions .cth-action-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 11px;
-  line-height: 1.2;
-  color: #222;
+  color: var(--cth-text);
+  gap: 2px;
   cursor: pointer;
-  transition: color 0.2s;
-  background: transparent;
-  border: none;
-  padding: 0;
-  margin: 0;
 }
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn .header-btn__icon,
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn .icon,
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-cart-btn .header-btn__icon,
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-cart-btn .icon {
+#custom-tharaa-header .cth-main-header .cth-actions .cth-action-item i {
   font-size: 26px;
-  margin-bottom: 3px;
-  color: #222;
 }
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn:hover,
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-cart-btn:hover {
-  color: #ff4747;
+#custom-tharaa-header .cth-main-header .cth-actions .cth-action-item:hover {
+  color: var(--cth-red);
 }
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn:hover .header-btn__icon,
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-action-btn:hover .icon,
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-cart-btn:hover .header-btn__icon,
-.sx-aliexpress-header .ali-main-header .ali-actions-area .ali-cart-btn:hover .icon {
-  color: #ff4747;
+#custom-tharaa-header {
+  /* 3. NAV BAR & SIDEBAR */
 }
-.sx-aliexpress-header .ali-nav-bar {
-  border-bottom: 2px solid #e8e8e8;
-  margin-top: 5px;
+#custom-tharaa-header .cth-nav-bar {
+  border-bottom: 2px solid var(--cth-border);
   position: relative;
 }
-.sx-aliexpress-header .ali-nav-bar .container {
-  position: relative;
+#custom-tharaa-header .cth-nav-bar .cth-nav-container {
+  display: flex;
+  align-items: center;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-all-cats {
-  position: relative;
-  display: inline-block;
+#custom-tharaa-header {
+  /* "All Categories" Trigger */
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-btn {
-  background-color: transparent;
-  color: #222;
-  border-radius: 999px 999px 0 0;
-  padding: 0 20px;
-  height: 48px;
+#custom-tharaa-header .cth-cat-trigger {
+  position: relative;
+  z-index: 1001;
+}
+#custom-tharaa-header .cth-cat-trigger button {
+  height: 45px;
+  padding: 0 25px;
   display: flex;
   align-items: center;
   gap: 10px;
   font-weight: 700;
   font-size: 15px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
-  z-index: 1001;
+  color: var(--cth-text);
+  border-radius: 999px 999px 0 0;
+  transition: all 0.2s;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-btn i.sicon-menu {
+#custom-tharaa-header .cth-cat-trigger button i.menu-icon {
   font-size: 20px;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-btn:hover {
-  color: #ff4747;
-  background: #fafafa;
+#custom-tharaa-header .cth-cat-trigger button i.arrow-icon {
+  font-size: 12px;
+  margin-right: auto;
+  opacity: 0.5;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-all-cats.is-active .ali-cat-btn {
-  background-color: #fff;
-  color: #ff4747;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+#custom-tharaa-header .cth-cat-trigger {
+  /* Active State */
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
+#custom-tharaa-header .cth-cat-trigger.is-active button {
+  background: #fff;
+  color: var(--cth-red);
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+  /* Visual connection to dropdown */
+}
+#custom-tharaa-header {
+  /* DROPDOWN SIDEBAR (Desktop) */
+}
+#custom-tharaa-header .cth-sidebar-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
   width: 260px;
   background: #fff;
-  border: 1px solid #e8e8e8;
-  border-top: 2px solid #222;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--cth-border);
+  border-top: 2px solid var(--cth-text);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  /* Hidden State */
   visibility: hidden;
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.25s ease;
+  /* Show when active */
 }
-.sx-aliexpress-header .ali-nav-bar .ali-all-cats.is-active .ali-cat-dropdown {
+.cth-cat-trigger.is-active #custom-tharaa-header .cth-sidebar-dropdown {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown ul.main-menu,
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown .level-0 {
-  display: flex;
-  flex-direction: column;
-  padding: 5px 0;
-  margin: 0;
-  list-style: none;
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu {
+  padding: 8px 0;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li {
-  position: static;
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li {
   position: relative;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a {
-  padding: 10px 20px;
-  color: #222;
-  font-size: 13px;
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a {
+  padding: 12px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  transition: 0.1s;
-  width: 100%;
+  font-size: 13px;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a img {
-  width: 24px;
-  height: 24px;
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a img {
+  width: 20px;
+  height: 20px;
   -o-object-fit: contain;
      object-fit: contain;
-  border-radius: 50%;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a i {
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a i {
   font-size: 18px;
   color: #999;
   width: 24px;
   text-align: center;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a:hover {
-  background-color: #fff;
-  color: #ff4747;
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a:hover {
+  background: #fff;
+  color: var(--cth-red);
   font-weight: 700;
-  box-shadow: inset -3px 0 0 #ff4747;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li a:hover i {
-  color: #ff4747;
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a:hover i {
+  color: var(--cth-red);
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu,
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li .level-1 {
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li a:hover {
+  /* Left Red Line */
+  box-shadow: inset -3px 0 0 var(--cth-red);
+}
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li {
+  /* HOVER: Show Mega Menu */
+}
+#custom-tharaa-header .cth-sidebar-dropdown ul.cth-vertical-menu li:hover > .cth-mega-menu {
+  display: grid;
+}
+#custom-tharaa-header {
+  /* MEGA MENU (Flyout) */
+}
+#custom-tharaa-header .cth-mega-menu {
   display: none;
   position: absolute;
-  top: -2px;
-  right: 259px;
+  top: 0;
+  right: 258px;
   width: 700px;
   min-height: 100%;
-  min-height: 350px;
   background: #fff;
-  border: 1px solid #e8e8e8;
-  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--cth-border);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
   padding: 25px;
-  z-index: 101;
+  z-index: 1001;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   align-content: start;
 }
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li:hover > ul, .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li:hover > .level-1 {
-  display: grid;
-}
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li .sub-menu li a {
-  font-weight: 400;
-  color: #555;
-  padding: 6px 0;
-  font-size: 13px;
-}
-.sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li .sub-menu li a:hover {
-  color: #ff4747;
-  box-shadow: none;
-  background: transparent;
-}
-.sx-aliexpress-header .ali-nav-bar .ali-menu-wrapper {
-  margin-right: 20px;
-}
-[dir=rtl] .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
-  right: 0;
-  left: auto;
-}
-[dir=rtl] .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu {
-  right: 260px;
-  left: auto;
-}
-[dir=rtl] .ali-all-cats.is-active .ali-cat-btn {
-  border-radius: 8px 8px 0 0;
-}
-[dir=ltr] .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown {
-  left: 0;
-  right: auto;
-}
-[dir=ltr] .sx-aliexpress-header .ali-nav-bar .ali-cat-dropdown li ul.sub-menu {
-  left: 260px;
-  right: auto;
-}
-/* =========================================
-   3. Mobile Sidebar (.sx-aliexpress-sidebar)
-========================================= */
-.sx-aliexpress-sidebar {
-  background-color: #fff;
-  width: 300px;
-  z-index: 99999;
-}
-.sx-aliexpress-sidebar .mobile-menu__header {
-  background: #ff4747;
-  padding: 20px;
-  color: white;
-}
-.sx-aliexpress-sidebar .mobile-menu__header .close-mobile-menu {
-  color: white;
-  opacity: 0.9;
-}
-.sx-aliexpress-sidebar .main-menu {
-  padding: 10px 0;
-}
-.sx-aliexpress-sidebar .main-menu li {
-  border-bottom: 1px solid #f9f9f9;
-}
-.sx-aliexpress-sidebar .main-menu li a {
-  padding: 16px 20px;
-  color: #222;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  font-size: 14px;
-  font-weight: 500;
-}
-.sx-aliexpress-sidebar .main-menu li a img {
-  width: 32px;
-  height: 32px;
-  -o-object-fit: contain;
-     object-fit: contain;
-  border-radius: 50%;
-  background: #fff;
-  border: 1px solid #eee;
-  padding: 2px;
-}
-.sx-aliexpress-sidebar .main-menu li a i {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  color: #777;
-  background: #f7f7f7;
-  border-radius: 50%;
-}
-.sx-aliexpress-sidebar .main-menu li a:hover, .sx-aliexpress-sidebar .main-menu li a:active {
-  color: #ff4747;
-  background: #fafafa;
-}
-.sx-aliexpress-sidebar .main-menu li a:hover i, .sx-aliexpress-sidebar .main-menu li a:active i {
-  color: #ff4747;
-  background: #fff1f1;
-}
-/* =========================================
-   4. Responsive Tweaks
-========================================= */
-@media (max-width: 1024px) {
-  .sx-aliexpress-header .ali-main-header {
-    padding: 10px 0;
-  }
-  .sx-aliexpress-header .ali-logo-area a.navbar-brand {
-    max-width: 120px;
-  }
-  .sx-aliexpress-header .ali-search-area,
-  .sx-aliexpress-header .ali-nav-bar {
-    display: none !important;
-  }
-}
-/* =========================================
-   5. AliExpress Product Card (custom-salla-product-card)
-========================================= */
-custom-salla-product-card {
-  display: block;
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, sans-serif;
-}
-custom-salla-product-card .s-product-card-entry {
-  background: #fff;
-  border: 1px solid #f2f2f2;
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  overflow: hidden;
-  height: 100%;
-  position: relative;
-  padding-bottom: 15px;
-}
-custom-salla-product-card .s-product-card-entry:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-  transform: translateY(-4px);
-  border-color: #fff;
-}
-custom-salla-product-card .s-product-card-image {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px 12px 0 0;
-  background: #fff;
-  height: 180px;
-}
-@media (min-width: 1024px) {
-  custom-salla-product-card .s-product-card-image {
-    height: 220px;
-  }
-}
-custom-salla-product-card .s-product-card-image img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
-  transition: transform 0.5s ease;
-  padding: 10px;
-}
-custom-salla-product-card .s-product-card-image:hover img {
-  transform: scale(1.05);
-}
-custom-salla-product-card .s-product-card-promotion-title,
-custom-salla-product-card .s-product-card-out-badge {
-  background-color: #ff4747;
-  color: white;
-  font-size: 10px;
+#custom-tharaa-header .cth-mega-menu .mega-title {
   font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 5;
+  color: var(--cth-text);
+  margin-bottom: 10px;
+  display: block;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
 }
-custom-salla-product-card [dir=rtl] .s-product-card-promotion-title {
-  right: 10px;
-  left: auto;
-}
-custom-salla-product-card .s-product-card-content {
-  padding: 5px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-custom-salla-product-card .s-product-card-content-title {
-  margin: 0;
-  min-height: 2.8em;
-}
-custom-salla-product-card .s-product-card-content-title a {
+#custom-tharaa-header .cth-mega-menu ul li a {
+  padding: 5px 0;
+  color: #555;
   font-size: 13px;
-  color: #222;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-weight: 400;
-  -webkit-text-decoration: none;
-  text-decoration: none;
 }
-custom-salla-product-card .s-product-card-content-title a:hover {
-  color: #ff4747;
-}
-custom-salla-product-card .s-product-card-content-subtitle {
-  font-size: 11px;
-  color: #999;
-  display: none;
-}
-custom-salla-product-card .s-product-card-content-sub {
-  margin-top: 4px;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-custom-salla-product-card .s-product-card-price,
-custom-salla-product-card .s-product-card-sale-price h4,
-custom-salla-product-card .s-product-card-starting-price h4 {
-  color: #ff4747 !important;
-  font-size: 18px !important;
-  font-weight: 800 !important;
-}
-custom-salla-product-card .s-product-card-price,
-custom-salla-product-card .s-product-card-sale-price h4,
-custom-salla-product-card .s-product-card-starting-price h4 {
-  margin: 0;
-  line-height: 1;
-  font-family: "Inter", sans-serif;
-}
-custom-salla-product-card .s-product-card-sale-price span {
-  color: #999 !important;
-  font-size: 12px !important;
-}
-custom-salla-product-card .s-product-card-sale-price span {
-  -webkit-text-decoration: line-through;
-  text-decoration: line-through;
+#custom-tharaa-header .cth-mega-menu ul li a:hover {
+  color: var(--cth-red);
+  box-shadow: none;
   font-weight: 400;
 }
-custom-salla-product-card .s-product-card-rating {
-  font-size: 11px;
-  color: #777;
-  display: flex;
-  align-items: center;
-  gap: 3px;
+#custom-tharaa-header {
+  /* BACKDROP */
 }
-custom-salla-product-card .s-product-card-rating i {
-  color: #FFAA00;
-  font-size: 10px;
-}
-custom-salla-product-card .s-product-card-content-footer {
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-custom-salla-product-card .s-product-card-content-footer salla-add-product-button {
-  flex: 1;
-}
-custom-salla-product-card .s-product-card-content-footer .s-product-card-wishlist-btn {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-custom-salla-product-card .s-product-card-content-footer .s-product-card-wishlist-btn {
-  color: #ccc;
-  width: 30px;
-  height: 30px;
-}
-custom-salla-product-card .s-product-card-content-footer .s-product-card-wishlist-btn:hover {
-  background: #fff1f1 !important;
-}
-custom-salla-product-card .s-product-card-content-footer .s-product-card-wishlist-btn:hover {
-  color: #ff4747;
-}
-custom-salla-product-card .s-product-card-content-footer .s-product-card-wishlist-btn.s-product-card-wishlist-added {
-  color: #ff4747;
-}
-custom-salla-product-card salla-add-product-button::part(button) {
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid #ff4747;
-  color: #ff4747;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 0;
-  height: 32px;
+#custom-tharaa-header .cth-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  transition: 0.2s;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 990;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
 }
-custom-salla-product-card salla-add-product-button::part(button):hover {
-  background-color: #ff4747;
-  color: #fff;
+#custom-tharaa-header .cth-backdrop.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+#custom-tharaa-header {
+  /* RESPONSIVE */
+}
+@media (max-width: 1024px) {
+  #custom-tharaa-header .cth-search-wrapper,
+  #custom-tharaa-header .cth-nav-bar {
+    display: none;
+  }
+  #custom-tharaa-header .cth-logo img {
+    height: 32px;
+  }
+  #custom-tharaa-header .cth-burger-btn {
+    display: block !important;
+  }
+}
+#custom-tharaa-header .cth-burger-btn {
+  display: none;
+  font-size: 24px;
+  padding: 5px;
 }
 .tharaa-theme {
   font-family: "Tajawal", "Inter", sans-serif;
@@ -25818,11 +25569,6 @@ custom-salla-product-card salla-add-product-button::part(button):hover {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(180deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-.group.is-active .group-\[\.is-active\]\:rotate-180{
-    --tw-rotate: 180deg;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(180deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
 @media (min-width: 640px){
     .sm\:col-span-2{
         grid-column: span 2 / span 2;
@@ -25948,9 +25694,6 @@ custom-salla-product-card salla-add-product-button::part(button):hover {
     }
     .md\:mt-0{
         margin-top: 0px;
-    }
-    .md\:block{
-        display: block;
     }
     .md\:flex{
         display: flex;

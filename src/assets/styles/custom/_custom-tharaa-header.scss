@@ -1,0 +1,353 @@
+/* 
+   CUSTOM THARAA HEADER 
+   Scoped strictly to #custom-tharaa-header to avoid conflicts.
+*/
+
+#custom-tharaa-header {
+    --cth-red: #ff4747;
+    --cth-black: #191919;
+    --cth-white: #ffffff;
+    --cth-gray-bg: #f5f5f5;
+    --cth-border: #e8e8e8;
+    --cth-text: #222;
+    --cth-text-light: #666;
+    --cth-font: 'Inter', system-ui, -apple-system, sans-serif;
+
+    background-color: var(--cth-white);
+    font-family: var(--cth-font);
+    direction: rtl;
+    position: relative;
+    z-index: 995;
+
+    /* Reset some default Salla styling within this scope */
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: 0.2s;
+    }
+
+    button {
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    /* 1. TOP BAR */
+    .cth-top-bar {
+        background-color: #fafafa;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 11px;
+        padding: 6px 0;
+        color: var(--cth-text-light);
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cth-top-links {
+            display: flex;
+            gap: 15px;
+
+            a,
+            button {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                &:hover {
+                    color: var(--cth-red);
+                }
+            }
+        }
+    }
+
+    /* 2. MAIN HEADER */
+    .cth-main-header {
+        padding: 20px 0;
+        background: var(--cth-white);
+
+        .cth-main-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        /* Logo */
+        .cth-logo {
+            flex-shrink: 0;
+
+            img {
+                height: 48px;
+                width: auto;
+                object-fit: contain;
+                display: block;
+            }
+        }
+
+        /* Search */
+        .cth-search-wrapper {
+            flex: 1;
+            max-width: 680px;
+
+            /* Salla Search Component Override */
+            salla-search {
+                --color-primary: var(--cth-black);
+                display: flex;
+                border: 2px solid var(--cth-black);
+                border-radius: 999px;
+                overflow: hidden;
+                height: 42px;
+
+                &::part(input) {
+                    border: none;
+                    background: transparent;
+                    padding: 0 20px;
+                    font-size: 14px;
+                }
+
+                &::part(button) {
+                    background: var(--cth-black);
+                    color: white;
+                    width: 80px;
+                    border-radius: 0;
+                }
+            }
+        }
+
+        /* Actions */
+        .cth-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            .cth-action-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-size: 11px;
+                color: var(--cth-text);
+                gap: 2px;
+                cursor: pointer;
+
+                i {
+                    font-size: 26px;
+                }
+
+                &:hover {
+                    color: var(--cth-red);
+                }
+            }
+        }
+    }
+
+    /* 3. NAV BAR & SIDEBAR */
+    .cth-nav-bar {
+        border-bottom: 2px solid var(--cth-border);
+        position: relative; // Context for dropdown
+
+        .cth-nav-container {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    /* "All Categories" Trigger */
+    .cth-cat-trigger {
+        position: relative;
+        z-index: 1001; // Above backdrop
+
+        button {
+            height: 45px;
+            padding: 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--cth-text);
+            border-radius: 999px 999px 0 0;
+            transition: all 0.2s;
+
+            i.menu-icon {
+                font-size: 20px;
+            }
+
+            i.arrow-icon {
+                font-size: 12px;
+                margin-right: auto;
+                opacity: 0.5;
+            }
+        }
+
+        /* Active State */
+        &.is-active button {
+            background: #fff;
+            color: var(--cth-red);
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+            /* Visual connection to dropdown */
+        }
+    }
+
+    /* DROPDOWN SIDEBAR (Desktop) */
+    .cth-sidebar-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0; // RTL
+        width: 260px;
+        background: #fff;
+        border: 1px solid var(--cth-border);
+        border-top: 2px solid var(--cth-text);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+
+        /* Hidden State */
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.25s ease;
+
+        /* Show when active */
+        .cth-cat-trigger.is-active & {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        ul.cth-vertical-menu {
+            padding: 8px 0;
+
+            li {
+                position: relative; // For Mega Menu positioning
+
+                a {
+                    padding: 12px 20px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    font-size: 13px;
+
+                    img {
+                        width: 20px;
+                        height: 20px;
+                        object-fit: contain;
+                    }
+
+                    i {
+                        font-size: 18px;
+                        color: #999;
+                        width: 24px;
+                        text-align: center;
+                    }
+
+                    &:hover {
+                        background: #fff;
+                        color: var(--cth-red);
+                        font-weight: 700;
+
+                        i {
+                            color: var(--cth-red);
+                        }
+
+                        /* Left Red Line */
+                        box-shadow: inset -3px 0 0 var(--cth-red);
+                    }
+                }
+
+                /* HOVER: Show Mega Menu */
+                &:hover>.cth-mega-menu {
+                    display: grid;
+                }
+            }
+        }
+    }
+
+    /* MEGA MENU (Flyout) */
+    .cth-mega-menu {
+        display: none; // Hidden
+        position: absolute;
+        top: 0;
+        right: 258px; // 260px width - border
+        width: 700px;
+        min-height: 100%;
+        background: #fff;
+        border: 1px solid var(--cth-border);
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+        padding: 25px;
+        z-index: 1001;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        align-content: start;
+
+        .mega-title {
+            font-weight: 700;
+            color: var(--cth-text);
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        ul li a {
+            padding: 5px 0;
+            color: #555;
+            font-size: 13px;
+
+            &:hover {
+                color: var(--cth-red);
+                box-shadow: none;
+                font-weight: 400;
+            }
+        }
+    }
+
+    /* BACKDROP */
+    .cth-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 990;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+
+        &.is-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+
+        .cth-search-wrapper,
+        .cth-nav-bar {
+            display: none;
+        }
+
+        .cth-logo img {
+            height: 32px;
+        }
+
+        .cth-burger-btn {
+            display: block !important;
+        }
+    }
+
+    .cth-burger-btn {
+        display: none;
+        font-size: 24px;
+        padding: 5px;
+    }
+}

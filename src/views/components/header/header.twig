@@ -6,17 +6,23 @@
 | cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
 <header
-	class="store-header sx-aliexpress-header">
-	{# 1. Top Navbar (Mini Bar) #}
-	<div class="ali-top-navbar top-navbar">
-		<div class="container flex justify-between">
-			<div
-				class="flex items-center space-x-4 rtl:space-x-reverse">
-				{# Footer Menu (often used for Help/About in top bar) #}
-				{% component 'footer.menu' with {is_header:true} %}
+	id="custom-tharaa-header">
+	{# Hook: Salla requirement #}
+	{{ content_for_header }}
 
+	{# 1. TOP BAR #}
+	<div class="cth-top-bar">
+		<div
+			class="container">
+			{# Left Side: Footer/Help Menu (Dynamic) #}
+			<div class="cth-top-menu">
+				{% component 'footer.menu' with {is_header:true} %}
+			</div>
+
+			{# Right Side: Currency, Language, Location #}
+			<div class="cth-top-links">
 				{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-					<button type="button" onclick="salla.event.dispatch('localization::open')" class="ali-top-btn btn--rounded-gray">
+					<button type="button" onclick="salla.event.dispatch('localization::open')">
 						<span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
 						<span class="mx-1.5">|</span>
 						<span>{{ currency.symbol }}</span>
@@ -25,165 +31,180 @@
 				{% endif %}
 
 				{% if store.scope %}
-					<button class="ali-top-btn btn--rounded-gray" onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
-						<i class="sicon-location rtl:ml-1 ltr:mr-1"></i>
+					<button onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
+						<i class="sicon-location"></i>
 						{{ store.scope.name }}
 					</button>
 				{% endif %}
 			</div>
-			{# Optional Contact Info #}
-			{% component 'footer.contacts' with {is_header:true} %}
 		</div>
 	</div>
 
-	{# 2. Main Header Row (Logo | Search | Actions) #}
-	<div class="ali-main-header">
+	{# 2. MAIN HEADER #}
+	<div class="cth-main-header">
 		<div class="container">
 			<div
-				class="ali-main-row flex items-center justify-between">
-				{# Logo Area #}
-				<div class="ali-logo-area flex items-center">
-					<a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu">
-						<i class="sicon-menu text-2xl"></i>
-					</a>
-					<a class="navbar-brand" href="{{ store.url }}">
-						<img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }}">
+				class="cth-main-row">
+				{# Mobile Burger Trigger #}
+				<a href="#mobile-menu" class="cth-burger-btn lg:hidden">
+					<i class="sicon-menu"></i>
+				</a>
+
+				{# Logo #}
+				<div class="cth-logo">
+					<a href="{{ store.url }}">
+						<img src="{{ store.logo }}" alt="{{ store.name }}" loading="eager">
 					</a>
 				</div>
 
-				{# Search Area (Moved here) #}
-				<div class="ali-search-area flex-1 mx-8 hidden lg:block">
-					<salla-search inline oval height="40"></salla-search>
+				{# Search #}
+				<div class="cth-search-wrapper hidden lg:block">
+					<salla-search inline oval height="42"></salla-search>
 				</div>
 
-				{# Actions Area #}
-				<div class="ali-actions-area flex items-center justify-end space-x-6 rtl:space-x-reverse">
-					{% if user.type=='user' %}
+				{# Actions #}
+				<div
+					class="cth-actions">
+					{# User #}
+					{% if user.type == 'user' %}
 						<salla-user-menu avatar-only show-header></salla-user-menu>
 					{% else %}
-						<button class="ali-action-btn header-btn" onclick="salla.event.dispatch('login::open')">
-							<i class="header-btn__icon sicon-user-circle"></i>
-							<span class="ali-btn-label hidden lg:block">{{ trans('blocks.header.login') }}</span>
+						<button class="cth-action-item" onclick="salla.event.dispatch('login::open')">
+							<i class="sicon-user-circle"></i>
+							<span class="hidden lg:block">{{ trans('blocks.header.login') }}</span>
 						</button>
 					{% endif %}
 
-					<salla-cart-summary class="ali-cart-btn">
-						<i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+					{# Cart #}
+					<salla-cart-summary class="cth-action-item">
+						<i slot="icon" class="sicon-shopping-bag"></i>
 					</salla-cart-summary>
 				</div>
 			</div>
 
-			{# Mobile Search (Visible only on mobile) #}
-			<div class="ali-mobile-search lg:hidden mt-3 pb-3">
-				<salla-search inline oval height="36"></salla-search>
+			{# Mobile Search #}
+			<div class="lg:hidden mt-4 pb-2">
+				<salla-search inline oval height="38"></salla-search>
 			</div>
 		</div>
 	</div>
 
-	{# 3. Navigation Bar (Categories | Menu) #}
-	<div id="mainnav" class="ali-nav-bar hidden lg:block">
-		<div class="container">
-			<div
-				class="flex items-center">
-				{# "All Categories" Button & Dropdown (Desktop Logic) #}
-				<div id="ali-category-trigger" class="ali-all-cats relative group">
-					<button class="ali-cat-btn" type="button" onclick="window.toggleAliSidebar()">
-						<i class="sicon-menu"></i>
-						<span>كل الأصناف</span>
-						<i class="sicon-keyboard_arrow_down text-xs opacity-50 transition-transform duration-300 transform group-[.is-active]:rotate-180"></i>
+	{# 3. NAV BAR #}
+	<div class="cth-nav-bar hidden lg:block">
+		<div
+			class="container cth-nav-container">
+			{# Sidebar Trigger & Dropdown #}
+			<div class="cth-cat-wrapper relative group">
+				<div id="cth-trigger" class="cth-cat-trigger">
+					<button type="button">
+						<i class="sicon-menu menu-icon"></i>
+						<span>{{ trans('blocks.header.categories')|default('كل الأصناف') }}</span>
+						<i class="sicon-keyboard_arrow_down arrow-icon"></i>
 					</button>
-
-					{# Sidebar Dropdown (Desktop Custom Loop) #}
-					<div id="ali-cat-dropdown" class="ali-cat-dropdown">
-						<ul
-							class="main-menu custom-ali-list">
-							{# Use core Salla variable for menus #}
-							{% for item in menus.main_menu.items %}
-								<li>
-									<a href="{{ item.url }}" class="flex items-center gap-3">
-										{% if item.image %}
-											<img src="{{ item.image }}" class="w-6 h-6 object-contain rounded-full" alt="{{ item.title }}">
-										{% endif %}
-										<span>{{ item.title }}</span>
-										{% if item.children|length > 0 %}
-											<i class="sicon-keyboard_arrow_left ltr:rotate-180 text-xs text-gray-400 ms-auto"></i>
-										{% endif %}
-									</a>
-
-									{# Mega Menu / Submenu #}
-									{% if item.children|length > 0 %}
-										<ul class="sub-menu">
-											{% for sub in item.children %}
-												<li>
-													<a href="{{ sub.url }}">{{ sub.title }}</a>
-													{# Level 3 if needed #}
-												</li>
-											{% endfor %}
-										</ul>
-									{% endif %}
-								</li>
-							{% endfor %}
-						</ul>
-					</div>
 				</div>
 
-				{# Backdrop Overlay #}
-				<div id="ali-backdrop" class="ali-backdrop" onclick="window.closeAliSidebar()"></div>
+				{# Dynamic Sidebar Menu #}
+				<div id="cth-dropdown" class="cth-sidebar-dropdown">
+					<ul class="cth-vertical-menu">
+						{# Iterate Main Menu Items #}
+						{# Note: 'menus.main_menu' is usually 'menus.main_menu.items' or just 'menus.main_menu' #}
+						{# In Tharaa usually: component 'header.menu' handles this. But we need custom markup. #}
+						{# Variables: site.menus.main_menu #}
 
-				{# Horizontal Menu (Optional) #}
-				<div class="ali-menu-wrapper flex-1 hidden md:block"></div>
+							{% for item in menus.main_menu %}
+								<li>
+									<a
+									href="{{ item.url }}"> <!-- Icon Logic -->
+									{% if item.icon %}
+										<i class="{{ item.icon }}" style="width:24px;text-align:center;"></i>
+									{% elseif item.image %}
+										<img src="{{ item.image }}" alt="{{ item.title }}" style="width:20px;height:20px;">
+									{% else %}
+										<i class="sicon-layout" style="width:24px;text-align:center;"></i>
+									{% endif %}
+
+									<span>{{ item.title }}</span>
+
+									{% if item.children|length > 0 %}
+										<i class="sicon-keyboard_arrow_left ltr:rotate-180 opacity-50 text-xs" style="margin-right:auto;"></i>
+									{% endif %}
+								</a>
+
+								{# Mega Menu (Level 2) #}
+								{% if item.children|length > 0 %}
+									<div class="cth-mega-menu">
+										{% for sub in item.children %}
+											<div class="mega-column">
+												<a href="{{ sub.url }}" class="mega-title">{{ sub.title }}</a>
+												{% if sub.children|length > 0 %}
+													<ul>
+														{% for child in sub.children %}
+															<li>
+																<a href="{{ child.url }}">{{ child.title }}</a>
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+											</div>
+										{% endfor %}
+									</div>
+								{% endif %}
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+
+			{# Horizontal Menu #}
+			<div class="cth-horiz-menu flex-1 margin-start-4">
+				<ul class="flex gap-6 items-center">{# Use header_menu if available or hardcode important links #}
+					{# Usually we iterate the same menu but exclude first item, or use a separate menu #}
+				</ul>
 			</div>
 		</div>
 	</div>
 
-	{# 4. Mobile Menu Component (Hidden on Desktop) #}
-	{# This ensures the Offcanvas works on mobile without polluting desktop markup #}
-	<div class="hidden">
-		{% component 'header.menu' %}
-	</div>
+	{# Backdrop #}
+	<div id="cth-backdrop" class="cth-backdrop"></div>
 
-	{# Strict Requirement: Hook Header End #}
 	{% hook 'header:end' %}
-
-	{# Custom Script for AliExpress Sidebar Toggle #}
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-window.toggleAliSidebar = function () {
-var trigger = document.getElementById('ali-category-trigger');
-var backdrop = document.getElementById('ali-backdrop');
-var isMobile = window.innerWidth < 1024;
-
-if (isMobile) {
-salla.event.dispatch('mobile-menu::open');
-} else {
-if (trigger) 
-trigger.classList.toggle('is-active');
-
-if (backdrop) 
-backdrop.classList.toggle('is-visible');
-
-}
-};
-
-window.closeAliSidebar = function () {
-var trigger = document.getElementById('ali-category-trigger');
-var backdrop = document.getElementById('ali-backdrop');
-if (trigger) 
-trigger.classList.remove('is-active');
-
-if (backdrop) 
-backdrop.classList.remove('is-visible');
-
-};
-
-document.addEventListener('keydown', function (event) {
-if (event.key === "Escape") 
-window.closeAliSidebar();
-
-});
-});
-	</script>
 </header>
 {% if store.scope %}
 	<salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
 {% endif %}
+
+{# Scoped JavaScript #}
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+const header = document.getElementById('custom-tharaa-header');
+if (! header) 
+return;
+
+
+const trigger = header.querySelector('#cth-trigger button'); // target the button inside
+const triggerWrapper = header.querySelector('#cth-trigger');
+const backdrop = document.getElementById('cth-backdrop');
+
+if (trigger && backdrop) { // Toggle Sidebar
+trigger.addEventListener('click', (e) => {
+e.stopPropagation();
+triggerWrapper.classList.toggle('is-active');
+backdrop.classList.toggle('is-visible');
+});
+
+// Close on Backdrop Click
+backdrop.addEventListener('click', () => {
+triggerWrapper.classList.remove('is-active');
+backdrop.classList.remove('is-visible');
+});
+
+// Close on Click Outside
+document.addEventListener('click', (e) => {
+if (! triggerWrapper.contains(e.target) && !document.getElementById('cth-dropdown').contains(e.target)) {
+triggerWrapper.classList.remove('is-active');
+backdrop.classList.remove('is-visible');
+}
+});
+}
+});
+</script>
