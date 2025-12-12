@@ -8,80 +8,109 @@
 
 <header
 	class="store-header th-hdr">
-	{# Top Utility Bar (Optional Shipping/Ads) #}
+
+	{# (اختياري) إعلان سلة إذا كان متوفر — بدون ما يسبب خطأ لو غير موجود #}
 	{% if advertisement is defined and advertisement %}
 		{% include 'components.header.advertisement' ignore missing with {advertisement: advertisement} %}
 	{% endif %}
 
-	{# Row 1: Top Header (Logo - Search - Icons) #}
-	<div class="th-hdr__top">
-		<div
-			class="container th-hdr__top-inner">
-			{# Right: Logo #}
-			<div class="th-hdr__logo">
-				<a class="navbar-brand" href="{{ store.url }}">
-					<img fetchpriority="high" loading="eager" src="{{ store.logo }}" alt="{{ store.name }}">
-				</a>
-			</div>
-
-			{# Center: Search #}
-			<div class="th-hdr__search">
-				<salla-search inline oval height="42" placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
-			</div>
-
-			{# Left: Icons (Cart - Heart - User) #}
-			<div
-				class="th-hdr__icons">
-				{# Cart #}
-				<salla-cart-summary class="th-hdr__icon-btn">
-					<i slot="icon" class="sicon-shopping-bag"></i>
-				</salla-cart-summary>
-
-				{# Wishlist (Heart) #}
-				<a href="{{ link('wishlist') }}" class="th-hdr__icon-btn">
-					<i class="sicon-heart"></i>
-					<span class="th-hdr__icon-label">{{ trans('blocks.header.wishlist') }}</span>
-				</a>
-
-				{# User / Account #}
-				{% if user.type=='user' %}
-					<salla-user-menu avatar-only show-header></salla-user-menu>
-				{% else %}
-					<button class="th-hdr__icon-btn" onclick="salla.event.dispatch('login::open')">
-						<i class="sicon-user"></i>
-						<span class="th-hdr__icon-label">{{ trans('blocks.header.my_account') }}</span>
-					</button>
-				{% endif %}
-			</div>
+	{# Top Shipping Bar (ستايل مثل تصميمك) #}
+	<div class="th-hdr__shipping-bar">
+		<div class="container th-hdr__shipping-inner">
+			شحن مجاني للطلبات التي تزيد عن 299 ريال | تسوّق الآن واستمتع بالخصومات
 		</div>
 	</div>
 
-	{# Row 2: Navigation Bar #}
-	<div class="th-hdr__bottom">
-		<div
-			class="container th-hdr__bottom-inner">
-			{# Mobile Burger (Visible only on mobile) #}
-			<a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu">
-				<i class="sicon-menu text-2xl"></i>
-			</a>
+	{# Top Nav (نحافظ على محتوى سلة الأصلي) #}
+	<div class="top-navbar th-hdr__top-navbar">
+		<div class="container flex justify-between th-hdr__top-inner">
 
-			{# Right: All Categories (Trigger for Mega Menu if needed) #}
-			<div class="th-hdr__all-cats hidden lg:flex">
-				<button class="th-hdr__all-cats-btn">
-					<i class="sicon-menu rtl:ml-2 ltr:mr-2"></i>
-					<span>{{ trans('blocks.header.all_categories') }}</span>
-					{# Or static text 'جميع الأقسام' if trans not available #}
-				</button>
+			<div
+				class="flex-1 flex items-center rtl:space-x-reverse space-x-2 th-hdr__top-left">
+
+				{# Footer Menu #}
+				{% component 'footer.menu' with {is_header:true} %}
+
+				<div
+					class="header-buttons">
+					{# Language & Currency Component #}
+					{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+						<button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray basis-0">
+							<span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
+							<span class="mx-1.5">|</span>
+							<span>{{ currency.symbol }}</span>
+						</button>
+						<salla-localization-modal></salla-localization-modal>
+					{% endif %}
+				</div>
+
+				{# Scopes | Branches #}
+				{% if store.scope %}
+					<button class="btn--rounded-gray" onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
+						<i class="sicon-location rtl:ml-1 ltr:mr-1"></i>
+						{{ store.scope.name }}
+					</button>
+				{% endif %}
+
+				{# Search (Mobile فقط هنا) #}
+				<div class="header-search flex-1 lg:hidden th-hdr__search-mobile">
+					<salla-search inline oval height="36"></salla-search>
+				</div>
 			</div>
 
-			{# Center/Left: Main Menu #}
-			<div class="th-hdr__nav hidden lg:block">
-				{% component 'header.menu' %}
-			</div>
+			{% component 'footer.contacts' with {is_header:true} %}
+		</div>
+	</div>
 
-			{# Mobile Search (Visible only on mobile) #}
-			<div class="lg:hidden flex-1 th-hdr__search-mobile">
-				<salla-search inline oval height="36"></salla-search>
+	{# Main Nav (Premium Layout) #}
+	<div id="mainnav" class="main-nav-container shadow-default bg-white th-hdr__main">
+		<div class="inner bg-inherit">
+			<div class="container">
+				<div
+					class="flex items-stretch justify-between relative th-hdr__main-inner">
+
+					{# Left: Burger + Logo + Menu #}
+					<div class="flex items-center th-hdr__left">
+						<a class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu">
+							<i class="sicon-menu th-hdr__burger-icon rtl:ml-2.5 ltr:mr-2.5"></i>
+						</a>
+
+						<a class="navbar-brand th-hdr__brand" href="{{ store.url }}">
+							<img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }}">
+							{% if is_page('index') %}
+								<h1 class="sr-only">{{ store.name }}</h1>
+							{% else %}
+								<h2 class="sr-only">{{ store.name }}</h2>
+							{% endif %}
+						</a>
+
+						{# Menu Component (لا نخفيه لأن فيه mobile-menu) #}
+						{% component 'header.menu' %}
+					</div>
+
+					{# Center: Search (Desktop فقط) #}
+					<div class="hidden lg:flex flex-1 justify-center px-6 th-hdr__search-desktop">
+						<div class="th-hdr__search-wrap">
+							<salla-search inline oval height="44"></salla-search>
+						</div>
+					</div>
+
+					{# Right: User + Cart (نحافظ على سلوك سلة) #}
+					<div class="flex items-center justify-end th-hdr__actions">
+						{% if user.type=='user' %}
+							<salla-user-menu avatar-only show-header></salla-user-menu>
+						{% else %}
+							<button class="header-btn th-hdr__icon-btn" onclick="salla.event.dispatch('login::open')">
+								<i class="header-btn__icon sicon-user-circle"></i>
+							</button>
+						{% endif %}
+
+						<salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4 th-hdr__cart">
+							<i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+						</salla-cart-summary>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>
@@ -104,7 +133,6 @@ const panes = root.querySelectorAll('[data-th-mega-pane]');
 const setOpen = (open) => {
 if (! panel) 
 return;
-
 
 panel.hidden = !open;
 toggle ?. setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -134,10 +162,8 @@ document.addEventListener('click', (e) => {
 if (! panel || panel.hidden) 
 return;
 
-
 if (root.contains(e.target)) 
 return;
-
 
 setOpen(false);
 });
@@ -147,8 +173,220 @@ document.addEventListener('keydown', (e) => {
 if (e.key === 'Escape') 
 setOpen(false);
 
-
 });
 });
 }
 </script>
+
+<style>
+	/* Premium Header (Scoped) */
+	.th-hdr {
+		--th-primary: #222;
+		--th-accent: #d4af37;
+		--th-bg: #f4f6f8;
+		--th-border: #e5e5e5;
+		--th-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+		--th-tr: 220ms ease;
+
+		.th-hdr__shipping-bar {
+			background: var(--th-primary);
+			color: #fff;
+			font-weight: 700;
+			font-size: 12px;
+		}
+		.th-hdr__shipping-inner {
+			padding: 8px 0;
+			text-align: center;
+		}
+
+		.th-hdr__burger-icon {
+			font-size: 22px;
+			color: var(--th-primary);
+		}
+
+		.th-hdr__search-wrap {
+			width: min(680px, 100%);
+			background: var(--th-bg);
+			border: 2px solid var(--th-bg);
+			border-radius: 999px;
+			padding: 4px 8px;
+			transition: border-color var(--th-tr), background var(--th-tr);
+		}
+		.th-hdr__search-wrap:focus-within {
+			background: #fff;
+			border-color: var(--th-accent);
+		}
+
+		/* Desktop menu look */
+		.th-hdr__menu {
+			display: flex;
+			align-items: stretch;
+			gap: 22px;
+		}
+		.th-hdr__nav-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			height: 100%;
+			font-weight: 700;
+			font-size: 15px;
+			padding: 0 2px;
+			transition: color var(--th-tr), transform var(--th-tr);
+		}
+		.th-hdr__nav-item:hover > .th-hdr__nav-link {
+			color: var(--th-accent);
+			transform: translateY(-1px);
+		}
+
+		/* Dropdown base */
+		.th-hdr__dropdown {
+			position: absolute;
+			top: 100%;
+			right: 0;
+			background: #fff;
+			border: 1px solid var(--th-border);
+			box-shadow: var(--th-shadow);
+			border-radius: 0 0 10px 10px;
+			padding: 10px 0;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(10px);
+			transition: opacity var(--th-tr), transform var(--th-tr), visibility var(--th-tr);
+			z-index: 1100;
+		}
+
+		/* Show dropdown on hover */
+		.th-hdr__nav-item.has-children:hover > .th-hdr__dropdown {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		/* Cascading / flyout for nested items */
+		.th-hdr__sub-item > .th-hdr__dropdown {
+			top: -6px;
+			right: 100%;
+			margin-right: 8px;
+			border-radius: 10px;
+		}
+
+		.th-hdr__submenu {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.th-hdr__submenu .th-hdr__nav-link {
+			width: 100%;
+			justify-content: space-between;
+			padding: 12px 18px;
+			font-weight: 700;
+			font-size: 14px;
+			color: #555;
+		}
+		.th-hdr__submenu .th-hdr__nav-item:hover > .th-hdr__nav-link {
+			background: #fcfcfc;
+			color: var(--th-accent);
+		}
+
+		.th-hdr__arrow-down,
+		.th-hdr__arrow-left {
+			font-size: 12px;
+			opacity: .7;
+		}
+
+		/* All Categories Mega */
+		.th-hdr__allcats {
+			position: relative;
+		}
+		.th-hdr__allcats-btn {
+			display: inline-flex;
+			align-items: center;
+			height: 100%;
+			padding: 0 18px;
+			border-left: 1px solid var(--th-border);
+			border-right: 1px solid var(--th-border);
+			background: #f9f9f9;
+			font-weight: 800;
+			transition: background var(--th-tr), color var(--th-tr);
+		}
+		.th-hdr__allcats-btn:hover {
+			background: var(--th-accent);
+			color: #fff;
+		}
+
+		.th-hdr__mega {
+			position: absolute;
+			top: 100%;
+			right: 0;
+			width: 900px;
+			min-height: 420px;
+			display: flex;
+			border: 1px solid var(--th-border);
+			border-top: 0;
+			background: #fff;
+			box-shadow: var(--th-shadow);
+			border-radius: 0 0 12px 12px;
+			overflow: hidden;
+		}
+		.th-hdr__mega-side {
+			width: 26%;
+			background: #fcfcfc;
+			border-left: 1px solid var(--th-border);
+		}
+		.th-hdr__mega-tab {
+			width: 100%;
+			text-align: right;
+			padding: 14px 16px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid #eee;
+			font-weight: 800;
+		}
+		.th-hdr__mega-tab.is-active {
+			background: #fff;
+			color: var(--th-accent);
+			border-right: 3px solid var(--th-accent);
+		}
+		.th-hdr__mega-content {
+			width: 74%;
+			padding: 22px;
+		}
+		.th-hdr__mega-pane {
+			display: none;
+		}
+		.th-hdr__mega-pane.is-active {
+			display: block;
+		}
+
+		.th-hdr__mega-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 18px;
+		}
+		.th-hdr__mega-title {
+			display: inline-block;
+			font-weight: 900;
+			padding-bottom: 6px;
+			margin-bottom: 10px;
+			border-bottom: 2px solid #eee;
+		}
+		.th-hdr__mega-link {
+			display: block;
+			color: #666;
+			font-size: 13px;
+			margin-bottom: 8px;
+		}
+		.th-hdr__mega-link:hover {
+			color: var(--th-accent);
+			transform: translateX(-5px);
+		}
+
+		/* Mobile search already in topbar */
+		@media(max-width: 992px) {
+			.th-hdr__shipping-bar {
+				font-size: 11px;
+			}
+		}
+	}
+</style>

@@ -11,80 +11,80 @@
 | menus[].products     | ?Product[] *Collection | List of selected products or null                  |
 #}
 
-{% set mega_tabs = [] %}
-{% for menu_id, m in menus %}
+{# نجهّز أقسام الميجا من نفس قائمة سلة (العناصر اللي لها Children) #}
+{% set mega_roots = [] %}
+{% for _id, m in menus %}
   {% if m.has_children %}
-    {% set mega_tabs = mega_tabs|merge([m]) %}
+    {% set mega_roots = mega_roots|merge([m]) %}
   {% endif %}
 {% endfor %}
-{% set mega_tabs = mega_tabs|slice(0, 10) %}
 
-<nav id="mobile-menu" class="mobile-menu th-hdr__drawer">
-    <ul class="main-menu th-hdr__menu">
+<nav id="mobile-menu" class="mobile-menu th-hdr__menu" data-th-menu>
 
-        {# زر جميع الأقسام (Desktop فقط) #}
-        {% if mega_tabs|length %}
-            <li class="!hidden lg:!inline-flex root-level th-hdr__allcats" data-th-mega>
-                <button type="button" class="th-hdr__allcats-btn" data-th-mega-toggle aria-expanded="false">
-                    <i class="sicon-menu th-hdr__allcats-ico rtl:ml-2 ltr:mr-2"></i>
-                    <span>جميع الأقسام</span>
-                </button>
+  <div class="th-hdr__navWrap">
 
-                <div class="th-hdr__mega" data-th-mega-panel hidden>
-                    <div class="th-hdr__mega-side">
-                        {% for t in mega_tabs %}
-                            <button type="button"
-                                    class="th-hdr__mega-tab {{ loop.first ? 'is-active' : '' }}"
-                                    data-th-mega-tab="{{ loop.index0 }}">
-                                <span>{{ t.title }}</span>
-                                <i class="sicon-keyboard_arrow_left"></i>
-                            </button>
+    {# زر "جميع الأقسام" + Mega Tabs (Desktop Only) #}
+    {% if mega_roots|length %}
+      <div class="th-hdr__allCats hidden lg:flex" data-th-mega>
+        <button type="button" class="th-hdr__allCatsBtn" data-th-mega-toggle aria-expanded="false">
+          <i class="sicon-menu th-hdr__allCatsIco"></i>
+          <span>جميع الأقسام</span>
+        </button>
+
+        <div class="th-hdr__mega" data-th-mega-panel hidden>
+          <div class="th-hdr__megaSide">
+            {% for m in mega_roots|slice(0, 10) %}
+              <button type="button"
+                      class="th-hdr__megaTab {{ loop.first ? 'is-active' : '' }}"
+                      data-th-tab-btn data-th-tab-target="th-mega-{{ loop.index }}">
+                <span>{{ m.title }}</span>
+                <span aria-hidden="true">‹</span>
+              </button>
+            {% endfor %}
+          </div>
+
+          <div class="th-hdr__megaContent">
+            {% for m in mega_roots|slice(0, 10) %}
+              <div class="th-hdr__megaPane {{ loop.first ? 'is-active' : '' }}" id="th-mega-{{ loop.index }}" data-th-tab-pane>
+                <div class="th-hdr__megaGrid">
+                  {% for child in m.children %}
+                    <div class="th-hdr__megaGroup">
+                      <a class="th-hdr__megaTitle" href="{{ child.url }}">{{ child.title }}</a>
+
+                      {% if child.has_children %}
+                        {% for sub in child.children|slice(0, 12) %}
+                          <a class="th-hdr__megaLink" href="{{ sub.url }}">{{ sub.title }}</a>
                         {% endfor %}
+                      {% endif %}
                     </div>
-
-                    <div class="th-hdr__mega-content">
-                        {% for t in mega_tabs %}
-                            <div class="th-hdr__mega-pane {{ loop.first ? 'is-active' : '' }}"
-                                 data-th-mega-pane="{{ loop.index0 }}">
-
-                                <div class="th-hdr__mega-grid">
-                                    {% for group in t.children %}
-                                        <div class="th-hdr__mega-group">
-                                            <a href="{{ group.url }}" class="th-hdr__mega-title">{{ group.title }}</a>
-
-                                            {% if group.children is defined and group.children and (group.children|length) %}
-                                                {% for link in group.children|slice(0, 12) %}
-                                                    <a href="{{ link.url }}" class="th-hdr__mega-link">{{ link.title }}</a>
-                                                {% endfor %}
-                                            {% endif %}
-                                        </div>
-                                    {% endfor %}
-                                </div>
-
-                                {% if t.products %}
-                                    <div class="th-hdr__mega-products">
-                                        <div class="grid gap-4 grid-cols-4">
-                                            {% for product in t.products|slice(0, 4) %}
-                                                <salla-product-card shadow-on-hover product="{{ product }}"></salla-product-card>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                {% endif %}
-
-                            </div>
-                        {% endfor %}
-                    </div>
+                  {% endfor %}
                 </div>
-            </li>
-        {% endif %}
 
-        {# بقية القوائم الأصلية #}
-        {% for menu_id, menu in menus %}
-            {% include 'components.header._menu-item' with {is_root_menu:true} %}
-        {% endfor %}
+                {% if m.products %}
+                  <div class="th-hdr__megaProducts">
+                    <div class="th-hdr__megaProductsGrid">
+                      {% for product in m.products|slice(0, 4) %}
+                        <salla-product-card shadow-on-hover product="{{ product }}"></salla-product-card>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    <ul class="main-menu th-hdr__links">
+      {% for menu_id, menu in menus %}
+        {% include 'components.header._menu-item' with {is_root_menu:true} %}
+      {% endfor %}
     </ul>
 
-    <button class="btn--close close-mobile-menu sicon-cancel lg:hidden"></button>
+  </div>
+
+  <button class="btn--close close-mobile-menu sicon-cancel lg:hidden" aria-label="إغلاق القائمة"></button>
 </nav>
 
-<button class="btn--close-sm close-mobile-menu sicon-cancel lg:hidden"></button>
+<button class="btn--close-sm close-mobile-menu sicon-cancel lg:hidden" aria-label="إغلاق القائمة"></button>
