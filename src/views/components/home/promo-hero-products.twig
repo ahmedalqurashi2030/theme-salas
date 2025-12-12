@@ -1,22 +1,25 @@
-{# ================================================
+{# =====================================================
    Tharaa Theme – Promo Hero With Products
    Path: home.promo-hero-products
-   يعتمد على twilight.json الذي أرسلته (title, description, hero_image, products, show_countdown, show_price, countdown_end, button_*)
-================================================ #}
+   يعتمد على twilight.json الذي أرسلته (بدون أي تعديل)
+===================================================== #}
 
-{% set title           = component.title           ?? '' %}
-{% set description     = component.description     ?? '' %}
+{# 1) قراءة الإعدادات من سلة #}
+{% set title           = component.title           ?? 'عروض آبل الخارقة وصلت الآن.' %}
+{% set description     = component.description     ?? 'احصل على خصومات فورية تصل إلى 20% عند شراء أجهزة مختارة.' %}
 {% set hero_image      = component.hero_image      ?? '' %}
-{% set products        = component.products        ?? [] %}
-{% set show_countdown  = component.show_countdown  ?? false %}
-{% set show_price      = component.show_price      ?? true %}
 {% set countdown_label = component.countdown_label ?? '' %}
 {% set countdown_end   = component.countdown_end   ?? '' %}
+{% set show_countdown  = component.show_countdown  ?? false %}
+{# ملاحظة: حاليًا id في twilight.json هو show_price لكن اللابل "إظهار التقييم"
+   لذلك نستخدمه هنا كـ show_rating #}
+{% set show_rating     = component.show_price      ?? true %}
 {% set button_text     = component.button_text     ?? '' %}
 {% set button_link     = component.button_link     ?? '' %}
+{% set products        = component.products        ?? [] %}
 
 <section class="s-block th-hero-promo">
-    {# ملاحظة: في الإنتاج يفضّل نقل هذا الستايل إلى ملف SCSS وليس داخل التمبلت #}
+    {# CSS خاص بالقسم – كله داخل نطاق th-hero-promo حتى لا يؤثر على بقية الثيم #}
     <style>
         .th-hero-promo {
             --th-primary: #0071e3;
@@ -29,15 +32,23 @@
             --th-radius-md: 20px;
             --th-radius-sm: 16px;
             --th-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+
             font-family: 'Tajawal', sans-serif;
             direction: rtl;
             text-align: right;
             padding: 40px 0;
             box-sizing: border-box;
         }
-        .th-hero-promo * { box-sizing: border-box; }
-        .th-hero-promo a { text-decoration: none; }
 
+        .th-hero-promo * {
+            box-sizing: border-box;
+        }
+
+        .th-hero-promo a {
+            text-decoration: none;
+        }
+
+        /* بطاقة الخلفية الرئيسية */
         .th-hero-promo__card {
             background: var(--th-bg-gradient);
             border-radius: var(--th-radius-xl);
@@ -49,6 +60,7 @@
             flex-direction: column;
             gap: 50px;
         }
+
         .th-hero-promo__glow {
             position: absolute;
             width: 600px;
@@ -61,6 +73,7 @@
             pointer-events: none;
         }
 
+        /* رأس القسم */
         .th-hero-promo__header {
             display: flex;
             align-items: center;
@@ -69,20 +82,30 @@
             position: relative;
             z-index: 2;
         }
-        .th-content-col { flex: 1; }
-        .th-visual-col { flex: 0 0 35%; max-width: 35%; display: flex; justify-content: flex-end; }
+
+        .th-content-col {
+            flex: 1;
+        }
+
+        .th-visual-col {
+            flex: 0 0 35%;
+            max-width: 35%;
+            display: flex;
+            justify-content: flex-end;
+        }
 
         .th-badge {
             display: inline-block;
-            background: rgba(0, 113, 227, 0.1);
+            background: rgba(0, 113, 227, 0.08);
             color: var(--th-primary);
             padding: 6px 14px;
-            border-radius: 30px;
+            border-radius: 999px;
             font-weight: 700;
             font-size: 13px;
             margin-bottom: 15px;
             border: 1px solid rgba(0, 113, 227, 0.15);
         }
+
         .th-title {
             font-size: 40px;
             font-weight: 900;
@@ -90,26 +113,32 @@
             margin-bottom: 15px;
             line-height: 1.2;
         }
+
         .th-subtitle {
             font-size: 16px;
             color: var(--th-text-sub);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             max-width: 90%;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        .th-countdown-label {
+        /* العد التنازلي */
+        .th-countdown {
+            margin-bottom: 30px;
+        }
+
+        .th-countdown__label {
             display: inline-block;
+            margin-bottom: 10px;
             font-size: 13px;
             color: #777;
-            margin-bottom: 8px;
         }
 
         .th-timer {
             display: flex;
             gap: 10px;
-            margin-bottom: 35px;
         }
+
         .th-timer__item {
             background: var(--th-glass-bg);
             backdrop-filter: blur(10px);
@@ -122,18 +151,21 @@
             align-items: center;
             justify-content: center;
         }
+
         .th-timer__val {
             font-size: 26px;
             font-weight: 800;
             color: #333;
             line-height: 1;
         }
+
         .th-timer__lbl {
             font-size: 12px;
             color: #666;
             margin-top: 4px;
         }
 
+        /* زر الدعوة لاتخاذ إجراء */
         .th-btn {
             background: var(--th-text-main);
             color: #fff !important;
@@ -144,13 +176,15 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
+
         .th-btn:hover {
             background: var(--th-primary);
             transform: translateY(-3px);
         }
 
+        /* صورة الهيرو */
         .th-main-img {
             width: 100%;
             height: auto;
@@ -159,7 +193,12 @@
             animation: thFloat 6s ease-in-out infinite;
         }
 
-        .th-footer { position: relative; z-index: 2; }
+        /* الفوتر / قائمة المنتجات */
+        .th-footer {
+            position: relative;
+            z-index: 2;
+        }
+
         .th-label {
             font-size: 14px;
             font-weight: 700;
@@ -174,35 +213,39 @@
         }
 
         .th-prod-card {
-            background: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.8);
             border-radius: var(--th-radius-md);
-            padding: 15px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: 0.3s;
+            transition: 0.25s ease;
             cursor: pointer;
             text-align: right;
             min-height: 90px;
             position: relative;
-            text-decoration: none !important;
         }
+
         .th-prod-card:hover {
             background: #fff;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.05);
         }
 
         .th-p-img {
             width: 45px;
             height: 45px;
             object-fit: contain;
-            transition: 0.3s;
+            flex-shrink: 0;
+            transition: 0.25s ease;
         }
-        .th-prod-card:hover .th-p-img { transform: scale(1.1); }
+
+        .th-prod-card:hover .th-p-img {
+            transform: scale(1.05);
+        }
 
         .th-p-info {
             flex: 1;
@@ -211,6 +254,7 @@
             gap: 4px;
             overflow: hidden;
         }
+
         .th-p-title {
             font-size: 11px;
             font-weight: 700;
@@ -219,40 +263,44 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        .th-p-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-start;
+        }
+
         .th-p-price {
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--th-primary);
         }
 
-        .th-add-btn {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: var(--th-primary);
-            color: #fff;
+        .th-p-rating {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            border: none;
-            opacity: 0;
-            transition: 0.3s;
-            cursor: pointer;
-            z-index: 2;
         }
-        .th-prod-card:hover .th-add-btn { opacity: 1; }
 
+        /* زر الإضافة للسلة – نستخدم Web Component الرسمي */
+        salla-add-product-button.th-add-btn {
+            position: absolute;
+            left: 14px;
+            bottom: 14px;
+        }
+
+        /* شريط التمرير في الجوال */
         .th-scroll-bar {
             display: none;
-            width: 100px;
+            width: 120px;
             height: 4px;
             background: rgba(0,0,0,0.05);
             border-radius: 4px;
-            margin: 15px auto 0;
+            margin: 16px auto 0;
             position: relative;
             overflow: hidden;
         }
+
         .th-scroll-thumb {
             position: absolute;
             top: 0;
@@ -264,25 +312,50 @@
         }
 
         @keyframes thFloat {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
-            100% { transform: translateY(0px); }
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-12px); }
+            100% { transform: translateY(0); }
         }
 
+        /* Responsiveness */
         @media (max-width: 992px) {
             .th-hero-promo__card {
-                padding: 40px 20px;
-                gap: 40px;
+                padding: 32px 18px;
+                gap: 32px;
             }
+
             .th-hero-promo__header {
                 flex-direction: column-reverse;
                 text-align: center;
             }
-            .th-content-col { width: 100%; }
-            .th-visual-col { flex: unset; max-width: 80%; width: 100%; justify-content: center; }
-            .th-title { font-size: 28px; }
-            .th-subtitle { margin: 0 auto 30px; }
-            .th-timer { justify-content: center; }
+
+            .th-content-col {
+                width: 100%;
+            }
+
+            .th-visual-col {
+                flex: unset;
+                max-width: 80%;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .th-title {
+                font-size: 28px;
+            }
+
+            .th-subtitle {
+                margin: 0 auto 25px;
+            }
+
+            .th-countdown {
+                display: inline-block;
+            }
+
+            .th-timer {
+                justify-content: center;
+            }
+
             .th-products-list {
                 display: flex;
                 overflow-x: auto;
@@ -290,17 +363,27 @@
                 padding-bottom: 10px;
                 scrollbar-width: none;
             }
-            .th-products-list::-webkit-scrollbar { display: none; }
-            .th-prod-card { min-width: 210px; scroll-snap-align: start; }
-            .th-add-btn { opacity: 1; }
-            .th-scroll-bar { display: block; }
+
+            .th-products-list::-webkit-scrollbar {
+                display: none;
+            }
+
+            .th-prod-card {
+                min-width: 210px;
+                scroll-snap-align: start;
+            }
+
+            .th-scroll-bar {
+                display: block;
+            }
         }
     </style>
 
     <div class="container">
-        <div class="th-hero-promo__card" data-th-promo>
+        <div class="th-hero-promo__card">
             <div class="th-hero-promo__glow"></div>
 
+            {# ======= HEADER (نص + صورة) ======= #}
             <header class="th-hero-promo__header">
                 <div class="th-content-col">
                     <span class="th-badge">تصفية نهاية العام</span>
@@ -310,29 +393,36 @@
                     {% endif %}
 
                     {% if description %}
-                        <p class="th-subtitle">{{ description|raw }}</p>
+                        <p class="th-subtitle">
+                            {{ description|raw }}
+                        </p>
                     {% endif %}
 
                     {% if show_countdown and countdown_end %}
-                        {% if countdown_label %}
-                            <div class="th-countdown-label">{{ countdown_label }}</div>
-                        {% endif %}
-                        <div class="th-timer" data-end="{{ countdown_end }}">
-                            <div class="th-timer__item">
-                                <span class="th-timer__val" data-unit="days">00</span>
-                                <span class="th-timer__lbl">يوم</span>
-                            </div>
-                            <div class="th-timer__item">
-                                <span class="th-timer__val" data-unit="hours">00</span>
-                                <span class="th-timer__lbl">ساعة</span>
-                            </div>
-                            <div class="th-timer__item">
-                                <span class="th-timer__val" data-unit="minutes">00</span>
-                                <span class="th-timer__lbl">دقيقة</span>
-                            </div>
-                            <div class="th-timer__item">
-                                <span class="th-timer__val" data-unit="seconds">00</span>
-                                <span class="th-timer__lbl">ثانية</span>
+                        <div class="th-countdown" data-countdown-end="{{ countdown_end }}">
+                            {% if countdown_label %}
+                                <span class="th-countdown__label">
+                                    {{ countdown_label }}
+                                </span>
+                            {% endif %}
+
+                            <div class="th-timer">
+                                <div class="th-timer__item">
+                                    <span class="th-timer__val" data-unit="days">00</span>
+                                    <span class="th-timer__lbl">يوم</span>
+                                </div>
+                                <div class="th-timer__item">
+                                    <span class="th-timer__val" data-unit="hours">00</span>
+                                    <span class="th-timer__lbl">ساعة</span>
+                                </div>
+                                <div class="th-timer__item">
+                                    <span class="th-timer__val" data-unit="minutes">00</span>
+                                    <span class="th-timer__lbl">دقيقة</span>
+                                </div>
+                                <div class="th-timer__item">
+                                    <span class="th-timer__val" data-unit="seconds">00</span>
+                                    <span class="th-timer__lbl">ثانية</span>
+                                </div>
                             </div>
                         </div>
                     {% endif %}
@@ -346,45 +436,65 @@
 
                 <div class="th-visual-col">
                     {% if hero_image %}
-                        <img src="{{ hero_image }}" alt="{{ title }}" class="th-main-img">
+                        <img src="{{ hero_image }}" alt="{{ title }}" class="th-main-img" loading="lazy">
                     {% endif %}
                 </div>
             </header>
 
+            {# ======= FOOTER (قائمة المنتجات) ======= #}
             <footer class="th-footer">
                 <h3 class="th-label">الأكثر طلباً هذا الأسبوع</h3>
 
-                {% if products|length %}
-                    <div class="th-products-list" data-th-products-list>
-                        {% for product in products %}
-                            <a href="{{ product.url }}"
-                               class="th-prod-card"
-                               title="{{ product.name }}"
-                               data-product-id="{{ product.id }}">
-                                {% if product.image %}
-                                    <img src="{{ product.image.url }}"
-                                         alt="{{ product.image.alt }}"
-                                         class="th-p-img"
-                                         loading="lazy">
-                                {% endif %}
+                <div class="th-products-list" id="thProductScroll">
+                    {% for product in products %}
+                        <article class="th-prod-card">
+                            <a href="{{ product.url }}" class="th-p-info-wrapper">
+                                <img src="{{ product.image.url }}" alt="{{ product.image.alt ?? product.name }}" class="th-p-img" loading="lazy">
 
                                 <div class="th-p-info">
                                     <span class="th-p-title">{{ product.name }}</span>
 
-                                    {% if show_price %}
-                                        <span class="th-p-price">
-                                            {{ (product.sale_price ?? product.price)|money }}
-                                        </span>
-                                    {% endif %}
-                                </div>
+                                    <div class="th-p-meta">
+                                        {% if show_rating %}
+                                            <div class="th-p-rating">
+                                                {# نحاول دعم أكثر من شكل لبيانات التقييم حسب بنية المنتج #}
+                                                <salla-rating-stars
+                                                    size="mini"
+                                                    value="{{ product.rating.value ?? product.rating ?? 0 }}"
+                                                    reviews="{{ product.rating.count ?? product.reviews_count ?? 0 }}">
+                                                </salla-rating-stars>
+                                            </div>
+                                        {% endif %}
 
-                                <button type="button" class="th-add-btn js-th-add-btn">
-                                    +
-                                </button>
+                                        <span class="th-p-price">
+                                            {{ product.sale_price is defined and product.sale_price
+                                                ? product.sale_price|money
+                                                : product.price|money }}
+                                        </span>
+                                    </div>
+                                </div>
                             </a>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+
+                            {# زر إضافة للسلة باستخدام Web Component الرسمي #}
+                            <salla-add-product-button
+                                class="th-add-btn"
+                                product-id="{{ product.id }}">
+                                <i class="fa-solid fa-plus"></i>
+                            </salla-add-product-button>
+                        </article>
+                    {% else %}
+                        {# عرض كروت تجريبية لو ما في منتجات مختارة – فقط للمعاينة في متجر الاختبار #}
+                        <article class="th-prod-card">
+                            <img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c51f.png" class="th-p-img" alt="">
+                            <div class="th-p-info">
+                                <span class="th-p-title">iPad Mini 6</span>
+                                <div class="th-p-meta">
+                                    <span class="th-p-price">2,499 ر.س</span>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
 
                 <div class="th-scroll-bar">
                     <div class="th-scroll-thumb"></div>
@@ -394,84 +504,75 @@
     </div>
 </section>
 
+{# =============== JS: عدّ تنازلي + شريط تمرير للجوال =============== #}
 <script>
-    (function () {
-        // كل قسم promo-hero في الصفحة يعالج لوحده
-        document.querySelectorAll('[data-th-promo]').forEach(function (sectionEl) {
+(function () {
+    var sections = document.querySelectorAll('.th-hero-promo');
 
-            // ====== 1) عدّ تنازلي لكل قسم ======
-            var timerEl = sectionEl.querySelector('.th-timer[data-end]');
-            if (timerEl) {
-                var endDate = new Date(timerEl.getAttribute('data-end'));
+    sections.forEach(function (section) {
+        // ----- العد التنازلي -----
+        var countdown = section.querySelector('[data-countdown-end]');
+        if (countdown) {
+            var end = countdown.getAttribute('data-countdown-end');
+            var endDate = end ? new Date(end) : null;
 
-                function updateTimer() {
+            if (endDate && !isNaN(endDate.getTime())) {
+                var daysEl    = countdown.querySelector('[data-unit="days"]');
+                var hoursEl   = countdown.querySelector('[data-unit="hours"]');
+                var minutesEl = countdown.querySelector('[data-unit="minutes"]');
+                var secondsEl = countdown.querySelector('[data-unit="seconds"]');
+
+                var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+
+                var tick = function () {
                     var now = Date.now();
-                    var diff = endDate - now;
+                    var diff = endDate.getTime() - now;
+
                     if (diff <= 0) {
-                        // انتهى
-                        ['days','hours','minutes','seconds'].forEach(function (u) {
-                            var el = timerEl.querySelector('[data-unit="' + u + '"]');
-                            if (el) el.textContent = '00';
-                        });
+                        daysEl    && (daysEl.textContent    = '00');
+                        hoursEl   && (hoursEl.textContent   = '00');
+                        minutesEl && (minutesEl.textContent = '00');
+                        secondsEl && (secondsEl.textContent = '00');
                         return;
                     }
+
                     var dd = Math.floor(diff / 86400000);
                     var hh = Math.floor((diff % 86400000) / 3600000);
                     var mm = Math.floor((diff % 3600000) / 60000);
                     var ss = Math.floor((diff % 60000) / 1000);
 
-                    var map = {
-                        days: dd,
-                        hours: hh,
-                        minutes: mm,
-                        seconds: ss
-                    };
-                    Object.keys(map).forEach(function (unit) {
-                        var el = timerEl.querySelector('[data-unit="' + unit + '"]');
-                        if (!el) return;
-                        var val = map[unit];
-                        el.textContent = val < 10 ? '0' + val : String(val);
-                    });
+                    daysEl    && (daysEl.textContent    = pad(dd));
+                    hoursEl   && (hoursEl.textContent   = pad(hh));
+                    minutesEl && (minutesEl.textContent = pad(mm));
+                    secondsEl && (secondsEl.textContent = pad(ss));
+                };
+
+                tick();
+                setInterval(tick, 1000);
+            }
+        }
+
+        // ----- شريط تمرير للمنتجات في الجوال -----
+        var scroller = section.querySelector('.th-products-list');
+        var track    = section.querySelector('.th-scroll-bar');
+        var thumb    = section.querySelector('.th-scroll-thumb');
+
+        if (scroller && track && thumb) {
+            scroller.addEventListener('scroll', function () {
+                var scrollW = scroller.scrollWidth - scroller.clientWidth;
+                if (scrollW <= 0) {
+                    thumb.style.transform = 'translateX(0)';
+                    return;
                 }
 
-                updateTimer();
-                setInterval(updateTimer, 1000);
-            }
+                var scrolled = Math.abs(scroller.scrollLeft);
+                var trackW   = track.clientWidth - thumb.clientWidth;
+                var move     = (scrolled / scrollW) * trackW;
 
-            // ====== 2) إضافة للسلة ======
-            sectionEl.querySelectorAll('.js-th-add-btn').forEach(function (btn) {
-                btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var card = btn.closest('.th-prod-card');
-                    if (!card) return;
-                    var productId = card.getAttribute('data-product-id');
-                    if (!productId || !window.salla || !salla.cart) return;
-
-                    salla.cart.addItem({ product_id: parseInt(productId, 10), quantity: 1 })
-                        .then(function () {
-                            if (salla.helpers && salla.helpers.modal && salla.helpers.modal.toast) {
-                                salla.helpers.modal.toast('تمت إضافة المنتج إلى السلة');
-                            }
-                        })
-                        .catch(function () { /* ممكن تضيف معالجة خطأ لاحقًا */ });
-                });
+                // للـ RTL نستخدم -move
+                thumb.style.transform = 'translateX(' + (-move) + 'px)';
             });
-
-            // ====== 3) شريط التمرير في الجوال ======
-            var scroller = sectionEl.querySelector('[data-th-products-list]');
-            var track    = sectionEl.querySelector('.th-scroll-bar');
-            var thumb    = sectionEl.querySelector('.th-scroll-thumb');
-
-            if (scroller && track && thumb) {
-                scroller.addEventListener('scroll', function () {
-                    var scrollW = scroller.scrollWidth - scroller.clientWidth;
-                    if (scrollW <= 0) return;
-                    var scrolled = Math.abs(scroller.scrollLeft);
-                    var trackW = track.clientWidth - thumb.clientWidth;
-                    var move = (scrolled / scrollW) * trackW;
-                    thumb.style.transform = 'translateX(-' + move + 'px)';
-                });
-            }
-        });
-    })();
+        }
+    });
+})();
 </script>
