@@ -34,10 +34,15 @@
                                 <div>
                                     <a href="{{ child.url }}" class="font-bold text-gray-800 mb-3 block hover:text-gold transition flex items-center gap-2">
                                         {# أيقونة افتراضية #}
-                                        <span class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-xs">
-                                            <i class="sicon-layout-grid"></i>
-                                        </span>
+                                         {% if item.image %}
+      <img src="{{ item.image }}" alt="{{ item.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
+    {% else %}
+      <span class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-xs">
+        <i class="sicon-layout-grid"></i>
+      </span>
+    {% endif %}
                                         {{ child.title }}
+										
                                     </a>
                                     <ul class="space-y-2 pr-10 border-r border-gray-50">
                                         {% for sub in child.children %}
