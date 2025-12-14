@@ -24987,12 +24987,6 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 .tharaa-theme .s-product-card-floating-btn i {
   font-size: 18px;
 }
-.tharaa-theme .s-product-card-floating-btn {
-  /* Hide text span if present */
-}
-.tharaa-theme .s-product-card-floating-btn span {
-  display: none;
-}
 .tharaa-theme {
   /* Promo Badge: Top Right */
 }

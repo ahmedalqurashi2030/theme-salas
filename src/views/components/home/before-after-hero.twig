@@ -1,67 +1,386 @@
-{# ================================================
-  Tharaa Theme – Before / After Hero Section
-  Path: home.before-after-hero.twig
-  Compatible with: Salla Partner Platform
-  Author: صخر – ثيم ثراء
-================================================ #}
+{# ==========================================================================
+   Component: Tharaa Comparison Hero (Card Style)
+   Description: سكشن "قبل وبعد" بتصميم بطاقة عائمة متوافق مع ثيم ثراء وسلة
+   File Name: before-after.twig
+   ========================================================================== #}
 
-{% set bg_color = component.bg_color ?? '#ffffff' %}
-{% set title = component.title ?? '' %}
-{% set eyebrow = component.subtitle ?? '' %}
-{% set description = component.description ?? '' %}
-{% set button_text = component.button_text ?? '' %}
-{% set button_link = component.button_link ?? '' %}
-{% set items = component.comparison_items ?? [] %}
+{# --- 1. إعداد المتغيرات (Configuration) --- #}
+{% set bg_color       = component.bg_color       ?? '#B5DCDD' %}
+{% set text_color     = component.text_color     ?? '#2F6F74' %}
+{% set title          = component.title          ?? 'كفى لحب الشباب أن يسيطر على حياتك' %}
+{% set subtitle       = component.subtitle       ?? 'Blemish Control Cleanser' %}
+{% set description    = component.description    ?? 'اكتشفي الفرق الحقيقي. يعمل هذا المنتج على تحسين مظهر البشرة وتقليل الشوائب بشكل ملحوظ.' %}
+{% set btn_text       = component.button_text    ?? 'تسوقي الآن' %}
+{% set btn_link       = component.button_link    ?? '#' %}
 
-<section class="th-before-after-hero s-block container"
-         style="background-color: {{ bg_color }};">
-    <div class="th-before-after-hero__inner">
-        <div class="th-before-after-hero__content">
-            {% if eyebrow %}
-                <span class="th-before-after-hero__eyebrow">{{ eyebrow }}</span>
-            {% endif %}
+{# الصور الافتراضية (Placeholder Images) #}
+{% set img_before     = component.before_image   ?? 'https://img.freepik.com/free-photo/young-woman-with-acne-problem-face_23-2149448375.jpg' %}
+{% set img_after      = component.after_image    ?? 'https://img.freepik.com/free-photo/beautiful-face-young-woman-with-clean-fresh-skin_23-2149448386.jpg' %}
+{% set product_img    = component.image          ?? 'https://img.freepik.com/free-photo/cosmetic-bottle-packaging-mockup_1150-40282.jpg?w=360' %}
 
-            {% if title %}
-                <h2 class="th-before-after-hero__title">{{ title }}</h2>
-            {% endif %}
 
-            {% if description %}
-                <p class="th-before-after-hero__desc">{{ description|raw }}</p>
-            {% endif %}
-
-            {% if button_text and button_link %}
-                <a href="{{ button_link }}" class="th-before-after-hero__btn s-button s-button--primary">
-                    {{ button_text }}
-                </a>
-            {% endif %}
-        </div>
-
-        {# قسم الصور: قبل / بعد #}
-        {% if items|length > 0 %}
-            <div class="th-before-after-hero__images">
-                {% for item in items %}
-                    <div class="th-before-after-hero__image-pair">
-                        <div class="th-before-after-hero__image th-before-after-hero__image--before">
-                            <img src="{{ item.before_image }}" alt="{{ item.before_label ?? 'قبل' }}">
-                            {% if item.before_label %}
-                                <span class="th-before-after-hero__label th-before-after-hero__label--before">
-                                    {{ item.before_label }}
-                                </span>
-                            {% endif %}
-                        </div>
-
-                        <div class="th-before-after-hero__image th-before-after-hero__image--after">
-                            <img src="{{ item.after_image }}" alt="{{ item.after_label ?? 'بعد' }}">
-                            {% if item.after_label %}
-                                <span class="th-before-after-hero__label th-before-after-hero__label--after">
-                                    {{ item.after_label }}
-                                </span>
-                            {% endif %}
-                        </div>
+{# --- 2. الهيكل (HTML Structure) --- #}
+<section class="th-comparison-hero s-block">
+    <div class="container">
+        
+        {# البطاقة العائمة (The Card) #}
+        <div class="th-comparison-hero__card" 
+             style="--th-card-bg: {{ bg_color }}; --th-card-text: {{ text_color }};">
+            
+            <div class="th-comparison-hero__inner">
+                
+                {# === الجزء النصي (Content) === #}
+                <div class="th-comparison-hero__content">
+                    {% if subtitle %}
+                        <span class="th-comparison-hero__badge">{{ subtitle }}</span>
+                    {% endif %}
+                    
+                    <h2 class="th-comparison-hero__title">{{ title }}</h2>
+                    
+                    <div class="th-comparison-hero__desc">
+                        <p>{{ description|raw }}</p>
                     </div>
-                {% endfor %}
+                    
+                    {% if btn_text %}
+                        {# استخدام كلاسات سلة الرسمية للأزرار #}
+                        <a href="{{ btn_link }}" class="s-button s-button--primary th-comparison-hero__btn">
+                            {{ btn_text }}
+                        </a>
+                    {% endif %}
+                </div>
+
+                {# === الجزء البصري (Visuals) === #}
+                <div class="th-comparison-hero__visual">
+                    
+                    {# صورة المنتج العائمة #}
+                    {% if product_img %}
+                        <div class="th-comparison-hero__product-floating">
+                            <img src="{{ product_img }}" alt="Product Result" loading="lazy">
+                        </div>
+                    {% endif %}
+
+                    {# سلايدر المقارنة #}
+                    <div class="th-comparison-slider js-th-comparison">
+                        
+                        {# الطبقة الخلفية (بعد - After) #}
+                        <div class="th-comparison-slider__layer th-comparison-slider__layer--base">
+                            <img src="{{ img_after }}" alt="After">
+                            <span class="th-comparison-slider__label th-comparison-slider__label--after">بعد</span>
+                        </div>
+
+                        {# الطبقة الأمامية (قبل - Before) #}
+                        <div class="th-comparison-slider__layer th-comparison-slider__layer--overlay">
+                            <img src="{{ img_before }}" alt="Before">
+                            <span class="th-comparison-slider__label th-comparison-slider__label--before">قبل</span>
+                        </div>
+
+                        {# المقبض (Handle) #}
+                        <div class="th-comparison-slider__handle">
+                            <div class="th-comparison-slider__handle-btn">
+                                <i class="sicon-arrow-left"></i>
+                                <i class="sicon-arrow-right"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-        {% endif %}
+        </div>
     </div>
 </section>
 
+
+{# --- 3. التنسيقات (CSS) --- #}
+<style>
+/* تعريف المتغيرات الأساسية للقسم */
+:root {
+    --th-radius-card: 24px;   /* نصف قطر حواف البطاقة */
+    --th-radius-slider: 16px; /* نصف قطر حواف السلايدر */
+    --th-slider-height: 420px;
+    --th-slider-height-mobile: 320px;
+}
+
+/* التنسيق العام للقسم */
+.th-comparison-hero {
+    position: relative;
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+/* تصميم البطاقة */
+.th-comparison-hero__card {
+    background-color: var(--th-card-bg, #f4f4f4);
+    color: var(--th-card-text, #333);
+    border-radius: var(--th-radius-card);
+    padding: 60px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05); /* ظل ناعم جداً */
+    position: relative;
+    /* overflow: visible ضروري جداً لظهور المنتج العائم خارج الحدود */
+    overflow: visible; 
+}
+
+/* الحاوية الداخلية */
+.th-comparison-hero__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+/* --- النصوص --- */
+.th-comparison-hero__content {
+    flex: 1;
+    max-width: 45%;
+    position: relative;
+    z-index: 2;
+}
+
+.th-comparison-hero__badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background-color: rgba(255,255,255, 0.25);
+    border: 1px solid rgba(255,255,255, 0.4);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: inherit;
+}
+
+.th-comparison-hero__title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: inherit;
+}
+
+.th-comparison-hero__desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+/* تخصيص زر سلة */
+.th-comparison-hero__btn.s-button {
+    padding: 12px 40px;
+    border-radius: 50px;
+    background-color: #fff;
+    color: var(--th-card-text);
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+.th-comparison-hero__btn.s-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* --- الجانب البصري --- */
+.th-comparison-hero__visual {
+    flex: 1;
+    position: relative;
+    height: var(--th-slider-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* المنتج العائم */
+.th-comparison-hero__product-floating {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-6deg);
+    z-index: 10; /* فوق السلايدر */
+    width: 240px;
+    pointer-events: none; /* يسمح بالنقر خلفه */
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+    transition: transform 0.4s ease;
+}
+
+/* تأثير عند مرور الماوس على المنطقة */
+.th-comparison-hero__visual:hover .th-comparison-hero__product-floating {
+    transform: translate(-50%, -55%) rotate(0deg) scale(1.05);
+}
+
+.th-comparison-hero__product-floating img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* السلايدر نفسه */
+.th-comparison-slider {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    height: 100%;
+    border-radius: var(--th-radius-slider);
+    overflow: hidden;
+    cursor: col-resize;
+    background: #fff;
+    border: 4px solid rgba(255,255,255,0.6); /* إطار جمالي */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.th-comparison-slider__layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+}
+
+.th-comparison-slider__layer img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* طبقة القناع (Overlay) */
+.th-comparison-slider__layer--overlay {
+    width: 50%; /* البداية */
+    z-index: 5;
+    border-right: 2px solid #fff;
+}
+
+/* تسميات قبل وبعد */
+.th-comparison-slider__label {
+    position: absolute;
+    top: 20px;
+    padding: 5px 14px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    font-weight: bold;
+}
+.th-comparison-slider__label--after { left: 20px; }
+.th-comparison-slider__label--before { right: 20px; }
+
+/* المقبض */
+.th-comparison-slider__handle {
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 0;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.th-comparison-slider__handle-btn {
+    width: 44px; height: 44px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    color: #333;
+    font-size: 14px;
+    gap: 4px;
+}
+.th-comparison-slider__handle-btn i { font-size: 10px; }
+
+
+/* --- التجاوب مع الجوال (Responsive) --- */
+@media (max-width: 992px) {
+    .th-comparison-hero__card {
+        padding: 40px 24px;
+        text-align: center;
+    }
+
+    .th-comparison-hero__inner {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .th-comparison-hero__content { max-width: 100%; }
+    .th-comparison-hero__title { font-size: 2rem; }
+
+    .th-comparison-hero__visual {
+        width: 100%;
+        height: var(--th-slider-height-mobile);
+    }
+
+    .th-comparison-hero__product-floating { width: 160px; }
+}
+</style>
+
+
+{# --- 4. التفاعل (JavaScript) --- #}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // تحديد جميع عناصر السلايدر في الصفحة
+    const sliders = document.querySelectorAll('.js-th-comparison');
+    
+    if (sliders.length === 0) return;
+
+    sliders.forEach(slider => {
+        const overlay = slider.querySelector('.th-comparison-slider__layer--overlay');
+        const overlayImg = overlay.querySelector('img');
+        const handle = slider.querySelector('.th-comparison-slider__handle');
+        let isDown = false;
+
+        // دالة: إصلاح عرض الصورة لتطابق عرض الحاوية دائماً
+        // هذا يمنع الصورة من الانكماش عند تحريك المقبض
+        function fixImageWidth() {
+            overlayImg.style.width = slider.offsetWidth + 'px';
+        }
+        
+        // استخدام ResizeObserver لمراقبة تغيير حجم السلايدر بدقة عالية
+        const resizeObserver = new ResizeObserver(() => fixImageWidth());
+        resizeObserver.observe(slider);
+
+        // دالة الحركة
+        function moveSlider(x) {
+            const rect = slider.getBoundingClientRect();
+            // حساب مكان المؤشر بالنسبة للحاوية
+            let position = x - rect.left;
+            
+            // التأكد من عدم خروج المقبض عن الحدود
+            if (position < 0) position = 0;
+            if (position > rect.width) position = rect.width;
+
+            // تطبيق التغييرات
+            overlay.style.width = position + "px";
+            handle.style.left = position + "px";
+        }
+
+        // --- أحداث الماوس (لأجهزة الكمبيوتر) ---
+        slider.addEventListener('mousedown', (e) => { 
+            isDown = true; 
+            moveSlider(e.clientX); 
+        });
+        
+        window.addEventListener('mouseup', () => isDown = false);
+        
+        window.addEventListener('mousemove', (e) => { 
+            if(isDown) { 
+                e.preventDefault(); // منع تحديد النص أثناء السحب
+                moveSlider(e.clientX); 
+            } 
+        });
+
+        // --- أحداث اللمس (للجوال والتابلت) ---
+        slider.addEventListener('touchstart', (e) => { 
+            isDown = true; 
+            moveSlider(e.touches[0].clientX); 
+        }, {passive: true});
+        
+        window.addEventListener('touchend', () => isDown = false);
+        
+        slider.addEventListener('touchmove', (e) => { 
+            if(isDown) {
+                // passive: false يسمح لنا بمنع سكرول الصفحة إذا أردنا ذلك، 
+                // لكن هنا نتركه يتحرك بسلاسة
+                moveSlider(e.touches[0].clientX); 
+            }
+        }, {passive: false});
+    });
+});
+</script>
