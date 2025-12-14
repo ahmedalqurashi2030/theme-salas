@@ -55,7 +55,11 @@
                 <salla-cart-summary class="th-icon-btn">
                     <div slot="icon" class="relative">
                         <i class="sicon-shopping-bag"></i>
+                        <i class="sicon-shopping-cart"></i>
+                        {# العدد #}
+                        {%- if cart.items_count > 0 -%}
                         <span class="th-badge">{{ cart.items_count }}</span>
+                        {%- endif -%}
                     </div>
                     <span class="th-icon-label hidden lg:block">السلة</span>
                 </salla-cart-summary>
