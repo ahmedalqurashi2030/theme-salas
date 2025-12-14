@@ -25306,694 +25306,362 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   width: 100%;
   height: auto;
 }
-/**
- * ═══════════════════════════════════════════════════════════════════════════
- * 🎨 THRAA PRODUCT CARD - Styles
- * ═══════════════════════════════════════════════════════════════════════════
- * 
- * أنماط بطاقة المنتج المخصصة لقالب ثراء
- * مصمم ليعمل مع thraa-product-card.js Web Component
- * 
- * ❌ لا يستخدم !important
- * ✅ يستخدم CSS Variables للتخصيص السهل
- * ✅ متجاوب بالكامل
- * ✅ يدعم RTL
- * 
- * ═══════════════════════════════════════════════════════════════════════════
- */
-/* ═══════════════════════════════════════════════════════════════════════════
-   🎨 المتغيرات (Design Tokens)
-   غيّر هذه القيم فقط لتخصيص التصميم بالكامل
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   🎨 تخصيص بطاقة المنتج - قالب ثراء
+   الأسلوب: CSS Override (آمن 100% على سلة)
+   ملاحظة مهمة: لا تستهدف Utilities مثل .text-gray-400 لتجنب Circular dependency
+   ═══════════════════════════════════════════════════════════════ */
+/* ═══ متغيرات الألوان ═══ */
 :root {
-  /* الألوان الأساسية */
-  --thraa-primary: #e91e63;
-  --thraa-primary-light: #fce4ec;
-  --thraa-primary-dark: #c2185b;
-  /* ألوان النص */
-  --thraa-text-primary: #212121;
-  --thraa-text-secondary: #757575;
-  --thraa-text-muted: #9e9e9e;
-  /* ألوان الخلفية */
-  --thraa-bg-card: #ffffff;
-  --thraa-bg-image: #fafafa;
-  /* ألوان خاصة */
-  --thraa-star-color: #ffc107;
-  --thraa-success: #4caf50;
-  --thraa-danger: #f44336;
-  --thraa-warning: #ff9800;
-  /* الأحجام */
-  --thraa-card-radius: 12px;
-  --thraa-card-padding: 12px;
-  --thraa-btn-size: 40px;
-  --thraa-badge-radius: 4px;
-  /* الظلال */
-  --thraa-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --thraa-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
-  --thraa-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
-  /* الانتقالات */
-  --thraa-transition-fast: 0.15s ease;
-  --thraa-transition-base: 0.3s ease;
-  --thraa-transition-slow: 0.5s ease;
+  --thraa-primary: #e91e63; /* اللون الوردي الأساسي */
+  --thraa-primary-light: #fce4ec; /* وردي فاتح للخلفيات */
+  --thraa-secondary: #9e9e9e; /* رمادي للنصوص الثانوية */
+  --thraa-star: #ffc107; /* لون النجمة */
+  --thraa-success: #4caf50; /* أخضر للمتوفر */
+  --thraa-danger: #f44336; /* أحمر لنفاد الكمية */
+  --thraa-text-primary: #212121; /* أسود للنص الرئيسي */
+  --thraa-text-secondary: #757575; /* رمادي للنص الثانوي */
+  --thraa-bg-card: #ffffff; /* خلفية البطاقة */
+  --thraa-border-radius: 12px; /* انحناء الحواف */
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   📦 بطاقة المنتج - الهيكل الأساسي
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card {
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-  background: var(--thraa-bg-card);
-  border-radius: 12px;
-  border-radius: var(--thraa-card-radius);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transition: transform var(--thraa-transition-base), box-shadow var(--thraa-transition-base);
-  position: relative;
+/* ═══════════════════════════════════════
+   بطاقة المنتج - الهيكل الأساسي
+   ═══════════════════════════════════════ */
+.s-product-card-entry {
+  background: #ffffff !important;
+  background: var(--thraa-bg-card) !important;
+  border-radius: 12px !important;
+  border-radius: var(--thraa-border-radius) !important;
+  border: 1px solid #f5f5f5 !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
 }
-.thraa-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  box-shadow: var(--thraa-shadow-lg);
+.s-product-card-entry:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-4px) !important;
 }
-/* حالة نفاد الكمية */
-.thraa-card.is-out-of-stock {
-  opacity: 0.7;
+/* ═══════════════════════════════════════
+   قسم الصورة
+   ═══════════════════════════════════════ */
+.s-product-card-image {
+  position: relative !important;
+  background: #fafafa !important;
+  aspect-ratio: 1/1 !important;
+  overflow: hidden !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   🖼️ قسم الصورة
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__media {
-  position: relative;
-  aspect-ratio: 1/1;
-  background: #fafafa;
-  background: var(--thraa-bg-image);
-  overflow: hidden;
+.s-product-card-image img,
+.s-product-card-image-cover {
+  width: 100% !important;
+  height: 100% !important;
+  -o-object-fit: contain !important;
+     object-fit: contain !important;
+  padding: 15px !important;
+  transition: transform 0.4s ease !important;
 }
-.thraa-card__image-link {
-  display: block;
-  width: 100%;
-  height: 100%;
+.s-product-card-image img,
+.s-product-card-image-cover { /* contain لإظهار المنتج كاملاً */
 }
-.thraa-card__image {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
-  padding: 15px;
-  transition: transform 0.5s ease;
-  transition: transform var(--thraa-transition-slow);
+.s-product-card-entry:hover .s-product-card-image img,
+.s-product-card-entry:hover .s-product-card-image-cover {
+  transform: scale(1.05) !important;
 }
-.thraa-card:hover .thraa-card__image {
-  transform: scale(1.05);
+/* ═══════════════════════════════════════
+   زر المفضلة (القلب)
+   ═══════════════════════════════════════ */
+.s-product-card-wishlist-btn {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+  right: auto !important;
+  width: 36px !important;
+  height: 36px !important;
+  background: #fff !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+  z-index: 10 !important;
+  transition: all 0.2s ease !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   ❤️ زر المفضلة
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__wishlist {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 40px;
-  width: var(--thraa-btn-size);
-  height: 40px;
-  height: var(--thraa-btn-size);
-  background: #ffffff;
-  background: var(--thraa-bg-card);
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  box-shadow: var(--thraa-shadow-sm);
-  transition: all 0.15s ease;
-  transition: all var(--thraa-transition-fast);
-  z-index: 10;
+.s-product-card-wishlist-btn { /* اليسار كما في الصورة */
 }
-.thraa-card__wishlist:hover {
-  background: #fce4ec;
-  background: var(--thraa-primary-light);
-  transform: scale(1.1);
+.s-product-card-wishlist-btn:hover {
+  background: #fce4ec !important;
+  background: var(--thraa-primary-light) !important;
+  transform: scale(1.1) !important;
 }
-.thraa-card__wishlist i {
-  font-size: 18px;
-  color: #9e9e9e;
-  color: var(--thraa-text-muted);
-  transition: color 0.15s ease;
-  transition: color var(--thraa-transition-fast);
+.s-product-card-wishlist-btn i {
+  color: #9e9e9e !important;
+  color: var(--thraa-secondary) !important;
+  font-size: 18px !important;
 }
-.thraa-card__wishlist:hover i,
-.thraa-card__wishlist.is-active i {
-  color: #e91e63;
-  color: var(--thraa-primary);
+.s-product-card-wishlist-btn.s-product-card-wishlist-added i,
+.s-product-card-wishlist-btn:hover i {
+  color: #e91e63 !important;
+  color: var(--thraa-primary) !important;
 }
-/* أنيميشن النبض عند الإضافة */
-.thraa-card__wishlist.is-active {
-  animation: thraa-pulse 0.3s ease;
+/* ═══════════════════════════════════════
+   شارة العرض / الخصم (أعلى اليمين)
+   ═══════════════════════════════════════ */
+.s-product-card-promotion-title {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  left: auto !important;
+  background: #e91e63 !important;
+  background: var(--thraa-primary) !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 4px 10px !important;
+  border-radius: 4px !important;
+  z-index: 10 !important;
 }
-@keyframes thraa-pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
+/* ═══════════════════════════════════════
+   زر الإضافة للسلة (العائم)
+   ═══════════════════════════════════════ */
+.s-product-card-floating-btn,
+.btn-floating-cart {
+  position: absolute !important;
+  bottom: 10px !important;
+  left: 10px !important;
+  right: auto !important;
+  z-index: 10 !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   🏷️ الشارات (Badges)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 4px 10px;
-  border-radius: 4px;
-  border-radius: var(--thraa-badge-radius);
-  font-size: 11px;
-  font-weight: 600;
-  z-index: 10;
+.s-product-card-floating-btn salla-add-product-button,
+.btn-floating-cart {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  background: #fff !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #eee !important;
+  padding: 0 !important;
+  transition: all 0.2s ease !important;
 }
-.thraa-card__badge--promo {
-  background: #e91e63;
-  background: var(--thraa-primary);
-  color: white;
+.s-product-card-floating-btn salla-add-product-button:hover,
+.btn-floating-cart:hover {
+  background: #e91e63 !important;
+  background: var(--thraa-primary) !important;
+  border-color: #e91e63 !important;
+  border-color: var(--thraa-primary) !important;
 }
-.thraa-card__badge--preorder {
-  background: #ff9800;
-  background: var(--thraa-warning);
-  color: white;
+.s-product-card-floating-btn salla-add-product-button i,
+.btn-floating-cart i {
+  color: #212121 !important;
+  color: var(--thraa-text-primary) !important;
+  font-size: 18px !important;
 }
-.thraa-card__badge--out {
-  background: #9e9e9e;
-  background: var(--thraa-text-muted);
-  color: white;
+.s-product-card-floating-btn salla-add-product-button:hover i,
+.btn-floating-cart:hover i {
+  color: #fff !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   🛒 أزرار التفاعل
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__actions {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  display: flex;
-  gap: 8px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-  transition: all var(--thraa-transition-base);
-  z-index: 10;
+/* ═══════════════════════════════════════
+   قسم المحتوى
+   ═══════════════════════════════════════ */
+.s-product-card-content {
+  padding: 12px 15px 15px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
 }
-.thraa-card:hover .thraa-card__actions {
-  opacity: 1;
-  transform: translateY(0);
+/* ═══════════════════════════════════════
+   التقييم (النجوم)
+   ═══════════════════════════════════════ */
+.s-product-card-rating {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12px !important;
 }
-/* زر الإضافة للسلة */
-.thraa-card__add-btn {
-  width: 40px;
-  width: var(--thraa-btn-size);
-  height: 40px;
-  height: var(--thraa-btn-size);
-  min-width: 40px;
-  min-width: var(--thraa-btn-size);
-  background: #ffffff;
-  background: var(--thraa-bg-card);
-  border: 1px solid #eee;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  box-shadow: var(--thraa-shadow-sm);
-  transition: all 0.15s ease;
-  transition: all var(--thraa-transition-fast);
-  padding: 0;
+.s-product-card-rating i {
+  color: #ffc107 !important;
+  color: var(--thraa-star) !important;
+  font-size: 14px !important;
 }
-.thraa-card__add-btn:hover {
-  background: #e91e63;
-  background: var(--thraa-primary);
-  border-color: #e91e63;
-  border-color: var(--thraa-primary);
+/* الرقم الرئيسي للتقييم */
+.s-product-card-rating span {
+  color: #212121 !important;
+  color: var(--thraa-text-primary) !important;
+  font-weight: 600 !important;
 }
-.thraa-card__add-btn i {
-  font-size: 18px;
-  color: #212121;
-  color: var(--thraa-text-primary);
-  transition: color 0.15s ease;
-  transition: color var(--thraa-transition-fast);
+/* ✅ بديل آمن عن .text-gray-400 (عادة هذا هو النص الرمادي/عدد المراجعات) */
+.s-product-card-rating span:last-of-type:not(:first-of-type) {
+  color: #757575 !important;
+  color: var(--thraa-text-secondary) !important;
+  font-weight: 400 !important;
 }
-.thraa-card__add-btn:hover i {
-  color: white;
+/* ═══════════════════════════════════════
+   الماركة / البراند
+   ═══════════════════════════════════════ */
+.s-product-card-brand {
+  font-size: 12px !important;
+  color: #757575 !important;
+  color: var(--thraa-text-secondary) !important;
+  font-weight: 400 !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   📝 قسم المحتوى
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__content {
-  padding: 12px;
-  padding: var(--thraa-card-padding);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
+/* ═══════════════════════════════════════
+   اسم المنتج
+   ═══════════════════════════════════════ */
+.s-product-card-content-title {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+  color: #212121 !important;
+  color: var(--thraa-text-primary) !important;
+  margin: 0 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  min-height: 40px !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   ⭐ التقييم
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__rating {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
+.s-product-card-content-title a {
+  color: inherit !important;
+  -webkit-text-decoration: none !important;
+  text-decoration: none !important;
 }
-.thraa-card__rating i {
-  color: #ffc107;
-  color: var(--thraa-star-color);
-  font-size: 14px;
+.s-product-card-content-title a:hover {
+  color: #e91e63 !important;
+  color: var(--thraa-primary) !important;
 }
-.thraa-card__rating-value {
-  color: #212121;
-  color: var(--thraa-text-primary);
-  font-weight: 600;
+/* ═══════════════════════════════════════
+   الأسعار
+   ═══════════════════════════════════════ */
+.s-product-card-price-row {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin-top: auto !important;
 }
-.thraa-card__rating-count {
-  color: #9e9e9e;
-  color: var(--thraa-text-muted);
+/* السعر العادي */
+.s-product-card-price {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #e91e63 !important;
+  color: var(--thraa-primary) !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   🏢 الماركة
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__brand {
-  font-size: 12px;
-  color: #757575;
-  color: var(--thraa-text-secondary);
+/* السعر مع الخصم */
+.s-product-card-sale-price {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   📌 اسم المنتج
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__title {
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.5;
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 40px;
+.s-product-card-sale-price h4 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #e91e63 !important;
+  color: var(--thraa-primary) !important;
+  margin: 0 !important;
 }
-.thraa-card__title a {
-  color: #212121;
-  color: var(--thraa-text-primary);
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  transition: color 0.15s ease;
-  transition: color var(--thraa-transition-fast);
+.s-product-card-sale-price span {
+  font-size: 12px !important;
+  color: #757575 !important;
+  color: var(--thraa-text-secondary) !important;
+  -webkit-text-decoration: line-through !important;
+  text-decoration: line-through !important;
 }
-.thraa-card__title a:hover {
-  color: #e91e63;
-  color: var(--thraa-primary);
+/* ═══════════════════════════════════════
+   شارة الخصم (في السعر)
+   ═══════════════════════════════════════ */
+.s-product-card-discount,
+.card-discount {
+  position: absolute !important;
+  bottom: 15px !important;
+  left: 15px !important;
+  right: auto !important;
+  background: #fce4ec !important;
+  background: var(--thraa-primary-light) !important;
+  color: #e91e63 !important;
+  color: var(--thraa-primary) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 3px 8px !important;
+  border-radius: 4px !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   💰 الأسعار
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card__prices {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-top: auto;
+/* ═══════════════════════════════════════
+   حالة نفاد الكمية
+   ═══════════════════════════════════════ */
+.s-product-card-entry.s-product-card-out-of-stock {
+  opacity: 0.7 !important;
 }
-.thraa-card__price-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.s-product-card-entry.s-product-card-out-of-stock .s-product-card-image::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  background: rgba(255, 255, 255, 0.5) !important;
 }
-.thraa-card__price-old {
-  font-size: 12px;
-  color: #9e9e9e;
-  color: var(--thraa-text-muted);
-  -webkit-text-decoration: line-through;
-  text-decoration: line-through;
+.s-product-card-out-badge {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background: #f44336 !important;
+  background: var(--thraa-danger) !important;
+  color: #fff !important;
+  padding: 6px 12px !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  z-index: 5 !important;
 }
-.thraa-card__price-current {
-  font-size: 16px;
-  font-weight: 700;
-  color: #e91e63;
-  color: var(--thraa-primary);
-}
-.thraa-card__price-starting {
-  font-size: 11px;
-  color: #757575;
-  color: var(--thraa-text-secondary);
-}
-.thraa-card__discount {
-  font-size: 11px;
-  font-weight: 700;
-  color: #e91e63;
-  color: var(--thraa-primary);
-  background: #fce4ec;
-  background: var(--thraa-primary-light);
-  padding: 2px 6px;
-  border-radius: 4px;
-  border-radius: var(--thraa-badge-radius);
-}
-/* ═══════════════════════════════════════════════════════════════════════════
-   📱 الاستجابة (Responsive)
-   ═══════════════════════════════════════════════════════════════════════════ */
-/* شاشات صغيرة - إظهار الأزرار دائماً */
-@media (max-width: 768px) {
-  .thraa-card__actions {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .thraa-card__wishlist,
-  .thraa-card__add-btn {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-  }
-  .thraa-card__wishlist i,
-  .thraa-card__add-btn i {
-    font-size: 16px;
-  }
-}
-/* ═══════════════════════════════════════════════════════════════════════════
-   🔄 دعم RTL
-   ═══════════════════════════════════════════════════════════════════════════ */
-[dir=rtl] .thraa-card__wishlist {
-  left: auto;
-  right: 10px;
-}
-[dir=rtl] .thraa-card__badge {
-  right: auto;
-  left: 10px;
-}
-[dir=rtl] .thraa-card__actions {
-  left: auto;
-  right: 10px;
-}
-/* ═══════════════════════════════════════════════════════════════════════════
-   🌙 الوضع الداكن (Dark Mode)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.dark .thraa-card,
-[data-theme=dark] .thraa-card {
-  --thraa-bg-card: #1e1e1e;
-  --thraa-bg-image: #2a2a2a;
-  --thraa-text-primary: #f5f5f5;
-  --thraa-text-secondary: #b0b0b0;
-  --thraa-text-muted: #808080;
-}
-/* ═══════════════════════════════════════════════════════════════════════════
-   🎯 شبكة المنتجات (Products Grid)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-products-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 15px;
-  gap: 15px;
+/* ═══════════════════════════════════════
+   الشبكة (Grid) للمنتجات
+   ═══════════════════════════════════════ */
+.s-products-list-wrapper,
+.s-products-list-vertical-cards {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  grid-gap: 15px !important;
+  gap: 15px !important;
 }
 @media (min-width: 640px) {
-  .thraa-products-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .s-products-list-wrapper,
+  .s-products-list-vertical-cards {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 @media (min-width: 768px) {
-  .thraa-products-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+  .s-products-list-wrapper,
+  .s-products-list-vertical-cards {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 20px !important;
   }
 }
 @media (min-width: 1024px) {
-  .thraa-products-grid {
-    grid-template-columns: repeat(5, 1fr);
+  .s-products-list-wrapper,
+  .s-products-list-vertical-cards {
+    grid-template-columns: repeat(5, 1fr) !important;
   }
 }
-@media (min-width: 1280px) {
-  .thraa-products-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
+/* ═══════════════════════════════════════
+   دعم RTL
+   ═══════════════════════════════════════ */
+[dir=rtl] .s-product-card-wishlist-btn {
+  left: auto !important;
+  right: 10px !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   🌟 بطاقة بظل عند الهوفر (Shadow on Hover)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card--shadow {
-  box-shadow: none;
-  border: 1px solid transparent;
+[dir=rtl] .s-product-card-promotion-title {
+  right: auto !important;
+  left: 10px !important;
 }
-.thraa-card--shadow:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  box-shadow: var(--thraa-shadow-lg);
-  border-color: transparent;
+[dir=rtl] .s-product-card-floating-btn {
+  left: auto !important;
+  right: 10px !important;
 }
-/* ═══════════════════════════════════════════════════════════════════════════
-   🖼️ بطاقة الصورة الكاملة (Full Image)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card--full-image {
-  aspect-ratio: 1/1;
-  border-radius: 12px;
-  border-radius: var(--thraa-card-radius);
-  overflow: hidden;
-}
-.thraa-card__full-link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-.thraa-card--full-image .thraa-card__image {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  padding: 0;
-  transition: transform 0.5s ease;
-  transition: transform var(--thraa-transition-slow);
-}
-.thraa-card--full-image:hover .thraa-card__image {
-  transform: scale(1.1);
-}
-.thraa-card__overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 12px;
-  padding: var(--thraa-card-padding);
-}
-.thraa-card__overlay .thraa-card__wishlist {
-  position: static;
-  align-self: flex-end;
-}
-.thraa-card__overlay-content {
-  color: white;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.thraa-card__overlay-content .thraa-card__title {
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-}
-.thraa-card__overlay-content .thraa-card__prices {
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-}
-.thraa-card__overlay-content .thraa-card__price-current {
-  color: white;
-  font-size: 18px;
-}
-.thraa-card__overlay-content .thraa-card__price-old {
-  color: rgba(255, 255, 255, 0.7);
-}
-.thraa-card__add-btn--full {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  background: #e91e63;
-  background: var(--thraa-primary);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  border-radius: var(--thraa-card-radius);
-  padding: 10px 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s ease;
-  transition: background var(--thraa-transition-fast);
-}
-.thraa-card__add-btn--full:hover {
-  background: #c2185b;
-  background: var(--thraa-primary-dark);
-}
-/* ═══════════════════════════════════════════════════════════════════════════
-   📦 البطاقة المصغرة (Minimal)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card--minimal {
-  background: #ffffff;
-  background: var(--thraa-bg-card);
-  border-radius: 12px;
-  border-radius: var(--thraa-card-radius);
-  padding: 12px;
-  padding: var(--thraa-card-padding);
-}
-.thraa-card__mini-wrapper {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-.thraa-card__mini-image {
-  flex-shrink: 0;
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fafafa;
-  background: var(--thraa-bg-image);
-}
-.thraa-card__mini-image .thraa-card__image {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  padding: 8px;
-}
-.thraa-card__mini-content {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.thraa-card--minimal .thraa-card__title {
-  font-size: 13px;
-  min-height: auto;
-  -webkit-line-clamp: 1;
-}
-.thraa-card--minimal .thraa-card__prices {
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-}
-.thraa-card--minimal .thraa-card__price-current {
-  font-size: 14px;
-}
-.thraa-card__mini-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.thraa-card__mini-actions .thraa-card__wishlist,
-.thraa-card__mini-actions .thraa-card__add-btn {
-  position: static;
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-}
-/* ═══════════════════════════════════════════════════════════════════════════
-   ↔️ البطاقة الأفقية (Horizontal)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card--horizontal {
-  background: #ffffff;
-  background: var(--thraa-bg-card);
-  border-radius: 12px;
-  border-radius: var(--thraa-card-radius);
-  overflow: hidden;
-}
-.thraa-card__horizontal-wrapper {
-  display: flex;
-  gap: 16px;
-}
-.thraa-card__horizontal-image {
-  flex-shrink: 0;
-  width: 40%;
-  max-width: 200px;
-  aspect-ratio: 1/1;
-  position: relative;
-  overflow: hidden;
-  background: #fafafa;
-  background: var(--thraa-bg-image);
-}
-.thraa-card__horizontal-image .thraa-card__image {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
-  padding: 10px;
-}
-.thraa-card__horizontal-image .thraa-card__badge {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-}
-.thraa-card__horizontal-content {
-  flex: 1;
-  padding: 12px;
-  padding: var(--thraa-card-padding);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.thraa-card--horizontal .thraa-card__title {
-  font-size: 14px;
-  min-height: auto;
-}
-.thraa-card__horizontal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: auto;
-  align-items: center;
-}
-.thraa-card__add-btn--wide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex: 1;
-  background: #e91e63;
-  background: var(--thraa-primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s ease;
-  transition: background var(--thraa-transition-fast);
-}
-.thraa-card__add-btn--wide:hover {
-  background: #c2185b;
-  background: var(--thraa-primary-dark);
-}
-.thraa-card__horizontal-actions .thraa-card__wishlist {
-  position: static;
-}
-/* Responsive للبطاقة الأفقية */
-@media (max-width: 480px) {
-  .thraa-card__horizontal-wrapper {
-    flex-direction: column;
-  }
-  .thraa-card__horizontal-image {
-    width: 100%;
-    max-width: none;
-    aspect-ratio: 16/9;
-  }
-}
-/* ═══════════════════════════════════════════════════════════════════════════
-   ⭐ البطاقة الخاصة (Special - مع عداد)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.thraa-card--special {
-  border: 2px solid #fce4ec;
-  border: 2px solid var(--thraa-primary-light);
+[dir=rtl] .s-product-card-discount {
+  left: auto !important;
+  right: 15px !important;
 }
 .first\:rounded-t-md:first-child{
     border-top-left-radius: 0.375rem;
