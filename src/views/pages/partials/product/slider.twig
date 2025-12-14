@@ -1,14 +1,30 @@
-{#TODO:: use in-line without include#}
-{% if products|length %}
-    <salla-products-slider
-    source="selected"
-    limit="{{ limit }}"
-    {{ autoplay ? 'autoplay' : '' }}
-    source-value="[{{ products|map((product) => product.id)|join(',') }}]"
-    display-all-url="{{display_all_url}}"
-    block-title="{{ title }}"
-    block-subTitle="{{ sub_title|raw }}"
-    slider-id="slider-with-bg-{{ position }}"
-    ></salla-products-slider>
-{% endif %}
+{# Tharaa - Products Slider (patched)
+   Adds a unique class for safe scoped styling/JS patching.
+   Keeps original behavior.
+#}
 
+{%- set sub_title = sub_title is empty ? '' : sub_title -%}
+
+{%- set source = items.type|default('latest_products') -%}
+{%- set source_value = '' -%}
+{%- if source == 'chosen_products' -%}
+  {%- set source = 'selected' -%}
+  {%- set source_value = items.products -%}
+{%- endif -%}
+
+<section class="s-block s-block--products-slider s-block--products-slider-{{ position }}">
+  <div class="container">
+    <salla-products-slider
+      class="th-products-slider"
+      source="{{ source }}"
+      source-value="{{ source_value }}"
+      limit="{{ limit }}"
+      autoplay="{{ autoplay }}"
+      {% if display_all_url %}display-all-url="{{ display_all_url }}"{% endif %}
+      block-title="{{ title }}"
+      sub-title="{{ sub_title }}"
+      slider-id="slider-with-bg-{{ position }}"
+      data-th-slides-desktop="6"
+    ></salla-products-slider>
+  </div>
+</section>

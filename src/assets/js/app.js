@@ -4,6 +4,8 @@ import Anime from './partials/anime';
 import initTootTip from './partials/tooltip';
 import AppHelpers from "./app-helpers";
 
+import './partials/thraa-product-card';
+
 class App extends AppHelpers {
   constructor() {
     super();
