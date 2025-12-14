@@ -461,11 +461,23 @@
                     ],
                     "fields": [
                         {
+                            "id": "links.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "الصوره او الايقونه",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "required": false
+                        },
+                        {
                             "type": "string",
                             "icon": "sicon-format-text-alt",
                             "label": "عنوان الرابط",
                             "id": "links.icon",
-                            "value": "sicon-store2",
+                            "value": "sicon-table",
                             "required": false,
                             "format": "icon",
                             "class": "form--inline",
