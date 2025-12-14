@@ -21,8 +21,16 @@
                 {% for item in mega_items %}
                     <div class="th-mega-tab {{ loop.first ? 'active' : '' }}" onmouseover="tharaaOpenTab(event, 'mega-{{ loop.index }}')">
                         {{ item.title }}
-                        <i class="sicon-keyboard_arrow_left text-[10px] opacity-60"></i>
-                    </div>
+                   
+					{% if item.image %}
+		<img src="{{ item.image }}" alt="{{ item.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
+		{% else %}
+		<span class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-xs">
+			<i class="sicon-layout-grid"></i>
+		</span>
+		{% endif %}
+		 </div>
+                    
                 {% endfor %}
             </div>
             {# المحتوى #}
@@ -34,8 +42,8 @@
                                 <div>
                                     <a href="{{ child.url }}" class="font-bold text-gray-800 mb-3 block hover:text-gold transition flex items-center gap-2">
                                         {# أيقونة افتراضية #}
-                                         {% if item.image %}
-      <img src="{{ item.image }}" alt="{{ item.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
+                                         {% if child.image %}
+      <img src="{{ child.image }}" alt="{{ child.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
     {% else %}
       <span class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-xs">
         <i class="sicon-layout-grid"></i>
