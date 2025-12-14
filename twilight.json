@@ -356,8 +356,8 @@
                     ],
                     "options": [
                         {
-                            "label": "style-overlay",
-                            "value": "بطاقة مدمجة (ستوري)",
+                            "label": "الاخيار الاول",
+                            "value": "style-overlay",
                             "key": "8951d60c-ca70-42de-9675-ef18f33df7c3"
                         },
                         {
@@ -610,44 +610,6 @@
                             "value": false
                         }
                     ]
-                },
-                {
-                    "id": "checkbox",
-                    "type": "boolean",
-                    "format": "checkbox",
-                    "label": "Checkbox",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-check-square",
-                    "value": true,
-                    "selected": false,
-                    "required": false
-                },
-                {
-                    "id": "checkbox_1",
-                    "type": "boolean",
-                    "format": "checkbox",
-                    "label": "Checkbox 1",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-check-square",
-                    "value": true,
-                    "selected": false,
-                    "required": false
-                },
-                {
-                    "id": "checkbox_list",
-                    "type": "items",
-                    "format": "checkbox-list",
-                    "label": "Checkbox List",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-list-check",
-                    "selected": [],
-                    "options": [],
-                    "source": "Manual",
-                    "multichoice": true,
-                    "required": false
                 }
             ]
         },
