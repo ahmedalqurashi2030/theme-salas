@@ -1891,10 +1891,6 @@ select{
     padding-left: 0.25rem;
     padding-right: 0.25rem;
 }
-.px-10{
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-}
 .px-2{
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -2376,9 +2372,6 @@ select{
 }
 .duration-500{
     transition-duration: 500ms;
-}
-.duration-700{
-    transition-duration: 700ms;
 }
 .ease-in-out{
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -25335,9 +25328,6 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
 }
 .hover\:underline:hover{
     text-decoration-line: underline;
-}
-.hover\:opacity-40:hover{
-    opacity: 0.4;
 }
 .hover\:opacity-80:hover{
     opacity: 0.8;

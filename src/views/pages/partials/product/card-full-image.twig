@@ -1,9 +1,6 @@
-{# Tharaa - Full Image Product Card (patched)
-   Uses the same JS web-component card so behavior remains consistent.
-#}
-
+{# Tharaa - Full Image Product Card #}
 <custom-salla-product-card
-  product="{{ product }}"
+  product='{{ product|json_encode|e("html_attr") }}'
   fullImage
   shadowOnHover
 ></custom-salla-product-card>

@@ -1,9 +1,6 @@
-{# Tharaa - Mini Product Card (patched)
-   Uses the same JS web-component card so design stays consistent everywhere.
-#}
-
+{# Tharaa - Mini Product Card #}
 <custom-salla-product-card
-  product="{{ product }}"
+  product='{{ product|json_encode|e("html_attr") }}'
   minimal
   shadowOnHover
 ></custom-salla-product-card>
