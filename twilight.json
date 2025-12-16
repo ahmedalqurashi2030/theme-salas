@@ -356,8 +356,8 @@
                     ],
                     "options": [
                         {
-                            "label": "الاخيار الاول",
-                            "value": "style-overlay",
+                            "label": "مربع بحواف ناعمة (عصري)",
+                            "value": "style-square",
                             "key": "8951d60c-ca70-42de-9675-ef18f33df7c3"
                         },
                         {
