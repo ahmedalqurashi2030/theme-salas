@@ -15,13 +15,16 @@
 <section class="s-block s-block--products-slider s-block--products-slider-{{ position }}">
   <div class="container">
     <salla-products-slider
-  class="th-products-slider"
-  source="{{ source }}"
-  source-value="{{ source_value }}"
-  block_title="{{ block_title }}"
-  block_sub_title="{{ block_sub_title }}"
-  slider-id="{{ slider_id }}">
-</salla-products-slider>
-
+      class="th-products-slider"
+      source="{{ source }}"
+      source-value="{{ source_value }}"
+      limit="{{ limit }}"
+      autoplay="{{ autoplay }}"
+      {% if display_all_url %}display-all-url="{{ display_all_url }}"{% endif %}
+      block-title="{{ title }}"
+      sub-title="{{ sub_title }}"
+      slider-id="slider-with-bg-{{ position }}"
+      data-th-slides-desktop="6"
+    ></salla-products-slider>
   </div>
 </section>
