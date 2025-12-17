@@ -1328,18 +1328,6 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "image",
-                    "type": "string",
-                    "format": "image",
-                    "label": "صورة القسم",
-                    "description": null,
-                    "labelHTML": null,
-                    "placeholder": "e.g. https://hostname.com/image.png",
-                    "icon": "sicon-image",
-                    "value": null,
-                    "required": false
-                },
-                {
                     "id": "description",
                     "type": "string",
                     "format": "richtext",
