@@ -879,6 +879,9 @@ select{
 .visible{
     visibility: visible;
 }
+.invisible{
+    visibility: hidden;
+}
 .static{
     position: static;
 }
@@ -22289,7 +22292,7 @@ salla-slider .slide--one-sixth{
 }
 @media (min-width: 1024px){
     salla-slider .slide--one-sixth{
-        width: 20%;
+        width: 16.666667%;
     }
 }
 salla-slider .swiper-slide {
@@ -25036,197 +25039,6 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   display: block;
   width: 100%;
   height: auto;
-}
-/* ===== 1. الحاوية الأساسية للكرت ===== */
-.s-product-card-entry {
-  background-color: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #f1f1f1;
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
-  padding: 10px 10px 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 260px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.s-product-card-entry:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
-}
-/* ===== 2. جزء الصورة ===== */
-.s-product-card-image,
-.s-product-card-image-full {
-  position: relative;
-  padding: 8px 8px 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 140px;
-}
-.s-product-card-image img,
-.s-product-card-image-full img {
-  max-height: 130px;
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-/* ===== 3. زر المفضلة أعلى يمين ===== */
-.s-product-card-wishlist-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-}
-/* ===== 4. البادج العلوي (منتج الأكثر بيعاً.. إلخ) ===== */
-.s-product-card-promotion-title,
-.s-product-card-quantity,
-.s-product-card-out-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: #ff4b8b;
-  color: #fff;
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-weight: 600;
-}
-/* ===== 5. زر السلة العائم أسفل يسار الصورة ===== */
-.s-product-card-floating-btn {
-  position: absolute;
-  bottom: 6px;
-  left: 10px;
-}
-.s-product-card-floating-btn .btn-floating-cart {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-/* ===== 6. محتوى الكرت ===== */
-.s-product-card-content {
-  padding-top: 6px;
-}
-/* صف التقييم + عدد التقييمات */
-.s-product-card-meta {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px;
-  margin-bottom: 2px;
-}
-.s-product-card-rating {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 12px;
-}
-.s-product-card-rating i {
-  font-size: 13px;
-}
-.s-product-card-rating span {
-  line-height: 1;
-}
-/* اسم البراند تحت التقييم مباشرة (Ola Hair / Dyson ...) */
-.s-product-card-brand {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: #4b5563;
-  margin-bottom: 2px;
-}
-/* عنوان المنتج */
-.s-product-card-content-title {
-  font-size: 12px;
-  font-weight: 400;
-  color: #111827;
-  margin-bottom: 6px;
-  line-height: 1.4;
-}
-.s-product-card-content-title a {
-  color: inherit;
-}
-/* ===== 7. صف السعر ===== */
-.s-product-card-price-row {
-  margin-top: 6px;
-}
-/* السعر مع الخصم (الكود الحالي يطبع div.s-product-card-sale-price) */
-.s-product-card-sale-price {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 4px;
-}
-/* السعر الحالي (الجديد) */
-.s-product-card-sale-price h4,
-.s-product-card-price {
-  font-size: 15px;
-  font-weight: 700;
-  color: #ff4b8b;
-  line-height: 1.2;
-}
-/* السعر القديم */
-.s-product-card-sale-price span {
-  font-size: 11px;
-  color: #9ca3af;
-  -webkit-text-decoration: line-through;
-  text-decoration: line-through;
-  line-height: 1;
-}
-/* لو ما في خصم – السعر العادي */
-.s-product-card-price {
-  text-align: right;
-}
-/* ===== 8. مساحة للبادج السفلي "-40%" لو حبيت تضيفه لاحقاً ===== */
-/* حالياً فقط نضبط الشكل، بدون حساب النسبة من الجافاسكربت حتى لا نلمس المنطق */
-.th-product-card-discount-badge {
-  display: inline-block;
-  margin-top: 4px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background-color: #ff4b8b;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-}
-/* 6 بطاقات على الكمبيوتر - آمن */
-@media (min-width: 1024px) {
-  salla-products-list {
-    display: grid !important;
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-    grid-gap: 16px !important;
-    gap: 16px !important;
-  }
-  .s-products-slider-card {
-    width: 18%;
-    max-width: 250px;
-  }
-}
-/* تابلت */
-@media (min-width: 768px) and (max-width: 1023px) {
-  salla-products-list {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    grid-gap: 14px !important;
-    gap: 14px !important;
-  }
-  .s-products-slider-card {
-    width: 30%;
-    max-width: 250px;
-  }
-}
-/* جوال */
-@media (max-width: 767px) {
-  salla-products-list {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    grid-gap: 12px !important;
-    gap: 12px !important;
-  }
 }
 .first\:rounded-t-md:first-child{
     border-top-left-radius: 0.375rem;
