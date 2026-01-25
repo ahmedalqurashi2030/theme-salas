@@ -25087,228 +25087,195 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   width: 100%;
   height: auto;
 }
-/* Tharaa - Product Card (Reference UI) */
-custom-salla-product-card.th-product-card {
-  background: #fff;
-  border: 1px solid rgba(15, 23, 42, 0.06);
+/* ===== 1. الحاوية الأساسية للكرت ===== */
+.s-product-card-entry {
+  background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-  padding: 10px;
-  overflow: hidden;
-  min-height: 280px;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+  padding: 10px 10px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 260px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-/* media */
-custom-salla-product-card.th-product-card .th-media {
+.s-product-card-entry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+}
+/* ===== 2. جزء الصورة ===== */
+.s-product-card-image,
+.s-product-card-image-full {
   position: relative;
-  border-radius: 14px;
-  background: #fff;
-  padding: 6px;
+  padding: 8px 8px 4px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  min-height: 160px;
-}
-custom-salla-product-card.th-product-card .th-media a {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+  min-height: 140px;
 }
-custom-salla-product-card.th-product-card .th-media img {
-  width: auto;
-  max-width: 100%;
-  max-height: 150px;
+.s-product-card-image img,
+.s-product-card-image-full img {
+  max-height: 130px;
   -o-object-fit: contain;
      object-fit: contain;
 }
-/* Wishlist: TOP-LEFT */
-custom-salla-product-card.th-product-card .s-product-card-wishlist-btn {
+/* ===== 3. زر المفضلة أعلى يمين ===== */
+.s-product-card-wishlist-btn {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: auto;
-  z-index: 6;
-  width: auto;
-  height: auto;
-  padding: 0;
-}
-custom-salla-product-card.th-product-card .s-product-card-wishlist-btn,
-custom-salla-product-card.th-product-card .s-product-card-wishlist-btn button {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-custom-salla-product-card.th-product-card .s-product-card-wishlist-btn i {
-  font-size: 20px;
-  color: #9ca3af;
-}
-custom-salla-product-card.th-product-card .s-product-card-wishlist-added i {
-  color: #ff4b8b;
-}
-/* Badge: TOP-RIGHT */
-custom-salla-product-card.th-product-card .s-product-card-promotion-title,
-custom-salla-product-card.th-product-card .s-product-card-quantity,
-custom-salla-product-card.th-product-card .s-product-card-out-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  left: auto;
-  z-index: 6;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 10px;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
   border-radius: 999px;
-  max-width: 80%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
-custom-salla-product-card.th-product-card .th-badge--pink {
-  background: #ff4b8b;
+/* ===== 4. البادج العلوي (منتج الأكثر بيعاً.. إلخ) ===== */
+.s-product-card-promotion-title,
+.s-product-card-quantity,
+.s-product-card-out-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #ff4b8b;
   color: #fff;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 600;
 }
-custom-salla-product-card.th-product-card .th-badge--green {
-  background: #16a34a;
-  color: #fff;
+/* ===== 5. زر السلة العائم أسفل يسار الصورة ===== */
+.s-product-card-floating-btn {
+  position: absolute;
+  bottom: 6px;
+  left: 10px;
 }
-custom-salla-product-card.th-product-card .s-product-card-quantity {
-  background: #ff4b8b;
-  color: #fff;
-}
-custom-salla-product-card.th-product-card .s-product-card-out-badge {
-  background: #f3f4f6;
-  color: #6b7280;
-}
-/* body */
-custom-salla-product-card.th-product-card .th-body {
-  padding: 8px 6px 6px;
-  text-align: center;
-}
-/* top row: cart LEFT, rating RIGHT (force LTR so it matches reference even in RTL) */
-custom-salla-product-card.th-product-card .th-top-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  direction: ltr;
-  margin-top: 2px;
-  margin-bottom: 6px;
-}
-/* cart button */
-custom-salla-product-card.th-product-card salla-add-product-button.th-cart-btn {
-  width: 34px;
-  height: 34px;
+.s-product-card-floating-btn .btn-floating-cart {
+  width: 36px;
+  height: 36px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
-  margin-left: -6px; /* pulls it a bit to the left like the reference */
-  position: relative;
 }
-custom-salla-product-card.th-product-card salla-add-product-button.th-cart-btn i {
-  font-size: 16px;
+/* ===== 6. محتوى الكرت ===== */
+.s-product-card-content {
+  padding-top: 6px;
 }
-/* rating */
-custom-salla-product-card.th-product-card .th-rating {
+/* صف التقييم + عدد التقييمات */
+.s-product-card-meta {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 4px;
-  font-size: 12px;
-  color: #6b7280;
+  margin-bottom: 2px;
 }
-custom-salla-product-card.th-product-card .th-rating i {
-  color: #f59e0b;
+.s-product-card-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+}
+.s-product-card-rating i {
   font-size: 13px;
 }
-custom-salla-product-card.th-product-card .th-rating .th-count {
-  color: #9ca3af;
+.s-product-card-rating span {
+  line-height: 1;
 }
-/* brand */
-custom-salla-product-card.th-product-card .th-brand {
-  font-size: 12px;
-  font-weight: 800;
-  color: #6b7280;
-  margin-bottom: 4px;
-}
-/* title */
-custom-salla-product-card.th-product-card .th-title {
+/* اسم البراند تحت التقييم مباشرة (Ola Hair / Dyson ...) */
+.s-product-card-brand {
+  display: block;
   font-size: 12px;
   font-weight: 600;
-  color: #111827;
-  line-height: 1.5;
-  margin: 0 0 10px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: #4b5563;
+  margin-bottom: 2px;
 }
-custom-salla-product-card.th-product-card .th-title a {
+/* عنوان المنتج */
+.s-product-card-content-title {
+  font-size: 12px;
+  font-weight: 400;
+  color: #111827;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.s-product-card-content-title a {
   color: inherit;
 }
-/* bottom row: discount LEFT, price RIGHT */
-custom-salla-product-card.th-product-card .th-bottom-row {
+/* ===== 7. صف السعر ===== */
+.s-product-card-price-row {
+  margin-top: 6px;
+}
+/* السعر مع الخصم (الكود الحالي يطبع div.s-product-card-sale-price) */
+.s-product-card-sale-price {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  direction: ltr;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 4px;
 }
-/* discount pill */
-custom-salla-product-card.th-product-card .th-discount {
-  background: #ffe3ea;
-  color: #ff2d6f;
-  font-size: 11px;
-  font-weight: 900;
-  padding: 3px 8px;
-  border-radius: 999px;
+/* السعر الحالي (الجديد) */
+.s-product-card-sale-price h4,
+.s-product-card-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ff4b8b;
   line-height: 1.2;
-  white-space: nowrap;
 }
-/* price block */
-custom-salla-product-card.th-product-card .th-price {
-  text-align: right;
-  direction: rtl; /* keep Arabic currency direction */
-}
-custom-salla-product-card.th-product-card .th-old {
-  display: block;
+/* السعر القديم */
+.s-product-card-sale-price span {
   font-size: 11px;
   color: #9ca3af;
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
-  line-height: 1.1;
-  margin-bottom: 2px;
+  line-height: 1;
 }
-custom-salla-product-card.th-product-card .th-now {
-  display: block;
-  font-size: 15px;
-  font-weight: 900;
-  color: #ff2d6f;
-  line-height: 1.1;
+/* لو ما في خصم – السعر العادي */
+.s-product-card-price {
+  text-align: right;
 }
-/* compat */
-custom-salla-product-card .th-hidden-options {
-  display: none;
+/* ===== 8. مساحة للبادج السفلي "-40%" لو حبيت تضيفه لاحقاً ===== */
+/* حالياً فقط نضبط الشكل، بدون حساب النسبة من الجافاسكربت حتى لا نلمس المنطق */
+.th-product-card-discount-badge {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #ff4b8b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
 }
-/* Slider sizing (scoped) */
-salla-products-slider.th-products-slider .s-products-slider-card {
-  width: 50%;
-}
-@media (min-width: 640px) {
-  salla-products-slider.th-products-slider .s-products-slider-card {
-    width: 33.3333%;
-  }
-}
-@media (min-width: 768px) {
-  salla-products-slider.th-products-slider .s-products-slider-card {
-    width: 25%;
-  }
-}
+/* 6 بطاقات على الكمبيوتر - آمن */
 @media (min-width: 1024px) {
-  salla-products-slider.th-products-slider .s-products-slider-card {
-    width: 16.6667%;
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    grid-gap: 16px !important;
+    gap: 16px !important;
+  }
+  .s-products-slider-card {
+    width: 18%;
+    max-width: 250px;
+  }
+}
+/* تابلت */
+@media (min-width: 768px) and (max-width: 1023px) {
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-gap: 14px !important;
+    gap: 14px !important;
+  }
+  .s-products-slider-card {
+    width: 30%;
+    max-width: 250px;
+  }
+}
+/* جوال */
+@media (max-width: 767px) {
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-gap: 12px !important;
+    gap: 12px !important;
   }
 }
 .first\:rounded-t-md:first-child{
@@ -25464,6 +25431,9 @@ salla-products-slider.th-products-slider .s-products-slider-card {
     }
     .sm\:mb-6{
         margin-bottom: 1.5rem;
+    }
+    .sm\:mb-8{
+        margin-bottom: 2rem;
     }
     .sm\:mt-0{
         margin-top: 0px;
@@ -25793,6 +25763,9 @@ salla-products-slider.th-products-slider .s-products-slider-card {
     }
     .lg\:grid-cols-2{
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .lg\:grid-cols-4{
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     .lg\:grid-cols-6{
         grid-template-columns: repeat(6, minmax(0, 1fr));
