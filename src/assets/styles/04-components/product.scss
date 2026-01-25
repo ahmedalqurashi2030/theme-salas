@@ -1,6 +1,6 @@
 // Product card
 .product-entry {
-  @apply h-full transition-shadow duration-300 bg-white hover:shadow-default rounded-lg justify-between flex relative;
+  @apply h-full transition-shadow duration-300 bg-white hover:shadow-default rounded-2xl justify-between flex relative overflow-hidden;
 
   &--full-image {
     @apply h-80 md:h-auto;
@@ -12,7 +12,7 @@
   }
 
   &__image {
-    @apply bg-gray-100 relative overflow-hidden hover:opacity-90 w-full h-full shrink-0;
+    @apply bg-gray-50 relative overflow-hidden hover:opacity-90 w-full h-full shrink-0;
 
     &::before{
       font-family: 'sallaicons';
@@ -35,7 +35,7 @@
   }
 
   &__title a {
-    @apply block text-sm font-bold text-gray-800 hover:text-primary;
+    @apply block text-sm font-semibold text-gray-900 hover:text-primary leading-6 line-clamp-2;
 
     .product-entry--horizontal & {
       @apply line-clamp-2;
@@ -85,14 +85,14 @@
     @apply flex-col;
 
     .product-entry__image {
-      @apply rounded-t-md;
+      @apply rounded-t-2xl min-h-[176px];
     }
 
     salla-button.btn--wishlist {
-      @apply absolute top-4 rtl:left-2 ltr:right-2 rtl:md:left-4 ltr:md:right-4 opacity-75 hover:opacity-100;
+      @apply absolute top-3 rtl:left-3 ltr:right-3 opacity-100 bg-white shadow-sm rounded-full w-9 h-9 flex items-center justify-center;
 
       button{
-        background-color: #fff !important;
+        background-color: transparent !important;
       }
     }
 
@@ -105,6 +105,18 @@
           text-shadow: 0 0 2px #666;
         }
       }
+    }
+  }
+
+  .btn--add-to-cart-floating {
+    @apply absolute top-1/2 -translate-y-1/2 rtl:left-3 ltr:left-3 bg-white shadow-md rounded-full w-10 h-10 flex items-center justify-center;
+
+    button {
+      @apply w-10 h-10 rounded-full p-0 border-0;
+    }
+
+    i {
+      @apply text-gray-900;
     }
   }
 

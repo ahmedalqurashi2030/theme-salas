@@ -22752,7 +22752,8 @@ model-viewer[style*=width]:before{
     display: flex;
     height: 100%;
     justify-content: space-between;
-    border-radius: 0.5rem;
+    overflow: hidden;
+    border-radius: 1rem;
     --tw-bg-opacity: 1;
     background-color: rgba(255, 255, 255, 1);
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
@@ -22791,8 +22792,8 @@ model-viewer[style*=width]:before{
     flex-shrink: 0;
     overflow: hidden;
     --tw-bg-opacity: 1;
-    background-color: rgba(243, 244, 246, 1);
-    background-color: rgba(243, 244, 246, var(--tw-bg-opacity, 1));
+    background-color: rgba(249, 250, 251, 1);
+    background-color: rgba(249, 250, 251, var(--tw-bg-opacity, 1));
 }
 .product-entry__image:hover{
     opacity: 0.9;
@@ -22836,13 +22837,17 @@ input[type=radio].sr-only:checked ~ div.product-entry__image::before {
     filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .product-entry__title a{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     display: block;
     font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 700;
+    font-weight: 600;
+    line-height: 1.5rem;
     --tw-text-opacity: 1;
-    color: rgba(31, 41, 55, 1);
-    color: rgba(31, 41, 55, var(--tw-text-opacity, 1));
+    color: rgba(17, 24, 39, 1);
+    color: rgba(17, 24, 39, var(--tw-text-opacity, 1));
 }
 .product-entry__title a:hover{
     --tw-text-opacity: 1;
@@ -22926,13 +22931,27 @@ input[type=radio].sr-only:checked ~ div.product-entry--minimal .product-rating,i
     flex-direction: column;
 }
 .product-entry--vertical .product-entry__image{
-    border-top-left-radius: 0.375rem;
-    border-top-right-radius: 0.375rem;
+    min-height: 176px;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
 }
 .product-entry--vertical salla-button.btn--wishlist{
     position: absolute;
-    top: 1rem;
-    opacity: 0.75;
+    top: 0.75rem;
+    display: flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    --tw-bg-opacity: 1;
+    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
+    opacity: 1;
+    --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
 }
 input[type=radio].sr-only div.product-entry--vertical salla-button.btn--wishlist {
   transition: all 0.3s;
@@ -22940,27 +22959,14 @@ input[type=radio].sr-only div.product-entry--vertical salla-button.btn--wishlist
 input[type=radio].sr-only:checked ~ div.product-entry--vertical salla-button.btn--wishlist {
   border-color: var(--color-main);
 }
-.product-entry--vertical salla-button.btn--wishlist:hover{
-    opacity: 1;
-}
 .product-entry--vertical salla-button.btn--wishlist:where([dir="ltr"], [dir="ltr"] *){
-    right: 0.5rem;
-}
-@media (min-width: 768px){
-    .product-entry--vertical salla-button.btn--wishlist:where([dir="ltr"], [dir="ltr"] *){
-        right: 1rem;
-    }
+    right: 0.75rem;
 }
 .product-entry--vertical salla-button.btn--wishlist:where([dir="rtl"], [dir="rtl"] *){
-    left: 0.5rem;
-}
-@media (min-width: 768px){
-    .product-entry--vertical salla-button.btn--wishlist:where([dir="rtl"], [dir="rtl"] *){
-        left: 1rem;
-    }
+    left: 0.75rem;
 }
 .product-entry--vertical salla-button.btn--wishlist button {
-  background-color: #fff !important;
+  background-color: transparent !important;
 }
 @media (max-width: 480px) {
   .product-entry--vertical .product-rating{
@@ -22983,6 +22989,50 @@ input[type=radio].sr-only:checked ~ div.product-entry--vertical .product-rating 
     color: #fff;
     text-shadow: 0 0 2px #666;
   }
+}
+.product-entry .btn--add-to-cart-floating{
+    position: absolute;
+    top: 50%;
+    display: flex;
+    height: 2.5rem;
+    width: 2.5rem;
+    --tw-translate-y: -50%;
+    transform: translate(var(--tw-translate-x), -50%) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    --tw-bg-opacity: 1;
+    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, var(--tw-bg-opacity, 1));
+    --tw-shadow: 5px 10px 99px rgba(43,45,52,0.05098);
+    --tw-shadow-colored: 5px 10px 99px var(--tw-shadow-color);
+    box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 5px 10px 99px rgba(43,45,52,0.05098);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
+}
+input[type=radio].sr-only div.product-entry .btn--add-to-cart-floating {
+  transition: all 0.3s;
+}
+input[type=radio].sr-only:checked ~ div.product-entry .btn--add-to-cart-floating {
+  border-color: var(--color-main);
+}
+.product-entry .btn--add-to-cart-floating:where([dir="ltr"], [dir="ltr"] *){
+    left: 0.75rem;
+}
+.product-entry .btn--add-to-cart-floating:where([dir="rtl"], [dir="rtl"] *){
+    left: 0.75rem;
+}
+.product-entry .btn--add-to-cart-floating button{
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 9999px;
+    border-width: 0px;
+    padding: 0px;
+}
+.product-entry .btn--add-to-cart-floating i{
+    --tw-text-opacity: 1;
+    color: rgba(17, 24, 39, 1);
+    color: rgba(17, 24, 39, var(--tw-text-opacity, 1));
 }
 .product-entry--special .product-rating{
     position: absolute;
@@ -24847,6 +24897,262 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
     z-index: 5;
   }
 }
+/* Pinkish red for sale */
+.tharaa-theme {
+  font-family: "Tajawal", "Inter", sans-serif;
+  /* 1. Grid System (Preserved) */
+}
+.tharaa-theme salla-products-list {
+  display: grid !important;
+}
+.tharaa-theme salla-products-list {
+  grid-gap: 16px;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 768px) {
+  .tharaa-theme salla-products-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .tharaa-theme salla-products-list {
+    grid-template-columns: repeat(5, 1fr);
+    /* 5 cards per row matches reference better */
+  }
+}
+.tharaa-theme {
+  /* 2. Card Container */
+}
+.tharaa-theme .s-product-card-entry {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  /* Subtle shadow for the "Card" look */
+}
+.tharaa-theme .s-product-card-entry:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px);
+}
+.tharaa-theme {
+  /* 3. Image Area */
+}
+.tharaa-theme .s-product-card-image {
+  position: relative;
+  height: 220px;
+  /* Taller image area */
+  width: 100%;
+  background: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.tharaa-theme .s-product-card-image img {
+  max-width: 90%;
+  max-height: 90%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  transition: transform 0.5s ease;
+}
+.tharaa-theme .s-product-card-image:hover img {
+  transform: scale(1.05);
+}
+.tharaa-theme {
+  /* 4. Floating Buttons */
+  /* Wishlist: Top Left */
+}
+.tharaa-theme .s-product-card-wishlist-btn {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.tharaa-theme .s-product-card-wishlist-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  color: #999;
+}
+.tharaa-theme .s-product-card-wishlist-btn i {
+  font-size: 20px;
+}
+.tharaa-theme .s-product-card-wishlist-btn:hover, .tharaa-theme .s-product-card-wishlist-btn.s-product-card-wishlist-added {
+  color: #f55157;
+}
+.tharaa-theme {
+  /* Add to Cart: Bottom Left of Image */
+}
+.tharaa-theme .s-product-card-floating-btn {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 10;
+}
+.tharaa-theme .s-product-card-floating-btn salla-add-product-button::part(button) {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: #333;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.tharaa-theme .s-product-card-floating-btn salla-add-product-button::part(button):hover {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+  transform: scale(1.1);
+}
+.tharaa-theme .s-product-card-floating-btn i {
+  margin: 0 !important;
+}
+.tharaa-theme .s-product-card-floating-btn i {
+  font-size: 18px;
+}
+.tharaa-theme {
+  /* Promo Badge: Top Right */
+}
+.tharaa-theme .s-product-card-promotion-title {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ffecf0;
+  color: #ff4d7e;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 5;
+}
+.tharaa-theme {
+  /* 5. Content Area */
+}
+.tharaa-theme .s-product-card-content {
+  padding: 12px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+}
+.tharaa-theme {
+  /* Row 1: Meta (Rating) */
+}
+.tharaa-theme .s-product-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+.tharaa-theme .s-product-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+.tharaa-theme .s-product-card-rating i {
+  color: #ffc107;
+  font-size: 12px;
+}
+.tharaa-theme {
+  /* Row 2: Title */
+}
+.tharaa-theme .s-product-card-content-title {
+  margin: 0;
+}
+.tharaa-theme .s-product-card-content-title a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.5;
+  height: 42px;
+  /* 2 lines */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+.tharaa-theme .s-product-card-content-title a:hover {
+  color: #f55157;
+}
+.tharaa-theme {
+  /* Row 3: Price */
+}
+.tharaa-theme .s-product-card-price-row {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tharaa-theme .s-product-card-price-row .s-product-card-sale-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  flex-direction: row-reverse;
+  /* To make Price right, Badge left */
+  justify-content: flex-end;
+}
+.tharaa-theme .s-product-card-price-row {
+  /* Current Price */
+}
+.tharaa-theme .s-product-card-price-row h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #f55157;
+  margin: 0;
+}
+.tharaa-theme .s-product-card-price-row {
+  /* Old Price */
+}
+.tharaa-theme .s-product-card-price-row span {
+  font-size: 12px;
+  color: #ccc;
+  -webkit-text-decoration: line-through;
+  text-decoration: line-through;
+}
+.tharaa-theme {
+  /* Discount Badge (Custom style for the badge rendered by salla) */
+  /* Discount Badge */
+}
+.tharaa-theme .s-product-card-discount-badge {
+  background-color: #ffe4e4;
+  color: #f55157;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-right: auto;
+  /* Push it to the left edge if using flex-row-reverse */
+}
+.tharaa-theme {
+  /* Specific fix: If our JS output for price was:
+     <h4>Price</h4> <span>Old</span>
+  */
+  /* --- Slider Spacing --- */
+}
+.tharaa-theme .s-products-slider-card {
+  padding: 8px;
+  /* Gap between slides */
+}
 .th-before-after-hero {
   padding: 60px 0;
   position: relative;
@@ -25036,6 +25342,256 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   display: block;
   width: 100%;
   height: auto;
+}
+/* ===== 1. الحاوية الأساسية للكرت ===== */
+.s-product-card-entry,
+custom-salla-product-card.th-product-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #eef0f2;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+  padding: 12px 12px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.s-product-card-entry:hover,
+custom-salla-product-card.th-product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+}
+/* ===== 2. جزء الصورة ===== */
+.s-product-card-image,
+.s-product-card-image-full,
+custom-salla-product-card.th-product-card .s-product-card-image,
+custom-salla-product-card.th-product-card .s-product-card-image-full {
+  position: relative;
+  padding: 16px 12px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 190px;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+.s-product-card-image img,
+.s-product-card-image-full img,
+custom-salla-product-card.th-product-card .s-product-card-image img,
+custom-salla-product-card.th-product-card .s-product-card-image-full img {
+  max-height: 160px;
+  max-width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+/* ===== 3. زر المفضلة أعلى يمين ===== */
+.s-product-card-wishlist-btn,
+custom-salla-product-card.th-product-card .s-product-card-wishlist-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+/* ===== 4. البادج العلوي (منتج الأكثر بيعاً.. إلخ) ===== */
+.s-product-card-promotion-title,
+.s-product-card-quantity,
+.s-product-card-out-badge,
+custom-salla-product-card.th-product-card .s-product-card-promotion-title,
+custom-salla-product-card.th-product-card .s-product-card-quantity,
+custom-salla-product-card.th-product-card .s-product-card-out-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #1e8e3e;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+/* ===== 5. زر السلة العائم أسفل يسار الصورة ===== */
+.s-product-card-floating-btn,
+custom-salla-product-card.th-product-card .s-product-card-floating-btn {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+}
+.s-product-card-floating-btn .btn-floating-cart,
+custom-salla-product-card.th-product-card .s-product-card-floating-btn .btn-floating-cart {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+/* ===== 6. محتوى الكرت ===== */
+.s-product-card-content,
+custom-salla-product-card.th-product-card .s-product-card-content {
+  padding-top: 10px;
+  text-align: left;
+}
+/* صف التقييم + عدد التقييمات */
+.s-product-card-meta,
+custom-salla-product-card.th-product-card .s-product-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.s-product-card-rating,
+custom-salla-product-card.th-product-card .s-product-card-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+}
+.s-product-card-rating i,
+custom-salla-product-card.th-product-card .s-product-card-rating i {
+  font-size: 13px;
+}
+.s-product-card-rating span,
+custom-salla-product-card.th-product-card .s-product-card-rating span {
+  line-height: 1;
+}
+/* اسم البراند تحت التقييم مباشرة */
+.s-product-card-brand,
+custom-salla-product-card.th-product-card .s-product-card-brand {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+/* عنوان المنتج */
+.s-product-card-content-title,
+custom-salla-product-card.th-product-card .s-product-card-content-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.s-product-card-content-title a,
+custom-salla-product-card.th-product-card .s-product-card-content-title a {
+  color: inherit;
+}
+/* ===== 7. صف السعر ===== */
+.s-product-card-price-row,
+custom-salla-product-card.th-product-card .s-product-card-price-row {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+}
+/* السعر مع الخصم */
+.s-product-card-sale-price,
+custom-salla-product-card.th-product-card .s-product-card-sale-price {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 6px;
+}
+/* السعر الحالي */
+.s-product-card-sale-price h4,
+.s-product-card-price,
+custom-salla-product-card.th-product-card .s-product-card-sale-price h4,
+custom-salla-product-card.th-product-card .s-product-card-price {
+  font-size: 15px;
+  font-weight: 800;
+  color: #e11d48;
+  line-height: 1.2;
+}
+/* السعر القديم */
+.s-product-card-sale-price span,
+custom-salla-product-card.th-product-card .s-product-card-sale-price span {
+  font-size: 11px;
+  color: #9ca3af;
+  -webkit-text-decoration: line-through;
+  text-decoration: line-through;
+  line-height: 1;
+}
+/* السعر العادي */
+.s-product-card-price,
+custom-salla-product-card.th-product-card .s-product-card-price {
+  text-align: right;
+}
+/* ===== 8. البادج السفلي ===== */
+.th-product-card-discount-badge {
+  display: inline-block;
+  margin-top: 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #ffe4ec;
+  color: #e11d48;
+  font-size: 11px;
+  font-weight: 700;
+}
+custom-salla-product-card .th-hidden-options {
+  display: none !important;
+}
+/* 6 بطاقات على الكمبيوتر - آمن */
+@media (min-width: 1024px) {
+  salla-products-slider {
+    --slides-per-view: 6;
+  }
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    grid-gap: 16px !important;
+    gap: 16px !important;
+  }
+  salla-products-slider .s-products-slider-card {
+    flex: 0 0 16.6666666667% !important;
+    width: 16.6666666667% !important;
+    max-width: 16.6666666667% !important;
+  }
+}
+/* تابلت */
+@media (min-width: 768px) and (max-width: 1023px) {
+  salla-products-slider {
+    --slides-per-view: 3;
+  }
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-gap: 14px !important;
+    gap: 14px !important;
+  }
+  salla-products-slider .s-products-slider-card {
+    flex: 0 0 33.3333333333% !important;
+    width: 33.3333333333% !important;
+    max-width: 33.3333333333% !important;
+  }
+}
+/* جوال */
+@media (max-width: 767px) {
+  salla-products-slider {
+    --slides-per-view: 2;
+  }
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-gap: 12px !important;
+    gap: 12px !important;
+  }
+  salla-products-slider .s-products-slider-card {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+  }
 }
 .first\:rounded-t-md:first-child{
     border-top-left-radius: 0.375rem;

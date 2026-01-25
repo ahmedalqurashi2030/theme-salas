@@ -1,225 +1,272 @@
 /* ===== 1. الحاوية الأساسية للكرت ===== */
-.s-product-card-entry {
-    background-color: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #f3f4f6;
-    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
-    padding: 12px 12px 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 270px;
-    transition: transform .2s ease, box-shadow .2s ease;
-  
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.10);
-    }
+.s-product-card-entry,
+custom-salla-product-card.th-product-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #eef0f2;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+  padding: 12px 12px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: transform .2s ease, box-shadow .2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.10);
   }
-  
-  /* ===== 2. جزء الصورة ===== */
-  .s-product-card-image,
-  .s-product-card-image-full {
-    position: relative;
-    padding: 14px 10px 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 170px;
-    border-radius: 14px;
-    background-color: #ffffff;
+}
+
+/* ===== 2. جزء الصورة ===== */
+.s-product-card-image,
+.s-product-card-image-full,
+custom-salla-product-card.th-product-card .s-product-card-image,
+custom-salla-product-card.th-product-card .s-product-card-image-full {
+  position: relative;
+  padding: 16px 12px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 190px;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.s-product-card-image img,
+.s-product-card-image-full img,
+custom-salla-product-card.th-product-card .s-product-card-image img,
+custom-salla-product-card.th-product-card .s-product-card-image-full img {
+  max-height: 160px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* ===== 3. زر المفضلة أعلى يمين ===== */
+.s-product-card-wishlist-btn,
+custom-salla-product-card.th-product-card .s-product-card-wishlist-btn {
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px; // يدعم RTL
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* ===== 4. البادج العلوي (منتج الأكثر بيعاً.. إلخ) ===== */
+.s-product-card-promotion-title,
+.s-product-card-quantity,
+.s-product-card-out-badge,
+custom-salla-product-card.th-product-card .s-product-card-promotion-title,
+custom-salla-product-card.th-product-card .s-product-card-quantity,
+custom-salla-product-card.th-product-card .s-product-card-out-badge {
+  position: absolute;
+  top: 12px;
+  inset-inline-start: 12px;
+  background-color: #1e8e3e;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* ===== 5. زر السلة العائم أسفل يسار الصورة ===== */
+.s-product-card-floating-btn,
+custom-salla-product-card.th-product-card .s-product-card-floating-btn {
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 12px;
+  transform: translateY(-50%);
+}
+
+.s-product-card-floating-btn .btn-floating-cart,
+custom-salla-product-card.th-product-card .s-product-card-floating-btn .btn-floating-cart {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== 6. محتوى الكرت ===== */
+.s-product-card-content,
+custom-salla-product-card.th-product-card .s-product-card-content {
+  padding-top: 10px;
+  text-align: start;
+}
+
+/* صف التقييم + عدد التقييمات */
+.s-product-card-meta,
+custom-salla-product-card.th-product-card .s-product-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.s-product-card-rating,
+custom-salla-product-card.th-product-card .s-product-card-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+
+  i {
+    font-size: 13px;
   }
-  
-  .s-product-card-image img,
-  .s-product-card-image-full img {
-    max-height: 150px;
-    max-width: 100%;
-    object-fit: contain;
-  }
-  
-  /* ===== 3. زر المفضلة أعلى يمين ===== */
-  .s-product-card-wishlist-btn {
-    position: absolute;
-    top: 10px;
-    inset-inline-end: 10px; // يدعم RTL
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    background-color: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  }
-  
-  /* ===== 4. البادج العلوي (منتج الأكثر بيعاً.. إلخ) ===== */
-  .s-product-card-promotion-title,
-  .s-product-card-quantity,
-  .s-product-card-out-badge {
-    position: absolute;
-    top: 10px;
-    inset-inline-start: 10px;
-    background-color: #0f8a2b;
-    color: #fff;
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-weight: 700;
-  }
-  
-  /* ===== 5. زر السلة العائم أسفل يسار الصورة ===== */
-  .s-product-card-floating-btn {
-    position: absolute;
-    bottom: 10px;
-    inset-inline-start: 10px;
-  }
-  
-  .s-product-card-floating-btn .btn-floating-cart {
-    width: 38px;
-    height: 38px;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  }
-  
-  /* ===== 6. محتوى الكرت ===== */
-  .s-product-card-content {
-    padding-top: 8px;
-    text-align: start;
-  }
-  
-  /* صف التقييم + عدد التقييمات */
-  .s-product-card-meta {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 6px;
-    margin-bottom: 4px;
-  }
-  
-  .s-product-card-rating {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 12px;
-  
-    i {
-      font-size: 13px;
-    }
-  
-    span {
-      line-height: 1;
-    }
-  }
-  
-  /* اسم البراند تحت التقييم مباشرة (Ola Hair / Dyson ...) */
-  .s-product-card-brand {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: #4b5563;
-    margin-bottom: 2px;
-  }
-  
-  /* عنوان المنتج */
-  .s-product-card-content-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  
-    a {
-      color: inherit;
-    }
-  }
-  
-  /* ===== 7. صف السعر ===== */
-  .s-product-card-price-row {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
-  }
-  
-  /* السعر مع الخصم (الكود الحالي يطبع div.s-product-card-sale-price) */
-  .s-product-card-sale-price {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    gap: 6px;
-  }
-  
-  /* السعر الحالي (الجديد) */
-  .s-product-card-sale-price h4,
-  .s-product-card-price {
-    font-size: 15px;
-    font-weight: 800;
-    color: #ff2d55;
-    line-height: 1.2;
-  }
-  
-  /* السعر القديم */
-  .s-product-card-sale-price span {
-    font-size: 11px;
-    color: #9ca3af;
-    text-decoration: line-through;
+
+  span {
     line-height: 1;
   }
-  
-  /* لو ما في خصم – السعر العادي */
-  .s-product-card-price {
-    text-align: end;
+}
+
+/* اسم البراند تحت التقييم مباشرة */
+.s-product-card-brand,
+custom-salla-product-card.th-product-card .s-product-card-brand {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+
+/* عنوان المنتج */
+.s-product-card-content-title,
+custom-salla-product-card.th-product-card .s-product-card-content-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 10px;
+  line-height: 1.4;
+
+  a {
+    color: inherit;
   }
-  
-  /* ===== 8. مساحة للبادج السفلي "-40%" لو حبيت تضيفه لاحقاً ===== */
-  .th-product-card-discount-badge {
-    display: inline-block;
-    margin-top: 0;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background-color: #ffe4ec;
-    color: #ff2d55;
-    font-size: 11px;
-    font-weight: 700;
+}
+
+/* ===== 7. صف السعر ===== */
+.s-product-card-price-row,
+custom-salla-product-card.th-product-card .s-product-card-price-row {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+/* السعر مع الخصم */
+.s-product-card-sale-price,
+custom-salla-product-card.th-product-card .s-product-card-sale-price {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+/* السعر الحالي */
+.s-product-card-sale-price h4,
+.s-product-card-price,
+custom-salla-product-card.th-product-card .s-product-card-sale-price h4,
+custom-salla-product-card.th-product-card .s-product-card-price {
+  font-size: 15px;
+  font-weight: 800;
+  color: #e11d48;
+  line-height: 1.2;
+}
+
+/* السعر القديم */
+.s-product-card-sale-price span,
+custom-salla-product-card.th-product-card .s-product-card-sale-price span {
+  font-size: 11px;
+  color: #9ca3af;
+  text-decoration: line-through;
+  line-height: 1;
+}
+
+/* السعر العادي */
+.s-product-card-price,
+custom-salla-product-card.th-product-card .s-product-card-price {
+  text-align: end;
+}
+
+/* ===== 8. البادج السفلي ===== */
+.th-product-card-discount-badge {
+  display: inline-block;
+  margin-top: 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #ffe4ec;
+  color: #e11d48;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+custom-salla-product-card .th-hidden-options {
+  display: none !important;
+}
+
+/* 6 بطاقات على الكمبيوتر - آمن */
+@media (min-width: 1024px) {
+  salla-products-slider {
+    --slides-per-view: 6;
   }
-  
-  /* 6 بطاقات على الكمبيوتر - آمن */
-  @media (min-width: 1024px) {
-    salla-products-list {
-      display: grid !important;
-      grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-      gap: 16px !important;
-    }
-        .s-products-slider-card {
-          width: 18%;
-          max-width: 250px;
-      }
+
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    gap: 16px !important;
   }
-  
-  /* تابلت */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    salla-products-list {
-      display: grid !important;
-      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-      gap: 14px !important;
-    }
-  
-        .s-products-slider-card {
-          width: 30%;
-          max-width: 250px;
-      }
+
+  salla-products-slider .s-products-slider-card {
+    flex: 0 0 calc(100% / 6) !important;
+    width: calc(100% / 6) !important;
+    max-width: calc(100% / 6) !important;
   }
-  
-  /* جوال */
-  @media (max-width: 767px) {
-    salla-products-list {
-      display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 12px !important;
-    }
+}
+
+/* تابلت */
+@media (min-width: 768px) and (max-width: 1023px) {
+  salla-products-slider {
+    --slides-per-view: 3;
   }
-  
+
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  salla-products-slider .s-products-slider-card {
+    flex: 0 0 calc(100% / 3) !important;
+    width: calc(100% / 3) !important;
+    max-width: calc(100% / 3) !important;
+  }
+}
+
+/* جوال */
+@media (max-width: 767px) {
+  salla-products-slider {
+    --slides-per-view: 2;
+  }
+
+  salla-products-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  salla-products-slider .s-products-slider-card {
+    flex: 0 0 calc(100% / 2) !important;
+    width: calc(100% / 2) !important;
+    max-width: calc(100% / 2) !important;
+  }
+}
