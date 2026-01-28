@@ -237,7 +237,7 @@ class ProductCard extends HTMLElement {
                 product-type="${this.product.type}"
                 class="btn-floating-cart">
                 <i class="sicon-shopping-bag"></i>
-                <i class="sicon-check"></i>
+                
               </salla-add-product-button>
             </div>`
         : ``}
