@@ -46,6 +46,7 @@
   "common": {
     "all": "All",
     "new": "New",
+    "best_seller": "Best Seller",
     "add_to_cart": "Add to Cart",
     "quantity": "Quantity",
     "product_details": "Product Details",

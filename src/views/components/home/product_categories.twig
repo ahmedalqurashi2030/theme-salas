@@ -1,6 +1,6 @@
 {# ============================================
-   Product Categories Component
-   Clean Twig file using Salla components only
+   Product Categories Component – Niceone Card
+   Uses Salla components + slots (image, details, price)
    ============================================ #}
 
 <section class="lifestyle-section" id="section-{{ section_id }}">
@@ -12,14 +12,20 @@
 		<!-- Section Header & Filters -->
 		<div class="section-header">
 			<div>
-				<h2>{{ section_titile|default(trans('components.product_categories.section_title')) }}</h2>
-				<p>{{ trans('components.product_categories.section_description') }}</p>
+				<h2 class="font-bold text-lg md:text-xl">
+					{{ section_titile|default(trans('components.product_categories.section_title')) }}
+				</h2>
+				<p class="text-sm text-gray-500">
+					{{ trans('components.product_categories.section_description') }}
+				</p>
 			</div>
 
 			<!-- Category Filter Tabs -->
 			{% if component.products|length > 0 %}
 				<div class="category-filter">
-					<button class="active filter-btn" data-target="all">{{ trans('common.all') }}</button>
+					<button class="active filter-btn" data-target="all">
+						{{ trans('common.all') }}
+					</button>
 					{% for tab in component.products %}
 						{% if tab.category_list and tab.dropdown_list_1|length > 0 %}
 							<button class="filter-btn" data-target="cat-{{ tab.category_list.id }}">
@@ -37,18 +43,110 @@
 				<div class="cards-strip">
 					{% for tab in component.products %}
 						{% for product in tab.dropdown_list_1 %}
-							<div class="s-products-slider-card" data-category="cat-{{ tab.category_list.id }}">
+							<div
+								class="s-products-slider-card niceone-card"
+								data-category="cat-{{ tab.category_list.id }}">
+
 								<salla-product-card 
 									product="{{ product|json_encode|e('html_attr') }}"
 									shadow-on-hover
-									class="{{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}">
+									class="niceone-card-inner {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}">
+
+									{# ========== IMAGE SLOT ========== #}
+									<div slot="image" class="niceone-card-image">
+										{# Best seller / promotion badge #}
+										{% if product.promotion_title or product.is_best_seller %}
+											<span class="niceone-badge niceone-badge--primary">
+												{{ trans('common.best_seller') }}
+											</span>
+										{% endif %}
+
+										<div class="niceone-card-image-wrapper">
+											<img
+												src="{{ product.image.url ?? product.image }}"
+												alt="{{ product.image.alt ?? product.name }}"
+												loading="lazy">
+										</div>
+
+										{# Quick Add floating button #}
+										<salla-add-product-button
+											class="niceone-quick-add"
+											product-id="{{ product.id }}"
+											product-status="{{ product.status }}"
+											product-type="{{ product.type }}">
+											<span class="sr-only">
+												{{ product.add_to_cart_label }}
+											</span>
+											<i class="sicon-shopping-bag text-base"></i>
+										</salla-add-product-button>
+									</div>
+
+									{# ========== DETAILS SLOT ========== #}
+									<div slot="details" class="niceone-card-details">
+										{% if product.brand %}
+											<div class="niceone-card-brand">
+												{{ product.brand.name ?? product.brand }}
+											</div>
+										{% endif %}
+
+										<div class="niceone-card-title">
+											{{ product.name }}
+										</div>
+
+										{% if product.rating %}
+											<div class="niceone-card-rating">
+												<i class="sicon-star2 niceone-card-rating-icon"></i>
+												<span class="niceone-card-rating-value">
+													{{ product.rating.stars ?? product.rating|number }}
+												</span>
+
+												{% if product.reviews_count %}
+													<span class="niceone-card-rating-count">
+														({{ product.reviews_count|number }})
+													</span>
+												{% endif %}
+											</div>
+										{% endif %}
+									</div>
+
+									{# ========== PRICE SLOT ========== #}
+									<div slot="price" class="niceone-card-price">
+										{% if product.is_on_sale %}
+											<div class="niceone-card-price-row">
+												<span class="niceone-card-price-final">
+													{{ product.sale_price|money }}
+												</span>
+
+												<span class="niceone-card-price-original">
+													{{ product.regular_price|money }}
+												</span>
+
+												{% set discount_percent = null %}
+												{% if product.discount_percentage %}
+													{% set discount_percent = product.discount_percentage %}
+												{% endif %}
+
+												{% if discount_percent is not null %}
+													<span class="niceone-card-discount-badge">
+														-%{{ discount_percent }}
+													</span>
+												{% endif %}
+											</div>
+										{% else %}
+											<div class="niceone-card-price-row">
+												<span class="niceone-card-price-final">
+													{{ product.price|money }}
+												</span>
+											</div>
+										{% endif %}
+									</div>
 								</salla-product-card>
 							</div>
 						{% endfor %}
 					{% endfor %}
 				</div>
 			</div>
-			
+
 			<!-- Scroll Progress Bar -->
 			<div class="scroll-bar">
 				<div class="scroll-prog"></div>
