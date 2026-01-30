@@ -1,6 +1,6 @@
-{# Tharaa - Full Image Product Card #}
-<custom-salla-product-card
-  product='{{ product|json_encode|e("html_attr") }}'
-  fullImage
-  shadowOnHover
-></custom-salla-product-card>
+{# Tharaa - Full Image Product Card (Using Official Salla Component) #}
+<salla-product-card 
+    product="{{ product }}"
+    full-image
+    shadow-on-hover>
+</salla-product-card>

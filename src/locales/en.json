@@ -4,7 +4,10 @@
       "cart": "Cart",
       "wishlist": "Wishlist",
       "free_shipping": "Free shipping for orders",
-      "all_categories": "All Categories"
+      "all_categories": "All Categories",
+      "featured_products": "Featured Products",
+      "menu": "Menu",
+      "login": "Login"
     },
     "footer": {
       "home": "Home",
@@ -28,6 +31,10 @@
     "product_categories": {
       "section_title": "Selected Products",
       "section_description": "Browse our latest collections"
+    },
+    "comparison": {
+      "before": "Before",
+      "after": "After"
     }
   },
   "pages": {

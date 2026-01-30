@@ -63,7 +63,7 @@
                         {# منتجات مقترحة #}
                         {% if item.products %}
                             <div class="mt-8 pt-6 border-t border-gray-100">
-                                <h4 class="font-bold mb-4 text-sm text-gold">منتجات مميزة</h4>
+                                <h4 class="font-bold mb-4 text-sm text-gold">{{ trans('blocks.header.featured_products') }}</h4>
                                 <div class="grid grid-cols-4 gap-4">
                                     {% for product in item.products|slice(0, 4) %}
                                         <salla-product-card shadow-on-hover product="{{ product }}" class="text-xs"></salla-product-card>
@@ -89,7 +89,7 @@
 <div class="mobile-overlay" id="mobile-overlay" onclick="toggleDrawer()"></div>
 <div class="mobile-drawer flex flex-col" id="mobile-drawer">
     <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-        <span class="font-bold text-lg">القائمة</span>
+        <span class="font-bold text-lg">{{ trans('blocks.header.menu') }}</span>
         <button onclick="toggleDrawer()" class="w-8 h-8 bg-white rounded-full shadow-sm flex items-center justify-center text-red-500">
             <i class="sicon-cancel"></i>
         </button>
@@ -107,7 +107,7 @@
         {% if user.type == 'user' %}
             <a href="{{ link('profile') }}" class="block text-center py-3 bg-white border border-gray-200 rounded-lg font-bold text-gray-700">{{ trans('blocks.footer.my_account') }}</a>
         {% else %}
-            <button onclick="salla.event.dispatch('login::open')" class="w-full py-3 bg-black text-white rounded-lg font-bold hover:bg-gold transition">تسجيل الدخول</button>
+            <button onclick="salla.event.dispatch('login::open')" class="w-full py-3 bg-black text-white rounded-lg font-bold hover:bg-gold transition">{{ trans('blocks.header.login') }}</button>
         {% endif %}
     </div>
 </div>

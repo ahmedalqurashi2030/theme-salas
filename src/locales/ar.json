@@ -4,7 +4,10 @@
       "cart": "السلة",
       "wishlist": "المفضلة",
       "free_shipping": "شحن مجاني للطلبات",
-      "all_categories": "جميع الأقسام"
+      "all_categories": "جميع الأقسام",
+      "featured_products": "منتجات مميزة",
+      "menu": "القائمة",
+      "login": "تسجيل الدخول"
     },
     "footer": {
       "home": "الرئيسية",
@@ -28,6 +31,10 @@
     "product_categories": {
       "section_title": "منتجات مختارة",
       "section_description": "تصفح أحدث المجموعات لدينا"
+    },
+    "comparison": {
+      "before": "قبل",
+      "after": "بعد"
     }
   },
   "pages": {
