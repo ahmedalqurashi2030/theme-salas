@@ -1,0 +1,71 @@
+//============================================
+// 📐 THARAA GRID SYSTEM
+//============================================
+
+@import 'th-config';
+@import 'th-system';
+
+@if $th-enable-grid {
+
+  // Grid Container - salla-products-list
+  .salla-products-list {
+    display: grid !important;
+    gap: map-get($th-grid, gap) !important;
+    
+    // Mobile (2 columns)
+    grid-template-columns: repeat(map-get($th-grid, mobile), 1fr) !important;
+    
+    // Tablet (3 columns)
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(map-get($th-grid, tablet), 1fr) !important;
+    }
+    
+    // Laptop (5 columns)
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(map-get($th-grid, laptop), 1fr) !important;
+    }
+    
+    // Desktop (6 columns)
+    @media (min-width: #{map-get($th-breakpoints, desktop)}) {
+      grid-template-columns: repeat(map-get($th-grid, desktop), 1fr) !important;
+    }
+  }
+
+  // Slider Grid - salla-products-slider
+  .th-products-slider,
+  .salla-products-slider.th-products-slider {
+    .swiper-wrapper {
+      gap: map-get($th-grid, gap) !important;
+    }
+    
+    .swiper-slide {
+      width: auto !important;
+      flex-shrink: 0 !important;
+      
+      // Mobile
+      width: calc((100% - #{map-get($th-grid, gap)} * (#{map-get($th-grid, mobile)} - 1)) / #{map-get($th-grid, mobile)}) !important;
+      
+      // Tablet
+      @media (min-width: 768px) {
+        width: calc((100% - #{map-get($th-grid, gap)} * (#{map-get($th-grid, tablet)} - 1)) / #{map-get($th-grid, tablet)}) !important;
+      }
+      
+      // Laptop
+      @media (min-width: 1024px) {
+        width: calc((100% - #{map-get($th-grid, gap)} * (#{map-get($th-grid, laptop)} - 1)) / #{map-get($th-grid, laptop)}) !important;
+      }
+      
+      // Desktop
+      @media (min-width: #{map-get($th-breakpoints, desktop)}) {
+        width: calc((100% - #{map-get($th-grid, gap)} * (#{map-get($th-grid, desktop)} - 1)) / #{map-get($th-grid, desktop)}) !important;
+      }
+    }
+  }
+
+  // Category page grid support
+  .products-grid,
+  #products-grid {
+    @extend .salla-products-list;
+  }
+
+}
