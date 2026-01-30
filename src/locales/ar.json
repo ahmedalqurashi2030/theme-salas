@@ -1,10 +1,33 @@
 {
   "blocks": {
     "header": {
-      "cart": "السلة"
+      "cart": "السلة",
+      "wishlist": "المفضلة",
+      "free_shipping": "شحن مجاني للطلبات",
+      "all_categories": "جميع الأقسام"
+    },
+    "footer": {
+      "home": "الرئيسية",
+      "categories": "الأقسام",
+      "my_account": "حسابي"
     },
     "appBanner": {
       "download_now": "حمله الان"
+    }
+  },
+  "components": {
+    "promo_hero": {
+      "countdown_label": "ينتهي العرض خلال",
+      "badge": "تصفية نهاية العام",
+      "seconds": "ثانية",
+      "minutes": "دقيقة",
+      "hours": "ساعة",
+      "days": "يوم",
+      "most_requested": "الأكثر طلباً هذا الأسبوع"
+    },
+    "product_categories": {
+      "section_title": "منتجات مختارة",
+      "section_description": "تصفح أحدث المجموعات لدينا"
     }
   },
   "pages": {
@@ -21,6 +44,14 @@
     }
   },
   "common": {
+    "all": "الكل",
+    "new": "جديد",
+    "add_to_cart": "إضافة للسلة",
+    "quantity": "الكمية",
+    "product_details": "تفاصيل المنتج",
+    "adding": "جاري الإضافة...",
+    "added": "تمت الإضافة ✓",
+    "product_added_to_cart": "تمت إضافة المنتج إلى السلة",
     "bank_offer_sub_title_multiple": "ادفع قيمة مشترياتك عبر أحد البطاقات البنكة التالية واحصل على الخصم المحدد",
     "bank_offer_sub_title_single": "ادفع قيمة مشترياتك عبر أحد بطاقات بنك :bank_name واحصل على خصم بنسبة "
   }

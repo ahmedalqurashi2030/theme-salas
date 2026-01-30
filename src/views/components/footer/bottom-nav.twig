@@ -2,12 +2,12 @@
 <div class="tharaa-bottom-nav">
     <a href="{{ link('/') }}" class="nav-item {{ page.slug == 'home' ? 'active' : '' }}">
         <i class="sicon-home"></i>
-        <span>الرئيسية</span>
+        <span>{{ trans('blocks.footer.home') }}</span>
     </a>
     
     <a href="{{ link('/categories') }}" class="nav-item">
         <i class="sicon-layout-grid"></i>
-        <span>الأقسام</span>
+        <span>{{ trans('blocks.footer.categories') }}</span>
     </a>
 
     {# الزر العائم المميز في الوسط #}
@@ -22,12 +22,12 @@
             <i class="sicon-shopping-bag"></i>
             <span class="badge-count">{{ cart.items_count }}</span>
         </div>
-        <span>السلة</span>
+        <span>{{ trans('blocks.header.cart') }}</span>
     </a>
 
     <a href="{{ link('/profile') }}" class="nav-item">
         <i class="sicon-user"></i>
-        <span>حسابي</span>
+        <span>{{ trans('blocks.footer.my_account') }}</span>
     </a>
 </div>
 {% endif %}

@@ -7,7 +7,7 @@
 {% set title           = component.title           ?? 'عروض آبل الخارقة وصلت الآن.' %}
 {% set description     = component.description     ?? 'احصل على خصومات فورية تصل إلى 20% عند شراء أجهزة مختارة.' %}
 {% set hero_image      = component.hero_image      ?? 'https://i.ibb.co/68v8zN6/Apple-Set-Transparent.png' %}
-{% set countdown_label = component.countdown_label ?? 'ينتهي العرض خلال' %}
+{% set countdown_label = component.countdown_label ?? trans('components.promo_hero.countdown_label') %}
 {% set countdown_end   = component.countdown_end   ?? '' %}
 {% set show_countdown  = component.show_countdown  ?? false %}
 {# ملاحظة: show_price في JSON لكن نستخدمه هنا كـ show_rating #}
@@ -385,7 +385,7 @@
             {# ===== هيدر القسم ===== #}
             <header class="th-hero-promo__header">
                 <div class="th-content-col">
-                    <span class="th-badge">تصفية نهاية العام</span>
+                    <span class="th-badge">{{ trans('components.promo_hero.badge') }}</span>
 
                     {% if title %}
                         <h2 class="th-title">{{ title }}</h2>
@@ -405,19 +405,19 @@
                         <div class="th-timer" data-end="{{ countdown_end|e('html_attr') }}">
                             <div class="th-timer__item">
                                 <span class="th-timer__val" data-part="seconds">00</span>
-                                <span class="th-timer__lbl">ثانية</span>
+                                <span class="th-timer__lbl">{{ trans('components.promo_hero.seconds') }}</span>
                             </div>
                             <div class="th-timer__item">
                                 <span class="th-timer__val" data-part="minutes">00</span>
-                                <span class="th-timer__lbl">دقيقة</span>
+                                <span class="th-timer__lbl">{{ trans('components.promo_hero.minutes') }}</span>
                             </div>
                             <div class="th-timer__item">
                                 <span class="th-timer__val" data-part="hours">00</span>
-                                <span class="th-timer__lbl">ساعة</span>
+                                <span class="th-timer__lbl">{{ trans('components.promo_hero.hours') }}</span>
                             </div>
                             <div class="th-timer__item">
                                 <span class="th-timer__val" data-part="days">00</span>
-                                <span class="th-timer__lbl">يوم</span>
+                                <span class="th-timer__lbl">{{ trans('components.promo_hero.days') }}</span>
                             </div>
                         </div>
                     {% endif %}
@@ -438,7 +438,7 @@
 
             {# ===== فوتر القسم: المنتجات ===== #}
             <footer class="th-footer">
-                <h3 class="th-label">الأكثر طلباً هذا الأسبوع</h3>
+                <h3 class="th-label">{{ trans('components.promo_hero.most_requested') }}</h3>
 
                 <div class="th-products-list" id="thProductScroll">
                     {% for product in products %}
@@ -578,7 +578,7 @@
                     salla.cart.addItem({ product_id: id, quantity: 1 })
                         .then(function () {
                             if (salla.helpers && salla.helpers.modal && salla.helpers.modal.toast) {
-                                salla.helpers.modal.toast('تمت إضافة المنتج إلى السلة');
+                                salla.helpers.modal.toast(salla.lang.get('common.product_added_to_cart'));
                             }
                         })
                         .catch(function (err) {

@@ -1,0 +1,195 @@
+.th-menu-img{
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  object-fit: cover;
+  background: #f3f4f6;
+  flex: 0 0 auto;
+  display: inline-block;
+}
+.mobile-menu .th-menu-img{
+  width: 32px;
+  height: 32px;
+}
+.main-menu a{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+ /* =========================================
+   THARAA PRO THEME - GLOBAL STYLES
+   ========================================= */
+:root {
+    --th-gold: #d4af37;
+    --th-black: #222222;
+    --th-gray: #f8f9fa;
+    --th-border: #eaeaea;
+    --th-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.1);
+    --th-trans: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* إعدادات الخطوط */
+.th-header { font-family: 'Tajawal', sans-serif; }
+
+/* 1. الشريط العلوي */
+.th-topbar {
+    background-color: var(--th-black);
+    color: #fff;
+    font-size: 12px;
+    padding: 8px 0;
+}
+.th-topbtn {
+    display: flex; align-items: center; gap: 5px;
+    opacity: 0.85; transition: var(--th-trans);
+}
+.th-topbtn:hover { opacity: 1; color: var(--th-gold); }
+
+/* 2. الهيدر الرئيسي */
+.th-main-header {
+    background: #fff;
+    position: sticky; top: 0; z-index: 999;
+    border-bottom: 1px solid var(--th-border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+/* تحسين حقل البحث */
+salla-search {
+    --salla-border-radius: 8px;
+    --salla-bg-surface: #f3f4f6;
+    --salla-height: 46px;
+}
+
+/* أيقونات الهيدر */
+.th-icon-btn {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    color: #444; transition: var(--th-trans); cursor: pointer;
+}
+.th-icon-btn:hover { color: var(--th-gold); transform: translateY(-2px); }
+.th-icon-btn i { font-size: 24px; margin-bottom: 2px; }
+.th-icon-label { font-size: 10px; font-weight: bold; }
+
+.th-badge {
+    position: absolute; top: -3px; right: -3px;
+    background: var(--th-gold); color: #fff;
+    font-size: 10px; font-weight: bold;
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #fff;
+}
+
+/* 3. الناف بار (Navigation) */
+.th-navbar {
+    background: #fff;
+    border-bottom: 1px solid var(--th-border);
+    height: 58px; /* ارتفاع ثابت لضمان التناسق */
+    position: relative;
+    z-index: 990;
+}
+
+/* زر جميع الأقسام */
+.th-all-cats-wrapper { height: 100%; position: relative; }
+.th-all-cats-btn {
+    height: 100%;
+    padding: 0 25px;
+    background: var(--th-gray);
+    border-left: 1px solid var(--th-border);
+    border-right: 1px solid var(--th-border);
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 14px; color: var(--th-black);
+    cursor: pointer; transition: var(--th-trans);
+}
+.th-all-cats-wrapper:hover .th-all-cats-btn {
+    background: var(--th-black); color: #fff;
+}
+
+/* الميجا منيو (Mega Menu) */
+.th-mega-menu {
+    position: absolute; top: 100%; right: 0;
+    width: 950px; min-height: 450px;
+    background: #fff;
+    border: 1px solid var(--th-border); border-top: none;
+    box-shadow: var(--th-shadow);
+    border-radius: 0 0 8px 8px;
+    opacity: 0; visibility: hidden;
+    transform: translateY(15px);
+    transition: var(--th-trans);
+    z-index: 1000; display: flex;
+}
+.th-all-cats-wrapper:hover .th-mega-menu {
+    opacity: 1; visibility: visible; transform: translateY(0);
+}
+
+/* تبويبات الميجا */
+.th-mega-sidebar { width: 25%; background: #fcfcfc; border-left: 1px solid var(--th-border); padding: 10px 0; }
+.th-mega-tab {
+    padding: 12px 20px; cursor: pointer;
+    font-size: 14px; font-weight: 600; color: #555;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: 0.2s; border-right: 3px solid transparent;
+}
+.th-mega-tab:hover, .th-mega-tab.active {
+    background: #fff; color: var(--th-gold);
+    border-right-color: var(--th-gold);
+    padding-right: 15px; /* حركة بسيطة */
+}
+
+.th-mega-content { width: 75%; padding: 30px; }
+.th-mega-pane { display: none; animation: fadeIn 0.3s ease-out; }
+.th-mega-pane.active { display: block; }
+
+/* القوائم المتسلسلة (Cascading Dropdown) */
+.th-nav-item { height: 100%; display: flex; align-items: center; position: relative; }
+.th-nav-link {
+    padding: 0 15px; height: 100%;
+    display: flex; align-items: center; gap: 5px;
+    font-weight: 700; font-size: 14px; color: #333;
+    transition: var(--th-trans);
+}
+.th-nav-item:hover > .th-nav-link { color: var(--th-gold); }
+
+.th-dropdown {
+    position: absolute; background: #fff;
+    min-width: 240px; padding: 8px 0;
+    border: 1px solid var(--th-border);
+    box-shadow: var(--th-shadow);
+    border-radius: 8px;
+    opacity: 0; visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--th-trans); z-index: 1100;
+}
+/* المستوى الأول يفتح للأسفل */
+.th-nav-item:hover > .th-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.th-dropdown.root-level { top: 100%; right: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+
+/* المستوى الثاني يفتح للجانب */
+.th-dropdown.side-level {
+    top: -5px; right: 100%; margin-right: 8px;
+    transform: translateX(10px);
+}
+.th-cascading-item:hover > .th-dropdown.side-level {
+    opacity: 1; visibility: visible; transform: translateX(0);
+}
+
+.th-cascading-link {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 20px; font-size: 14px; color: #555; transition: 0.2s;
+}
+.th-cascading-link:hover { background: #f9f9f9; color: var(--th-gold); }
+
+/* الموبايل (Drawer) */
+.mobile-drawer {
+    position: fixed; top: 0; right: -100%;
+    width: 300px; height: 100vh; background: #fff;
+    z-index: 2001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -5px 0 30px rgba(0,0,0,0.15);
+}
+.mobile-drawer.open { right: 0; }
+.mobile-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s;
+}
+.mobile-overlay.open { opacity: 1; visibility: visible; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }

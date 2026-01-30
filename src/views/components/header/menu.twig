@@ -11,7 +11,7 @@
     <div class="th-all-cats-wrapper group">
         <div class="th-all-cats-btn">
             <i class="sicon-layout-grid text-lg"></i>
-            <span>جميع الأقسام</span>
+            <span>{{ trans('blocks.header.all_categories') }}</span>
             <i class="sicon-keyboard_arrow_down text-xs opacity-50 mt-1 mr-auto"></i>
         </div>
 
@@ -105,7 +105,7 @@
 
     <div class="p-4 border-t border-gray-100 bg-gray-50">
         {% if user.type == 'user' %}
-            <a href="{{ link('profile') }}" class="block text-center py-3 bg-white border border-gray-200 rounded-lg font-bold text-gray-700">حسابي</a>
+            <a href="{{ link('profile') }}" class="block text-center py-3 bg-white border border-gray-200 rounded-lg font-bold text-gray-700">{{ trans('blocks.footer.my_account') }}</a>
         {% else %}
             <button onclick="salla.event.dispatch('login::open')" class="w-full py-3 bg-black text-white rounded-lg font-bold hover:bg-gold transition">تسجيل الدخول</button>
         {% endif %}
