@@ -378,7 +378,7 @@ salla-products-list {
   }
 }
 
-.niceone-card-inner {
+.th-card-inner {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -388,12 +388,12 @@ salla-products-list {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.niceone-card-inner:hover {
+.th-card-inner:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.09);
 }
 
-.niceone-card-image {
+.th-card-image {
   position: relative;
   padding: 18px 12px 10px;
   display: flex;
@@ -401,7 +401,7 @@ salla-products-list {
   align-items: center;
 }
 
-.niceone-card-image-wrapper {
+.th-card-image-wrapper {
   width: 100%;
   max-width: 130px;
   aspect-ratio: 1/1;
@@ -410,27 +410,27 @@ salla-products-list {
   justify-content: center;
 }
 
-.niceone-card-image-wrapper img {
+.th-card-image-wrapper img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
   transition: transform 0.35s ease;
 }
 
-.niceone-card-inner:hover .niceone-card-image-wrapper img {
+.th-card-inner:hover .th-card-image-wrapper img {
   transform: scale(1.03);
 }
 
 /* Quick add floating button */
-.niceone-quick-add {
+.th-quick-add {
   position: absolute;
   inset-inline-start: 14px;
   bottom: 18px;
   z-index: 10;
 }
 
-.niceone-quick-add::part(button),
-.niceone-quick-add button {
+.th-quick-add::part(button),
+.th-quick-add button {
   width: 34px;
   height: 34px;
   border-radius: 999px;
@@ -444,8 +444,8 @@ salla-products-list {
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-.niceone-quick-add::part(button):hover,
-.niceone-quick-add button:hover {
+.th-quick-add::part(button):hover,
+.th-quick-add button:hover {
   background-color: #111827;
   color: #ffffff;
   transform: translateY(-1px) scale(1.04);
@@ -453,7 +453,7 @@ salla-products-list {
 }
 
 /* Best seller / status badge */
-.niceone-badge {
+.th-badge {
   position: absolute;
   inset-inline-start: 14px;
   top: 10px;
@@ -463,25 +463,25 @@ salla-products-list {
   font-weight: 700;
 }
 
-.niceone-badge--primary {
+.th-badge--primary {
   background-color: #e6f7ed;
   color: #15803d;
 }
 
-.niceone-card-details {
+.th-card-details {
   display: flex;
   flex-direction: column;
   gap: 2px;
   padding-inline: 4px;
 }
 
-.niceone-card-brand {
+.th-card-brand {
   font-size: 11px;
   font-weight: 700;
   color: #111827;
 }
 
-.niceone-card-title {
+.th-card-title {
   font-size: 12px;
   font-weight: 400;
   color: #4b5563;
@@ -493,7 +493,7 @@ salla-products-list {
   -webkit-box-orient: vertical;
 }
 
-.niceone-card-rating {
+.th-card-rating {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -502,46 +502,46 @@ salla-products-list {
   color: #6b7280;
 }
 
-.niceone-card-rating-icon {
+.th-card-rating-icon {
   color: #facc15;
   font-size: 12px;
 }
 
-.niceone-card-rating-value {
+.th-card-rating-value {
   font-weight: 600;
   color: #111827;
 }
 
-.niceone-card-rating-count {
+.th-card-rating-count {
   font-size: 10px;
   color: #9ca3af;
 }
 
-.niceone-card-price {
+.th-card-price {
   margin-top: 8px;
   padding-inline: 4px;
 }
 
-.niceone-card-price-row {
+.th-card-price-row {
   display: flex;
   align-items: center;
   gap: 6px;
   justify-content: flex-start;
 }
 
-.niceone-card-price-final {
+.th-card-price-final {
   font-size: 14px;
   font-weight: 800;
   color: #e11d48;
 }
 
-.niceone-card-price-original {
+.th-card-price-original {
   font-size: 11px;
   color: #9ca3af;
   text-decoration: line-through;
 }
 
-.niceone-card-discount-badge {
+.th-card-discount-badge {
   font-size: 11px;
   font-weight: 700;
   padding: 2px 8px;
@@ -550,7 +550,7 @@ salla-products-list {
   color: #e11d48;
 }
 
-.niceone-card-inner.is-out-of-stock {
+.th-card-inner.is-out-of-stock {
   opacity: 0.85;
 }
 

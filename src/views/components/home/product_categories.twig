@@ -44,24 +44,24 @@
 					{% for tab in component.products %}
 						{% for product in tab.dropdown_list_1 %}
 							<div
-								class="s-products-slider-card niceone-card"
+								class="s-products-slider-card th-card"
 								data-category="cat-{{ tab.category_list.id }}">
 
 								<salla-product-card 
 									product="{{ product|json_encode|e('html_attr') }}"
 									shadow-on-hover
-									class="niceone-card-inner {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}">
+									class="th-card-inner {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}">
 
 									{# ========== IMAGE SLOT ========== #}
-									<div slot="image" class="niceone-card-image">
+									<div slot="image" class="th-card-image">
 										{# Best seller / promotion badge #}
 										{% if product.promotion_title or product.is_best_seller %}
-											<span class="niceone-badge niceone-badge--primary">
+											<span class="th-badge th-badge--primary">
 												{{ trans('common.best_seller') }}
 											</span>
 										{% endif %}
 
-										<div class="niceone-card-image-wrapper">
+										<div class="th-card-image-wrapper">
 											<img
 												src="{{ product.image.url ?? product.image }}"
 												alt="{{ product.image.alt ?? product.name }}"
@@ -70,7 +70,7 @@
 
 										{# Quick Add floating button #}
 										<salla-add-product-button
-											class="niceone-quick-add"
+											class="th-quick-add"
 											product-id="{{ product.id }}"
 											product-status="{{ product.status }}"
 											product-type="{{ product.type }}">
@@ -82,26 +82,26 @@
 									</div>
 
 									{# ========== DETAILS SLOT ========== #}
-									<div slot="details" class="niceone-card-details">
+									<div slot="details" class="th-card-details">
 										{% if product.brand %}
-											<div class="niceone-card-brand">
+											<div class="th-card-brand">
 												{{ product.brand.name ?? product.brand }}
 											</div>
 										{% endif %}
 
-										<div class="niceone-card-title">
+										<div class="th-card-title">
 											{{ product.name }}
 										</div>
 
 										{% if product.rating %}
-											<div class="niceone-card-rating">
-												<i class="sicon-star2 niceone-card-rating-icon"></i>
-												<span class="niceone-card-rating-value">
+											<div class="th-card-rating">
+												<i class="sicon-star2 th-card-rating-icon"></i>
+												<span class="th-card-rating-value">
 													{{ product.rating.stars ?? product.rating|number }}
 												</span>
 
 												{% if product.reviews_count %}
-													<span class="niceone-card-rating-count">
+													<span class="th-card-rating-count">
 														({{ product.reviews_count|number }})
 													</span>
 												{% endif %}
@@ -110,14 +110,14 @@
 									</div>
 
 									{# ========== PRICE SLOT ========== #}
-									<div slot="price" class="niceone-card-price">
+									<div slot="price" class="th-card-price">
 										{% if product.is_on_sale %}
-											<div class="niceone-card-price-row">
-												<span class="niceone-card-price-final">
+											<div class="th-card-price-row">
+												<span class="th-card-price-final">
 													{{ product.sale_price|money }}
 												</span>
 
-												<span class="niceone-card-price-original">
+												<span class="th-card-price-original">
 													{{ product.regular_price|money }}
 												</span>
 
@@ -127,14 +127,14 @@
 												{% endif %}
 
 												{% if discount_percent is not null %}
-													<span class="niceone-card-discount-badge">
+													<span class="th-card-discount-badge">
 														-%{{ discount_percent }}
 													</span>
 												{% endif %}
 											</div>
 										{% else %}
-											<div class="niceone-card-price-row">
-												<span class="niceone-card-price-final">
+											<div class="th-card-price-row">
+												<span class="th-card-price-final">
 													{{ product.price|money }}
 												</span>
 											</div>
