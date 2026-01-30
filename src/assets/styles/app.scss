@@ -50,7 +50,8 @@
  *
  */
 
-@import './01-settings/tailwind';
+//@import './01-settings/tailwind';
+@use './01-settings/tailwind';
 @import './01-settings/fonts';
 @import './01-settings/global';
 @import './01-settings/breakpoints';
@@ -97,10 +98,19 @@
 
 @import './4-layout/sidebar';
 @import './tharaa/store_category';
+@import './custom/_before-after-hero';
 
 // Custom Styles
 //@import './custom/aliexpress-theme';
-@import './custom/_product-card';
+//@import './custom/_product-card';
+//@import './custom/thraa-product-card';
 
-@import './custom/_before-after-hero';
-@import './custom/thraa-product-card';
+
+
+//============================================
+// THARAA CUSTOM (في النهاية)
+//============================================
+@import './th-system/th-config';
+@import './th-system/th-system';
+@import './th-system/th-grid';
+@import './th-system/th-card';

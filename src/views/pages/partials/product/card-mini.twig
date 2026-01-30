@@ -1,1 +1,11 @@
-<custom-salla-product-card product="{{ product }}" minimal shadowonhover></custom-salla-product-card>
+{#
+====================================
+Tharaa Mini Product Card v2.0
+====================================
+#}
+
+<custom-salla-product-card 
+  product='{{ product|json_encode|e("html_attr") }}' 
+  minimal 
+  shadowOnHover>
+</custom-salla-product-card>

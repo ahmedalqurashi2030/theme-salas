@@ -1,0 +1,187 @@
+//============================================
+// 🎨 THARAA PRODUCT CARD
+//============================================
+
+@import 'th-config';
+@import 'th-system';
+
+@if $th-enable-card-styling {
+
+  // Target Salla official classes only
+  .salla-product-card,
+  .custom-salla-product-card,
+  .s-product-card-entry {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: th-color('bg-card');
+    border-radius: map-get($th-card, radius);
+    overflow: hidden;
+    transition: all var(--th-transition-base);
+    
+    // Hover Effect
+    @if $th-enable-animations {
+      &:hover {
+        box-shadow: map-get($th-card, shadow-hover);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // Image Container
+  .salla-product-card,
+  .s-product-card-entry {
+    
+    .product-entry__image,
+    > a:first-child {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: map-get($th-image, radius);
+      background: th-color('bg-image');
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--th-transition-slow);
+        
+        &.lazy {
+          opacity: 0;
+          transition: opacity var(--th-transition-base);
+        }
+        
+        &.loaded,
+        &:not(.lazy) {
+          opacity: 1;
+        }
+      }
+      
+      @if $th-enable-animations {
+        &:hover img {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
+  // Wishlist Button
+  .btn--wishlist {
+    position: absolute;
+    top: th-space('sm');
+    #{$right}: th-space('sm');
+    z-index: th-z('button');
+    
+    @include th-mobile {
+      opacity: 1 !important;
+    }
+  }
+
+  // Add to Cart Floating Button
+  .btn--add-to-cart-floating {
+    position: absolute;
+    bottom: th-space('sm');
+    #{$right}: th-space('sm');
+    z-index: th-z('button');
+  }
+
+  // Discount Badge
+  @if $th-enable-discount-badge {
+    .th-discount-badge {
+      position: absolute;
+      top: th-space('sm');
+      #{$left}: th-space('sm');
+      z-index: th-z('badge');
+      background: map-get($th-badge, bg);
+      color: map-get($th-badge, color);
+      border-radius: map-get($th-badge, radius);
+      padding: 4px 10px;
+      font-size: map-get($th-font-sizes, xs);
+      font-weight: 700;
+      
+      @if $th-enable-animations {
+        animation: badge-pop 0.3s ease-out;
+      }
+    }
+    
+    @keyframes badge-pop {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  }
+
+  // Content
+  .product-entry__content,
+  .product-content {
+    padding: th-space('md');
+    display: flex;
+    flex-direction: column;
+    gap: th-space('xs');
+    flex: 1;
+  }
+
+  // Title
+  .product-entry__title,
+  .product-title {
+    @include th-truncate(2);
+    @include th-smooth;
+    font-size: map-get($th-font-sizes, base);
+    color: th-color('text-primary');
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+      
+      &:hover {
+        color: th-color('primary');
+      }
+    }
+  }
+
+  // Price
+  .product-entry__price,
+  .price-wrapper {
+    margin-top: auto;
+    
+    .price,
+    .sale-price {
+      font-size: map-get($th-font-sizes, md);
+      font-weight: 700;
+      color: th-color('primary');
+    }
+    
+    .regular-price,
+    .before-price {
+      font-size: map-get($th-font-sizes, sm);
+      color: th-color('text-muted');
+      text-decoration: line-through;
+    }
+  }
+
+  // RTL Support
+  [dir="rtl"] {
+    .th-discount-badge {
+      left: auto;
+      right: th-space('sm');
+    }
+    
+    .btn--wishlist {
+      right: auto;
+      left: th-space('sm');
+    }
+    
+    .btn--add-to-cart-floating {
+      right: auto;
+      left: th-space('sm');
+    }
+  }
+
+  // Hide options component for safety
+  .product-options,
+  .salla-product-options {
+    display: none !important;
+  }
+
+}
