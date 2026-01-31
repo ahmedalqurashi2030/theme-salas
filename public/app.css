@@ -23474,8 +23474,8 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
    This file consolidates all product card styles
    from multiple files into one clean location.
    ============================================ */
-/* --- CSS Variables --- */
-:root {
+.tharaa-theme {
+  /* --- CSS Variables --- */
   --product-card-bg: #ffffff;
   --product-card-text: #333333;
   --product-card-text-muted: #777777;
@@ -23486,47 +23486,65 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   --product-card-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
   --product-card-shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.06);
   --product-card-transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  /* ============================================
+     Salla Product Card Component Styles
+     ============================================ */
+  /* Grid System */
+  /* Card Container */
+  /* Image Area */
+  /* Wishlist Button */
+  /* Product Badges */
+  /* Floating Add to Cart Button */
+  /* Content Area */
+  /* Price Row */
+  /* ============================================
+     Product Categories Component Styles
+     ============================================ */
+  /* Decorative Halos */
+  /* Section Header */
+  /* Category Filter Tabs */
+  /* Products Band */
+  /* Product Card Wrapper for Categories Component (Niceone layout) */
+  /* Quick add floating button */
+  /* Best seller / status badge */
+  /* Scroll Progress Bar */
+  /* ============================================
+     Responsive Adjustments
+     ============================================ */
 }
-/* ============================================
-   Salla Product Card Component Styles
-   ============================================ */
-/* Grid System */
-salla-products-list {
+.tharaa-theme salla-products-list {
   display: grid !important;
 }
-salla-products-list {
+.tharaa-theme salla-products-list {
   grid-gap: 16px;
   gap: 16px;
   grid-template-columns: repeat(2, 1fr);
 }
 @media (min-width: 768px) {
-  salla-products-list {
+  .tharaa-theme salla-products-list {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (min-width: 1024px) {
-  salla-products-list {
+  .tharaa-theme salla-products-list {
     grid-template-columns: repeat(5, 1fr);
   }
 }
-/* Card Container */
-.s-product-card-entry {
-  background: #ffffff;
+.tharaa-theme .s-product-card-entry {
   background: var(--product-card-bg);
   border-radius: 20px;
   overflow: hidden;
   position: relative;
   transition: all 0.3s ease;
-  border: 1px solid #f1f1f1;
+  border: none;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
-.s-product-card-entry:hover {
+.tharaa-theme .s-product-card-entry:hover {
   box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
   transform: translateY(-1px);
 }
-/* Image Area */
-.s-product-card-image,
-.s-product-card-image-full {
+.tharaa-theme .s-product-card-image,
+.tharaa-theme .s-product-card-image-full {
   position: relative;
   padding: 20px 14px 10px;
   display: flex;
@@ -23536,20 +23554,19 @@ salla-products-list {
   border-radius: 14px;
   background-color: #ffffff;
 }
-.s-product-card-image img,
-.s-product-card-image-full img {
+.tharaa-theme .s-product-card-image img,
+.tharaa-theme .s-product-card-image-full img {
   max-height: 150px;
   max-width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
   transition: transform 0.5s ease;
 }
-.s-product-card-image:hover img,
-.s-product-card-image-full:hover img {
+.tharaa-theme .s-product-card-image:hover img,
+.tharaa-theme .s-product-card-image-full:hover img {
   transform: scale(1.05);
 }
-/* Wishlist Button */
-.s-product-card-wishlist-btn {
+.tharaa-theme .s-product-card-wishlist-btn {
   position: absolute;
   top: 12px;
   left: 12px;
@@ -23562,14 +23579,13 @@ salla-products-list {
   box-shadow: 0 8px 14px rgba(15, 23, 42, 0.08);
   z-index: 5;
 }
-.s-product-card-wishlist-btn i {
+.tharaa-theme .s-product-card-wishlist-btn i {
   font-size: 14px;
   color: #9ca3af;
 }
-/* Product Badges */
-.s-product-card-promotion-title,
-.s-product-card-quantity,
-.s-product-card-out-badge {
+.tharaa-theme .s-product-card-promotion-title,
+.tharaa-theme .s-product-card-quantity,
+.tharaa-theme .s-product-card-out-badge {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -23582,16 +23598,16 @@ salla-products-list {
   font-weight: 700;
   z-index: 5;
 }
-/* Floating Add to Cart Button */
-.s-product-card-floating-btn {
+.tharaa-theme .s-product-card-floating-btn {
   position: absolute;
-  top: 50%;
-  left: 12px;
+  top: auto;
+  left: 50%;
   right: auto;
-  transform: translateY(-50%);
+  bottom: 12px;
+  transform: translateX(-50%);
   z-index: 10;
 }
-.s-product-card-floating-btn salla-add-product-button::part(button) {
+.tharaa-theme .s-product-card-floating-btn salla-add-product-button::part(button) {
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -23601,47 +23617,46 @@ salla-products-list {
   box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
   transition: all 0.2s ease;
 }
-.s-product-card-floating-btn salla-add-product-button::part(button):hover {
+.tharaa-theme .s-product-card-floating-btn salla-add-product-button::part(button):hover {
   background: #fffaf1;
   color: #a16207;
   border-color: #d5b482;
   transform: scale(1.05);
 }
-/* Content Area */
-.s-product-card-content {
+.tharaa-theme .s-product-card-content {
   padding: 10px 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   text-align: right;
 }
-.s-product-card-meta {
+.tharaa-theme .s-product-card-meta {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
   margin-bottom: 0;
 }
-.s-product-card-rating {
+.tharaa-theme .s-product-card-rating {
   display: flex;
   align-items: center;
   gap: 4px;
   font-size: 11px;
   color: #6b7280;
 }
-.s-product-card-rating i {
+.tharaa-theme .s-product-card-rating i {
   color: #f59e0b;
   font-size: 11px;
 }
-.s-product-card-brand {
+.tharaa-theme .s-product-card-brand {
   font-size: 12px;
   font-weight: 600;
   color: #6b7280;
 }
-.s-product-card-content-title {
+.tharaa-theme .s-product-card-content-title {
   margin: 0;
 }
-.s-product-card-content-title a {
+.tharaa-theme .s-product-card-content-title a {
   font-size: 13px;
   font-weight: 500;
   color: #111827;
@@ -23654,11 +23669,10 @@ salla-products-list {
   -webkit-text-decoration: none;
   text-decoration: none;
 }
-.s-product-card-content-title a:hover {
+.tharaa-theme .s-product-card-content-title a:hover {
   color: #f55157;
 }
-/* Price Row */
-.s-product-card-price-row {
+.tharaa-theme .s-product-card-price-row {
   margin-top: auto;
   display: flex;
   align-items: center;
@@ -23666,7 +23680,7 @@ salla-products-list {
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.s-product-card-price-row .s-product-card-sale-price {
+.tharaa-theme .s-product-card-price-row .s-product-card-sale-price {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -23674,25 +23688,25 @@ salla-products-list {
   flex-direction: row-reverse;
   justify-content: flex-end;
 }
-.s-product-card-price-row .s-product-card-sale-price h4 {
+.tharaa-theme .s-product-card-price-row .s-product-card-sale-price h4 {
   font-size: 15px;
   font-weight: 800;
   color: #e11d48;
   margin: 0;
 }
-.s-product-card-price-row .s-product-card-sale-price span {
+.tharaa-theme .s-product-card-price-row .s-product-card-sale-price span {
   font-size: 11px;
   color: #9ca3af;
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
 }
-.s-product-card-price {
+.tharaa-theme .s-product-card-price {
   font-size: 14px;
   font-weight: 800;
   color: #e11d48;
   text-align: right;
 }
-.s-product-card-discount-badge {
+.tharaa-theme .s-product-card-discount-badge {
   display: inline-block;
   margin-top: 0;
   padding: 2px 7px;
@@ -23702,22 +23716,18 @@ salla-products-list {
   font-size: 10px;
   font-weight: 700;
 }
-/* ============================================
-   Product Categories Component Styles
-   ============================================ */
-.lifestyle-section {
+.tharaa-theme .lifestyle-section {
   padding: 40px 15px;
   position: relative;
   overflow: hidden;
   margin-bottom: 30px;
   direction: rtl;
 }
-.lifestyle-section * {
+.tharaa-theme .lifestyle-section * {
   box-sizing: border-box;
   outline: none;
 }
-/* Decorative Halos */
-.lifestyle-section .halo {
+.tharaa-theme .lifestyle-section .halo {
   position: absolute;
   border-radius: 999px;
   filter: blur(60px);
@@ -23725,29 +23735,28 @@ salla-products-list {
   pointer-events: none;
   z-index: 0;
 }
-.lifestyle-section .halo-1 {
+.tharaa-theme .lifestyle-section .halo-1 {
   width: 350px;
   height: 350px;
   background: radial-gradient(circle, #eddcd9 0%, transparent 70%);
   top: -5%;
   right: -5%;
 }
-.lifestyle-section .halo-2 {
+.tharaa-theme .lifestyle-section .halo-2 {
   width: 300px;
   height: 300px;
   background: radial-gradient(circle, #e0e6ed 0%, transparent 70%);
   bottom: -5%;
   left: -5%;
 }
-.section-container {
+.tharaa-theme .section-container {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
-/* Section Header */
-.section-header {
+.tharaa-theme .section-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -23755,20 +23764,17 @@ salla-products-list {
   gap: 20px;
   margin-bottom: 25px;
 }
-.section-header h2 {
+.tharaa-theme .section-header h2 {
   margin: 0 0 5px;
   font-size: 26px;
-  color: #333333;
   color: var(--product-card-text);
 }
-.section-header p {
+.tharaa-theme .section-header p {
   margin: 0;
-  color: #777777;
   color: var(--product-card-text-muted);
   font-size: 14px;
 }
-/* Category Filter Tabs */
-.category-filter {
+.tharaa-theme .category-filter {
   background: #fff;
   padding: 5px;
   border-radius: 999px;
@@ -23778,26 +23784,23 @@ salla-products-list {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
   border: 1px solid #eee;
 }
-.filter-btn {
+.tharaa-theme .filter-btn {
   border: none;
   background: transparent;
   padding: 7px 20px;
   border-radius: 999px;
   cursor: pointer;
-  color: #777777;
   color: var(--product-card-text-muted);
   transition: 0.3s;
   font-size: 13px;
   font-family: inherit;
   font-weight: 500;
 }
-.filter-btn.active {
-  background: #333333;
+.tharaa-theme .filter-btn.active {
   background: var(--product-card-text);
   color: #fff;
 }
-/* Products Band */
-.products-band {
+.tharaa-theme .products-band {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(245, 240, 242, 0.5) 100%);
   border-radius: 30px;
   padding: 25px;
@@ -23805,35 +23808,34 @@ salla-products-list {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.03);
   position: relative;
 }
-.cards-strip-wrapper {
+.tharaa-theme .cards-strip-wrapper {
   overflow-x: auto;
   padding-bottom: 15px;
   cursor: grab;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
-.cards-strip-wrapper::-webkit-scrollbar {
+.tharaa-theme .cards-strip-wrapper::-webkit-scrollbar {
   display: none;
 }
-.cards-strip {
+.tharaa-theme .cards-strip {
   display: flex;
   gap: 14px;
 }
-/* Product Card Wrapper for Categories Component (Niceone layout) */
-.s-products-slider-card {
+.tharaa-theme .s-products-slider-card {
   flex-shrink: 0;
   width: calc((100% - 14px) / 2);
   min-width: 160px;
   max-width: 220px;
 }
 @media (min-width: 1024px) {
-  .s-products-slider-card {
+  .tharaa-theme .s-products-slider-card {
     width: calc((100% - 56px) / 5);
     min-width: 200px;
     max-width: none;
   }
 }
-.th-card-inner {
+.tharaa-theme .th-card-inner {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -23842,18 +23844,18 @@ salla-products-list {
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.th-card-inner:hover {
+.tharaa-theme .th-card-inner:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.09);
 }
-.th-card-image {
+.tharaa-theme .th-card-image {
   position: relative;
   padding: 18px 12px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.th-card-image-wrapper {
+.tharaa-theme .th-card-image-wrapper {
   width: 100%;
   max-width: 130px;
   aspect-ratio: 1/1;
@@ -23861,25 +23863,24 @@ salla-products-list {
   align-items: center;
   justify-content: center;
 }
-.th-card-image-wrapper img {
+.tharaa-theme .th-card-image-wrapper img {
   max-width: 100%;
   max-height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
   transition: transform 0.35s ease;
 }
-.th-card-inner:hover .th-card-image-wrapper img {
+.tharaa-theme .th-card-inner:hover .th-card-image-wrapper img {
   transform: scale(1.03);
 }
-/* Quick add floating button */
-.th-quick-add {
+.tharaa-theme .th-quick-add {
   position: absolute;
   left: 14px;
   bottom: 18px;
   z-index: 10;
 }
-.th-quick-add::part(button),
-.th-quick-add button {
+.tharaa-theme .th-quick-add::part(button),
+.tharaa-theme .th-quick-add button {
   width: 34px;
   height: 34px;
   border-radius: 999px;
@@ -23892,15 +23893,14 @@ salla-products-list {
   color: #111827;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
-.th-quick-add::part(button):hover,
-.th-quick-add button:hover {
+.tharaa-theme .th-quick-add::part(button):hover,
+.tharaa-theme .th-quick-add button:hover {
   background-color: #111827;
   color: #ffffff;
   transform: translateY(-1px) scale(1.04);
   box-shadow: 0 10px 26px rgba(15, 23, 42, 0.22);
 }
-/* Best seller / status badge */
-.th-badge {
+.tharaa-theme .th-badge {
   position: absolute;
   left: 14px;
   top: 10px;
@@ -23909,23 +23909,23 @@ salla-products-list {
   font-size: 11px;
   font-weight: 700;
 }
-.th-badge--primary {
+.tharaa-theme .th-badge--primary {
   background-color: #e6f7ed;
   color: #15803d;
 }
-.th-card-details {
+.tharaa-theme .th-card-details {
   display: flex;
   flex-direction: column;
   gap: 2px;
   padding-left: 4px;
   padding-right: 4px;
 }
-.th-card-brand {
+.tharaa-theme .th-card-brand {
   font-size: 11px;
   font-weight: 700;
   color: #111827;
 }
-.th-card-title {
+.tharaa-theme .th-card-title {
   font-size: 12px;
   font-weight: 400;
   color: #4b5563;
@@ -23936,7 +23936,7 @@ salla-products-list {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.th-card-rating {
+.tharaa-theme .th-card-rating {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -23944,41 +23944,41 @@ salla-products-list {
   font-size: 11px;
   color: #6b7280;
 }
-.th-card-rating-icon {
+.tharaa-theme .th-card-rating-icon {
   color: #facc15;
   font-size: 12px;
 }
-.th-card-rating-value {
+.tharaa-theme .th-card-rating-value {
   font-weight: 600;
   color: #111827;
 }
-.th-card-rating-count {
+.tharaa-theme .th-card-rating-count {
   font-size: 10px;
   color: #9ca3af;
 }
-.th-card-price {
+.tharaa-theme .th-card-price {
   margin-top: 8px;
   padding-left: 4px;
   padding-right: 4px;
 }
-.th-card-price-row {
+.tharaa-theme .th-card-price-row {
   display: flex;
   align-items: center;
   gap: 6px;
   justify-content: flex-start;
 }
-.th-card-price-final {
+.tharaa-theme .th-card-price-final {
   font-size: 14px;
   font-weight: 800;
   color: #e11d48;
 }
-.th-card-price-original {
+.tharaa-theme .th-card-price-original {
   font-size: 11px;
   color: #9ca3af;
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
 }
-.th-card-discount-badge {
+.tharaa-theme .th-card-discount-badge {
   font-size: 11px;
   font-weight: 700;
   padding: 2px 8px;
@@ -23986,11 +23986,10 @@ salla-products-list {
   background-color: #ffe4ec;
   color: #e11d48;
 }
-.th-card-inner.is-out-of-stock {
+.tharaa-theme .th-card-inner.is-out-of-stock {
   opacity: 0.85;
 }
-/* Scroll Progress Bar */
-.scroll-bar {
+.tharaa-theme .scroll-bar {
   width: 100px;
   height: 4px;
   background: #e0e0e0;
@@ -23998,46 +23997,42 @@ salla-products-list {
   margin: 25px auto 0;
   overflow: hidden;
 }
-.scroll-prog {
+.tharaa-theme .scroll-prog {
   height: 100%;
-  background: #333333;
   background: var(--product-card-text);
   width: 0;
   border-radius: 10px;
   transition: width 0.1s;
 }
-/* ============================================
-   Responsive Adjustments
-   ============================================ */
 @media (max-width: 767px) {
-  salla-products-list {
+  .tharaa-theme salla-products-list {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
   }
-  salla-products-slider {
+  .tharaa-theme salla-products-slider {
     --slides-per-view: 2;
   }
 }
 @media (min-width: 768px) and (max-width: 1023px) {
-  salla-products-list {
+  .tharaa-theme salla-products-list {
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 14px !important;
   }
-  salla-products-slider {
+  .tharaa-theme salla-products-slider {
     --slides-per-view: 3;
   }
 }
 @media (min-width: 1024px) {
-  salla-products-list {
+  .tharaa-theme salla-products-list {
     grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
     gap: 16px !important;
   }
-  salla-products-slider {
+  .tharaa-theme salla-products-slider {
     --slides-per-view: 6;
   }
 }
 @media (min-width: 1280px) {
-  salla-products-slider {
+  .tharaa-theme salla-products-slider {
     --slides-per-view: 7;
   }
 }

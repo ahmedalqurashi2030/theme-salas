@@ -197,6 +197,20 @@ class ProductCard extends HTMLElement {
          </salla-product-options>`
       : '';
 
+    // Add to cart button HTML - moved to content area
+    const addToCartBtn = !this.hideAddBtn && !this.horizontal && !this.fullImage
+      ? `<div class="s-product-card-add-btn">
+            <salla-add-product-button
+              fill="outline"
+              product-id="${this.product.id}"
+              product-status="${this.product.status}"
+              product-type="${this.product.type}"
+              class="btn-floating-cart">
+              <i class="sicon-shopping-bag"></i>
+            </salla-add-product-button>
+          </div>`
+      : '';
+
     this.innerHTML = `
       <div class="${!this.fullImage ? 's-product-card-image' : 's-product-card-image-full'}">
         <a href="${this.product?.url}" aria-label="${this.escapeHTML(this.product?.image?.alt || this.product.name)}">
@@ -228,24 +242,11 @@ class ProductCard extends HTMLElement {
 
         ${!this.fullImage && !this.minimal ? this.getProductBadge() : ''}
 
-        ${!this.hideAddBtn && !this.horizontal && !this.fullImage
-        ? `<div class="s-product-card-floating-btn">
-              <salla-add-product-button
-                fill="outline"
-                product-id="${this.product.id}"
-                product-status="${this.product.status}"
-                product-type="${this.product.type}"
-                class="btn-floating-cart">
-                <i class="sicon-shopping-bag"></i>
-
-              </salla-add-product-button>
-            </div>`
-        : ``}
-
         ${this.fullImage ? `<a href="${this.product?.url}" aria-label="${this.escapeHTML(this.product.name)}" class="s-product-card-overlay"></a>` : ''}
       </div>
 
       <div class="s-product-card-content">
+        <!-- Row 1: Rating + Add to Cart Button -->
         <div class="s-product-card-meta">
           ${this.product?.rating?.stars
         ? `<div class="s-product-card-rating">
@@ -255,6 +256,7 @@ class ProductCard extends HTMLElement {
                 </div>`
         : `<div class="s-product-card-rating empty"></div>`
       }
+          ${addToCartBtn}
         </div>
 
         ${brandName ? `<span class="s-product-card-brand">${brandName}</span>` : ''}

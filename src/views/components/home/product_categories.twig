@@ -13,7 +13,7 @@
 		<div class="section-header">
 			<div>
 				<h2 class="font-bold text-lg md:text-xl">
-					{{ section_titile|default(trans('components.product_categories.section_title')) }}
+					{{ section_title|default(trans('components.product_categories.section_title')) }}
 				</h2>
 				<p class="text-sm text-gray-500">
 					{{ trans('components.product_categories.section_description') }}
@@ -29,7 +29,7 @@
 					{% for tab in component.products %}
 						{% if tab.category_list and tab.dropdown_list_1|length > 0 %}
 							<button class="filter-btn" data-target="cat-{{ tab.category_list.id }}">
-								{{ tab.categoty_title }}
+								{{ tab.category_title|default(tab.category_list.name|default('')) }}
 							</button>
 						{% endif %}
 					{% endfor %}
@@ -45,10 +45,10 @@
 						{% for product in tab.dropdown_list_1 %}
 							<div
 								class="s-products-slider-card th-card"
-								data-category="cat-{{ tab.category_list.id }}">
+								data-category="cat-{{ tab.category_list.id|default('') }}">
 
 								<salla-product-card 
-									product="{{ product|json_encode|e('html_attr') }}"
+									product="{{ product }}"
 									shadow-on-hover
 									class="th-card-inner {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}">
 
@@ -57,14 +57,14 @@
 										{# Best seller / promotion badge #}
 										{% if product.promotion_title or product.is_best_seller %}
 											<span class="th-badge th-badge--primary">
-												{{ trans('common.best_seller') }}
+												{{ product.promotion_title|default(trans('common.best_seller')) }}
 											</span>
 										{% endif %}
 
 										<div class="th-card-image-wrapper">
 											<img
-												src="{{ product.image.url ?? product.image }}"
-												alt="{{ product.image.alt ?? product.name }}"
+												src="{{ product.image.url|default(product.image|default('images/s-empty.png'|cdn)) }}"
+												alt="{{ product.image.alt|default(product.name) }}"
 												loading="lazy">
 										</div>
 
@@ -90,7 +90,7 @@
 										{% endif %}
 
 										<div class="th-card-title">
-											{{ product.name }}
+											{{ product.name|default('') }}
 										</div>
 
 										{% if product.rating %}
@@ -100,9 +100,9 @@
 													{{ product.rating.stars ?? product.rating|number }}
 												</span>
 
-												{% if product.reviews_count %}
+												{% if product.rating.count %}
 													<span class="th-card-rating-count">
-														({{ product.reviews_count|number }})
+														({{ product.rating.count|number }})
 													</span>
 												{% endif %}
 											</div>

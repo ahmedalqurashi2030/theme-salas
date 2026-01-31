@@ -4,6 +4,8 @@ $sale-color: #f55157;
 $badge-bg: #ffe4e4;
 $badge-text: #f55157;
 $star-color: #ffc107;
+$teal-badge: #00C9A7;
+/* Teal color for "الأكثر مبيعا" badge */
 
 .tharaa-theme {
   font-family: 'Tajawal', 'Inter', sans-serif;
@@ -66,11 +68,11 @@ $star-color: #ffc107;
 
   /* 4. Floating Buttons */
 
-  /* Wishlist: Top Left */
+  /* Wishlist: Top Right (as in reference) */
   .s-product-card-wishlist-btn {
     position: absolute;
     top: 12px;
-    left: 12px;
+    right: 12px;
     background: transparent !important;
     border: none !important;
     padding: 0;
@@ -80,7 +82,7 @@ $star-color: #ffc107;
     align-items: center;
     justify-content: center;
     z-index: 5;
-    color: #999;
+    color: #ccc;
     box-shadow: none !important;
 
     i {
@@ -93,50 +95,13 @@ $star-color: #ffc107;
     }
   }
 
-  /* Add to Cart: Bottom Left of Image */
-  .s-product-card-floating-btn {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    z-index: 10;
-
-    salla-add-product-button::part(button) {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #fff;
-      color: #333;
-      border: 1px solid #eee;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    salla-add-product-button::part(button):hover {
-      background: #333;
-      color: #fff;
-      border-color: #333;
-      transform: scale(1.1);
-    }
-
-    i {
-      font-size: 8px;
-      margin: 0 !important;
-    }
-
-   
-  }
-
-  /* Promo Badge: Top Right */
+  /* Promo Badge: Top Left (Teal color as in reference) */
   .s-product-card-promotion-title {
     position: absolute;
     top: 12px;
-    right: 12px;
-    background: #ffecf0;
-    color: #ff4d7e;
+    left: 12px;
+    background: $teal-badge;
+    color: #fff;
     font-size: 10px;
     font-weight: bold;
     padding: 4px 10px;
@@ -153,12 +118,15 @@ $star-color: #ffc107;
     text-align: right;
   }
 
-  /* Row 1: Meta (Rating) */
+  /* Row 1: Meta (Rating + Add to Cart) - Reference Layout */
   .s-product-card-meta {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2px;
+    flex-direction: row-reverse;
+    /* RTL: Rating right, Button left */
+    margin-bottom: 4px;
+    gap: 8px;
   }
 
   .s-product-card-rating {
@@ -174,16 +142,48 @@ $star-color: #ffc107;
     }
   }
 
+  /* Add to Cart Button - Circular as in reference */
+  .s-product-card-add-btn {
+    flex-shrink: 0;
+
+    salla-add-product-button::part(button) {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      color: #333;
+      border: 1px solid #eee;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    salla-add-product-button::part(button):hover {
+      background: #333;
+      color: #fff;
+      border-color: #333;
+      transform: scale(1.1);
+    }
+
+    i {
+      font-size: 14px;
+      margin: 0 !important;
+    }
+  }
+
   /* Row 2: Title */
   .s-product-card-content-title {
     margin: 0;
 
     a {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: #333;
       line-height: 1.5;
-      height: 42px;
+      height: 40px;
       /* 2 lines */
       overflow: hidden;
       display: -webkit-box;
@@ -231,8 +231,17 @@ $star-color: #ffc107;
     }
   }
 
-  /* Discount Badge (Custom style for the badge rendered by salla) */
-  /* Discount Badge */
+  /* Discount Badge - Reference style with gradient */
+  .th-product-card-discount-badge {
+    background: linear-gradient(135deg, #ff6b8a 0%, #ff4d7e 100%);
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+
+  /* Alternative: Pill style discount badge */
   .s-product-card-discount-badge {
     background-color: $badge-bg;
     color: $badge-text;
@@ -244,11 +253,6 @@ $star-color: #ffc107;
     /* Push it to the left edge if using flex-row-reverse */
   }
 
-  /* Specific fix: If our JS output for price was:
-     <h4>Price</h4> <span>Old</span>
-  */
-
-
   /* --- Slider Spacing --- */
   .s-products-slider-card {
     padding: 8px;
@@ -256,7 +260,12 @@ $star-color: #ffc107;
   }
 
   .s-button-outline {
-    border: none ;
-    box-shadow: none ;
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Hide old floating button styles */
+  .s-product-card-floating-btn {
+    display: none !important;
   }
 }
