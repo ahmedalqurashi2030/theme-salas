@@ -1169,6 +1169,9 @@ select{
 .h-10{
     height: 2.5rem;
 }
+.h-11{
+    height: 2.75rem;
+}
 .h-12{
     height: 3rem;
 }
@@ -1286,6 +1289,9 @@ select{
 .w-10{
     width: 2.5rem;
 }
+.w-11{
+    width: 2.75rem;
+}
 .w-12{
     width: 3rem;
 }
@@ -1391,6 +1397,16 @@ select{
 .-translate-x-1\/2{
     --tw-translate-x: -50%;
     transform: translate(-50%, var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.translate-x-0{
+    --tw-translate-x: 0px;
+    transform: translate(0px, var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.translate-x-full{
+    --tw-translate-x: 100%;
+    transform: translate(100%, var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .translate-y-0{
@@ -1663,6 +1679,9 @@ select{
 }
 .overflow-x-hidden{
     overflow-x: hidden;
+}
+.overscroll-contain{
+    overscroll-behavior: contain;
 }
 .text-ellipsis{
     text-overflow: ellipsis;
@@ -2356,11 +2375,17 @@ select{
 .duration-1000{
     transition-duration: 1000ms;
 }
+.duration-200{
+    transition-duration: 200ms;
+}
 .duration-300{
     transition-duration: 300ms;
 }
 .duration-500{
     transition-duration: 500ms;
+}
+.ease-in{
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 .ease-in-out{
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -3769,6 +3794,12 @@ input[type=radio].sr-only:checked ~ div.s-app-install-alert-cancel-button {
     overflow-x: hidden;
     padding-left: 1rem;
     padding-right: 1rem;
+}
+.mobile-drawer .s-bottom-alert-modal-inner {
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scroll on iOS */
+  overscroll-behavior: contain;
+  /* Prevent scroll chaining */
 }
 .s-bottom-alert-modal-content-title{
     margin-top: 1rem;
@@ -5890,6 +5921,12 @@ input[type=radio].sr-only:checked ~ div.s-count-down-end-text {
     overflow-y: auto;
     overflow-x: hidden;
     text-align: center;
+}
+.mobile-drawer .s-drawer-wrapper {
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scroll on iOS */
+  overscroll-behavior: contain;
+  /* Prevent scroll chaining */
 }
 .s-drawer-wrapper-left{
     justify-content: flex-start;
@@ -8728,6 +8765,12 @@ input[type=radio].sr-only:checked ~ div.s-map-my-location-button {
     height: 100%;
     overflow-y: auto;
     text-align: center;
+}
+.mobile-drawer .s-modal-wrapper {
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scroll on iOS */
+  overscroll-behavior: contain;
+  /* Prevent scroll chaining */
 }
 .s-modal-loader{
     margin-left: 0.5rem;
@@ -15615,6 +15658,12 @@ input[type=radio].sr-only:checked ~ div.s-scopes-search-icon {
     overflow-y: auto;
     padding-left: 0.5rem;
 }
+.mobile-drawer .s-scopes-container {
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scroll on iOS */
+  overscroll-behavior: contain;
+  /* Prevent scroll chaining */
+}
 .s-scopes-container:where([dir="rtl"], [dir="rtl"] *){
     padding-left: 0px;
     padding-right: 0.5rem;
@@ -15872,6 +15921,12 @@ input[type=radio].sr-only div.s-search-results {
 }
 input[type=radio].sr-only:checked ~ div.s-search-results {
   border-color: var(--color-main);
+}
+.mobile-drawer .s-search-results {
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scroll on iOS */
+  overscroll-behavior: contain;
+  /* Prevent scroll chaining */
 }
 .s-search-no-results{
     border-bottom-right-radius: 0px !important;
@@ -23458,33 +23513,32 @@ salla-products-list {
 .s-product-card-entry {
   background: #ffffff;
   background: var(--product-card-bg);
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
   position: relative;
   transition: all 0.3s ease;
-  border: 1px solid transparent;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+  border: 1px solid #f1f1f1;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 .s-product-card-entry:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
-  box-shadow: var(--product-card-shadow-hover);
-  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
 }
 /* Image Area */
 .s-product-card-image,
 .s-product-card-image-full {
   position: relative;
-  padding: 16px 12px 8px;
+  padding: 20px 14px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 190px;
-  border-radius: 12px;
+  min-height: 176px;
+  border-radius: 14px;
   background-color: #ffffff;
 }
 .s-product-card-image img,
 .s-product-card-image-full img {
-  max-height: 160px;
+  max-height: 150px;
   max-width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
@@ -23498,14 +23552,19 @@ salla-products-list {
 .s-product-card-wishlist-btn {
   position: absolute;
   top: 12px;
-  right: 12px;
-  width: 30px;
-  height: 30px;
+  left: 12px;
+  right: auto;
+  width: 28px;
+  height: 28px;
   border-radius: 999px;
   background-color: #ffffff;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.08);
   z-index: 5;
+}
+.s-product-card-wishlist-btn i {
+  font-size: 14px;
+  color: #9ca3af;
 }
 /* Product Badges */
 .s-product-card-promotion-title,
@@ -23513,12 +23572,13 @@ salla-products-list {
 .s-product-card-out-badge {
   position: absolute;
   top: 12px;
-  left: 12px;
-  background-color: #1e8e3e;
+  right: 12px;
+  left: auto;
+  background-color: #0f8a3b;
   color: #fff;
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 999px;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 12px;
   font-weight: 700;
   z-index: 5;
 }
@@ -23527,59 +23587,66 @@ salla-products-list {
   position: absolute;
   top: 50%;
   left: 12px;
+  right: auto;
   transform: translateY(-50%);
   z-index: 10;
 }
 .s-product-card-floating-btn salla-add-product-button::part(button) {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: #fff;
-  color: #333;
-  border: 1px solid #eee;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: #b7791f;
+  border: 1px solid #e4c596;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+  transition: all 0.2s ease;
 }
 .s-product-card-floating-btn salla-add-product-button::part(button):hover {
-  background: #333;
-  color: #fff;
-  border-color: #333;
-  transform: scale(1.1);
+  background: #fffaf1;
+  color: #a16207;
+  border-color: #d5b482;
+  transform: scale(1.05);
 }
 /* Content Area */
 .s-product-card-content {
-  padding: 12px 14px 16px;
+  padding: 10px 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   text-align: right;
 }
 .s-product-card-meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2px;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 0;
 }
 .s-product-card-rating {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 12px;
-  color: #666;
+  font-size: 11px;
+  color: #6b7280;
 }
 .s-product-card-rating i {
-  color: #ffc107;
+  color: #f59e0b;
+  font-size: 11px;
+}
+.s-product-card-brand {
   font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
 }
 .s-product-card-content-title {
   margin: 0;
 }
 .s-product-card-content-title a {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  color: #333;
-  line-height: 1.5;
-  height: 42px;
+  color: #111827;
+  line-height: 1.45;
+  height: 38px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -23595,8 +23662,9 @@ salla-products-list {
   margin-top: auto;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 .s-product-card-price-row .s-product-card-sale-price {
   display: flex;
@@ -23607,19 +23675,19 @@ salla-products-list {
   justify-content: flex-end;
 }
 .s-product-card-price-row .s-product-card-sale-price h4 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
-  color: #f55157;
+  color: #e11d48;
   margin: 0;
 }
 .s-product-card-price-row .s-product-card-sale-price span {
-  font-size: 12px;
-  color: #ccc;
+  font-size: 11px;
+  color: #9ca3af;
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
 }
 .s-product-card-price {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   color: #e11d48;
   text-align: right;
@@ -23627,11 +23695,11 @@ salla-products-list {
 .s-product-card-discount-badge {
   display: inline-block;
   margin-top: 0;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 999px;
   background-color: #ffe4ec;
   color: #e11d48;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
 }
 /* ============================================
@@ -23966,6 +24034,11 @@ salla-products-list {
   }
   salla-products-slider {
     --slides-per-view: 6;
+  }
+}
+@media (min-width: 1280px) {
+  salla-products-slider {
+    --slides-per-view: 7;
   }
 }
 .brands-nav{
@@ -25407,8 +25480,8 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   gap: 10px;
 }
 /* =========================================
-  THARAA PRO THEME - GLOBAL STYLES
-  ========================================= */
+   THARAA PRO THEME - GLOBAL STYLES
+   ========================================= */
 :root {
   --th-gold: #d4af37;
   --th-black: #222222;
@@ -25504,7 +25577,8 @@ salla-search {
   background: #fff;
   border-bottom: 1px solid #eaeaea;
   border-bottom: 1px solid var(--th-border);
-  height: 58px; /* ارتفاع ثابت لضمان التناسق */
+  height: 58px;
+  /* ارتفاع ثابت لضمان التناسق */
   position: relative;
   z-index: 990;
 }
@@ -25585,13 +25659,15 @@ salla-search {
   transition: 0.2s;
   border-right: 3px solid transparent;
 }
-.th-mega-tab:hover, .th-mega-tab.active {
+.th-mega-tab:hover,
+.th-mega-tab.active {
   background: #fff;
   color: #d4af37;
   color: var(--th-gold);
   border-right-color: #d4af37;
   border-right-color: var(--th-gold);
-  padding-right: 15px; /* حركة بسيطة */
+  padding-right: 15px;
+  /* حركة بسيطة */
 }
 .th-mega-content {
   width: 75%;
@@ -25682,21 +25758,17 @@ salla-search {
   color: #d4af37;
   color: var(--th-gold);
 }
-/* الموبايل (Drawer) */
-.mobile-drawer {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 300px;
-  height: 100vh;
-  background: #fff;
-  z-index: 2001;
-  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+/* =========================================
+   الموبايل (Mobile Drawer) - Enhanced
+   ========================================= */
+/* Body scroll lock when drawer is open */
+body.drawer-open {
+  overflow: hidden !important;
 }
-.mobile-drawer.open {
-  right: 0;
+body.drawer-open {
+  touch-action: none;
 }
+/* Overlay */
 .mobile-overlay {
   position: fixed;
   top: 0;
@@ -25707,12 +25779,72 @@ salla-search {
   z-index: 2000;
   opacity: 0;
   visibility: hidden;
-  transition: 0.3s;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(2px);
 }
 .mobile-overlay.open {
   opacity: 1;
   visibility: visible;
 }
+/* Drawer Panel */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  /* Alpine handles the transform */
+  width: min(300px, 100vw - 50px);
+  /* Responsive: never exceeds screen width */
+  max-width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  /* Dynamic viewport height for mobile browsers */
+  background: #fff;
+  z-index: 2001;
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  /* LTR Support */
+  /* Ensure drawer content doesn't overflow */
+  overflow: hidden;
+}
+[dir=ltr] .mobile-drawer {
+  right: auto;
+  left: 0;
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.15);
+}
+/* Close Button - Larger touch target */
+.drawer-close-btn {
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.drawer-close-btn:active {
+  transform: scale(0.95);
+}
+/* Hamburger Button - Touch target */
+.hamburger-btn {
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.hamburger-btn:active {
+  transform: scale(0.95);
+}
+/* Menu content scrolling */
+.mobile-drawer .overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scroll on iOS */
+  overscroll-behavior: contain;
+  /* Prevent scroll chaining */
+}
+/* Focus visible styles for accessibility */
+.mobile-drawer button:focus-visible,
+.mobile-drawer a:focus-visible {
+  outline: 2px solid #d4af37;
+  outline: 2px solid var(--th-gold);
+  outline-offset: 2px;
+}
+/* Animation keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -25722,6 +25854,30 @@ salla-search {
     opacity: 1;
     transform: translateY(0);
   }
+}
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+/* RTL slide animation */
+[dir=rtl] .mobile-drawer[x-show] {
+  animation: slideInFromRight 0.3s ease-out;
+}
+/* LTR slide animation */
+[dir=ltr] .mobile-drawer[x-show] {
+  animation: slideInFromLeft 0.3s ease-out;
 }
 .first\:rounded-t-md:first-child{
     border-top-left-radius: 0.375rem;
@@ -25783,6 +25939,11 @@ salla-search {
     transform: translate(-3px, var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+.hover\:border-gray-300:hover{
+    --tw-border-opacity: 1;
+    border-color: rgba(209, 213, 219, 1);
+    border-color: rgba(209, 213, 219, var(--tw-border-opacity, 1));
+}
 .hover\:bg-gray-100:hover{
     --tw-bg-opacity: 1;
     background-color: rgba(243, 244, 246, 1);
@@ -25798,6 +25959,11 @@ salla-search {
     background-color: rgba(197, 160, 89, 1);
     background-color: rgba(197, 160, 89, var(--tw-bg-opacity, 1));
 }
+.hover\:bg-red-50:hover{
+    --tw-bg-opacity: 1;
+    background-color: rgba(254, 242, 242, 1);
+    background-color: rgba(254, 242, 242, var(--tw-bg-opacity, 1));
+}
 .hover\:text-dark:hover{
     --tw-text-opacity: 1;
     color: rgba(29, 31, 31, 1);
@@ -25812,6 +25978,11 @@ salla-search {
     --tw-text-opacity: 1;
     color: rgba(239, 68, 68, 1);
     color: rgba(239, 68, 68, var(--tw-text-opacity, 1));
+}
+.hover\:text-red-600:hover{
+    --tw-text-opacity: 1;
+    color: rgba(220, 38, 38, 1);
+    color: rgba(220, 38, 38, var(--tw-text-opacity, 1));
 }
 .hover\:text-white:hover{
     --tw-text-opacity: 1;
@@ -25838,6 +26009,27 @@ salla-search {
     --tw-shadow-colored: 5px 10px 99px var(--tw-shadow-color);
     box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 5px 10px 99px rgba(43,45,52,0.05098);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
+}
+.focus\:outline-none:focus{
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+.focus\:ring-2:focus{
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: /*!*/ /*!*/ 0 0 0 0px #fff, /*!*/ /*!*/ 0 0 0 calc(2px + 2px) #2563eb, 0 0 rgba(0,0,0,0);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 rgba(0,0,0,0));
+}
+.focus\:ring-primary:focus{
+    --tw-ring-opacity: 1;
+    --tw-ring-color: rgba(197, 160, 89, var(--tw-ring-opacity, 1));
+}
+.focus\:ring-red-500:focus{
+    --tw-ring-opacity: 1;
+    --tw-ring-color: rgba(239, 68, 68, var(--tw-ring-opacity, 1));
+}
+.focus\:ring-offset-2:focus{
+    --tw-ring-offset-width: 2px;
 }
 .group:hover .group-hover\:block{
     display: block;
@@ -26512,6 +26704,11 @@ salla-search {
 }
 .rtl\:mr-3:where([dir="rtl"], [dir="rtl"] *){
     margin-right: 0.75rem;
+}
+.rtl\:-translate-x-full:where([dir="rtl"], [dir="rtl"] *){
+    --tw-translate-x: -100%;
+    transform: translate(-100%, var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .rtl\:-scale-x-100:where([dir="rtl"], [dir="rtl"] *){
     --tw-scale-x: -1;

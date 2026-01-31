@@ -23,8 +23,12 @@
     <div class="th-main-header py-3">
         <div class="container flex items-center justify-between gap-8">
             
-            {# زر الموبايل #}
-            <button class="lg:hidden text-2xl text-gray-800" onclick="toggleDrawer()">
+            {# زر الموبايل (Hamburger) #}
+            <button type="button"
+                    class="hamburger-btn lg:hidden text-2xl text-gray-800 w-11 h-11 flex items-center justify-center hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    onclick="toggleDrawer()"
+                    aria-controls="mobile-drawer"
+                    aria-label="{{ trans('blocks.header.menu') }}">
                 <i class="sicon-menu"></i>
             </button>
 
