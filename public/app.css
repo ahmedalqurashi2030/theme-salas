@@ -23494,7 +23494,6 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   /* Image Area */
   /* Wishlist Button */
   /* Product Badges */
-  /* Floating Add to Cart Button */
   /* Content Area */
   /* Price Row */
   /* ============================================
@@ -23511,6 +23510,12 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   /* ============================================
      Responsive Adjustments
      ============================================ */
+  /* =================================================================
+     CUSTOM ADD TO CART BUTTON (Floating Left - Image Match)
+     ================================================================= */
+  /* 1. وضع الحاوية (Positioning the Container) */
+  /* 2. تصميم الزر الدائري (Circular Button Style) */
+  /* 3. تأثير التحويم (Hover Effect) */
 }
 .tharaa-theme salla-products-list {
   display: grid !important;
@@ -23597,31 +23602,6 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   border-radius: 12px;
   font-weight: 700;
   z-index: 5;
-}
-.tharaa-theme .s-product-card-floating-btn {
-  position: absolute;
-  top: auto;
-  left: 50%;
-  right: auto;
-  bottom: 12px;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-.tharaa-theme .s-product-card-floating-btn salla-add-product-button::part(button) {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #fff;
-  color: #b7791f;
-  border: 1px solid #e4c596;
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
-  transition: all 0.2s ease;
-}
-.tharaa-theme .s-product-card-floating-btn salla-add-product-button::part(button):hover {
-  background: #fffaf1;
-  color: #a16207;
-  border-color: #d5b482;
-  transform: scale(1.05);
 }
 .tharaa-theme .s-product-card-content {
   padding: 10px 14px 16px;
@@ -24035,6 +24015,52 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   .tharaa-theme salla-products-slider {
     --slides-per-view: 7;
   }
+}
+.tharaa-theme .s-product-card-add-btn {
+  position: absolute !important;
+  z-index: 25 !important;
+  left: 12px !important;
+  right: auto !important;
+  top: 155px !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  display: block !important;
+}
+.tharaa-theme .s-product-card-add-btn {
+  /* الموقع: جهة اليسار */
+  /* الارتفاع: مضبوط ليكون أسفل الصورة تقريباً (يمكنك تعديل 155px) */
+  /* تنظيف */
+}
+.tharaa-theme .s-product-card-add-btn salla-add-product-button::part(button) {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+.tharaa-theme .s-product-card-add-btn salla-add-product-button::part(button) {
+  /* لون الأيقونة */
+  /* حدود وظلال ناعمة */
+  /* توسيط المحتوى */
+}
+.tharaa-theme .s-product-card-add-btn salla-add-product-button::part(button):hover {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  border-color: #111827 !important;
+}
+.tharaa-theme .s-product-card-add-btn salla-add-product-button::part(button):hover {
+  /* خلفية سوداء عند التحويم */
+  /* أيقونة بيضاء عند التحويم */
+  transform: scale(1.05);
 }
 .brands-nav{
     display: flex;

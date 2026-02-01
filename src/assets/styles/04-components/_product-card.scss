@@ -114,35 +114,6 @@
     z-index: 5;
   }
 
-  /* Floating Add to Cart Button */
-  .s-product-card-floating-btn {
-    position: absolute;
-    top: auto;
-    left: 50%;
-    right: auto;
-    bottom: 12px;
-    transform: translateX(-50%);
-    z-index: 10;
-
-    salla-add-product-button::part(button) {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #fff;
-      color: #b7791f;
-      border: 1px solid #e4c596;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
-      transition: all 0.2s ease;
-    }
-
-    salla-add-product-button::part(button):hover {
-      background: #fffaf1;
-      color: #a16207;
-      border-color: #d5b482;
-      transform: scale(1.05);
-    }
-  }
-
   /* Content Area */
   .s-product-card-content {
     padding: 10px 14px 16px;
@@ -629,5 +600,61 @@
     salla-products-slider {
       --slides-per-view: 7;
     }
+  }
+
+  /* =================================================================
+     CUSTOM ADD TO CART BUTTON (Floating Left - Image Match)
+     ================================================================= */
+
+  /* 1. وضع الحاوية (Positioning the Container) */
+  .s-product-card-add-btn {
+    position: absolute !important;
+    z-index: 25 !important;
+
+    /* الموقع: جهة اليسار */
+    left: 12px !important;
+    right: auto !important;
+
+    /* الارتفاع: مضبوط ليكون أسفل الصورة تقريباً (يمكنك تعديل 155px) */
+    top: 155px !important;
+    bottom: auto !important;
+
+    /* تنظيف */
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  /* 2. تصميم الزر الدائري (Circular Button Style) */
+  .s-product-card-add-btn salla-add-product-button::part(button) {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background-color: #ffffff !important;
+
+    /* لون الأيقونة */
+    color: #333333 !important;
+
+    /* حدود وظلال ناعمة */
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+
+    /* توسيط المحتوى */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+
+  /* 3. تأثير التحويم (Hover Effect) */
+  .s-product-card-add-btn salla-add-product-button::part(button):hover {
+    background-color: #111827 !important;
+    /* خلفية سوداء عند التحويم */
+    color: #ffffff !important;
+    /* أيقونة بيضاء عند التحويم */
+    border-color: #111827 !important;
+    transform: scale(1.05);
   }
 }
