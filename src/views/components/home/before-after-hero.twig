@@ -62,16 +62,19 @@
                     {# سلايدر المقارنة #}
                     <div class="th-comparison-slider js-th-comparison">
                         
-                        {# الطبقة الخلفية (بعد - After) #}
-                        <div class="th-comparison-slider__layer th-comparison-slider__layer--base">
-                            <img src="{{ img_after }}" alt="After">
-                            <span class="th-comparison-slider__label th-comparison-slider__label--after">{{ trans('components.comparison.after') }}</span>
-                        </div>
+                        {# حاوية الصور (للقص) #}
+                        <div class="th-comparison-images">
+                            {# الطبقة الخلفية (بعد - After) #}
+                            <div class="th-comparison-slider__layer th-comparison-slider__layer--base">
+                                <img src="{{ img_after }}" alt="After">
+                                <span class="th-comparison-slider__label th-comparison-slider__label--after">{{ trans('components.comparison.after') }}</span>
+                            </div>
 
-                        {# الطبقة الأمامية (قبل - Before) #}
-                        <div class="th-comparison-slider__layer th-comparison-slider__layer--overlay">
-                            <img src="{{ img_before }}" alt="Before">
-                            <span class="th-comparison-slider__label th-comparison-slider__label--before">{{ trans('components.comparison.before') }}</span>
+                            {# الطبقة الأمامية (قبل - Before) #}
+                            <div class="th-comparison-slider__layer th-comparison-slider__layer--overlay">
+                                <img src="{{ img_before }}" alt="Before">
+                                <span class="th-comparison-slider__label th-comparison-slider__label--before">{{ trans('components.comparison.before') }}</span>
+                            </div>
                         </div>
 
                         {# المقبض (Handle) #}
@@ -91,7 +94,7 @@
 </section>
 
 
-{# --- 3. التنسيقات (CSS) --- #}
+{# --- 3. التنسيقات (CSS) --- }
 <style>
 /* تعريف المتغيرات الأساسية للقسم */
 :root {
@@ -114,9 +117,6 @@
     /* خلفية متدرجة جذابة */
     background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* Fallback */
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-    
-    /* إذا أردنا لوناً أكثر جاذبية (Purple/Blue vibe) يمكن استبدال الخلفية بـ: */
-    /* background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
     
     border-radius: var(--th-radius-xl);
     padding: 0;
@@ -244,11 +244,23 @@
     max-width: 620px;
     height: 100%;
     border-radius: var(--th-radius-lg);
-    overflow: hidden;
+    /* overflow: hidden;  <-- تم الإلغاء للسماح للمقبض بالخروج */
+    overflow: visible;
     cursor: col-resize;
     background: #fff;
     box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
     border: 8px solid #fff; /* إطار أبيض عريض */
+}
+
+/* حاوية الصور الداخلية (جديد) */
+.th-comparison-images {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* القص يحدث هنا */
+    border-radius: calc(var(--th-radius-lg) - 8px); /* نصف القطر الداخلي */
+    z-index: 1;
 }
 
 .th-comparison-slider__layer {
@@ -319,6 +331,7 @@
 
 .th-comparison-slider__handle-btn i { font-size: 12px; opacity: 0.6; }
 
+
 /* --- التجاوب مع الجوال (Responsive) --- */
 @media (max-width: 992px) {
     .th-comparison-hero { padding: 20px 0; }
@@ -352,6 +365,11 @@
         border-width: 4px;
         max-width: 100%;
     }
+    
+    /* تعديل نصف القطر الداخلي للموبايل */
+    .th-comparison-images {
+        border-radius: calc(var(--th-radius-lg) - 4px);
+    }
 
     .th-comparison-hero__product-floating { 
         width: 140px; 
@@ -360,7 +378,7 @@
 </style>
 
 
-{# --- 4. التفاعل (JavaScript) --- #}
+{# --- 4. التفاعل (JavaScript) --- }
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // تحديد جميع عناصر السلايدر في الصفحة
@@ -374,10 +392,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const handle = slider.querySelector('.th-comparison-slider__handle');
         let isDown = false;
 
-        // دالة: إصلاح عرض الصورة لتطابق عرض الحاوية دائماً
-        // هذا يمنع الصورة من الانكماش عند تحريك المقبض
+        // دالة: إصلاح عرض الصورة لتطابق عرض الحاوية الداخلية
         function fixImageWidth() {
-            overlayImg.style.width = slider.offsetWidth + 'px';
+            // نستخدم clientWidth للحصول على العرض الداخلي (بدون البوردر)
+            // مما يضمن تطابق الصور داخل الحاوية الجديدة
+            overlayImg.style.width = slider.clientWidth + 'px';
         }
         
         // استخدام ResizeObserver لمراقبة تغيير حجم السلايدر بدقة عالية
@@ -387,12 +406,19 @@ document.addEventListener("DOMContentLoaded", function() {
         // دالة الحركة
         function moveSlider(x) {
             const rect = slider.getBoundingClientRect();
-            // حساب مكان المؤشر بالنسبة للحاوية
-            let position = x - rect.left;
+            // حساب مكان المؤشر بالنسبة للحاوية (يشمل البوردر لأن rect يشمله)
+            // للحصول على الموقع النسبي داخل الـ content-box (بافتراض وجود بوردر)
+            // لكن المقبض absolute بالنسبة للـ padding-box
+            // البوردر اليساري هو slider.clientLeft
             
-            // التأكد من عدم خروج المقبض عن الحدود
+            let position = x - rect.left - slider.clientLeft;
+            
+            // حدود الحركة: من 0 إلى العرض الداخلي
+            const maxPos = slider.clientWidth;
+
+            // التأكد من عدم خروج المقبض عن الحدود الداخلية
             if (position < 0) position = 0;
-            if (position > rect.width) position = rect.width;
+            if (position > maxPos) position = maxPos;
 
             // تطبيق التغييرات
             overlay.style.width = position + "px";
