@@ -8,7 +8,7 @@
 	<div class="halo halo-1"></div>
 	<div class="halo halo-2"></div>
 
-	<div class="container">
+	<div class="section-container">
 		<!-- Section Header & Filters -->
 		<div class="section-header">
 			<div>
@@ -35,16 +35,6 @@
 					{% endfor %}
 				</div>
 			{% endif %}
-
-			{% for section in component.products %}
-              <salla-button 
-                class="tab-trigger {{ loop.first?'is-active':'' }}"
-                data-target="{{ component_id }}-{{ section.id }}"
-                data-component-id="{{ component_id }}"
-                fill="outline">
-                  {{ section.category_title }}
-              </salla-button>
-          {% endfor %}
 		</div>
 
 		<!-- Products Area -->
