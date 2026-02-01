@@ -957,9 +957,6 @@ select{
 .top-full{
     top: 100%;
 }
-.isolate{
-    isolation: isolate;
-}
 .-z-1{
     z-index: -1;
 }
@@ -1384,6 +1381,9 @@ select{
 }
 .flex-none{
     flex: none;
+}
+.flex-shrink{
+    flex-shrink: 1;
 }
 .shrink-0{
     flex-shrink: 0;
@@ -2114,6 +2114,9 @@ select{
 }
 .font-semibold{
     font-weight: 600;
+}
+.uppercase{
+    text-transform: uppercase;
 }
 .leading-10{
     line-height: 2.5rem;
@@ -24072,6 +24075,9 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
 }
 .tharaa-theme .s-product-card-add-btn i {
   font-size: 14px;
+}
+.tharaa-theme .s-button-outline {
+  border: none;
 }
 .brands-nav{
     display: flex;
