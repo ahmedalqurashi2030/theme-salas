@@ -135,23 +135,17 @@ class ProductCard extends HTMLElement {
 
   getRatingHtml() {
     // 1. Check for Real Rating
-    const hasRating = this.product?.rating?.stars;
+    const hasRating = !!this.product?.rating?.stars;
     const ratingValue = hasRating ? this.product.rating.stars : 5.0;
+    const ratingCount = hasRating ? (this.product.rating.count || 0) : 2;
 
-    // 2. Build 5-star loop
-    let starsHtml = '<div class="flex text-amber-400 gap-0.5">';
-    for (let i = 1; i <= 5; i++) {
-      // If real rating: gray out stars beyond the value
-      // If fake (no rating): always gold (as per "fake 5 stars" request)
-      const isFilled = hasRating ? (i <= Math.round(ratingValue)) : true;
-      starsHtml += `<i class="sicon-star2 ${isFilled ? '' : 'text-gray-200'}"></i>`;
-    }
-    starsHtml += '</div>';
-
+    // Style: (Count) Value Star -- RTL: Star Value (Count)
+    // Structure: Icon - Value - Count
     return `
-      <div class="product-rating text-sm text-gray-400 flex items-center">
-        ${starsHtml}
-        <span class="font-bold text-gray-600 px-1 pt-0.5">${ratingValue}</span>
+      <div class="s-product-card-rating text-sm flex items-center gap-1">
+        <span class="text-gray-400 text-xs">(${ratingCount})</span>
+        <span class="font-bold text-gray-600">${ratingValue}</span>
+        <i class="sicon-star2 text-amber-400"></i>
       </div>`;
   }
 

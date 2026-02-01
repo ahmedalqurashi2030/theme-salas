@@ -118,18 +118,13 @@ view options:
                1. Change check back to {% if product.rating %}
                2. Use {{ product.rating|number }}
                =========================================
-            #}
-          
-                <div class="product-rating text-sm text-gray-400 flex items-center">
-                    <div class="flex text-amber-400 gap-0.5">
-                        {% for i in 1..5 %}
-                        ★
-                            <i class="sicon-star2"></i>
-                        {% endfor %}
-                    </div>
-                    <span class="font-bold text-gray-600 px-1 pt-0.5">5.0</span>
+            {% if true %}
+                <div class="product-rating text-sm text-gray-400 flex items-center gap-1">
+                    <span class="text-gray-400 text-xs">({{ product.rating.count|default(2) }})</span>
+                    <span class="font-bold text-gray-600">{{ product.rating.stars|default(5.0)|number }}</span>
+                    <i class="sicon-star2 text-amber-400"></i>
                 </div>
-                </div>
+            {% endif %}      </div>
 
         {% if is_special %}
             {% if main_product.product.discount_ends %}
