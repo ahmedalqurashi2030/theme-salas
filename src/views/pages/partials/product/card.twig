@@ -119,16 +119,17 @@ view options:
                2. Use {{ product.rating|number }}
                =========================================
             #}
-            {% if true %}
+          
                 <div class="product-rating text-sm text-gray-400 flex items-center">
                     <div class="flex text-amber-400 gap-0.5">
                         {% for i in 1..5 %}
+                        ★
                             <i class="sicon-star2"></i>
                         {% endfor %}
                     </div>
                     <span class="font-bold text-gray-600 px-1 pt-0.5">5.0</span>
                 </div>
-            {% endif %}      </div>
+                </div>
 
         {% if is_special %}
             {% if main_product.product.discount_ends %}
