@@ -263,24 +263,11 @@
             transform: scale(1.1);
         }
 
-        /* زر الإضافة العائم (Salla Component Specs) */
-        salla-add-product-button.th-float-add {
+        /* زر الإضافة العائم (التصميم المطلوب) */
+        .th-float-add {
             position: absolute;
             top: 10px;
             left: 10px;
-            z-index: 5;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.3s ease;
-        }
-
-        .th-mini-card:hover salla-add-product-button.th-float-add {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Inner Button Styling via Shadow Parts */
-        salla-add-product-button.th-float-add::part(button) {
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -291,11 +278,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
             font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            z-index: 5;
         }
 
-        salla-add-product-button.th-float-add::part(button):hover {
+        .th-mini-card:hover .th-float-add {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .th-float-add:hover {
             background: var(--th-text-dark);
             color: #fff;
             border-color: var(--th-text-dark);
@@ -371,7 +368,7 @@
             }
             
             /* إظهار زر الإضافة دائماً في الجوال */
-            salla-add-product-button.th-float-add {
+            .th-float-add {
                 opacity: 1;
                 transform: scale(1);
                 top: 8px; left: 8px;
@@ -391,11 +388,11 @@
                     <span class="th-badge-pill">{{ trans('components.promo_hero.badge')|default('عرض خاص') }}</span>
                     
                     {% if title %}
-                        <h2 class="th-hero-title">{{ title }}</h2>
+                        <h2 class="th-hero-title">{{ title }} fasfasf</h2>
                     {% endif %}
 
                     {% if description %}
-                        <p class="th-hero-desc">{{ description|raw }}</p>
+                        <p class="th-hero-desc">{{ description|raw }} j;fasf</p>
                     {% endif %}
 
                     <!-- العداد -->
@@ -444,13 +441,9 @@
                         {% for product in products %}
                             <a href="{{ product.url }}" class="th-mini-card" title="{{ product.name }}">
                                 <!-- زر الإضافة العائم -->
-                                <salla-add-product-button 
-                                    class="th-float-add"
-                                    product-id="{{ product.id }}"
-                                    product-status="{{ product.status }}"
-                                    product-type="{{ product.type }}">
+                                <button type="button" class="th-float-add" data-product-id="{{ product.id }}" aria-label="أضف للسلة">
                                     <i class="sicon-shopping-bag"></i>
-                                </salla-add-product-button>
+                                </button>
 
                                 <div class="th-card-img-wrap">
                                     {% if product.image is defined %}
@@ -480,7 +473,7 @@
                             {# Dummy Data for Preview #}
                             {% for i in 1..6 %}
                                 <div class="th-mini-card">
-                                    <salla-add-product-button class="th-float-add"><i class="sicon-shopping-bag"></i></salla-add-product-button>
+                                    <button type="button" class="th-float-add"><i class="sicon-shopping-bag"></i></button>
                                     <div class="th-card-img-wrap">
                                         <img src="https://via.placeholder.com/150?text=Prod+{{ i }}" class="th-card-img" alt="Demo">
                                     </div>
@@ -522,7 +515,7 @@
 
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 6)) / (1000 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 const setVal = (part, val) => {
@@ -539,6 +532,35 @@
             update();
         });
 
-        // 2. منطق الإضافة للسلة (تم استبداله بمكون سلة القياسي)
+        // 2. منطق الإضافة للسلة
+        const addBtns = document.querySelectorAll('.th-float-add');
+        addBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault(); // منع فتح رابط المنتج
+                e.stopPropagation(); // منع الانتقال للصفحة
+
+                const id = this.getAttribute('data-product-id');
+                if(!id || !window.salla) return;
+
+                this.classList.add('loading'); // يمكن إضافة ستايل للتحميل
+                this.innerHTML = '<i class="sicon-loader fa-spin"></i>';
+
+                salla.cart.addItem({ product_id: id, quantity: 1 })
+                .then(res => {
+                    this.innerHTML = '<i class="sicon-check"></i>'; // علامة صح
+                    this.style.background = '#10b981'; // لون أخضر
+                    this.style.color = '#fff';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="sicon-shopping-bag"></i>';
+                        this.style.background = '';
+                        this.style.color = '';
+                    }, 2000);
+                })
+                .catch(err => {
+                    this.innerHTML = '<i class="sicon-shopping-bag"></i>';
+                    console.error(err);
+                });
+            });
+        });
     });
 </script>
