@@ -11,10 +11,13 @@ $teal-badge: #00C9A7;
   font-family: 'Tajawal', 'Inter', sans-serif;
 
   /* 1. Grid System (Preserved) */
-  salla-products-list {
+  /* 1. Grid System (Preserved) */
+  salla-products-list,
+  .s-products-list-wrapper {
     display: grid !important;
     gap: 16px;
     grid-template-columns: repeat(2, 1fr);
+    width: 100%;
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(3, 1fr);
@@ -22,7 +25,6 @@ $teal-badge: #00C9A7;
 
     @media (min-width: 1024px) {
       grid-template-columns: repeat(5, 1fr);
-      /* 5 cards per row matches reference better */
     }
   }
 

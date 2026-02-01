@@ -23,10 +23,17 @@
      ============================================ */
 
   /* Grid System */
+  /* Grid System - Fixed to target the wrapper inside the component */
   salla-products-list {
+    display: block !important;
+    width: 100%;
+  }
+
+  .s-products-list-wrapper {
     display: grid !important;
     gap: 16px;
     grid-template-columns: repeat(2, 1fr);
+    width: 100%;
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(3, 1fr);
@@ -565,7 +572,7 @@
      ============================================ */
 
   @media (max-width: 767px) {
-    salla-products-list {
+    .s-products-list-wrapper {
       grid-template-columns: repeat(2, 1fr) !important;
       gap: 12px !important;
     }
@@ -576,7 +583,7 @@
   }
 
   @media (min-width: 768px) and (max-width: 1023px) {
-    salla-products-list {
+    .s-products-list-wrapper {
       grid-template-columns: repeat(3, 1fr) !important;
       gap: 14px !important;
     }
@@ -587,7 +594,7 @@
   }
 
   @media (min-width: 1024px) {
-    salla-products-list {
+    .s-products-list-wrapper {
       grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
       gap: 16px !important;
     }
@@ -662,10 +669,16 @@
     }
   }
 
-  
+
 
   .s-button-outline {
-      border: none;
+    border: none;
+  }
+
+  .s-button-btn {
+    padding: 0.5rem 0.7rem !important;
+    border-radius: 50% !important;
+    background: #dfd1d1 !important;
   }
 
 }

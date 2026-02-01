@@ -24,6 +24,8 @@ class App extends AppHelpers {
     this.initiateCollapse();
     this.initAttachWishlistListeners();
     this.changeMenuDirection()
+    this.initSwiperScrollbar();
+    this.initStickyHeader();
     initTootTip();
     this.loadModalImgOnclick();
 
@@ -299,6 +301,107 @@ class App extends AppHelpers {
     salla.cart.event.onItemAdded((response, prodId) => {
       app.element('salla-cart-summary').animateToCart(app.element(`#product-${prodId} img`));
     });
+  }
+
+  initSwiperScrollbar() {
+    // Function to process a specific slider
+    const processSlider = (slider) => {
+      if (slider.dataset.scrollbarInitialized) return;
+      if (slider.parentNode.querySelector('.scroll-bar')) {
+        slider.dataset.scrollbarInitialized = 'true';
+        return;
+      }
+
+      // Create scrollbar elements
+      const bar = document.createElement('div');
+      bar.className = 'scroll-bar';
+
+      const prog = document.createElement('div');
+      prog.className = 'scroll-prog';
+      prog.style.width = '0%';
+
+      bar.appendChild(prog);
+
+      // Append scrollbar after the slider container
+      slider.parentNode.insertBefore(bar, slider.nextSibling);
+      slider.dataset.scrollbarInitialized = 'true';
+
+      // Function to attach to swiper instance
+      const attach = (swiper) => {
+        const updateProg = () => {
+          prog.style.width = `${swiper.progress * 100}%`;
+        };
+
+        swiper.on('progress', updateProg);
+        swiper.on('setTransition', (s, duration) => {
+          prog.style.transitionDuration = `${duration}ms`;
+        });
+
+        updateProg();
+      };
+
+      if (slider.swiper) {
+        attach(slider.swiper);
+      } else {
+        const checkSwiper = setInterval(() => {
+          if (slider.swiper) {
+            clearInterval(checkSwiper);
+            attach(slider.swiper);
+          }
+        }, 500);
+        setTimeout(() => clearInterval(checkSwiper), 10000);
+      }
+    };
+
+    // 1. Process existing sliders
+    document.querySelectorAll('.swiper.s-slider-container').forEach(processSlider);
+
+    // 2. Observer for new sliders (e.g. loaded via AJAX or Web Components)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) { // Element node
+            // Check if the node itself is a slider
+            if (node.matches && node.matches('.swiper.s-slider-container')) {
+              processSlider(node);
+            }
+            // Check descendants
+            if (node.querySelectorAll) {
+              node.querySelectorAll('.swiper.s-slider-container').forEach(processSlider);
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  /**
+   * Initialize Sticky Header
+   */
+  initStickyHeader() {
+    const header = document.querySelector('.th-main-header');
+    if (!header) return;
+
+    const observer = new IntersectionObserver(
+      ([e]) => e.target.classList.toggle('is-sticky', e.intersectionRatio < 1),
+      { threshold: [1] }
+    );
+
+    // We need a sentinel element to track since sticky top:0 is always visible
+    // Alternatively, checking scroll position is simpler and reliable for sticky headers
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        header.classList.add('is-sticky');
+      } else {
+        header.classList.remove('is-sticky');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Initial check
+    handleScroll();
   }
 }
 
