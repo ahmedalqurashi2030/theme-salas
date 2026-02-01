@@ -3,13 +3,13 @@
    Uses Salla components + slots (image, details, price)
    ============================================ #}
 
-<section class="lifestyle-section" id="section-{{ section_id }}">
+{% set component_id = 'product-categories-' ~ section_id %}
+<section class="lifestyle-section s-block s-block-tabs s-block--tabs-produtcs s-block--full-bg bg-gray-100 py-8 sm:py-16" id="{{ component_id }}">
 	<!-- Decorative Background Halos -->
 	<div class="halo halo-1"></div>
 	<div class="halo halo-2"></div>
 
 	<div class="section-container">
-		<!-- Section Header & Filters -->
 		<div class="section-header">
 			<div>
 				<h2 class="font-bold text-lg md:text-xl">
@@ -19,138 +19,244 @@
 					{{ trans('components.product_categories.section_description') }}
 				</p>
 			</div>
-
-			<!-- Category Filter Tabs -->
-			{% if component.products|length > 0 %}
-				<div class="category-filter">
-					<button class="active filter-btn" data-target="all">
-						{{ trans('common.all') }}
-					</button>
-					{% for tab in component.products %}
-						{% if tab.category_list and tab.dropdown_list_1|length > 0 %}
-							<button class="filter-btn" data-target="cat-{{ tab.category_list.id }}">
-								{{ tab.category_title|default(tab.category_list.name|default('')) }}
-							</button>
-						{% endif %}
-					{% endfor %}
-				</div>
-			{% endif %}
 		</div>
 
-		<!-- Products Area -->
-		<div class="products-band">
-			<div class="cards-strip-wrapper">
-				<div class="cards-strip">
-					{% for tab in component.products %}
-						{% for product in tab.dropdown_list_1 %}
-							<div
-								class="s-products-slider-card th-card"
-								data-category="cat-{{ tab.category_list.id|default('') }}">
+		{% if component.products|length > 0 %}
+			<div class="tabs hide-scroll category-filter">
+				<button class="tab-trigger is-active filter-btn" data-target="{{ component_id }}-all" data-component-id="{{ component_id }}">
+					{{ trans('common.all') }}
+				</button>
+				{% for tab in component.products %}
+					{% if tab.category_list and tab.dropdown_list_1|length > 0 %}
+						<button class="tab-trigger filter-btn" data-target="{{ component_id }}-cat-{{ tab.category_list.id }}" data-component-id="{{ component_id }}">
+							{{ tab.category_title|default(tab.category_list.name|default('')) }}
+						</button>
+					{% endif %}
+				{% endfor %}
+			</div>
+		{% endif %}
 
-								<salla-product-card 
-									product="{{ product }}"
-									shadow-on-hover
-									class="th-card-inner {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}">
+		<div class="tabs-wrapper">
+			<div id="{{ component_id }}-all" class="tabs__item is-active">
+				<div class="products-band">
+					<div class="cards-strip-wrapper">
+						<div class="cards-strip">
+							{% for tab in component.products %}
+								{% for product in tab.dropdown_list_1 %}
+									<div class="s-products-slider-card th-card">
+										<salla-product-card
+											product="{{ product }}"
+											shadow-on-hover
+											class="th-card-inner {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}">
 
-									{# ========== IMAGE SLOT ========== #}
-									<div slot="image" class="th-card-image">
-										{# Best seller / promotion badge #}
-										{% if product.promotion_title or product.is_best_seller %}
-											<span class="th-badge th-badge--primary">
-												{{ product.promotion_title|default(trans('common.best_seller')) }}
-											</span>
-										{% endif %}
-
-										<div class="th-card-image-wrapper">
-											<img
-												src="{{ product.image.url|default(product.image|default('images/s-empty.png'|cdn)) }}"
-												alt="{{ product.image.alt|default(product.name) }}"
-												loading="lazy">
-										</div>
-
-										{# Quick Add floating button #}
-										<salla-add-product-button
-											class="th-quick-add"
-											product-id="{{ product.id }}"
-											product-status="{{ product.status }}"
-											product-type="{{ product.type }}">
-											<span class="sr-only">
-												{{ product.add_to_cart_label }}
-											</span>
-											<i class="sicon-shopping-bag text-base"></i>
-										</salla-add-product-button>
-									</div>
-
-									{# ========== DETAILS SLOT ========== #}
-									<div slot="details" class="th-card-details">
-										{% if product.brand %}
-											<div class="th-card-brand">
-												{{ product.brand.name ?? product.brand }}
-											</div>
-										{% endif %}
-
-										<div class="th-card-title">
-											{{ product.name|default('') }}
-										</div>
-
-										{% if product.rating %}
-											<div class="th-card-rating">
-												<i class="sicon-star2 th-card-rating-icon"></i>
-												<span class="th-card-rating-value">
-													{{ product.rating.stars ?? product.rating|number }}
-												</span>
-
-												{% if product.rating.count %}
-													<span class="th-card-rating-count">
-														({{ product.rating.count|number }})
+											{# ========== IMAGE SLOT ========== #}
+											<div slot="image" class="th-card-image">
+												{% if product.promotion_title or product.is_best_seller %}
+													<span class="th-badge th-badge--primary">
+														{{ product.promotion_title|default(trans('common.best_seller')) }}
 													</span>
 												{% endif %}
-											</div>
-										{% endif %}
-									</div>
 
-									{# ========== PRICE SLOT ========== #}
-									<div slot="price" class="th-card-price">
-										{% if product.is_on_sale %}
-											<div class="th-card-price-row">
-												<span class="th-card-price-final">
-													{{ product.sale_price|money }}
-												</span>
+												<div class="th-card-image-wrapper">
+													<img
+														src="{{ product.image.url|default(product.image|default('images/s-empty.png'|cdn)) }}"
+														alt="{{ product.image.alt|default(product.name) }}"
+														loading="lazy">
+												</div>
 
-												<span class="th-card-price-original">
-													{{ product.regular_price|money }}
-												</span>
-
-												{% set discount_percent = null %}
-												{% if product.discount_percentage %}
-													{% set discount_percent = product.discount_percentage %}
-												{% endif %}
-
-												{% if discount_percent is not null %}
-													<span class="th-card-discount-badge">
-														-%{{ discount_percent }}
+												<salla-add-product-button
+													class="th-quick-add"
+													product-id="{{ product.id }}"
+													product-status="{{ product.status }}"
+													product-type="{{ product.type }}">
+													<span class="sr-only">
+														{{ product.add_to_cart_label }}
 													</span>
+													<i class="sicon-shopping-bag text-base"></i>
+												</salla-add-product-button>
+											</div>
+
+											{# ========== DETAILS SLOT ========== #}
+											<div slot="details" class="th-card-details">
+												{% if product.brand %}
+													<div class="th-card-brand">
+														{{ product.brand.name ?? product.brand }}
+													</div>
+												{% endif %}
+
+												<div class="th-card-title">
+													{{ product.name|default('') }}
+												</div>
+
+												{% if product.rating %}
+													<div class="th-card-rating">
+														<i class="sicon-star2 th-card-rating-icon"></i>
+														<span class="th-card-rating-value">
+															{{ product.rating.stars ?? product.rating|number }}
+														</span>
+
+														{% if product.rating.count %}
+															<span class="th-card-rating-count">
+																({{ product.rating.count|number }})
+															</span>
+														{% endif %}
+													</div>
 												{% endif %}
 											</div>
-										{% else %}
-											<div class="th-card-price-row">
-												<span class="th-card-price-final">
-													{{ product.price|money }}
-												</span>
+
+											{# ========== PRICE SLOT ========== #}
+											<div slot="price" class="th-card-price">
+												{% if product.is_on_sale %}
+													<div class="th-card-price-row">
+														<span class="th-card-price-final">
+															{{ product.sale_price|money }}
+														</span>
+
+														<span class="th-card-price-original">
+															{{ product.regular_price|money }}
+														</span>
+
+														{% set discount_percent = null %}
+														{% if product.discount_percentage %}
+															{% set discount_percent = product.discount_percentage %}
+														{% endif %}
+
+														{% if discount_percent is not null %}
+															<span class="th-card-discount-badge">
+																-%{{ discount_percent }}
+															</span>
+														{% endif %}
+													</div>
+												{% else %}
+													<div class="th-card-price-row">
+														<span class="th-card-price-final">
+															{{ product.price|money }}
+														</span>
+													</div>
+												{% endif %}
 											</div>
-										{% endif %}
+										</salla-product-card>
 									</div>
-								</salla-product-card>
-							</div>
-						{% endfor %}
-					{% endfor %}
+								{% endfor %}
+							{% endfor %}
+						</div>
+					</div>
+
+					<div class="scroll-bar">
+						<div class="scroll-prog"></div>
+					</div>
 				</div>
 			</div>
 
-			<!-- Scroll Progress Bar -->
-			<div class="scroll-bar">
-				<div class="scroll-prog"></div>
-			</div>
+			{% for tab in component.products %}
+				{% if tab.category_list and tab.dropdown_list_1|length > 0 %}
+					<div id="{{ component_id }}-cat-{{ tab.category_list.id }}" class="tabs__item">
+						<div class="products-band">
+							<div class="cards-strip-wrapper">
+								<div class="cards-strip">
+									{% for product in tab.dropdown_list_1 %}
+										<div class="s-products-slider-card th-card">
+											<salla-product-card
+												product="{{ product }}"
+												shadow-on-hover
+												class="th-card-inner {{ product.is_out_of_stock ? 'is-out-of-stock' : '' }}">
+
+												<div slot="image" class="th-card-image">
+													{% if product.promotion_title or product.is_best_seller %}
+														<span class="th-badge th-badge--primary">
+															{{ product.promotion_title|default(trans('common.best_seller')) }}
+														</span>
+													{% endif %}
+
+													<div class="th-card-image-wrapper">
+														<img
+															src="{{ product.image.url|default(product.image|default('images/s-empty.png'|cdn)) }}"
+															alt="{{ product.image.alt|default(product.name) }}"
+															loading="lazy">
+													</div>
+
+													<salla-add-product-button
+														class="th-quick-add"
+														product-id="{{ product.id }}"
+														product-status="{{ product.status }}"
+														product-type="{{ product.type }}">
+														<span class="sr-only">
+															{{ product.add_to_cart_label }}
+														</span>
+														<i class="sicon-shopping-bag text-base"></i>
+													</salla-add-product-button>
+												</div>
+
+												<div slot="details" class="th-card-details">
+													{% if product.brand %}
+														<div class="th-card-brand">
+															{{ product.brand.name ?? product.brand }}
+														</div>
+													{% endif %}
+
+													<div class="th-card-title">
+														{{ product.name|default('') }}
+													</div>
+
+													{% if product.rating %}
+														<div class="th-card-rating">
+															<i class="sicon-star2 th-card-rating-icon"></i>
+															<span class="th-card-rating-value">
+																{{ product.rating.stars ?? product.rating|number }}
+															</span>
+
+															{% if product.rating.count %}
+																<span class="th-card-rating-count">
+																	({{ product.rating.count|number }})
+																</span>
+															{% endif %}
+														</div>
+													{% endif %}
+												</div>
+
+												<div slot="price" class="th-card-price">
+													{% if product.is_on_sale %}
+														<div class="th-card-price-row">
+															<span class="th-card-price-final">
+																{{ product.sale_price|money }}
+															</span>
+
+															<span class="th-card-price-original">
+																{{ product.regular_price|money }}
+															</span>
+
+															{% set discount_percent = null %}
+															{% if product.discount_percentage %}
+																{% set discount_percent = product.discount_percentage %}
+															{% endif %}
+
+															{% if discount_percent is not null %}
+																<span class="th-card-discount-badge">
+																	-%{{ discount_percent }}
+																</span>
+															{% endif %}
+														</div>
+													{% else %}
+														<div class="th-card-price-row">
+															<span class="th-card-price-final">
+																{{ product.price|money }}
+															</span>
+														</div>
+													{% endif %}
+												</div>
+											</salla-product-card>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+
+							<div class="scroll-bar">
+								<div class="scroll-prog"></div>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
 		</div>
 	</div>
 </section>
