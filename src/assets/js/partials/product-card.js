@@ -133,6 +133,28 @@ class ProductCard extends HTMLElement {
     return p ? `<span class="th-product-card-discount-badge">-${p}%</span>` : '';
   }
 
+  getRatingHtml() {
+    // 1. Check for Real Rating
+    const hasRating = this.product?.rating?.stars;
+    const ratingValue = hasRating ? this.product.rating.stars : 5.0;
+
+    // 2. Build 5-star loop
+    let starsHtml = '<div class="flex text-amber-400 gap-0.5">';
+    for (let i = 1; i <= 5; i++) {
+      // If real rating: gray out stars beyond the value
+      // If fake (no rating): always gold (as per "fake 5 stars" request)
+      const isFilled = hasRating ? (i <= Math.round(ratingValue)) : true;
+      starsHtml += `<i class="sicon-star2 ${isFilled ? '' : 'text-gray-200'}"></i>`;
+    }
+    starsHtml += '</div>';
+
+    return `
+      <div class="product-rating text-sm text-gray-400 flex items-center">
+        ${starsHtml}
+        <span class="font-bold text-gray-600 px-1 pt-0.5">${ratingValue}</span>
+      </div>`;
+  }
+
   /* -------------------------------------------------------------------------- */
   /* Rendering                                                                  */
   /* -------------------------------------------------------------------------- */
@@ -248,14 +270,7 @@ class ProductCard extends HTMLElement {
       <div class="s-product-card-content">
         <!-- Row 1: Rating + Add to Cart Button -->
         <div class="s-product-card-meta">
-          ${this.product?.rating?.stars
-        ? `<div class="s-product-card-rating">
-                  <i class="sicon-star2"></i>
-                  <span>${this.product.rating.stars}</span>
-                  <span class="text-gray-400 text-xs">(${this.product.rating.count || 0})</span>
-                </div>`
-        : `<div class="s-product-card-rating empty"></div>`
-      }
+          ${this.getRatingHtml()}
           ${addToCartBtn}
         </div>
 

@@ -2273,6 +2273,11 @@ select{
     color: rgba(255, 255, 255, 1);
     color: rgba(255, 255, 255, var(--tw-text-opacity, 1));
 }
+.text-gray-200{
+    --tw-text-opacity: 1;
+    color: rgba(229, 231, 235, 1);
+    color: rgba(229, 231, 235, var(--tw-text-opacity, 1));
+}
 .underline{
     text-decoration-line: underline;
 }
