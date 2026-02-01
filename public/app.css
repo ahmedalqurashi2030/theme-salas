@@ -957,6 +957,9 @@ select{
 .top-full{
     top: 100%;
 }
+.isolate{
+    isolation: isolate;
+}
 .-z-1{
     z-index: -1;
 }
@@ -2318,6 +2321,12 @@ select{
     box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
 }
+.shadow{
+    --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+    box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
+}
 .outline{
     outline-style: solid;
 }
@@ -3240,6 +3249,12 @@ textarea.s-input{
         padding-left: 0.625rem;
         padding-right: 0.625rem;
     }
+}
+.thara-categories .s-advertisement-content {
+  max-width: 1400px;
+  /* Wider container for layout */
+  margin: 0 auto;
+  padding: 0 20px;
 }
 .s-advertisement-content-main{
     flex: 1 1 0%;
@@ -23050,6 +23065,9 @@ input[type=radio].sr-only:checked ~ div.product-entry .btn--add-to-cart-floating
     border-radius: 9999px;
     border-width: 0px;
     padding: 0px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .product-entry .btn--add-to-cart-floating i{
     --tw-text-opacity: 1;
@@ -23177,6 +23195,12 @@ input[type=radio].sr-only:checked ~ div.product-entry--special .product-rating {
         padding-left: 0.625rem;
         padding-right: 0.625rem;
     }
+}
+.thara-categories .s-comments-product .s-comments-container {
+  max-width: 1400px;
+  /* Wider container for layout */
+  margin: 0 auto;
+  padding: 0 20px;
 }
 .share-btns-list{
     position: absolute;
@@ -23514,8 +23538,6 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
      CUSTOM ADD TO CART BUTTON (Floating Left - Image Match)
      ================================================================= */
   /* 1. وضع الحاوية (Positioning the Container) */
-  /* 2. تصميم الزر الدائري (Circular Button Style) */
-  /* 3. تأثير التحويم (Hover Effect) */
 }
 .tharaa-theme salla-products-list {
   display: grid !important;
@@ -23537,7 +23559,7 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
 }
 .tharaa-theme .s-product-card-entry {
   background: var(--product-card-bg);
-  border-radius: 20px;
+  border-radius: 4px;
   overflow: hidden;
   position: relative;
   transition: all 0.3s ease;
@@ -23571,7 +23593,7 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
 .tharaa-theme .s-product-card-image-full:hover img {
   transform: scale(1.05);
 }
-.tharaa-theme .s-product-card-wishlist-btn {
+.tharaa-theme .s-product-card-vertical .s-product-card-wishlist-btn button {
   position: absolute;
   top: 12px;
   left: 12px;
@@ -23584,7 +23606,7 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   box-shadow: 0 8px 14px rgba(15, 23, 42, 0.08);
   z-index: 5;
 }
-.tharaa-theme .s-product-card-wishlist-btn i {
+.tharaa-theme .s-product-card-vertical .s-product-card-wishlist-btn button i {
   font-size: 14px;
   color: #9ca3af;
 }
@@ -24021,7 +24043,7 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   z-index: 25 !important;
   left: 12px !important;
   right: auto !important;
-  top: 155px !important;
+  top: -20 !important;
   bottom: auto !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -24035,32 +24057,30 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   /* تنظيف */
 }
 .tharaa-theme .s-product-card-add-btn salla-add-product-button::part(button) {
-  width: 40px !important;
-  height: 40px !important;
-  border-radius: 50% !important;
-  background-color: #ffffff !important;
-  color: #333333 !important;
-  border: 1px solid #e5e7eb !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-}
-.tharaa-theme .s-product-card-add-btn salla-add-product-button::part(button) {
-  /* لون الأيقونة */
-  /* حدود وظلال ناعمة */
-  /* توسيط المحتوى */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  color: #333;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .tharaa-theme .s-product-card-add-btn salla-add-product-button::part(button):hover {
-  background-color: #111827 !important;
-  color: #ffffff !important;
-  border-color: #111827 !important;
+  background: #333;
+  color: #fff;
+  border-color: #333;
+  transform: scale(1.1);
 }
-.tharaa-theme .s-product-card-add-btn salla-add-product-button::part(button):hover {
-  /* خلفية سوداء عند التحويم */
-  /* أيقونة بيضاء عند التحويم */
-  transform: scale(1.05);
+.tharaa-theme .s-product-card-add-btn i {
+  margin: 0 !important;
+}
+.tharaa-theme .s-product-card-add-btn i {
+  font-size: 14px;
 }
 .brands-nav{
     display: flex;
@@ -25899,6 +25919,147 @@ body.drawer-open {
 /* LTR slide animation */
 [dir=ltr] .mobile-drawer[x-show] {
   animation: slideInFromLeft 0.3s ease-out;
+}
+/* ============================================
+   STORE CATEGORIES - Professional Design
+   ============================================ */
+.thara-categories {
+  padding: 50px 0;
+  background-color: #fff;
+  position: relative;
+  /* Section Header */
+  /* Scroll Container */
+  /* Category Item (Card) */
+  /* Custom Navigation (Optional - visible on large screens) */
+}
+.thara-categories .container {
+  max-width: 1400px;
+  /* Wider container for layout */
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.thara-categories .title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 30px;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.thara-categories .title::after {
+  content: "";
+  flex-grow: 1;
+  height: 2px;
+  background: #f5f5f5;
+  margin-right: 20px;
+}
+.thara-categories__scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 40px;
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  /* Prevent cut-off shadows */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Hide scrollbar for cleaner look */
+}
+.thara-categories__scroll::-webkit-scrollbar {
+  display: none;
+}
+.thara-categories .thara-category {
+  flex: 0 0 160px;
+  /* Fixed width for consistency */
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  scroll-snap-align: start;
+  position: relative;
+  /* group transition handled by hover state */
+  /* Image Container (Circle or Rounded Square) */
+  /* Title */
+  /* Hover Effects */
+}
+@media (min-width: 768px) {
+  .thara-categories .thara-category {
+    flex: 0 0 180px;
+  }
+}
+@media (min-width: 1024px) {
+  .thara-categories .thara-category {
+    flex: 0 0 200px;
+  }
+}
+.thara-categories .thara-category__image-wrapper {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 24px;
+  /* Soft rounded corners */
+  background: #f8f8f8;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  /* Placeholder gradient */
+}
+.thara-categories .thara-category__image-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.03) 100%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.thara-categories .thara-category img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.thara-categories .thara-category__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin: 0;
+  transition: color 0.3s;
+}
+.thara-categories .thara-category:hover .thara-category__image-wrapper {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
+  /* Deep shadow */
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.thara-categories .thara-category:hover .thara-category__image-wrapper::before {
+  opacity: 1;
+}
+.thara-categories .thara-category:hover img {
+  transform: scale(1.12);
+  /* Subtle zoom */
+}
+.thara-categories .thara-category:hover .thara-category__title {
+  color: #000;
+}
+.thara-categories .scroll-btn {
+  display: none;
+  /* Styles for nav buttons would go here if implemented */
+}
+@media (min-width: 1024px) {
+  .thara-categories .scroll-btn {
+    display: flex;
+  }
 }
 .first\:rounded-t-md:first-child{
     border-top-left-radius: 0.375rem;

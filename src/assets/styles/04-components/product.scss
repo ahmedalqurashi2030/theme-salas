@@ -113,6 +113,9 @@
 
     button {
       @apply w-10 h-10 rounded-full p-0 border-0;
+      background-color: #fff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
     i {
