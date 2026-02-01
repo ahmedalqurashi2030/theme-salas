@@ -111,10 +111,18 @@ view options:
                 <h4 class="font-bold text-sm">{{ product.price|money }}</h4>
             {% endif %}
 
-            {% if product.rating %}
+            {# 
+               =========================================
+               [DEV MODE] Fake Rating (5 Stars)
+               To revert to real rating:
+               1. Change check back to {% if product.rating %}
+               2. Use {{ product.rating|number }}
+               =========================================
+            #}
+            {% if true %}
                 <div class="product-rating text-sm text-gray-400">
                     <i class="sicon-star2 text-amber-400"></i>
-                    <span>{{ product.rating|number }}</span>
+                    <span>5.0</span>
                 </div>
             {% endif %}
         </div>
