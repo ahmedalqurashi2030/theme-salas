@@ -1609,6 +1609,16 @@
             "icon": "sicon-store",
             "path": "home.main-links-circle",
             "fields": []
+        },
+        {
+            "key": "8d714399-ec2c-40af-a437-6d6b6c273f9a",
+            "title": {
+                "en": "Square Links (Tharaa)",
+                "ar": "روابط مربعات (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.main-links-square",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
