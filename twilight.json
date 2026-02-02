@@ -1619,6 +1619,16 @@
             "icon": "sicon-store",
             "path": "home.main-links-square",
             "fields": []
+        },
+        {
+            "key": "e66ae247-e415-40f8-9910-be48450ebdea",
+            "title": {
+                "en": "Rectangular Links (Tharaa)",
+                "ar": "روابط مستطيلات (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.main-links-rect",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
