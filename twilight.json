@@ -1629,6 +1629,16 @@
             "icon": "sicon-store",
             "path": "home.main-links-rect",
             "fields": []
+        },
+        {
+            "key": "e72c4c6b-48e1-4ea1-ab48-e935605f3172",
+            "title": {
+                "en": "Overlay Links (Tharaa)",
+                "ar": "روابط تراكب (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.main-links-overlay",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
