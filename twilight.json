@@ -1608,7 +1608,23 @@
             },
             "icon": "sicon-store",
             "path": "home.main-links-circle",
-            "fields": []
+            "fields": [
+                {
+                    "id": null,
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان القسم",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         },
         {
             "key": "8d714399-ec2c-40af-a437-6d6b6c273f9a",
