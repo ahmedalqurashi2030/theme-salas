@@ -1623,6 +1623,124 @@
                     "required": false,
                     "minLength": 6,
                     "maxLength": 30
+                },
+                {
+                    "id": "عرض_أزرار_التنقل_copy",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "عرض أزرار التنقل copy",
+                    "description": "وضع العرض",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "show_progress",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "عرض مؤشر التمرير",
+                    "description": "وضع العرض",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "layout_mode",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "وضع العرض",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [
+                        {
+                            "label": "صف واحد (سحب)",
+                            "value": "default",
+                            "key": "732ac4a5-af2e-4209-bbe3-fe0bb9dda09b"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "صف واحد (سحب)",
+                            "value": "default",
+                            "key": "732ac4a5-af2e-4209-bbe3-fe0bb9dda09b"
+                        },
+                        {
+                            "label": "صفين (سحب)",
+                            "value": "is-two-rows",
+                            "key": "35239cf3-161f-4576-957d-18f30c52a94f"
+                        },
+                        {
+                            "label": "شبكة عمودية (كامل الصفحة)",
+                            "value": "is-vertical",
+                            "key": "8e3ef8db-8e4c-46b5-9738-3063f5c68b39"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": false,
+                    "searchable": false,
+                    "required": false
+                },
+                {
+                    "id": "links",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "links",
+                    "description": null,
+                    "labelHTML": null,
+                    "item_label": null,
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "links.title",
+                            "type": "string",
+                            "format": "text",
+                            "label": "العنوان",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": null,
+                            "multilanguage": false,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "links.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "الصوره",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "required": false
+                        },
+                        {
+                            "id": "links.url",
+                            "type": "string",
+                            "format": "url",
+                            "inputType": "url",
+                            "label": "الرابط",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://salla.sa",
+                            "icon": "sicon-link",
+                            "value": null,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        }
+                    ],
+                    "value": [],
+                    "minLength": 1,
+                    "maxLength": 5
                 }
             ]
         },
