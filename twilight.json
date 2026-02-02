@@ -1599,6 +1599,16 @@
                     "maxLength": 30
                 }
             ]
+        },
+        {
+            "key": "b3a6775a-1cd0-46b8-994a-532239e1f189",
+            "title": {
+                "en": "Circular Links (Tharaa)",
+                "ar": "روابط دائرية (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.main-links-circle",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
