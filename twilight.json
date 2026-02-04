@@ -1082,16 +1082,6 @@
             ]
         },
         {
-            "key": "af1abfe9-60c2-4277-9f2f-4582db47e97b",
-            "title": {
-                "en": "Project_feacture",
-                "ar": "قائمة منتجات متحركة"
-            },
-            "icon": "sicon-store",
-            "path": "home.project_feacture",
-            "fields": []
-        },
-        {
             "key": "f924a739-5022-4d21-a4c3-c14c5b91cd41",
             "title": {
                 "en": "Product Categories",
