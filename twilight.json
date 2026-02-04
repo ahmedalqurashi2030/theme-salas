@@ -1752,7 +1752,23 @@
             },
             "icon": "sicon-store",
             "path": "home.main-links-overlay",
-            "fields": []
+            "fields": [
+                {
+                    "id": "aanoan_alqsm",
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان القسم",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
