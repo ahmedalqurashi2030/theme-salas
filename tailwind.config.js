@@ -139,6 +139,6 @@ module.exports = {
     plugins: [
         require('@salla.sa/twilight-tailwind-theme'),
         require('@tailwindcss/forms'),
-        // Note: @tailwindcss/line-clamp removed - built into Tailwind v3.3+
+        require('@tailwindcss/line-clamp'),
     ],
 }
