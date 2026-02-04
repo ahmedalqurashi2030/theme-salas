@@ -1306,8 +1306,8 @@
         {
             "key": "5d19b08d-c8d1-4422-95ab-d4c86d7bdc04",
             "title": {
-                "en": "Before / After Section",
-                "ar": "مقارنة قبل / بعد"
+                "en": "Before / After Comparison (Tharaa)",
+                "ar": "مقارنة قبل / بعد (ثراء)"
             },
             "icon": "sicon-store",
             "path": "home.before-after-hero",
