@@ -1742,7 +1742,23 @@
             },
             "icon": "sicon-store",
             "path": "home.main-links-square",
-            "fields": []
+            "fields": [
+                {
+                    "id": "aanoan_alqsm",
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان القسم",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         },
         {
             "key": "e66ae247-e415-40f8-9910-be48450ebdea",
@@ -1752,7 +1768,23 @@
             },
             "icon": "sicon-store",
             "path": "home.main-links-rect",
-            "fields": []
+            "fields": [
+                {
+                    "id": "aanoan_alqsm",
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان القسم",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         },
         {
             "key": "e72c4c6b-48e1-4ea1-ab48-e935605f3172",
@@ -1762,7 +1794,23 @@
             },
             "icon": "sicon-store",
             "path": "home.main-links-overlay",
-            "fields": []
+            "fields": [
+                {
+                    "id": "aanoan_alqsm",
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان القسم",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
