@@ -1957,7 +1957,7 @@
                     "labelHTML": null,
                     "placeholder": "Placeholder text ..",
                     "icon": "sicon-format-text-alt",
-                    "value": "tharaa-hero-slider",
+                    "value": null,
                     "multilanguage": false,
                     "required": false,
                     "minLength": 6,
