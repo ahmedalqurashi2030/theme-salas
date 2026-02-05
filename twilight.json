@@ -1820,7 +1820,33 @@
             },
             "icon": "sicon-album-photo",
             "path": "home.tharaa_banners_slider",
-            "fields": []
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "static",
+                    "format": "title",
+                    "label": "Title",
+                    "value": "إعدادات السلايدر",
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "description",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": "تحكم بالأسهم، التحريك التلقائي، التأثير، والحواف.",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "line",
+                    "type": "static",
+                    "format": "line",
+                    "label": "Line",
+                    "icon": "sicon-minus"
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
