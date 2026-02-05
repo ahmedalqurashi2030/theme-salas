@@ -1947,6 +1947,21 @@
                     "value": [],
                     "minLength": 1,
                     "maxLength": "6"
+                },
+                {
+                    "id": "custom_class",
+                    "type": "string",
+                    "format": "text",
+                    "label": "كلاس CSS مخصص",
+                    "description": "tharaa-hero-slider",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "tharaa-hero-slider",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
                 }
             ]
         }
