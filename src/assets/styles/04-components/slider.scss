@@ -17,6 +17,102 @@ salla-slider {
     .s-slider-block__title-nav {
       @apply hidden sm:flex;
     }
+
+    &.s-slider-vertical {
+      @media (min-width: 768px) {
+        .s-slider-container {
+          order: 1;
+        }
+
+        .s-slider-thumbs {
+          order: 2;
+          margin-left: 15px;
+        }
+
+        &:where([dir="rtl"], [dir="rtl"] *) {
+          .s-slider-container {
+            order: 2;
+          }
+
+          .s-slider-thumbs {
+            order: 1;
+            margin-left: 0;
+            margin-right: 15px;
+          }
+        }
+      }
+    }
+
+
+    // Custom Layout (Desktop 1024px+)
+    @media (min-width: 1024px) {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      gap: 0; // Handled by margins
+
+      // Main Image Container
+      .s-slider-container {
+        flex: 1 1 auto;
+        min-width: 0;
+        order: 1; // Default LTR: Image Left
+      }
+
+      // Thumbnails Container
+      .s-slider-thumbs {
+        width: 100px;
+        flex: 0 0 100px;
+        order: 2; // Default LTR: Thumbs Right
+        margin-left: 15px;
+        margin-right: 0;
+        margin-top: 0;
+
+        // Constraint to prevent overflow beyond main image
+        max-height: 600px;
+        overflow-y: auto;
+
+        // Hide scrollbar for cleaner UI
+        scrollbar-width: thin;
+        scrollbar-color: #eee transparent;
+
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: #eee;
+          border-radius: 4px;
+        }
+
+        // Vertical Stack Logic
+        .swiper-wrapper {
+          flex-direction: column;
+          box-sizing: border-box;
+        }
+
+        .swiper-slide {
+          width: 100% !important;
+          margin-right: 0 !important;
+          margin-left: 0 !important;
+          margin-bottom: 10px !important; // Gap between thumbs
+          height: auto !important;
+          display: block; // Ensure block layout
+        }
+      }
+
+      // RTL Overrides
+      &:where([dir="rtl"], [dir="rtl"] *) {
+        .s-slider-container {
+          order: 2; // Image Left
+        }
+
+        .s-slider-thumbs {
+          order: 1; // Thumbs Right
+          margin-right: 15px; // Gap
+          margin-left: 0;
+        }
+      }
+    }
   }
 
   .slide--one-fourth {

@@ -51,19 +51,19 @@
                 </div>
                 <button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')"><i class="sicon-user"></i></button>
 
+                {% if user.type=='user' %}
+
                 <a href="{{ link('wishlist') }}" class="th-icon-btn hidden lg:flex">
                     <i class="sicon-heart"></i>
                     <span class="th-icon-label">{{ trans('blocks.header.wishlist') }}</span>
                 </a>
+                {% endif %}
 
                 <salla-cart-summary class="th-icon-btn">
                     <div slot="icon" class="relative">
                         <i class="sicon-shopping-bag"></i>
                         <i class="sicon-shopping-cart"></i>
-                        {# العدد #}
-                        {%- if cart.items_count > 0 -%}
-                        <span class="th-badge">{{ cart.items_count }}</span>
-                        {%- endif -%}
+                       
                     </div>
                     <span class="th-icon-label hidden lg:block">{{ trans('blocks.header.cart') }}</span>
                 </salla-cart-summary>
