@@ -1600,7 +1600,7 @@
             "path": "home.main-links-circle",
             "fields": [
                 {
-                    "id": null,
+                    "id": "title",
                     "type": "string",
                     "format": "text",
                     "label": "عنوان القسم",
@@ -1615,10 +1615,10 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "عرض_أزرار_التنقل_copy",
+                    "id": "show_controls",
                     "type": "boolean",
                     "format": "switch",
-                    "label": "عرض أزرار التنقل copy",
+                    "label": "عرض أسهم التحرك",
                     "description": "وضع العرض",
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
