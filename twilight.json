@@ -1625,8 +1625,7 @@
                     "value": true,
                     "selected": false,
                     "required": false
-                  },
-                  
+                },
                 {
                     "id": "show_progress",
                     "type": "boolean",
@@ -1812,6 +1811,16 @@
                     "maxLength": 30
                 }
             ]
+        },
+        {
+            "key": "745b6f2f-5ce6-47cd-9a57-76deaa8efc99",
+            "title": {
+                "en": "(Banners Slider (tharaa",
+                "ar": "بنرات متحركة (ثراء)"
+            },
+            "icon": "sicon-album-photo",
+            "path": "home.tharaa_banners_slider",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
