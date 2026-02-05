@@ -48,7 +48,7 @@ salla-slider {
     @media (min-width: 1024px) {
       display: flex;
       flex-wrap: nowrap;
-      align-items: flex-start;
+      align-items: stretch; // Thumbnails match main image height
       gap: 0; // Handled by margins
 
       // Main Image Container
@@ -58,8 +58,9 @@ salla-slider {
         order: 1; // Default LTR: Image Left
       }
 
-      // Thumbnails Container
+      // Thumbnails Container - Position-based containment
       .s-slider-thumbs {
+        position: relative;
         width: 100px;
         flex: 0 0 100px;
         order: 2; // Default LTR: Thumbs Right
@@ -67,21 +68,28 @@ salla-slider {
         margin-right: 0;
         margin-top: 0;
 
-        // Constraint to prevent overflow beyond main image
-        max-height: 600px;
-        overflow-y: auto;
+        // Inner wrapper for absolute positioning
+        .swiper {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow-y: auto;
+          overflow-x: hidden;
 
-        // Hide scrollbar for cleaner UI
-        scrollbar-width: thin;
-        scrollbar-color: #eee transparent;
+          // Scrollbar styling
+          scrollbar-width: thin;
+          scrollbar-color: #ccc transparent;
 
-        &::-webkit-scrollbar {
-          width: 4px;
-        }
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
 
-        &::-webkit-scrollbar-thumb {
-          background-color: #eee;
-          border-radius: 4px;
+          &::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+          }
         }
 
         // Vertical Stack Logic
@@ -94,9 +102,9 @@ salla-slider {
           width: 100% !important;
           margin-right: 0 !important;
           margin-left: 0 !important;
-          margin-bottom: 10px !important; // Gap between thumbs
+          margin-bottom: 10px !important;
           height: auto !important;
-          display: block; // Ensure block layout
+          flex-shrink: 0;
         }
       }
 
