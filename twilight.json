@@ -1939,9 +1939,9 @@
                             "placeholder": "e.g. https://salla.sa",
                             "icon": "sicon-link",
                             "value": null,
-                            "required": false,
-                            "minLength": 6,
-                            "maxLength": 30
+                            "required": true,
+                            "minLength": "1",
+                            "maxLength": "1"
                         }
                     ],
                     "value": [],
