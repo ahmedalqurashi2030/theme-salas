@@ -1827,7 +1827,7 @@
                     "format": "title",
                     "label": "إعدادات السلايدر",
                     "value": "إعدادات السلايدر",
-                    "variant": "h1",
+                    "variant": "h6",
                     "icon": "sicon-format-text"
                 },
                 {
@@ -1939,9 +1939,9 @@
                             "selected": [],
                             "options": [],
                             "source": "Manual",
-                            "multichoice": false,
+                            "multichoice": true,
                             "searchable": true,
-                            "required": true
+                            "required": false
                         },
                         {
                             "id": "banners.link",
