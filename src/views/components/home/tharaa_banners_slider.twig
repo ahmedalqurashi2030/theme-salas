@@ -1,0 +1,63 @@
+{# =========================================================
+  Tharaa | Banners Slider (Premium)
+  Compatible with your twilight.json fields:
+  - full_width, rounded, autoplay, show_arrows, banners[], custom_class
+  Uses official <salla-slider>
+========================================================= #}
+
+{% set full_width   = component.full_width ?? true %}
+{% set rounded      = component.rounded ?? true %}
+{% set autoplay     = component.autoplay ?? true %}
+{% set show_arrows  = component.show_arrows ?? true %}
+{% set custom_class = component.custom_class ?? '' %}
+{% set banners      = component.banners ?? [] %}
+
+{% if banners|length > 0 %}
+  <section class="tharaa-banners-slider {{ custom_class }} {{ full_width ? 'is-fullwidth' : '' }} {{ rounded ? 'is-rounded' : '' }}">
+    <div class="{{ full_width ? '' : 'container' }}">
+      <salla-slider
+        class="tharaa-banners-slider__slider"
+        type="carousel"
+        {% if show_arrows %} show-controls {% else %} :show-controls="false" {% endif %}
+        {% if autoplay %} auto-play {% endif %}
+      >
+        {% for banner in banners %}
+          {# expected keys #}
+          {% set img_desktop = banner.image ?? null %}
+          {% set img_mobile  = banner.mobile_image ?? null %}
+          {% set url         = banner.url ?? null %}
+
+          {# fallback if keys contain prefix "banners." #}
+          {% if not img_desktop and banner['banners.image'] is defined %}{% set img_desktop = banner['banners.image'] %}{% endif %}
+          {% if not img_mobile and banner['banners.mobile_image'] is defined %}{% set img_mobile = banner['banners.mobile_image'] %}{% endif %}
+          {% if not url and banner['banners.url'] is defined %}{% set url = banner['banners.url'] %}{% endif %}
+
+          {% if img_desktop and url %}
+            <div class="tharaa-banners-slider__slide">
+              <a class="tharaa-banners-slider__link" href="{{ url }}" aria-label="انتقل إلى العرض">
+                <span class="tharaa-banners-slider__skeleton" aria-hidden="true"></span>
+
+                <picture class="tharaa-banners-slider__media">
+                  {% if img_mobile %}
+                    <source media="(max-width: 768px)" srcset="{{ img_mobile }}">
+                  {% endif %}
+
+                  <img
+                    class="tharaa-banners-slider__img"
+                    src="{{ img_desktop }}"
+                    alt=""
+                    loading="{{ loop.first ? 'eager' : 'lazy' }}"
+                    decoding="async"
+                    fetchpriority="{{ loop.first ? 'high' : 'auto' }}"
+                  >
+                </picture>
+
+                <span class="tharaa-banners-slider__shine" aria-hidden="true"></span>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </salla-slider>
+    </div>
+  </section>
+{% endif %}
