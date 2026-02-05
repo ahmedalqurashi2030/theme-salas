@@ -1825,7 +1825,7 @@
                     "id": "title",
                     "type": "static",
                     "format": "title",
-                    "label": "Title",
+                    "label": "إعدادات السلايدر",
                     "value": "إعدادات السلايدر",
                     "variant": "h1",
                     "icon": "sicon-format-text"
@@ -1835,7 +1835,7 @@
                     "type": "static",
                     "format": "description",
                     "label": "Description",
-                    "value": "تحكم بالأسهم، التحريك التلقائي، التأثير، والحواف.",
+                    "value": "تحكم في العرض، الأسهم، التحريك التلقائي، التأثير، والحواف. (ينصح بإضافة 2–6 بنرات لنتيجة أفضل)",
                     "variant": "h1",
                     "icon": "sicon-format-size"
                 },
@@ -1845,6 +1845,123 @@
                     "format": "line",
                     "label": "Line",
                     "icon": "sicon-minus"
+                },
+                {
+                    "id": "full_width",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "جعل البنرات بعرض الشاشة",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "rounded",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "حواف دائرية",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "autoplay",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "تحريك تلقائي",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "show_arrows",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "تفعيل أسهم التنقل",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "banners",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "قائمة البنرات",
+                    "description": null,
+                    "labelHTML": null,
+                    "item_label": null,
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "banners.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "صورة البنر (Desktop)",
+                            "description": "المقاس المناسب 1300×300 بكسل",
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "required": true
+                        },
+                        {
+                            "id": "banners.mobile_image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "صورة البنر للجوال (اختياري)",
+                            "description": "يفضل 900×900 أو 1080×1080 حسب التصميم",
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "required": false
+                        },
+                        {
+                            "id": "banners.link_type",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "label": "الرابط",
+                            "description": null,
+                            "labelHTML": null,
+                            "icon": "sicon-keyboard_arrow_down",
+                            "selected": [],
+                            "options": [],
+                            "source": "Manual",
+                            "multichoice": false,
+                            "searchable": true,
+                            "required": true
+                        },
+                        {
+                            "id": "banners.link",
+                            "type": "string",
+                            "format": "url",
+                            "inputType": "url",
+                            "label": "الرابط",
+                            "description": "ضع رابط صفحة المنتج/التصنيف أو أي رابط خارجي. مثال: https://",
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://salla.sa",
+                            "icon": "sicon-link",
+                            "value": null,
+                            "required": false,
+                            "minLength": "0",
+                            "maxLength": "1"
+                        }
+                    ],
+                    "value": [],
+                    "minLength": 1,
+                    "maxLength": "6"
                 }
             ]
         }
