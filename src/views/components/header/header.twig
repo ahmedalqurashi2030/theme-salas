@@ -21,7 +21,7 @@
 
     {# 2. الهيدر الرئيسي #}
     <div class="th-main-header py-3">
-        <div class="container flex items-center justify-between gap-8">
+        <div class="container flex items-center justify-between gap-6">
             
             {# زر الموبايل (Hamburger) #}
             <button type="button"
@@ -38,12 +38,12 @@
             </a>
 
             {# البحث #}
-            <div class="flex-1 max-w-2xl hidden lg:block">
-                <salla-search inline oval placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
+            <div class="header-search flex-1 hidden lg:block">
+                <salla-search inline placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
             </div>
 
             {# الأيقونات #}
-            <div class="flex items-center gap-6">
+            <div class="header-actions flex items-center gap-6">
                 <button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')"><i class="sicon-search"></i></button>
 
                 <div class="hidden lg:block">
