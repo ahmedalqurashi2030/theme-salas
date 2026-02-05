@@ -1940,8 +1940,8 @@
                             "icon": "sicon-link",
                             "value": null,
                             "required": true,
-                            "minLength": "1",
-                            "maxLength": "1"
+                            "minLength": "100",
+                            "maxLength": "100"
                         }
                     ],
                     "value": [],
