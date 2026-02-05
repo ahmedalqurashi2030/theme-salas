@@ -1618,14 +1618,15 @@
                     "id": "show_controls",
                     "type": "boolean",
                     "format": "switch",
-                    "label": "عرض أسهم التحرك",
+                    "label": "عرض أسهم التنقل",
                     "description": "وضع العرض",
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
                     "value": true,
                     "selected": false,
                     "required": false
-                },
+                  },
+                  
                 {
                     "id": "show_progress",
                     "type": "boolean",
