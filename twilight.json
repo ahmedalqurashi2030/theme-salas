@@ -1929,19 +1929,19 @@
                             "required": false
                         },
                         {
-                            "id": "banners.link_type",
-                            "type": "items",
-                            "format": "dropdown-list",
+                            "id": "banners.url",
+                            "type": "string",
+                            "format": "url",
+                            "inputType": "url",
                             "label": "الرابط",
                             "description": null,
                             "labelHTML": null,
-                            "icon": "sicon-keyboard_arrow_down",
-                            "selected": [],
-                            "options": [],
-                            "source": "Manual",
-                            "multichoice": true,
-                            "searchable": false,
-                            "required": true
+                            "placeholder": "e.g. https://salla.sa",
+                            "icon": "sicon-link",
+                            "value": null,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
                         }
                     ],
                     "value": [],
