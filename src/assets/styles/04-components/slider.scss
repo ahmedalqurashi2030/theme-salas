@@ -18,17 +18,97 @@ salla-slider {
       @apply hidden sm:flex;
     }
 
-    &.s-slider-vertical {
-      @media (min-width: 768px) {
+    /* --- التعديل الاحترافي للصور الجانبية على اليمين (Desktop) --- */
+    @media (min-width: 1024px) {
+      display: flex !important;
+      flex-direction: row !important;
+      @apply gap-4 items-start;
+
+      /* تحديد ارتفاع أقصى يتناسب مع الشاشة لضمان عدم تمدد القائمة جانبياً */
+      max-height: 750px;
+
+      // التحكم في الاتجاهات لضمان بقاء الصور على اليمين دائماً
+      &:where([dir="rtl"], [dir="rtl"] *) {
+        .s-slider-thumbs {
+          order: 1;
+        }
+
+        .s-slider-container {
+          order: 2;
+        }
+      }
+
+      &:where([dir="ltr"], [dir="ltr"] *) {
         .s-slider-container {
           order: 1;
         }
 
         .s-slider-thumbs {
           order: 2;
-          margin-left: 15px;
+        }
+      }
+
+      // حاوية الصور المصغرة
+      .s-slider-thumbs {
+        @apply w-24 shrink-0 m-0 !important;
+        /* منع القائمة من تخطي ارتفاع الصورة الكبيرة */
+        height: 100% !important;
+        max-height: 100% !important;
+        overflow-y: auto !important;
+        /* تفعيل التمرير الداخلي */
+        scrollbar-width: none;
+
+        /* إخفاء شريط التمرير لفايرفوكس */
+        &::-webkit-scrollbar {
+          display: none;
         }
 
+        /* إخفاء شريط التمرير لكروم وسافاري */
+
+        .swiper-wrapper {
+          @apply flex-col h-auto !important;
+          transform: none !important;
+          /* نوقف حركة السلايدر التلقائية ليعمل كقائمة */
+          display: flex !important;
+        }
+
+        .swiper-slide {
+          @apply mb-3 rounded-md overflow-hidden cursor-pointer transition-all duration-300;
+          @apply border border-gray-100 opacity-60;
+          height: 120px !important;
+          /* ارتفاع ثابت لكل صورة مصغرة */
+          width: 100% !important;
+
+          &:hover {
+            @apply opacity-100;
+          }
+
+          &-thumb-active {
+            @apply opacity-100 border-primary shadow-sm;
+            border-width: 2px !important;
+          }
+
+          img {
+            @apply w-full h-full object-cover;
+          }
+        }
+
+        // إخفاء الأسهم لأن التمرير سيكون بالماوس
+        .s-slider-button-next,
+        .s-slider-button-prev {
+          @apply hidden !important;
+        }
+      }
+
+      // حاوية الصورة الكبيرة
+      .s-slider-container {
+        @apply flex-1 w-full !important;
+        height: auto;
+      }
+    }
+
+    &.s-slider-vertical {
+      @media (min-width: 768px) and (max-width: 1023px) {
         &:where([dir="rtl"], [dir="rtl"] *) {
           .s-slider-container {
             order: 2;
@@ -36,88 +116,9 @@ salla-slider {
 
           .s-slider-thumbs {
             order: 1;
-            margin-left: 0;
-            margin-right: 15px;
+            margin-left: 15px;
+            margin-right: 0;
           }
-        }
-      }
-    }
-
-
-    // Custom Layout (Desktop 1024px+)
-    @media (min-width: 1024px) {
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: stretch; // Thumbnails match main image height
-      gap: 0; // Handled by margins
-
-      // Main Image Container
-      .s-slider-container {
-        flex: 1 1 auto;
-        min-width: 0;
-        order: 1; // Default LTR: Image Left
-      }
-
-      // Thumbnails Container - Position-based containment
-      .s-slider-thumbs {
-        position: relative;
-        width: 100px;
-        flex: 0 0 100px;
-        order: 2; // Default LTR: Thumbs Right
-        margin-left: 15px;
-        margin-right: 0;
-        margin-top: 0;
-
-        // Inner wrapper for absolute positioning
-        .swiper {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          overflow-y: auto;
-          overflow-x: hidden;
-
-          // Scrollbar styling
-          scrollbar-width: thin;
-          scrollbar-color: #ccc transparent;
-
-          &::-webkit-scrollbar {
-            width: 4px;
-          }
-
-          &::-webkit-scrollbar-thumb {
-            background-color: #ccc;
-            border-radius: 4px;
-          }
-        }
-
-        // Vertical Stack Logic
-        .swiper-wrapper {
-          flex-direction: column;
-          box-sizing: border-box;
-        }
-
-        .swiper-slide {
-          width: 100% !important;
-          margin-right: 0 !important;
-          margin-left: 0 !important;
-          margin-bottom: 10px !important;
-          height: auto !important;
-          flex-shrink: 0;
-        }
-      }
-
-      // RTL Overrides
-      &:where([dir="rtl"], [dir="rtl"] *) {
-        .s-slider-container {
-          order: 2; // Image Left
-        }
-
-        .s-slider-thumbs {
-          order: 1; // Thumbs Right
-          margin-right: 15px; // Gap
-          margin-left: 0;
         }
       }
     }

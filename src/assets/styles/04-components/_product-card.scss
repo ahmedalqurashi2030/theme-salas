@@ -549,8 +549,8 @@
     opacity: 0.85;
   }
 
-  /* Scroll Progress Bar */
-  .scroll-bar {
+  /* Scroll Progress Bar - Scoped to Product Cards Section Only */
+  .products-band .scroll-bar {
     width: 100px;
     height: 4px;
     background: #e0e0e0;
@@ -559,7 +559,7 @@
     overflow: hidden;
   }
 
-  .scroll-prog {
+  .products-band .scroll-prog {
     height: 100%;
     background: var(--product-card-text);
     width: 0;
@@ -675,7 +675,7 @@
     border: none;
   }
 
- .btn-floating-cart .s-button-btn {
+  .btn-floating-cart .s-button-btn {
     padding: 0.5rem 0.7rem !important;
     border-radius: 50% !important;
     background: #f2f2f2 !important;
