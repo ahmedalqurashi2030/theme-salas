@@ -1741,7 +1741,7 @@
                 "ar": "روابط مربعات (ثراء)"
             },
             "icon": "sicon-store",
-            "path": "home.main-links-square",
+            "path": "home.th-links-square",
             "fields": [
                 {
                     "id": "aanoan_alqsm",
