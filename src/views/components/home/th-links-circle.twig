@@ -1,0 +1,257 @@
+{# =========================================================
+  Tharaa | Circular Links (home.th-links-circle)
+  Fields used:
+  - section_title, section_description
+  - display_mode (slider|list) [also supports Arabic values]
+  - autoplay (boolean)
+  - show_controls (boolean)
+  - two_rows (boolean) -> only applies in slider mode
+  - items_per_view_desktop (dropdown 4..8)
+  - items (collection): title, image, url (optional)
+========================================================= #}
+
+{% set items = component.items ?? [] %}
+{% if items|length == 0 %}
+  {# لا نعرض شيء إذا ما فيه عناصر #}
+{% else %}
+
+  {# -------- Safe reading helpers -------- #}
+  {% set raw_mode = component.display_mode ?? 'slider' %}
+  {% set display_mode = (raw_mode in ['list','قائمة']) ? 'list' : 'slider' %}
+
+  {% set autoplay = component.autoplay ?? false %}
+  {% set show_controls = component.show_controls ?? true %}
+  {% set two_rows = component.two_rows ?? false %}
+
+  {# items_per_view_desktop: sometimes comes as string "6" or as selected array; make it robust #}
+  {% set per_view = component.items_per_view_desktop ?? 6 %}
+
+  {# if per_view is iterable like selected array, pick first.value/label #}
+  {% if per_view is iterable %}
+    {% set _first = per_view|first %}
+    {% set per_view = (_first.value ?? _first.label ?? 6) %}
+  {% endif %}
+
+  {# normalize to integer-like string #}
+  {% set per_view = (per_view ?: 6) %}
+
+  {# Mobile per-view not defined in your schema -> fixed default #}
+  {% set per_view_mobile = 3 %}
+
+  {% set section_title = component.section_title ?? '' %}
+  {% set section_description = component.section_description ?? '' %}
+
+  <section
+    class="th-links-circle"
+    data-tharaa="links-circle"
+    data-mode="{{ display_mode }}"
+    data-autoplay="{{ autoplay ? '1' : '0' }}"
+    data-controls="{{ show_controls ? '1' : '0' }}"
+    data-two-rows="{{ two_rows ? '1' : '0' }}"
+    data-per-view="{{ per_view }}"
+    data-per-view-mobile="{{ per_view_mobile }}"
+  >
+    <div class="container">
+      <div class="th-links-circle__head">
+        <div class="th-links-circle__titles">
+          {% if section_title %}
+            <h2 class="th-links-circle__title">{{ section_title }}</h2>
+          {% endif %}
+          {% if section_description %}
+            <p class="th-links-circle__desc">{{ section_description }}</p>
+          {% endif %}
+        </div>
+
+        {# Controls shown only in slider mode #}
+        <div class="th-links-circle__controls" data-role="controls" aria-hidden="{{ (display_mode == 'slider' and show_controls) ? 'false' : 'true' }}">
+          <button class="th-links-circle__btn" type="button" data-action="prev" aria-label="السابق">
+            ‹
+          </button>
+          <button class="th-links-circle__btn" type="button" data-action="next" aria-label="التالي">
+            ›
+          </button>
+        </div>
+      </div>
+
+      {% if display_mode == 'list' %}
+        {# ============ LIST MODE ============ #}
+        <div class="th-links-circle__list" data-role="list">
+          {% for it in items %}
+            {% set title = it.title ?? '' %}
+            {% set img = it.image ?? '' %}
+            {% set url = it.url ?? '' %}
+
+            <div class="th-links-circle__item">
+              {% if url %}
+                <a class="th-links-circle__card" href="{{ url }}" aria-label="{{ title }}">
+                  <span class="th-links-circle__avatar">
+                    {% if img %}<img src="{{ img }}" alt="{{ title }}" loading="lazy" decoding="async">{% endif %}
+                  </span>
+                  <span class="th-links-circle__name">{{ title }}</span>
+                </a>
+              {% else %}
+                <div class="th-links-circle__card" role="group" aria-label="{{ title }}">
+                  <span class="th-links-circle__avatar">
+                    {% if img %}<img src="{{ img }}" alt="{{ title }}" loading="lazy" decoding="async">{% endif %}
+                  </span>
+                  <span class="th-links-circle__name">{{ title }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+
+      {% else %}
+        {# ============ SLIDER MODE ============ #}
+        <div class="th-links-circle__slider" data-role="slider">
+          <div class="th-links-circle__track {{ two_rows ? 'is-two-rows' : '' }}" data-role="track" tabindex="0" aria-label="سلايدر الروابط">
+            {% for it in items %}
+              {% set title = it.title ?? '' %}
+              {% set img = it.image ?? '' %}
+              {% set url = it.url ?? '' %}
+
+              <div class="th-links-circle__slide" data-role="slide">
+                {% if url %}
+                  <a class="th-links-circle__card" href="{{ url }}" aria-label="{{ title }}">
+                    <span class="th-links-circle__avatar">
+                      {% if img %}<img src="{{ img }}" alt="{{ title }}" loading="{{ loop.first ? 'eager' : 'lazy' }}" decoding="async">{% endif %}
+                    </span>
+                    <span class="th-links-circle__name">{{ title }}</span>
+                  </a>
+                {% else %}
+                  <div class="th-links-circle__card" role="group" aria-label="{{ title }}">
+                    <span class="th-links-circle__avatar">
+                      {% if img %}<img src="{{ img }}" alt="{{ title }}" loading="{{ loop.first ? 'eager' : 'lazy' }}" decoding="async">{% endif %}
+                    </span>
+                    <span class="th-links-circle__name">{{ title }}</span>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="th-links-circle__progress" data-role="progress" aria-hidden="true">
+            <span class="th-links-circle__bar" data-role="bar"></span>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <SCRIpt>
+    (function () {
+  function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+  function parseIntSafe(v, fallback) {
+    const n = parseInt(v, 10);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  function setVarsFromDataset(root) {
+    const perView = clamp(parseIntSafe(root.dataset.perView, 6), 3, 10);
+    const perViewMobile = clamp(parseIntSafe(root.dataset.perViewMobile, 3), 2, 6);
+
+    root.style.setProperty('--th-per-view', String(perView));
+    root.style.setProperty('--th-per-view-mobile', String(perViewMobile));
+  }
+
+  function updateProgress(track, bar) {
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const ratio = maxScroll <= 0 ? 0 : (track.scrollLeft / maxScroll);
+    bar.style.width = `${Math.round(ratio * 100)}%`;
+  }
+
+  function scrollByOneCard(track, dir) {
+    // Scroll by "one visible card" width ~ card + gap
+    const firstSlide = track.querySelector('[data-role="slide"]');
+    const step = firstSlide ? firstSlide.getBoundingClientRect().width : track.clientWidth * 0.6;
+    track.scrollBy({ left: dir * step, behavior: 'smooth' });
+  }
+
+  function initSection(root) {
+    setVarsFromDataset(root);
+
+    const mode = root.dataset.mode || 'slider';
+    if (mode === 'list') return;
+
+    const controlsEnabled = root.dataset.controls === '1';
+    const autoplayEnabled = root.dataset.autoplay === '1';
+    const track = root.querySelector('[data-role="track"]');
+    const controls = root.querySelector('[data-role="controls"]');
+    const bar = root.querySelector('[data-role="bar"]');
+    const progress = root.querySelector('[data-role="progress"]');
+
+    if (!track) return;
+
+    // Controls visibility
+    if (!controlsEnabled && controls) controls.style.display = 'none';
+
+    // Progress visibility
+    if (!bar || !progress) {
+      // ignore
+    } else {
+      updateProgress(track, bar);
+      track.addEventListener('scroll', () => updateProgress(track, bar), { passive: true });
+      window.addEventListener('resize', () => updateProgress(track, bar));
+    }
+
+    // Buttons
+    if (controlsEnabled && controls) {
+      const prev = controls.querySelector('[data-action="prev"]');
+      const next = controls.querySelector('[data-action="next"]');
+
+      if (prev) prev.addEventListener('click', () => scrollByOneCard(track, -1));
+      if (next) next.addEventListener('click', () => scrollByOneCard(track, 1));
+    }
+
+    // Autoplay (default delay 3500ms - you didn't create autoplay_delay)
+    let timer = null;
+    const delay = 3500;
+
+    function startAutoplay() {
+      if (!autoplayEnabled) return;
+      if (timer) return;
+
+      timer = setInterval(() => {
+        // If reached end, go back to start
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll <= 0) return;
+
+        const atEnd = track.scrollLeft >= (maxScroll - 2);
+        if (atEnd) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          scrollByOneCard(track, 1);
+        }
+      }, delay);
+    }
+
+    function stopAutoplay() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    // Pause on hover / touch
+    track.addEventListener('mouseenter', stopAutoplay);
+    track.addEventListener('mouseleave', startAutoplay);
+    track.addEventListener('touchstart', stopAutoplay, { passive: true });
+    track.addEventListener('touchend', startAutoplay, { passive: true });
+
+    startAutoplay();
+  }
+
+  function initAll() {
+    document.querySelectorAll('[data-tharaa="links-circle"]').forEach(initSection);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+})();
+
+    </SCRIpt>
+{% endif %}
