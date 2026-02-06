@@ -1,8 +1,10 @@
 {# =========================================================
   Tharaa | Banners Slider (Home Component)
-  Compatible with twilight.json:
-  full_width, rounded, autoplay, show_arrows, banners[], custom_class
-  banners fields: banners.image, banners.mobile_image, banners.url
+  - Compatible with twilight.json:
+    full_width, rounded, autoplay, show_arrows, banners[], custom_class
+  - banners fields (collection):
+    banners.image, banners.mobile_image, banners.url
+  - Fix: arrows click issue using controls-outer (official)
 ========================================================= #}
 
 {% set full_width   = component.full_width ?? true %}
@@ -12,8 +14,7 @@
 {% set custom_class = component.custom_class ?? '' %}
 {% set banners      = component.banners ?? [] %}
 
-{% if banners|length %}
-
+{% if banners|length > 0 %}
   {% set multiple = banners|length > 1 %}
 
   {# Swiper config via slider-config #}
@@ -34,6 +35,7 @@
         type="carousel"
         slides-per-view="1"
         show-controls="{{ (show_arrows and multiple) ? 'true' : 'false' }}"
+        {% if show_arrows and multiple %}controls-outer arrows-centered{% endif %}
         auto-play="{{ (autoplay and multiple) ? 'true' : 'false' }}"
         loop="{{ multiple ? 'true' : 'false' }}"
         slider-config='{{ sliderConfig|json_encode|e("html_attr") }}'
@@ -86,7 +88,6 @@
           {% endif %}
         {% endfor %}
 
-        {# Safety: لو البنرات موجودة لكن الصور فاضية #}
         {% if rendered == 0 %}
           <div slot="items" class="tharaa-banners-slider__empty">
             لا توجد بنرات صالحة للعرض — تأكد من رفع صورة البنر.

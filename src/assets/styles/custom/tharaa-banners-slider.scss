@@ -1,30 +1,54 @@
+/* ===========================================
+   Tharaa | Banners Slider (Isolated)
+   - RTL ready
+   - 1 slide per view
+   - Fix arrows click: controls-outer needs side padding
+=========================================== */
+
 .tharaa-banners-slider {
   direction: rtl;
   position: relative;
   margin-top: 16px;
 }
 
+/* Wrap */
 .tharaa-banners-slider__wrap {
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: 16px;
 }
 
+/* Full width layout */
 .tharaa-banners-slider__wrap--full {
   max-width: 100%;
   padding-inline: 0;
 }
 
+/* IMPORTANT: when controls-outer enabled, add safe padding so arrows are clickable & visible */
+.tharaa-banners-slider__wrap.container,
+.tharaa-banners-slider__wrap--full {
+  padding-inline: 28px;
+}
+
+@media (max-width: 768px) {
+  .tharaa-banners-slider__wrap.container,
+  .tharaa-banners-slider__wrap--full {
+    padding-inline: 14px;
+  }
+}
+
+/* Slider root */
 .tharaa-banners-slider__slider {
   display: block;
   width: 100%;
 }
 
-/* banner takes full width */
+/* Slide */
 .tharaa-banners-slider__slide {
   width: 100%;
 }
 
+/* Link/Box */
 .tharaa-banners-slider__link {
   display: block;
   width: 100%;
@@ -32,22 +56,21 @@
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
+  transform: translateZ(0);
 }
 
 .tharaa-banners-slider.is-rounded .tharaa-banners-slider__link {
   border-radius: 18px;
 }
 
+/* Media box */
 .tharaa-banners-slider__media {
   display: block;
   width: 100%;
   aspect-ratio: 1300 / 300;
 }
 
-.tharaa-banners-slider__media.has-mobile {
-  /* optional: keep desktop ratio; mobile ratio will be overridden below */
-}
-
+/* Image fill */
 .tharaa-banners-slider__img {
   display: block;
   width: 100%;
@@ -56,30 +79,24 @@
   object-position: center;
 }
 
+/* Empty state (dev safety) */
 .tharaa-banners-slider__empty {
   padding: 12px;
   text-align: center;
   opacity: 0.7;
 }
 
+/* Mobile refinements */
 @media (max-width: 768px) {
   .tharaa-banners-slider {
     margin-top: 12px;
-  }
-
-  .tharaa-banners-slider__wrap {
-    padding-inline: 12px;
-  }
-
-  .tharaa-banners-slider__wrap--full {
-    padding-inline: 0;
   }
 
   .tharaa-banners-slider.is-rounded .tharaa-banners-slider__link {
     border-radius: 16px;
   }
 
-  /* لو رفعت mobile_image، نخليها مربعة */
+  /* If mobile image exists => square ratio looks premium */
   .tharaa-banners-slider__media.has-mobile {
     aspect-ratio: 1 / 1;
   }
