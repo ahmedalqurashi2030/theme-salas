@@ -1597,7 +1597,7 @@
                 "ar": "روابط دائرية (ثراء)"
             },
             "icon": "sicon-store",
-            "path": "home.tharaa-links-circle",
+            "path": "home.th-links-circle",
             "fields": [
                 {
                     "id": "title",
