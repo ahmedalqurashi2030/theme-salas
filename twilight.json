@@ -1767,7 +1767,7 @@
                 "ar": "روابط مستطيلات (ثراء)"
             },
             "icon": "sicon-store",
-            "path": "home.main-links-rect",
+            "path": "home.th-links-rect",
             "fields": [
                 {
                     "id": "aanoan_alqsm",
