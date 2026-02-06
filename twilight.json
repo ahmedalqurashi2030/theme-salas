@@ -1717,6 +1717,43 @@
                     "required": false
                 },
                 {
+                    "id": "items_per_view_mobile",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "عدد العناصر الظاهرة (جوال)",
+                    "description": "عدد العناصر الظاهرة (كمبيوتر)",
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [
+                        {
+                            "label": "4",
+                            "value": "4",
+                            "key": "732ac4a5-af2e-4209-bbe3-fe0bb9dda09b"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "2",
+                            "value": "2",
+                            "key": "732ac4a5-af2e-4209-bbe3-fe0bb9dda09b"
+                        },
+                        {
+                            "label": "3",
+                            "value": "3",
+                            "key": "35239cf3-161f-4576-957d-18f30c52a94f"
+                        },
+                        {
+                            "label": "4",
+                            "value": "4",
+                            "key": "8e3ef8db-8e4c-46b5-9738-3063f5c68b39"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": false,
+                    "searchable": false,
+                    "required": false
+                },
+                {
                     "id": "items_per_view_desktop",
                     "type": "items",
                     "format": "dropdown-list",
@@ -1726,9 +1763,9 @@
                     "icon": "sicon-keyboard_arrow_down",
                     "selected": [
                         {
-                            "label": "6",
-                            "value": "6",
-                            "key": "8e3ef8db-8e4c-46b5-9738-3063f5c68b39"
+                            "label": "4",
+                            "value": "4",
+                            "key": "732ac4a5-af2e-4209-bbe3-fe0bb9dda09b"
                         }
                     ],
                     "options": [
@@ -1818,7 +1855,7 @@
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": 5
+                    "maxLength": "20"
                 }
             ]
         },
