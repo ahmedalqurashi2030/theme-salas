@@ -2,7 +2,8 @@
    Tharaa | Banners Slider (Isolated)
    - RTL ready
    - 1 slide per view
-   - Fix arrows click: controls-outer needs side padding
+   - Arrows click fix: controls-outer needs safe padding
+   - Pagination dots: spacing + styling
 =========================================== */
 
 .tharaa-banners-slider {
@@ -11,20 +12,20 @@
   margin-top: 16px;
 }
 
-/* Wrap */
+/* Wrap base */
 .tharaa-banners-slider__wrap {
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: 16px;
 }
 
-/* Full width layout */
+/* Full width */
 .tharaa-banners-slider__wrap--full {
   max-width: 100%;
   padding-inline: 0;
 }
 
-/* IMPORTANT: when controls-outer enabled, add safe padding so arrows are clickable & visible */
+/* IMPORTANT: controls-outer adds arrows outside; give padding so they show + clickable */
 .tharaa-banners-slider__wrap.container,
 .tharaa-banners-slider__wrap--full {
   padding-inline: 28px;
@@ -41,9 +42,10 @@
 .tharaa-banners-slider__slider {
   display: block;
   width: 100%;
+  margin-bottom: 14px; /* space for pagination dots */
 }
 
-/* Slide */
+/* Each slide full width */
 .tharaa-banners-slider__slide {
   width: 100%;
 }
@@ -63,7 +65,7 @@
   border-radius: 18px;
 }
 
-/* Media box */
+/* Media area */
 .tharaa-banners-slider__media {
   display: block;
   width: 100%;
@@ -79,7 +81,7 @@
   object-position: center;
 }
 
-/* Empty state (dev safety) */
+/* Empty */
 .tharaa-banners-slider__empty {
   padding: 12px;
   text-align: center;
@@ -96,7 +98,7 @@
     border-radius: 16px;
   }
 
-  /* If mobile image exists => square ratio looks premium */
+  /* If mobile_image exists => square ratio */
   .tharaa-banners-slider__media.has-mobile {
     aspect-ratio: 1 / 1;
   }

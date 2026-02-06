@@ -2,9 +2,12 @@
   Tharaa | Banners Slider (Home Component)
   - Compatible with twilight.json:
     full_width, rounded, autoplay, show_arrows, banners[], custom_class
-  - banners fields (collection):
+  - banners collection keys:
     banners.image, banners.mobile_image, banners.url
-  - Fix: arrows click issue using controls-outer (official)
+  - Features:
+    * 1 banner per view
+    * arrows clickable (controls-outer)
+    * pagination dots (requires id) ✅
 ========================================================= #}
 
 {% set full_width   = component.full_width ?? true %}
@@ -16,6 +19,9 @@
 
 {% if banners|length > 0 %}
   {% set multiple = banners|length > 1 %}
+
+  {# Unique id required for pagination per Salla docs #}
+  {% set slider_id = 'tharaa-banners-slider-' ~ (component.key ?? 'default') %}
 
   {# Swiper config via slider-config #}
   {% set sliderConfig = {
@@ -31,11 +37,16 @@
     <div class="tharaa-banners-slider__wrap{{ full_width ? ' tharaa-banners-slider__wrap--full' : ' container' }}">
 
       <salla-slider
+        id="{{ slider_id }}"
         class="tharaa-banners-slider__slider"
         type="carousel"
         slides-per-view="1"
+
         show-controls="{{ (show_arrows and multiple) ? 'true' : 'false' }}"
         {% if show_arrows and multiple %}controls-outer arrows-centered{% endif %}
+
+        pagination="{{ multiple ? 'true' : 'false' }}"
+
         auto-play="{{ (autoplay and multiple) ? 'true' : 'false' }}"
         loop="{{ multiple ? 'true' : 'false' }}"
         slider-config='{{ sliderConfig|json_encode|e("html_attr") }}'
@@ -43,10 +54,10 @@
         {% set rendered = 0 %}
 
         {% for banner in banners %}
-          {# ✅ IMPORTANT: your twilight.json uses dotted keys #}
-          {% set img_desktop = banner['banners.image'] ?? banner.image ?? null %}
-          {% set img_mobile  = banner['banners.mobile_image'] ?? banner.mobile_image ?? null %}
-          {% set url         = banner['banners.url'] ?? banner.url ?? '' %}
+          {# ✅ Your twilight.json uses dotted keys inside the collection items #}
+          {% set img_desktop = banner['banners.image'] ?? null %}
+          {% set img_mobile  = banner['banners.mobile_image'] ?? null %}
+          {% set url         = banner['banners.url'] ?? '' %}
 
           {# normalize if image is object {url/original} #}
           {% if img_desktop and img_desktop.url is defined %}{% set img_desktop = img_desktop.url %}{% endif %}
@@ -88,6 +99,7 @@
           {% endif %}
         {% endfor %}
 
+        {# Safety: if collection exists but no valid images #}
         {% if rendered == 0 %}
           <div slot="items" class="tharaa-banners-slider__empty">
             لا توجد بنرات صالحة للعرض — تأكد من رفع صورة البنر.
