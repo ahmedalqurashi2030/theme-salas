@@ -1,9 +1,8 @@
 {# =========================================================
   Tharaa | Banners Slider (Home Component)
-  - Compatible with your twilight.json:
-    full_width, rounded, autoplay, show_arrows, banners[], custom_class
-  - Force 1 banner per view
-  - Uses official <salla-slider> web component
+  Compatible with twilight.json:
+  full_width, rounded, autoplay, show_arrows, banners[], custom_class
+  banners fields: banners.image, banners.mobile_image, banners.url
 ========================================================= #}
 
 {% set full_width   = component.full_width ?? true %}
@@ -13,58 +12,86 @@
 {% set custom_class = component.custom_class ?? '' %}
 {% set banners      = component.banners ?? [] %}
 
-{% if banners|length > 0 %}
-  {% set multiple_banners = banners|length > 1 %}
+{% if banners|length %}
 
+  {% set multiple = banners|length > 1 %}
+
+  {# Swiper config via slider-config #}
   {% set sliderConfig = {
     "slidesPerView": 1,
     "spaceBetween": 0,
     "centeredSlides": false,
-    "loop": multiple_banners,
     "watchOverflow": true,
-    "autoplay": (autoplay and multiple_banners) ? {"delay": 3500, "disableOnInteraction": false} : false
+    "loop": multiple,
+    "autoplay": (autoplay and multiple) ? {"delay": 3500, "disableOnInteraction": false} : false
   } %}
 
   <section class="tharaa-banners-slider {{ custom_class }}{{ full_width ? ' is-fullwidth' : '' }}{{ rounded ? ' is-rounded' : '' }}">
-    <div class="tharaa-banners-slider__wrap {{ full_width ? 'tharaa-banners-slider__wrap--full' : 'container' }}">
+    <div class="tharaa-banners-slider__wrap{{ full_width ? ' tharaa-banners-slider__wrap--full' : ' container' }}">
 
       <salla-slider
         class="tharaa-banners-slider__slider"
         type="carousel"
+        slides-per-view="1"
+        show-controls="{{ (show_arrows and multiple) ? 'true' : 'false' }}"
+        auto-play="{{ (autoplay and multiple) ? 'true' : 'false' }}"
+        loop="{{ multiple ? 'true' : 'false' }}"
         slider-config='{{ sliderConfig|json_encode|e("html_attr") }}'
-        {% if show_arrows and multiple_banners %}show-controls{% endif %}
-        {% if autoplay and multiple_banners %} auto-play{% endif %}
       >
+        {% set rendered = 0 %}
+
         {% for banner in banners %}
+          {# ✅ IMPORTANT: your twilight.json uses dotted keys #}
+          {% set img_desktop = banner['banners.image'] ?? banner.image ?? null %}
+          {% set img_mobile  = banner['banners.mobile_image'] ?? banner.mobile_image ?? null %}
+          {% set url         = banner['banners.url'] ?? banner.url ?? '' %}
 
-          {% set img_desktop = banner.image ?? null %}
-          {% set img_mobile  = banner.mobile_image ?? null %}
-          {% set url         = banner.url ?? null %}
+          {# normalize if image is object {url/original} #}
+          {% if img_desktop and img_desktop.url is defined %}{% set img_desktop = img_desktop.url %}{% endif %}
+          {% if img_desktop and img_desktop.original is defined %}{% set img_desktop = img_desktop.original %}{% endif %}
 
-          {% if img_desktop and url %}
-            <div class="tharaa-banners-slider__slide">
-              <a class="tharaa-banners-slider__link" href="{{ url }}" aria-label="عرض البنر">
-                <picture class="tharaa-banners-slider__media{% if img_mobile %} has-mobile{% endif %}">
-                  {% if img_mobile %}
-                    <source media="(max-width: 768px)" srcset="{{ img_mobile }}">
-                  {% endif %}
-                  <img
-                    class="tharaa-banners-slider__img"
-                    src="{{ img_desktop }}"
-                    alt=""
-                    width="1300"
-                    height="300"
-                    style="display:block;width:100%;height:100%;object-fit:cover;object-position:center;"
-                    loading="{{ loop.first ? 'eager' : 'lazy' }}"
-                    decoding="async"
-                    fetchpriority="{{ loop.first ? 'high' : 'auto' }}"
-                  >
-                </picture>
-              </a>
+          {% if img_mobile and img_mobile.url is defined %}{% set img_mobile = img_mobile.url %}{% endif %}
+          {% if img_mobile and img_mobile.original is defined %}{% set img_mobile = img_mobile.original %}{% endif %}
+
+          {% if img_desktop %}
+            {% set rendered = rendered + 1 %}
+
+            <div class="tharaa-banners-slider__slide" slot="items">
+              {% if url %}
+                <a class="tharaa-banners-slider__link" href="{{ url }}" aria-label="عرض البنر">
+              {% else %}
+                <div class="tharaa-banners-slider__link" aria-label="عرض البنر">
+              {% endif %}
+
+                  <picture class="tharaa-banners-slider__media{% if img_mobile %} has-mobile{% endif %}">
+                    {% if img_mobile %}
+                      <source media="(max-width: 768px)" srcset="{{ img_mobile }}">
+                    {% endif %}
+                    <img
+                      class="tharaa-banners-slider__img"
+                      src="{{ img_desktop }}"
+                      alt=""
+                      loading="{{ loop.first ? 'eager' : 'lazy' }}"
+                      decoding="async"
+                      fetchpriority="{{ loop.first ? 'high' : 'auto' }}"
+                    >
+                  </picture>
+
+              {% if url %}
+                </a>
+              {% else %}
+                </div>
+              {% endif %}
             </div>
           {% endif %}
-
         {% endfor %}
+
+        {# Safety: لو البنرات موجودة لكن الصور فاضية #}
+        {% if rendered == 0 %}
+          <div slot="items" class="tharaa-banners-slider__empty">
+            لا توجد بنرات صالحة للعرض — تأكد من رفع صورة البنر.
+          </div>
+        {% endif %}
       </salla-slider>
 
     </div>
