@@ -1944,7 +1944,7 @@
                 "ar": "بنرات متحركة (ثراء)"
             },
             "icon": "sicon-album-photo",
-            "path": "home.tharaa_banners_slider",
+            "path": "home.tharaa-banners-slider",
             "fields": [
                 {
                     "id": "title",
