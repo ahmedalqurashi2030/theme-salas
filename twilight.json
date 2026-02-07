@@ -2097,7 +2097,7 @@
                 "ar": "بانر مزدوج (ثراء)"
             },
             "icon": "sicon-store",
-            "path": "home.th_double_banner",
+            "path": "home.th-double-banner",
             "fields": []
         }
     ],
