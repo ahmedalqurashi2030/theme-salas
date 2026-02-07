@@ -1,0 +1,5 @@
+npx update-browserslist-db@latest
+salla theme preview --browser=edge
+salla theme preview --with-editor
+
+ pnpm run prod  
