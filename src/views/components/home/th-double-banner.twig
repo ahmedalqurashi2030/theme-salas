@@ -1,0 +1,89 @@
+{# =========================================================
+  Tharaa | Double Banner (Home Component)
+  - Compatible with twilight.json:
+    is_rounded, uniform_height, mobile_vertical, gap, 
+    first_banner_image, first_banner_link,
+    second_banner_image, second_banner_link,
+    custom_class
+========================================================= #}
+
+{% set is_rounded      = component.is_rounded ?? true %}
+{% set uniform_height  = component.uniform_height ?? true %}
+{% set mobile_vertical = component.mobile_vertical ?? false %}
+{% set gap             = component.gap ?? 0 %}
+{% set custom_class    = component.custom_class ?? '' %}
+
+{# ✅ Dotted keys from twilight.json #}
+{% set first_image  = component['first_banner_image'] ?? component.first_banner_image ?? null %}
+{% set first_link   = component['first_banner_link'] ?? component.first_banner_link ?? '' %}
+{% set second_image = component['second_banner_image'] ?? component.second_banner_image ?? null %}
+{% set second_link  = component['second_banner_link'] ?? component.second_banner_link ?? '' %}
+
+{# normalize if image is object {url/original} #}
+{% if first_image and first_image.url is defined %}{% set first_image = first_image.url %}{% endif %}
+{% if first_image and first_image.original is defined %}{% set first_image = first_image.original %}{% endif %}
+
+{% if second_image and second_image.url is defined %}{% set second_image = second_image.url %}{% endif %}
+{% if second_image and second_image.original is defined %}{% set second_image = second_image.original %}{% endif %}
+
+{% if first_image or second_image %}
+  <section class="s-block th-double-banner {{ custom_class }}{{ is_rounded ? ' is-rounded' : '' }}">
+    <div class="th-double-banner__wrap container">
+
+      <div class="th-double-banner__grid 
+                  {{ uniform_height ? 'th-double-banner__grid--uniform' : '' }}
+                  {{ mobile_vertical ? 'th-double-banner__grid--stack-mobile' : '' }}"
+           style="--th-gap: {{ gap }}px;">
+
+        {# البانر الأول #}
+        {% if first_image %}
+          {% if first_link %}
+            <a href="{{ first_link }}" class="th-banner" target="_blank" rel="noopener" aria-label="البنر الأول">
+          {% else %}
+            <div class="th-banner" aria-label="البنر الأول">
+          {% endif %}
+            
+            <picture class="th-banner__media">
+              <img
+                class="th-banner__img"
+                src="{{ first_image }}"
+                alt=""
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                width="700"
+                height="300"
+              >
+            </picture>
+
+          {% if first_link %}</a>{% else %}</div>{% endif %}
+        {% endif %}
+
+        {# البانر الثاني #}
+        {% if second_image %}
+          {% if second_link %}
+            <a href="{{ second_link }}" class="th-banner" target="_blank" rel="noopener" aria-label="البنر الثاني">
+          {% else %}
+            <div class="th-banner" aria-label="البنر الثاني">
+          {% endif %}
+            
+            <picture class="th-banner__media">
+              <img
+                class="th-banner__img"
+                src="{{ second_image }}"
+                alt=""
+                loading="lazy"
+                decoding="async"
+                width="700"
+                height="300"
+              >
+            </picture>
+
+          {% if second_link %}</a>{% else %}</div>{% endif %}
+        {% endif %}
+
+      </div>
+
+    </div>
+  </section>
+{% endif %}

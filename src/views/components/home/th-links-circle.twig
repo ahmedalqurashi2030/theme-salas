@@ -1,15 +1,3 @@
-{#
-  ============================================
-  Tharaa Theme - Circular Links Component
-  ============================================
-  Component: th-links-circle
-  Purpose: Display circular category/brand links with slider or grid layout
-  Fields: section_title, section_description, display_mode, autoplay, show_controls, two_rows, items_per_view, items[]
-  Theme JSON Path: components.th-links-circle
-  SCSS Classes: .tharaa-links-section.style-circle
-  ============================================
-#}
-
 {# Get component data from theme.json #}
 {% set section_title = component.section_title|default('تصفح حسب الفئة') %}
 {% set section_description = component.section_description|default('') %}
@@ -27,115 +15,80 @@
 {# Only render if we have items #}
 {% if items is not empty %}
 
-{# 
-  Main Section Container 
-  Classes:
-  - tharaa-links-section: Base component class (defined in th-links.scss)
-  - style-circle: Modifier for circular style (border-radius: 50%)
-  - mode-grid: Applied when display_mode is 'list' (vertical grid)
-  - mode-double: Applied when two_rows is enabled
-#}
-<section 
-  class="tharaa-links-section style-circle {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" 
-  id="{{ section_id }}"
-  data-autoplay="{{ autoplay ? 'true' : 'false' }}"
-  data-items-mobile="{{ items_mobile }}"
-  data-items-desktop="{{ items_desktop }}">
-  
-  <div class="tharaa-container">
-    
-    {# 
-      Section Header 
-      Contains: Title, Description
-      SCSS: .tharaa-header, .tharaa-header__title, .tharaa-header__subtitle
-    #}
-    <header class="tharaa-header">
-      <div class="tharaa-header__content">
-        {# Section Title - Controlled by theme.json: section_title #}
-        <h2 class="tharaa-header__title">{{ section_title }}</h2>
-        
-        {# Section Description (Optional) - Controlled by theme.json: section_description #}
-        {% if section_description %}
-          <p class="tharaa-header__subtitle">{{ section_description }}</p>
-        {% endif %}
-      </div>
-    </header>
 
-    {# 
-      Track Wrapper - Contains slider track and navigation buttons
-      SCSS: .tharaa-track-wrapper
-    #}
-    <div class="tharaa-track-wrapper">
-      
-      {# Navigation Buttons - Controlled by theme.json: show_controls #}
-      {% if show_controls %}
-        <button 
-          class="tharaa-nav-btn btn-prev" 
-          aria-label="{{ trans('common.previous') }}">
-          <i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'right' : 'left' }}"></i>
-        </button>
-        
-        <button 
-          class="tharaa-nav-btn btn-next" 
-          aria-label="{{ trans('common.next') }}">
-          <i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'left' : 'right' }}"></i>
-        </button>
-      {% endif %}
+	<section class="tharaa-links-section style-circle {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}">
 
-      {# 
-        Slider Track - Contains all items
-        SCSS: .tharaa-track
-        Features: Horizontal scroll, snap points, drag support
-      #}
-      <div class="tharaa-track">
-        
-        {# Loop through items from theme.json: items[] #}
-        {% for item in items %}
-          {# 
-            Single Card Component
-            SCSS: .tharaa-card, .tharaa-card__visual, .tharaa-card__img, .tharaa-card__content
-            Data: item.title, item.image, item.url
-          #}
-          <a 
-            href="{{ item.url|default('#') }}" 
-            class="tharaa-card"
-            aria-label="{{ item.title }}">
-            
-            {# Visual Container (Image) - Circle shape via style-circle modifier #}
-            <div class="tharaa-card__visual">
-              <img 
-                class="tharaa-card__img" 
-                src="{{ item.image }}" 
-                alt="{{ item.title }}"
-                loading="lazy"
-                decoding="async">
-            </div>
-            
-            {# Content Container (Title + Optional Count) #}
-            <div class="tharaa-card__content">
-              <span class="tharaa-card__title">{{ item.title }}</span>
-              
-              {# Optional: Product count (if available in data) #}
-              {% if item.count is defined %}
-                <span class="tharaa-card__count">{{ item.count }}</span>
-              {% endif %}
-            </div>
-          </a>
-        {% endfor %}
+		<div class="tharaa-container">
 
-      </div>
-    </div>
 
-    {# 
-      Progress Bar - Shows scroll position
-      SCSS: .tharaa-progress, .tharaa-progress__bar
-      Hidden in grid mode via CSS
-    #}
-    <div class="tharaa-progress">
-      <div class="tharaa-progress__bar"></div>
-    </div>
+			<header class="tharaa-header">
+				<div
+					class="tharaa-header__content">
+					{# Section Title - Controlled by theme.json: section_title #}
+					<h2 class="tharaa-header__title">{{ section_title }}</h2>
 
-  </div>
-</section>
+					{# Section Description (Optional) - Controlled by theme.json: section_description #}
+					{% if section_description %}
+						<p class="tharaa-header__subtitle">{{ section_description }}</p>
+					{% endif %}
+				</div>
+			</header>
+
+			<div class="tharaa-track-wrapper">
+
+				{% if show_controls %}
+					<button class="tharaa-nav-btn btn-prev" aria-label="{{ trans('common.previous') }}">
+						<i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'right' : 'left' }}"></i>
+					</button>
+
+					<button class="tharaa-nav-btn btn-next" aria-label="{{ trans('common.next') }}">
+						<i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'left' : 'right' }}"></i>
+					</button>
+				{% endif %}
+
+				<div
+					class="tharaa-track">
+
+					{# Loop through items from theme.json: items[] #}
+					{% for item in items %}
+						{# 
+												            Single Card Component
+												            SCSS: .tharaa-card, .tharaa-card__visual, .tharaa-card__img, .tharaa-card__content
+												            Data: item.title, item.image, item.url
+												          #}
+						<a
+							href="{{ item.url|default('#') }}" class="tharaa-card" aria-label="{{ item.title }}">
+
+							{# Visual Container (Image) - Circle shape via style-circle modifier #}
+							<div class="tharaa-card__visual">
+								<img class="tharaa-card__img" src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" decoding="async">
+							</div>
+
+							{# Content Container (Title + Optional Count) #}
+							<div class="tharaa-card__content">
+								<span class="tharaa-card__title">{{ item.title }}</span>
+
+								{# Optional: Product count (if available in data) #}
+								{% if item.count is defined %}
+									<span class="tharaa-card__count">{{ item.count }}</span>
+								{% endif %}
+							</div>
+						</a>
+					{% endfor %}
+
+				</div>
+			</div>
+
+			{# 
+						      Progress Bar - Shows scroll position
+						      SCSS: .tharaa-progress, .tharaa-progress__bar
+						      Hidden in grid mode via CSS
+						    #}
+			<div class="tharaa-progress">
+				<div class="tharaa-progress__bar"></div>
+			</div>
+
+		</div>
+	</section>
 
 {% endif %}
