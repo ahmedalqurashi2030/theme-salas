@@ -1,5 +1,8 @@
 npx update-browserslist-db@latest
+<<<<<<< Updated upstream
 salla theme preview --browser=edge
 salla theme preview --with-editor
 
  pnpm run prod  
+=======
+>>>>>>> Stashed changes
