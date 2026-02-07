@@ -2098,7 +2098,148 @@
             },
             "icon": "sicon-store",
             "path": "home.th-double-banner",
-            "fields": []
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "static",
+                    "format": "title",
+                    "label": "Title",
+                    "value": "إعدادات القسم",
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "description",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": "أضف بانرين جانباً إلى جانب مع التحكم بالعرض والحواف والروابط.",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "line",
+                    "type": "static",
+                    "format": "line",
+                    "label": "Line",
+                    "icon": "sicon-minus"
+                },
+                {
+                    "id": "is_rounded",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "حواف دائرية",
+                    "description": "حواف دائرية",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "uniform_height",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "توحيد ارتفاع البنرات",
+                    "description": "توحيد ارتفاع البنرات",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "gap",
+                    "type": "number",
+                    "format": "float",
+                    "inputType": "number",
+                    "label": "المسافة بين البنرات (بكسل)",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Input a number between -10.10 and 100.",
+                    "icon": "sicon-hashtag",
+                    "value": 0,
+                    "required": false,
+                    "step": 0.1,
+                    "minimum": "0",
+                    "maximum": "50"
+                },
+                {
+                    "id": "mobile_vertical",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "عرض البنرات بشكل عمودي في الجوال",
+                    "description": "عند التفعيل: البنرات تظهر فوق بعض (عمودي) عند الإيقاف: البنرات تظهر جنباً إلى جنب (أفقي)",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "first_banner_image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة البانر الأول",
+                    "description": "المقاس المناسب 700×300 بكسل أو 1400×600 للشاشات الكبيرة",
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://hostname.com/image.png",
+                    "icon": "sicon-image",
+                    "value": null,
+                    "required": false
+                },
+                {
+                    "id": "first_banner_link",
+                    "type": "string",
+                    "format": "url",
+                    "inputType": "url",
+                    "label": "الرابط",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://salla.sa",
+                    "icon": "sicon-link",
+                    "value": null,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "title_1",
+                    "type": "static",
+                    "format": "title",
+                    "label": "Title 1",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "second_banner_image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة البانر الثاني",
+                    "description": "المقاس المناسب 700×300 بكسل أو 1400×600 للشاشات الكبيرة",
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://hostname.com/image.png",
+                    "icon": "sicon-image",
+                    "value": null,
+                    "required": false
+                },
+                {
+                    "id": "second_banner_link",
+                    "type": "string",
+                    "format": "url",
+                    "inputType": "url",
+                    "label": "الرابط",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://salla.sa",
+                    "icon": "sicon-link",
+                    "value": null,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
