@@ -9,7 +9,7 @@
  * =====================================================
  */
 
-(function() {
+(function () {
   'use strict';
 
   /**
@@ -20,14 +20,14 @@
     /**
      * Initialize all link sections on the page
      */
-    init: function() {
+    init: function () {
       // Find all link sections
       const sections = document.querySelectorAll('.tharaa-links-section');
-      
+
       if (sections.length === 0) {
         return; // No sections found, exit early
       }
-      
+
       // Initialize each section
       sections.forEach(section => {
         this.initSection(section);
@@ -38,13 +38,12 @@
      * Initialize a single section
      * @param {HTMLElement} section - The section element
      */
-    initSection: function(section) {
+    initSection: function (section) {
       const track = section.querySelector('.tharaa-track');
       const prevBtn = section.querySelector('.btn-prev');
       const nextBtn = section.querySelector('.btn-next');
       const progressBar = section.querySelector('.tharaa-progress__bar');
       const progressContainer = section.querySelector('.tharaa-progress');
-      const layoutBtns = section.querySelectorAll('.tharaa-control-btn');
 
       if (!track) {
         console.warn('Tharaa Links: Track not found in section', section);
@@ -87,7 +86,7 @@
         if (progressBar) {
           const progress = (scrollLeft / maxScroll) * 100;
           const progressWidth = Math.min(progress * 0.7, 70); // Max 70% width
-          
+
           if (isRTL) {
             progressBar.style.right = `${progressWidth}%`;
           } else {
@@ -97,49 +96,17 @@
 
         // Update navigation buttons visibility
         if (prevBtn) {
-          scrollLeft > 20 
-            ? prevBtn.classList.add('is-visible') 
+          scrollLeft > 20
+            ? prevBtn.classList.add('is-visible')
             : prevBtn.classList.remove('is-visible');
         }
-        
+
         if (nextBtn) {
-          scrollLeft < maxScroll - 20 
-            ? nextBtn.classList.add('is-visible') 
+          scrollLeft < maxScroll - 20
+            ? nextBtn.classList.add('is-visible')
             : nextBtn.classList.remove('is-visible');
         }
       };
-
-      /**
-       * Layout Switcher (Default / Double Row / Grid)
-       */
-      layoutBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          // Update active state
-          layoutBtns.forEach(b => b.classList.remove('is-active'));
-          btn.classList.add('is-active');
-
-          // Remove all mode classes
-          section.classList.remove('mode-double', 'mode-grid');
-
-          // Add selected mode class
-          const mode = btn.dataset.mode;
-          if (mode && mode !== 'default') {
-            section.classList.add(mode);
-          }
-
-          // Reset scroll position
-          track.scrollLeft = 0;
-
-          // Stop autoplay if switching to grid
-          if (mode === 'mode-grid' && autoplayInterval) {
-            clearInterval(autoplayInterval);
-            autoplayInterval = null;
-          }
-
-          // Update UI after layout change
-          setTimeout(updateUI, 50);
-        });
-      });
 
       /**
        * Scroll Event Handler (Throttled via requestAnimationFrame)
@@ -166,7 +133,7 @@
         nextBtn.addEventListener('click', () => {
           const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
           const scrollAmount = getScrollAmount();
-          
+
           track.scrollBy({
             left: isRTL ? scrollAmount : -scrollAmount,
             behavior: 'smooth'
@@ -178,7 +145,7 @@
         prevBtn.addEventListener('click', () => {
           const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
           const scrollAmount = getScrollAmount();
-          
+
           track.scrollBy({
             left: isRTL ? -scrollAmount : scrollAmount,
             behavior: 'smooth'
@@ -196,12 +163,12 @@
       // Mouse events
       track.addEventListener('mousedown', (e) => {
         if (section.classList.contains('mode-grid')) return;
-        
+
         isDown = true;
         track.classList.add('is-dragging');
         startX = e.pageX - track.offsetLeft;
         scrollLeft = track.scrollLeft;
-        
+
         // Prevent text selection while dragging
         e.preventDefault();
       });
@@ -218,7 +185,7 @@
 
       track.addEventListener('mousemove', (e) => {
         if (!isDown) return;
-        
+
         e.preventDefault();
         const x = e.pageX - track.offsetLeft;
         const walk = (x - startX) * 2.5; // Scroll speed multiplier
@@ -231,14 +198,14 @@
 
       track.addEventListener('touchstart', (e) => {
         if (section.classList.contains('mode-grid')) return;
-        
+
         touchStartX = e.touches[0].pageX - track.offsetLeft;
         touchScrollLeft = track.scrollLeft;
       }, { passive: true });
 
       track.addEventListener('touchmove', (e) => {
         if (section.classList.contains('mode-grid')) return;
-        
+
         const x = e.touches[0].pageX - track.offsetLeft;
         const walk = (x - touchStartX) * 2;
         track.scrollLeft = touchScrollLeft - walk;
@@ -251,12 +218,12 @@
         const startAutoplay = () => {
           // Don't autoplay in grid mode
           if (section.classList.contains('mode-grid')) return;
-          
+
           autoplayInterval = setInterval(() => {
             const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
             const maxScroll = track.scrollWidth - track.clientWidth;
             const currentScroll = isRTL ? Math.abs(track.scrollLeft) : track.scrollLeft;
-            
+
             // Check if reached end
             if (currentScroll >= maxScroll - 10) {
               // Reset to start
@@ -300,7 +267,7 @@
       const resizeObserver = new ResizeObserver(() => {
         updateUI();
       });
-      
+
       resizeObserver.observe(track);
 
       /**
@@ -351,7 +318,7 @@
      * Public method to refresh a specific section
      * @param {string} sectionId - The section ID
      */
-    refresh: function(sectionId) {
+    refresh: function (sectionId) {
       const section = document.getElementById(sectionId);
       if (section) {
         this.initSection(section);
@@ -362,7 +329,7 @@
      * Public method to destroy a section (cleanup)
      * @param {string} sectionId - The section ID
      */
-    destroy: function(sectionId) {
+    destroy: function (sectionId) {
       const section = document.getElementById(sectionId);
       if (!section) return;
 

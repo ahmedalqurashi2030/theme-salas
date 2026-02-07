@@ -46,7 +46,7 @@
     
     {# 
       Section Header 
-      Contains: Title, Description, Layout Controls
+      Contains: Title, Description
       SCSS: .tharaa-header, .tharaa-header__title, .tharaa-header__subtitle
     #}
     <header class="tharaa-header">
@@ -58,34 +58,6 @@
         {% if section_description %}
           <p class="tharaa-header__subtitle">{{ section_description }}</p>
         {% endif %}
-      </div>
-      
-      {# 
-        Layout Control Buttons (Pill Style)
-        SCSS: .tharaa-controls, .tharaa-control-btn
-        Functionality: Switch between slider/double-row/grid views
-      #}
-      <div class="tharaa-controls">
-        <button 
-          class="tharaa-control-btn {{ display_mode != 'list' and not two_rows ? 'is-active' : '' }}" 
-          data-mode="default" 
-          aria-label="{{ trans('common.default_view') }}">
-          <i class="sicon-arrow-{{ user.language.dir == 'rtl' ? 'right' : 'left' }}"></i>
-        </button>
-        
-        <button 
-          class="tharaa-control-btn {{ two_rows ? 'is-active' : '' }}" 
-          data-mode="mode-double" 
-          aria-label="{{ trans('common.two_rows_view') }}">
-          <i class="sicon-apps"></i>
-        </button>
-        
-        <button 
-          class="tharaa-control-btn {{ display_mode == 'list' ? 'is-active' : '' }}" 
-          data-mode="mode-grid" 
-          aria-label="{{ trans('common.grid_view') }}">
-          <i class="sicon-border-all"></i>
-        </button>
       </div>
     </header>
 
