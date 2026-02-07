@@ -2089,6 +2089,16 @@
                     "maxLength": 30
                 }
             ]
+        },
+        {
+            "key": "a7fc3895-8ad5-4ef0-926c-76cf59280af2",
+            "title": {
+                "en": "double banner (Tharaa)",
+                "ar": "بانر مزدوج (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.th_double_banner",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
