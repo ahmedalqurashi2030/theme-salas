@@ -2,88 +2,90 @@
 | Variable             | Type                   | Description                                        |
 |----------------------|------------------------|----------------------------------------------------| 
 | menus                | Menu[] *Collection     | List of menus                                      |
+| menus[].has_children | Bool                   |                                                    |
+| menus[].url          | string                 |                                                    |
+| menus[].title        | string                 |                                                    |
+| menus[].attrs        | string                 | Menu dom attributes ex: ` id="offers"`             |
+| menus[].link_attrs   | string                 | Menu link dom attributes ex: `class="offers-link"` |
+| menus[].children     | Menu[] *Collection     |                                                    |
+| menus[].products     | ?Product[] *Collection | List of selected products or null                  |
 #}
 
 {# DESKTOP MENU #}
 <div class="flex items-center h-full gap-8">
-	
 	{# 1. زر جميع الأقسام (Mega Menu) #}
-	<div class="th-all-cats-wrapper group relative">
+	<div class="th-all-cats-wrapper group">
 		<div class="th-all-cats-btn">
 			<i class="sicon-layout-grid text-lg"></i>
 			<span>{{ trans('blocks.header.all_categories') }}</span>
 			<i class="sicon-keyboard_arrow_down text-xs opacity-50 mt-1 mr-auto"></i>
 		</div>
 
-		{# Mega Menu - يظهر تحت الـ navbar مباشرة #}
-		<div class="th-mega-menu absolute right-0 top-full mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-			<div class="bg-white rounded-lg shadow-2xl border border-gray-100 mt-2 overflow-hidden">
-				<div class="flex">
-					{# القائمة الجانبية #}
-					<div class="th-mega-sidebar bg-gray-50 w-64 border-l border-gray-100">
-						{% for menu in menus %}
-							{% if menu.has_children %}
-								<div class="th-mega-tab {{ loop.first ? 'active' : '' }} px-4 py-3 cursor-pointer hover:bg-white transition flex items-center justify-between gap-3 border-b border-gray-100" onmouseover="tharaaOpenTab(event, 'mega-{{ loop.index }}')">
-									<span class="font-medium text-sm">{{ menu.title }}</span>
-									{% if menu.image %}
-										<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-8 h-8 rounded-full object-cover bg-white">
-									{% else %}
-										<span class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-400 text-xs">
-											<i class="sicon-layout-grid"></i>
-										</span>
-									{% endif %}
-								</div>
+		<div class="th-mega-menu">
+			{# القائمة الجانبية #}
+			<div class="th-mega-sidebar">
+				{% for menu in menus %}
+                    <!-- DEBUG: Processing menu {{ menu.title }} -->
+					{% if menu.has_children %}
+						<div class="th-mega-tab {{ loop.first ? 'active' : '' }}" onmouseover="tharaaOpenTab(event, 'mega-{{ loop.index }}')">
+							{{ menu.title }}
+							{% if menu.image %}
+								<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
+							{% else %}
+								<span class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-xs">
+									<i class="sicon-layout-grid"></i>
+								</span>
 							{% endif %}
-						{% endfor %}
-					</div>
-					
-					{# المحتوى #}
-					<div class="th-mega-content overflow-y-auto" style="width: 800px; max-height: 500px;">
-						{% for menu in menus %}
-							{% if menu.has_children %}
-								<div id="mega-{{ loop.index }}" class="th-mega-pane {{ loop.first ? 'block' : 'hidden' }} p-6">
-									<div class="grid grid-cols-3 gap-6">
-										{% for child in menu.children %}
-											<div>
-												<a href="{{ child.url }}" class="font-bold text-gray-800 mb-3 block hover:text-gold transition flex items-center gap-2 text-sm">
-													{% if child.image %}
-														<img src="{{ child.image }}" alt="{{ child.title }}" class="w-6 h-6 rounded-full object-cover bg-gray-50">
-													{% else %}
-														<span class="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-xs">
-															<i class="sicon-layout-grid"></i>
-														</span>
-													{% endif %}
-													{{ child.title }}
-												</a>
-												{% if child.children|length > 0 %}
-													<ul class="space-y-1.5 pr-6 border-r border-gray-100">
-														{% for sub in child.children %}
-															<li>
-																<a href="{{ sub.url }}" class="text-xs text-gray-500 hover:text-gold transition block hover:translate-x-[-2px]">{{ sub.title }}</a>
-															</li>
-														{% endfor %}
-													</ul>
-												{% endif %}
-											</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+			
+			{# المحتوى #}
+			<div class="th-mega-content overflow-y-auto">
+				{% for menu in menus %}
+					{% if menu.has_children %}
+						<div id="mega-{{ loop.index }}" class="th-mega-pane {{ loop.first ? 'active' : '' }}">
+							<div class="grid grid-cols-3 gap-8">
+								{% for child in menu.children %}
+									<div>
+										<a href="{{ child.url }}" class="font-bold text-gray-800 mb-3 block hover:text-gold transition flex items-center gap-2">
+											{% if child.image %}
+												<img src="{{ child.image }}" alt="{{ child.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
+											{% else %}
+												<span class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-xs">
+													<i class="sicon-layout-grid"></i>
+												</span>
+											{% endif %}
+											{{ child.title }}
+										</a>
+										{% if child.children|length > 0 %}
+											<ul class="space-y-2 pr-10 border-r border-gray-50">
+												{% for sub in child.children %}
+													<li>
+														<a href="{{ sub.url }}" class="text-sm text-gray-500 hover:text-gold transition block hover:translate-x-[-3px]">{{ sub.title }}</a>
+													</li>
+												{% endfor %}
+											</ul>
+										{% endif %}
+									</div>
+								{% endfor %}
+							</div>
+							
+							{# منتجات مقترحة #}
+							{% if menu.products %}
+								<div class="mt-8 pt-6 border-t border-gray-100">
+									<h4 class="font-bold mb-4 text-sm text-gold">{{ trans('blocks.header.featured_products') }}</h4>
+									<div class="grid grid-cols-4 gap-4">
+										{% for product in menu.products|slice(0, 4) %}
+											<salla-product-card shadow-on-hover product="{{ product }}" class="text-xs"></salla-product-card>
 										{% endfor %}
 									</div>
-									
-									{# منتجات مقترحة #}
-									{% if menu.products %}
-										<div class="mt-6 pt-4 border-t border-gray-100">
-											<h4 class="font-bold mb-3 text-xs text-gold">{{ trans('blocks.header.featured_products') }}</h4>
-											<div class="grid grid-cols-4 gap-3">
-												{% for product in menu.products|slice(0, 4) %}
-													<salla-product-card shadow-on-hover product="{{ product }}" class="text-xs"></salla-product-card>
-												{% endfor %}
-											</div>
-										</div>
-									{% endif %}
 								</div>
 							{% endif %}
-						{% endfor %}
-					</div>
-				</div>
+						</div>
+					{% endif %}
+				{% endfor %}
 			</div>
 		</div>
 	</div>
@@ -96,193 +98,12 @@
 	</ul>
 </div>
 
-<style>
-/* ============================================
-   🎨 MEGA MENU POSITIONING FIX
-   ============================================ */
-
-/* التأكد من أن الـ navbar لديه position relative */
-.th-navbar {
-	position: relative;
-	z-index: 40;
-}
-
-/* Mega Menu Tabs */
-.th-mega-tab {
-	position: relative;
-}
-
-.th-mega-tab.active {
-	background: white;
-	color: #d4af37;
-}
-
-.th-mega-tab.active::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	top: 0;
-	bottom: 0;
-	width: 3px;
-	background: #d4af37;
-}
-
-/* Mega Menu Panes */
-.th-mega-pane {
-	display: none;
-}
-
-.th-mega-pane.active,
-.th-mega-pane:first-child {
-	display: block;
-}
-
-/* زر جميع الأقسام */
-.th-all-cats-btn {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	padding: 10px 20px;
-	background: linear-gradient(135deg, #d4af37 0%, #c9a028 100%);
-	color: white;
-	border-radius: 8px;
-	cursor: pointer;
-	font-weight: 600;
-	font-size: 14px;
-	transition: all 0.3s;
-	white-space: nowrap;
-}
-
-.th-all-cats-btn:hover {
-	transform: translateY(-1px);
-	box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-}
-
-/* ============================================
-   🎨 CASCADING MENU POSITIONING FIX
-   ============================================ */
-
-/* القائمة الرئيسية */
-.th-nav-item {
-	position: relative;
-	height: 100%;
-	display: flex;
-	align-items: center;
-}
-
-/* الرابط الرئيسي */
-.th-nav-link {
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	padding: 10px 16px;
-	color: #1f2937;
-	font-weight: 600;
-	font-size: 14px;
-	text-decoration: none;
-	transition: color 0.2s;
-	height: 100%;
-}
-
-.th-nav-link:hover {
-	color: #d4af37;
-}
-
-/* القائمة المنسدلة الرئيسية */
-.th-dropdown.root-level {
-	position: absolute;
-	right: 0;
-	top: 100%;
-	min-width: 220px;
-	background: white;
-	border-radius: 8px;
-	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-	border: 1px solid #f3f4f6;
-	padding: 8px 0;
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(10px);
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	z-index: 50;
-	margin-top: 8px;
-}
-
-.th-nav-item:hover > .th-dropdown.root-level {
-	opacity: 1;
-	visibility: visible;
-	transform: translateY(0);
-}
-
-/* القوائم الفرعية الجانبية */
-.th-dropdown.side-level {
-	position: absolute;
-	right: 100%;
-	top: 0;
-	min-width: 200px;
-	background: white;
-	border-radius: 8px;
-	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-	border: 1px solid #f3f4f6;
-	padding: 8px 0;
-	opacity: 0;
-	visibility: hidden;
-	transform: translateX(10px);
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	z-index: 51;
-	margin-right: 8px;
-}
-
-.th-cascading-item:hover > .th-dropdown.side-level {
-	opacity: 1;
-	visibility: visible;
-	transform: translateX(0);
-}
-
-/* الرابط داخل القائمة المنسدلة */
-.th-cascading-link {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 8px;
-	padding: 10px 16px;
-	color: #4b5563;
-	font-size: 13px;
-	text-decoration: none;
-	transition: all 0.2s;
-}
-
-.th-cascading-link:hover {
-	background: #f9fafb;
-	color: #d4af37;
-	padding-right: 12px;
-}
-
-/* منع تداخل Mega Menu مع Cascading */
-.th-all-cats-wrapper.group:hover ~ .th-nav-list .th-dropdown {
-	pointer-events: none;
-}
-</style>
-
 <script>
-// Mega Menu Tab Switching
-function tharaaOpenTab(evt, id) {
-	// إخفاء جميع الـ panes
-	document.querySelectorAll('.th-mega-pane').forEach(el => {
-		el.classList.remove('active', 'block');
-		el.classList.add('hidden');
-	});
-	
-	// إزالة active من جميع الـ tabs
-	document.querySelectorAll('.th-mega-tab').forEach(el => el.classList.remove('active'));
-	
-	// إظهار الـ pane المطلوب
-	const targetPane = document.getElementById(id);
-	if (targetPane) {
-		targetPane.classList.remove('hidden');
-		targetPane.classList.add('active', 'block');
+	// Mega Menu Tab Switching
+	function tharaaOpenTab(evt, id) {
+		document.querySelectorAll('.th-mega-pane').forEach(el => el.classList.remove('active'));
+		document.querySelectorAll('.th-mega-tab').forEach(el => el.classList.remove('active'));
+		document.getElementById(id).classList.add('active');
+		evt.currentTarget.classList.add('active');
 	}
-	
-	// إضافة active للـ tab الحالي
-	evt.currentTarget.classList.add('active');
-}
 </script>

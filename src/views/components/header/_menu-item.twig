@@ -5,15 +5,15 @@
 | is_root    | Bool | هل هذه قائمة رئيسية أم فرعية   |
 #}
 
-<li class="th-nav-item th-cascading-item {{ is_root ? '' : 'w-full' }}">
+<li class="th-nav-item th-cascading-item group/item {{ is_root ? '' : 'w-full' }}">
 
 	<a href="{{ menu.url }}" class="{{ is_root ? 'th-nav-link' : 'th-cascading-link' }}">
 		{% if not is_root %}
-			<div class="flex items-center gap-2.5">
+			<div class="flex items-center gap-3">
 				{% if menu.image %}
-					<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-6 h-6 rounded-full object-cover bg-gray-50">
+					<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
 				{% else %}
-					<i class="sicon-layout-grid text-gray-300 text-base"></i>
+					<i class="sicon-layout-grid text-gray-300 text-lg group-hover/item:text-gold transition"></i>
 				{% endif %}
 				<span>{{ menu.title }}</span>
 			</div>
@@ -22,7 +22,7 @@
 		{% endif %}
 
 		{% if menu.has_children %}
-			<i class="{{ is_root ? 'sicon-keyboard_arrow_down mt-0.5 text-[10px]' : 'sicon-keyboard_arrow_left text-[10px]' }} opacity-60"></i>
+			<i class="{{ is_root ? 'sicon-keyboard_arrow_down mt-1 text-[10px]' : 'sicon-keyboard_arrow_left text-[10px]' }} opacity-60 group-hover/item:text-gold transition"></i>
 		{% endif %}
 	</a>
 
