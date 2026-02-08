@@ -2754,7 +2754,7 @@
                 "ar": "ماركات تجارية متحركة (ثراء)"
             },
             "icon": "sicon-store",
-            "path": "home.th-brand-carousel",
+            "path": "home.th-brand",
             "fields": [
                 {
                     "id": "iaadadat_alqsm",
