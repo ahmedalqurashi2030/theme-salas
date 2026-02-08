@@ -2390,32 +2390,6 @@
             ]
         },
         {
-            "key": "e72c4c6b-48e1-4ea1-ab48-e935605f3172",
-            "title": {
-                "en": "Overlay Links (Tharaa)",
-                "ar": "روابط تراكب (ثراء)"
-            },
-            "icon": "sicon-store",
-            "path": "home.main-links-overlay",
-            "fields": [
-                {
-                    "id": "aanoan_alqsm",
-                    "type": "string",
-                    "format": "text",
-                    "label": "عنوان القسم",
-                    "description": null,
-                    "labelHTML": null,
-                    "placeholder": "Placeholder text ..",
-                    "icon": "sicon-format-text-alt",
-                    "value": null,
-                    "multilanguage": false,
-                    "required": false,
-                    "minLength": 6,
-                    "maxLength": 30
-                }
-            ]
-        },
-        {
             "key": "745b6f2f-5ce6-47cd-9a57-76deaa8efc99",
             "title": {
                 "en": "(Banners Slider (tharaa",
