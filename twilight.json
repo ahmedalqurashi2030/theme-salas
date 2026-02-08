@@ -2158,7 +2158,7 @@
                     "labelHTML": null,
                     "placeholder": "Input a number between -10.10 and 100.",
                     "icon": "sicon-hashtag",
-                    "value": 0,
+                    "value": 10,
                     "required": false,
                     "step": 0.1,
                     "minimum": "0",
