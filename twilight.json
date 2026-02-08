@@ -2746,6 +2746,16 @@
                     "maxLength": 30
                 }
             ]
+        },
+        {
+            "key": "c3a43bc9-531a-4e88-8e9e-913cf7220c74",
+            "title": {
+                "en": "Brand Carousel (Tharaa)",
+                "ar": "ماركات تجارية متحركة (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.th-brand-carousel",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
