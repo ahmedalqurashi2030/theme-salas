@@ -63,8 +63,10 @@
 
 		<script defer data-cfasync="false" src="{{ 'product-card.js'|asset }}"></script>
 		<script defer src="{{ 'main-menu.js'|asset }}"></script>
-		{# Alpine.js for mobile drawer and interactive UI components #}
-		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+		{# Alpine.js for mobile drawer and interactive UI #}
+		{# MUST load WITHOUT defer so alpine:init event fires AFTER listeners register #}
+		<script src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 
 		{% block head_scripts %}{% endblock %}
@@ -100,10 +102,10 @@ window.can_access_wallet = {{ user.can_access_wallet | json_encode }}
 	{% hook 'head:end' %}
 </head>
 <body id="app" class="overflow-x-hidden {% hook 'body:classes' %}
-								  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
-								  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
-								  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
-								  ">
+										  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
+										  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
+										  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
+										  ">
 	<div class="loader-init"></div>
 	<noscript>
 		To get full functionality of this site you need to enable JavaScript. Here is how
