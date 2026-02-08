@@ -1924,19 +1924,19 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "text_area",
+                    "id": "section_subtitle",
                     "type": "string",
-                    "format": "textarea",
-                    "label": "Text Area",
-                    "description": null,
+                    "format": "text",
+                    "label": "عنوان فرعي (اختياري)",
+                    "description": "يظهر أعلى القسم في الصفحة",
                     "labelHTML": null,
-                    "placeholder": "Your text here",
-                    "icon": "sicon-typography",
-                    "value": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "مثال: تسوق حسب الأقسام",
                     "multilanguage": false,
                     "required": false,
-                    "minLength": 20,
-                    "maxLength": 255
+                    "minLength": 6,
+                    "maxLength": 30
                 },
                 {
                     "id": "display_mode",
@@ -1946,7 +1946,13 @@
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-keyboard_arrow_down",
-                    "selected": [],
+                    "selected": [
+                        {
+                            "label": "slider",
+                            "value": "سلايدر",
+                            "key": "95dedd1a-790d-4698-bca7-ae1502acf68d"
+                        }
+                    ],
                     "options": [
                         {
                             "label": "slider",
@@ -1982,6 +1988,18 @@
                     "format": "switch",
                     "label": "عرض أسهم التنقل",
                     "description": "عرض أسهم التنقل",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "two_rows",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "عرض العناصر في صفين",
+                    "description": "عند التفعيل: يظهر السلايدر على صفين (مناسب للتصنيفات الكثيرة).",
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
                     "value": true,
@@ -2057,18 +2075,6 @@
                     "icon": "sicon-list-add",
                     "fields": [
                         {
-                            "id": "items.image",
-                            "type": "string",
-                            "format": "image",
-                            "label": "الصوره",
-                            "description": "يفضل 300×300 (مربع)",
-                            "labelHTML": null,
-                            "placeholder": "e.g. https://hostname.com/image.png",
-                            "icon": "sicon-image",
-                            "value": null,
-                            "required": true
-                        },
-                        {
                             "id": "items.title",
                             "type": "string",
                             "format": "text",
@@ -2082,6 +2088,33 @@
                             "required": false,
                             "minLength": 6,
                             "maxLength": 30
+                        },
+                        {
+                            "id": "items.subtitle",
+                            "type": "string",
+                            "format": "text",
+                            "label": "عنوان فرعي (اختياري)",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": "مثال: جديد",
+                            "multilanguage": false,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "items.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "الصوره",
+                            "description": "يفضل 300×300 (مربع)",
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "required": true
                         },
                         {
                             "id": "items.url",
