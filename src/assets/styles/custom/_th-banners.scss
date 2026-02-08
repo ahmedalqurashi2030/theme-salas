@@ -1,13 +1,14 @@
 // 📁 src/assets/styles/04-sections/_th-banners.scss
-
 // ============================================
 // THARA BANNERS SYSTEM - Complete SCSS
+// يدعم: مزدوج | ثلاثي | رباعي | سداسي
 // ============================================
 
 :root {
   --th-gap: 16px;
   --th-radius: 12px;
   --th-transition: all 0.3s ease;
+  --th-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 // -----------------------------------
@@ -32,26 +33,92 @@
 }
 
 // -----------------------------------
-// Grid System
+// Grid System - All Types
 // -----------------------------------
 .th-banners__grid {
   display: grid;
   gap: var(--th-gap);
 
   // ==========================================
-  // بنر مزدوج (2)
+  // 1. بنر مزدوج (2)
   // ==========================================
   &--2 {
     grid-template-columns: repeat(2, 1fr);
 
-    // في الجوال: افتراضي جنباً إلى جنب
-    // عند تفعيل mobile_vertical: يصبح عمودي
     @media (max-width: 767px) {
       &.th-banners__grid--stack-mobile {
         grid-template-columns: 1fr;
       }
     }
   }
+
+  // ==========================================
+  // 2. بنر ثلاثي (3)
+  // ==========================================
+  &--3 {
+    grid-template-columns: repeat(3, 1fr);
+
+    // تابلت: عمودين، الثالث يأخذ العرض الكامل
+    @media (max-width: 991px) {
+      grid-template-columns: repeat(2, 1fr);
+
+      .th-banner:nth-child(3) {
+        grid-column: 1 / -1;
+      }
+    }
+
+    // موبايل: عمود واحد
+    @media (max-width: 575px) {
+      grid-template-columns: 1fr;
+
+      .th-banner:nth-child(3) {
+        grid-column: auto;
+      }
+    }
+  }
+
+  // ==========================================
+  // 3. بنر رباعي (4)
+  // ==========================================
+  &--4 {
+    grid-template-columns: repeat(4, 1fr);
+
+    // تابلت: عمودين
+    @media (max-width: 991px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    // موبايل: عمود واحد
+    @media (max-width: 575px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // ==========================================
+  // 4. بنر سداسي (6)
+  // ==========================================
+  &--6 {
+    grid-template-columns: repeat(6, 1fr);
+
+    // ديسكتوب صغير: 3 أعمدة
+    @media (max-width: 1199px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    // تابلت: عمودين
+    @media (max-width: 767px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    // موبايل: عمود واحد
+    @media (max-width: 575px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // ==========================================
+  // الموديفايرات المشتركة
+  // ==========================================
 
   // حواف دائرية
   &--rounded {
@@ -61,16 +128,43 @@
     }
   }
 
-  // توحيد الارتفاع
+  // توحيد الارتفاع (16:9)
   &--uniform {
     .th-banner {
       aspect-ratio: 16 / 9;
     }
   }
+
+  // مربع (1:1)
+  &--square {
+    .th-banner {
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  // عمودي (3:4)
+  &--portrait {
+    .th-banner {
+      aspect-ratio: 3 / 4;
+    }
+  }
+
+  // مسافات
+  &--tight {
+    --th-gap: 8px;
+  }
+
+  &--loose {
+    --th-gap: 32px;
+  }
+
+  &--flush {
+    --th-gap: 0;
+  }
 }
 
 // -----------------------------------
-// Banner Item
+// Banner Item (مشترك)
 // -----------------------------------
 .th-banner {
   position: relative;
@@ -85,23 +179,41 @@
     min-height: 200px;
   }
 
+  // حالة الرابط
   &[href] {
     cursor: pointer;
 
     &:hover {
-      opacity: 0.95;
+      transform: translateY(-4px);
+      box-shadow: var(--th-shadow);
 
       .th-banner__img {
-        transform: scale(1.02);
+        transform: scale(1.05);
       }
     }
   }
 
+  // الصورة
   &__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     transition: transform 0.4s ease;
+  }
+}
+
+// -----------------------------------
+// Accessibility
+// -----------------------------------
+@media (prefers-reduced-motion: reduce) {
+
+  .th-banner,
+  .th-banner__img {
+    transition: none !important;
+  }
+
+  .th-banner:hover {
+    transform: none;
   }
 }
