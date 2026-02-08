@@ -141,6 +141,14 @@
 		box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
 	}
 
+	.text-gold {
+		color: #d4af37 !important;
+	}
+
+	.th-navbar {
+		z-index: 990 !important;
+	}
+
 	.mobile-menu.show {
 		right: 0;
 	}
@@ -575,6 +583,7 @@ return;
 
 
 // فتح القائمة
+console.log('Initializing Mobile Menu Custom Logic');
 hamburgerBtn.addEventListener('click', function (e) {
 e.preventDefault();
 mobileMenu.classList.add('show');

@@ -106,6 +106,9 @@
 
 	{# 2. الروابط الرئيسية (Cascading) #}
 	<ul class="th-nav-list flex items-center gap-6 h-full">
+		{% if menus|length == 0 %}
+			<li class="text-sm text-red-500 font-bold px-4">DEBUG: No menus found in 'menus' variable.</li>
+		{% endif %}
 		{% for menu in menus %}
 			{% include 'components.header._menu-item' with { is_root: true } %}
 		{% endfor %}
