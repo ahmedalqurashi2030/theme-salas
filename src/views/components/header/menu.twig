@@ -26,17 +26,31 @@
 			<div class="th-mega-sidebar">
 				{% for menu in menus %}
                     <!-- DEBUG: Processing menu {{ menu.title }} -->
+					<!-- Item with Children -->
 					{% if menu.has_children %}
 						<div class="th-mega-tab {{ loop.first ? 'active' : '' }}" onmouseover="tharaaOpenTab(event, 'mega-{{ loop.index }}')">
-							{{ menu.title }}
-							{% if menu.image %}
-								<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
-							{% else %}
-								<span class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 text-xs">
-									<i class="sicon-layout-grid"></i>
-								</span>
-							{% endif %}
+							<div class="flex items-center gap-2">
+								{% if menu.image %}
+									<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-6 h-6 rounded-full object-cover bg-gray-50">
+								{% else %}
+									<i class="sicon-layout-grid text-gray-400"></i>
+								{% endif %}
+								<span>{{ menu.title }}</span>
+							</div>
+							<i class="sicon-keyboard_arrow_left text-xs opacity-50"></i>
 						</div>
+					{% else %}
+						<!-- Item without Children (Link) -->
+						<a href="{{ menu.url }}" class="th-mega-tab block hover:bg-white hover:text-gold transition">
+							<div class="flex items-center gap-2">
+								{% if menu.image %}
+									<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-6 h-6 rounded-full object-cover bg-gray-50">
+								{% else %}
+									<i class="sicon-layout-grid text-gray-400"></i>
+								{% endif %}
+								<span>{{ menu.title }}</span>
+							</div>
+						</a>
 					{% endif %}
 				{% endfor %}
 			</div>

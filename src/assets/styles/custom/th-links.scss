@@ -1,7 +1,7 @@
 // =====================================================
 // Tharaa Theme - Links Components SCSS
 // =====================================================
-// Components: th-links-circle, th-links-square, th-links-portrait
+// Components: th-links-circle, th-links-square, th-links-rect
 // Architecture: BEM + Modular + Responsive + RTL Ready
 // Version: 1.0.0
 // =====================================================
@@ -324,7 +324,7 @@ $breakpoint-desktop: 1280px;
 }
 
 // =====================================================
-// 8. Style Modifiers (Circle / Square / Portrait)
+// 8. Style Modifiers (Circle / Square / rect)
 // =====================================================
 
 // Circle Style (Default)
@@ -357,8 +357,8 @@ $breakpoint-desktop: 1280px;
   }
 }
 
-// Portrait Style (Overlay Text)
-.tharaa-links-section.style-portrait {
+// rect Style (Overlay Text)
+.tharaa-links-section.style-rect {
   .tharaa-card {
     width: 150px;
     border-radius: 18px;
@@ -374,7 +374,7 @@ $breakpoint-desktop: 1280px;
     width: 100%;
     height: 100%;
     border-radius: 0;
-    aspect-ratio: 3 / 4; // Portrait aspect ratio
+    aspect-ratio: 3 / 4; // rect aspect ratio
     
     // Gradient overlay for text readability
     &::after {

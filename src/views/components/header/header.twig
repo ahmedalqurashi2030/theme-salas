@@ -28,7 +28,7 @@
 			class="container flex items-center justify-between gap-6">
 
 			{# زر الموبايل (Hamburger) #}
-			<a href="#mobile-menu" class="hamburger-btn lg:hidden text-2xl text-gray-800 w-11 h-11 flex items-center justify-center hover:text-primary transition-colors" aria-label="{{ trans('blocks.header.menu') }}">
+			<a href="#mobile-menu-custom" class="hamburger-btn lg:hidden text-2xl text-gray-800 w-11 h-11 flex items-center justify-center hover:text-primary transition-colors" aria-label="{{ trans('blocks.header.menu') }}">
 				<i class="sicon-menu"></i>
 			</a>
 
@@ -84,7 +84,7 @@
 {# ============================================ #}
 {# Mobile Menu - القائمة المحمولة #}
 {# ============================================ #}
-	<nav id="mobile-menu" class="mobile-menu"> <ul class="main-menu">
+	<nav id="mobile-menu-custom" class="mobile-menu"> <ul class="main-menu">
 		{% for menu in menus %}
 			<li class="text-sm font-bold">
 				{% if not menu.has_children %}
@@ -564,7 +564,7 @@
 // ============================================
 
 function initMobileMenu() {
-const mobileMenu = document.getElementById('mobile-menu');
+const mobileMenu = document.getElementById('mobile-menu-custom');
 const hamburgerBtn = document.querySelector('.hamburger-btn');
 const closeBtn = document.querySelector('.close-mobile-menu');
 const closeOverlay = document.querySelector('.btn--close-sm');
