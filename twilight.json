@@ -1894,6 +1894,21 @@
                     "icon": "sicon-minus"
                 },
                 {
+                    "id": "section_description",
+                    "type": "string",
+                    "format": "text",
+                    "label": "وصف مختصر (اختياري)",
+                    "description": "يظهر أعلى القسم في الصفحة",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "مثال: اختر فئتك بسرعة واستكشف",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
                     "id": "section_title",
                     "type": "string",
                     "format": "text",
@@ -1945,8 +1960,8 @@
                         }
                     ],
                     "source": "Manual",
-                    "multichoice": true,
-                    "searchable": true,
+                    "multichoice": false,
+                    "searchable": false,
                     "required": false
                 },
                 {
@@ -1995,8 +2010,8 @@
                         }
                     ],
                     "source": "Manual",
-                    "multichoice": true,
-                    "searchable": true,
+                    "multichoice": false,
+                    "searchable": false,
                     "required": false
                 },
                 {
@@ -2007,7 +2022,13 @@
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-keyboard_arrow_down",
-                    "selected": [],
+                    "selected": [
+                        {
+                            "label": "2",
+                            "value": "2",
+                            "key": "c82d8de6-19dc-4cef-914d-b616fc2b4d0c"
+                        }
+                    ],
                     "options": [
                         {
                             "label": "3",
@@ -2021,8 +2042,8 @@
                         }
                     ],
                     "source": "Manual",
-                    "multichoice": true,
-                    "searchable": true,
+                    "multichoice": false,
+                    "searchable": false,
                     "required": false
                 },
                 {
@@ -2045,7 +2066,7 @@
                             "placeholder": "e.g. https://hostname.com/image.png",
                             "icon": "sicon-image",
                             "value": null,
-                            "required": false
+                            "required": true
                         },
                         {
                             "id": "items.title",
