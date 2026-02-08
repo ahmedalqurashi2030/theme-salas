@@ -2147,7 +2147,13 @@
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-keyboard_arrow_down",
-                    "selected": [],
+                    "selected": [
+                        {
+                            "label": "slider",
+                            "value": "سلايدر",
+                            "key": "098db87d-3668-4c94-aea2-fd09ba3c1851"
+                        }
+                    ],
                     "options": [
                         {
                             "label": "slider",
@@ -2211,9 +2217,9 @@
                     "icon": "sicon-keyboard_arrow_down",
                     "selected": [
                         {
-                            "label": "6",
-                            "value": "6",
-                            "key": "a73624de-d1fe-4950-9f10-b0bfc0ab4557"
+                            "label": "4",
+                            "value": "4",
+                            "key": "749a72f6-c5e3-4aa4-977d-e166a6ab4953"
                         }
                     ],
                     "options": [
@@ -2244,9 +2250,10 @@
                         }
                     ],
                     "source": "Manual",
-                    "multichoice": true,
-                    "searchable": true,
-                    "required": false
+                    "multichoice": false,
+                    "searchable": false,
+                    "required": false,
+                    "public": true
                 },
                 {
                     "id": "items_per_view_mobile",
@@ -2258,9 +2265,9 @@
                     "icon": "sicon-keyboard_arrow_down",
                     "selected": [
                         {
-                            "label": "3",
-                            "value": "3",
-                            "key": "e85ce81d-fb5a-4c77-bfc6-8e711a134e1d"
+                            "label": "2",
+                            "value": "2",
+                            "key": "dea2b405-7001-4daf-a77f-898d8973a2e6"
                         }
                     ],
                     "options": [
@@ -2281,9 +2288,10 @@
                         }
                     ],
                     "source": "Manual",
-                    "multichoice": true,
-                    "searchable": true,
-                    "required": false
+                    "multichoice": false,
+                    "searchable": false,
+                    "required": false,
+                    "public": true
                 },
                 {
                     "id": "items",
@@ -2355,7 +2363,7 @@
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": 5
+                    "maxLength": "20"
                 }
             ]
         },
