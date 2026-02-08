@@ -1,15 +1,18 @@
-{# تجهيز بيانات الميجا منيو #}
-{% set mega_items = [] %}
-{% for m in menus %}
-	{% if m.has_children %}
-		{% set mega_items = mega_items|merge([m]) %}
-	{% endif %}
-{% endfor %}
+{#
+| Variable             | Type                   | Description                                        |
+|----------------------|------------------------|----------------------------------------------------|
+| menus                | Menu[] *Collection     | List of menus                                      |
+| menus[].has_children | Bool                   |                                                    |
+| menus[].url          | string                 |                                                    |
+| menus[].title        | string                 |                                                    |
+| menus[].attrs        | string                 | Menu dom attributes ex: ` id="offers"`             |
+| menus[].link_attrs   | string                 | Menu link dom attributes ex: `class="offers-link"` |
+| menus[].children     | Menu[] *Collection     |                                                    |
+| menus[].products     | ?Product[] *Collection | List of selected products or null                  |
+#}
 
-{# === DESKTOP MENU === #}
-<div
-	class="flex items-center h-full gap-8">
-
+{# DESKTOP MENU - Same as before #}
+<div class="flex items-center h-full gap-8">
 	{# 1. زر جميع الأقسام (Mega Menu) #}
 	<div class="th-all-cats-wrapper group">
 		<div class="th-all-cats-btn">
@@ -18,14 +21,19 @@
 			<i class="sicon-keyboard_arrow_down text-xs opacity-50 mt-1 mr-auto"></i>
 		</div>
 
-		<div
-			class="th-mega-menu">
+		<div class="th-mega-menu">
 			{# القائمة الجانبية #}
 			<div class="th-mega-sidebar">
+				{% set mega_items = [] %}
+				{% for m in menus %}
+					{% if m.has_children %}
+						{% set mega_items = mega_items|merge([m]) %}
+					{% endif %}
+				{% endfor %}
+				
 				{% for item in mega_items %}
 					<div class="th-mega-tab {{ loop.first ? 'active' : '' }}" onmouseover="tharaaOpenTab(event, 'mega-{{ loop.index }}')">
 						{{ item.title }}
-
 						{% if item.image %}
 							<img src="{{ item.image }}" alt="{{ item.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
 						{% else %}
@@ -34,7 +42,6 @@
 							</span>
 						{% endif %}
 					</div>
-
 				{% endfor %}
 			</div>
 			{# المحتوى #}
@@ -44,9 +51,7 @@
 						<div class="grid grid-cols-3 gap-8">
 							{% for child in item.children %}
 								<div>
-									<a
-										href="{{ child.url }}" class="font-bold text-gray-800 mb-3 block hover:text-gold transition flex items-center gap-2">
-										{# أيقونة افتراضية #}
+									<a href="{{ child.url }}" class="font-bold text-gray-800 mb-3 block hover:text-gold transition flex items-center gap-2">
 										{% if child.image %}
 											<img src="{{ child.image }}" alt="{{ child.title }}" class="w-8 h-8 rounded-full object-cover bg-gray-50">
 										{% else %}
@@ -55,7 +60,6 @@
 											</span>
 										{% endif %}
 										{{ child.title }}
-
 									</a>
 									<ul class="space-y-2 pr-10 border-r border-gray-50">
 										{% for sub in child.children %}
@@ -92,74 +96,36 @@
 	</ul>
 </div>
 
-{# === MOBILE DRAWER (Alpine.js Enhanced) === #}
-{# === MOBILE DRAWER (Alpine.js Enhanced) === #}
-<template
-	x-teleport="body">
-	{# Mobile Drawer Component - Updated #}
-	<div
-		x-data="{
-															isOpen: false,
-															init() {
-																this.$watch('isOpen', (value) => {
-																	document.body.classList.toggle('drawer-open', value);
-																	document.body.style.overflow = value ? 'hidden' : '';
-																});
-															},
-															toggle() { this.isOpen = !this.isOpen },
-															open() { this.isOpen = true },
-															close() { this.isOpen = false }
-														}" x-init="init()" @toggle-drawer.window="toggle()" @keydown.escape.window="isOpen && close()" class="lg:hidden">
-
-		{# Overlay - closes drawer on click #}
-		<div x-show="isOpen" x-transition:enter="transition-opacity ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="close()" class="mobile-overlay" :class="{ 'open': isOpen }" aria-hidden="true"></div>
-
-		{# Drawer Panel #}
-		<div
-			x-show="isOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full rtl:-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full rtl:-translate-x-full" x-trap.inert.noscroll="isOpen" class="mobile-drawer flex flex-col" id="mobile-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" :aria-hidden="!isOpen">
-
-			{# Header #}
-			<div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-				<span id="drawer-title" class="font-bold text-lg">{{ trans('blocks.header.menu') }}</span>
-				<button @click="close()" type="button" class="drawer-close-btn w-11 h-11 bg-white rounded-full shadow-sm flex items-center justify-center text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" aria-label="{{ trans('common.elements.close') }}">
-					<i class="sicon-cancel text-lg"></i>
-				</button>
-			</div>
-
-			{# Menu Content - Scrollable #}
-			<div class="flex-1 overflow-y-auto p-2 overscroll-contain">
-				<ul class="space-y-1">
-					{% for menu in menus %}
-						{% include 'components.header._menu-item' with { is_mobile: true } %}
-					{% endfor %}
-				</ul>
-			</div>
-
-			{# Footer - Account/Login #}
-			<div class="p-4 border-t border-gray-100 bg-gray-50">
-				{% if user.type == 'user' %}
-					<a href="{{ link('profile') }}" class="block text-center py-3 bg-white border border-gray-200 rounded-lg font-bold text-gray-700 hover:border-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">{{ trans('blocks.footer.my_account') }}</a>
+{# MOBILE MENU - Standard Salla mmenu-light approach #}
+<nav id="mobile-menu" class="mobile-menu">
+	<ul class="main-menu">
+		{% for menu in menus %}
+			{# MOBILE #}
+			<li class="lg:hidden text-sm font-bold" {{ menu.attrs|raw }}>
+				{% if not menu.has_children %}
+					<a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="text-gray-500">{{ menu.title }}</a>
 				{% else %}
-					<button @click="close(); salla.event.dispatch('login::open')" type="button" class="w-full py-3 bg-black text-white rounded-lg font-bold hover:bg-gold transition focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2">{{ trans('blocks.header.login') }}</button>
+					<span>{{ menu.title }}</span>
+					<ul>
+						<li class="text-sm font-bold"><a {{ menu.link_attrs|raw }} href="{{ menu.url }}" class="text-gray-500">{{ trans('blocks.home.view_all') }}</a></li>
+						{% for submenu in menu.children %}
+							<li class="text-sm"><a href="{{ submenu.url }}" class="text-gray-500">{{ submenu.title }}</a></li>
+						{% endfor %}
+					</ul>
 				{% endif %}
-			</div>
-		</div>
-	</div>
-</template>
+			</li>
+		{% endfor %}
+	</ul>
+	<button class="btn--close close-mobile-menu sicon-cancel lg:hidden"></button>
+</nav>
+<button class="btn--close-sm close-mobile-menu sicon-cancel lg:hidden"></button>
 
 <script>
 	// Mega Menu Tab Switching
-function tharaaOpenTab(evt, id) {
-document.querySelectorAll('.th-mega-pane').forEach(el => el.classList.remove('active'));
-document.querySelectorAll('.th-mega-tab').forEach(el => el.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-evt.currentTarget.classList.add('active');
-}
-
-// Mobile Drawer Alpine Component
-
-// Mobile Drawer Toggle (Global)
-window.toggleDrawer = function () {
-window.dispatchEvent(new CustomEvent('toggle-drawer'));
-}
+	function tharaaOpenTab(evt, id) {
+		document.querySelectorAll('.th-mega-pane').forEach(el => el.classList.remove('active'));
+		document.querySelectorAll('.th-mega-tab').forEach(el => el.classList.remove('active'));
+		document.getElementById(id).classList.add('active');
+		evt.currentTarget.classList.add('active');
+	}
 </script>

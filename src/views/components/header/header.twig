@@ -1,85 +1,96 @@
-<header class="store-header th-header">
+<header
+	class="store-header th-header">
 
-    {# 1. الشريط العلوي #}
-    <div class="th-topbar hidden md:block">
-        <div class="container flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                {% component 'footer.menu' with {is_header:true} %}
-                
-                {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-                    <button type="button" onclick="salla.event.dispatch('localization::open')" class="th-topbtn text-xs">
-                        <span class="flag iti__flag iti__{{ user.language.country_code }}"></span>
-                        <span>{{ currency.symbol }}</span>
-                    </button>
-                {% endif %}
-            </div>
-            <div class="text-xs opacity-90 font-medium">
-                <i class="sicon-shipping-fast mx-1"></i> {{ trans('blocks.header.free_shipping') }} +299 ر.س
-            </div>
-        </div>
-    </div>
+	{# 1. الشريط العلوي #}
+	<div class="th-topbar hidden md:block">
+		<div class="container flex justify-between items-center">
+			<div class="flex items-center gap-4">
+				{% component 'footer.menu' with {is_header:true} %}
 
-    {# 2. الهيدر الرئيسي #}
-    <div class="th-main-header py-3">
-        <div class="container flex items-center justify-between gap-6">
-            
-            {# زر الموبايل (Hamburger) #}
-            <button type="button"
-                    class="hamburger-btn lg:hidden text-2xl text-gray-800 w-11 h-11 flex items-center justify-center hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    onclick="toggleDrawer()"
-                    aria-controls="mobile-drawer"
-                    aria-label="{{ trans('blocks.header.menu') }}">
-                <i class="sicon-menu"></i>
-            </button>
+				{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+					<button type="button" onclick="salla.event.dispatch('localization::open')" class="th-topbtn text-xs">
+						<span class="flag iti__flag iti__{{ user.language.country_code }}"></span>
+						<span>{{ currency.symbol }}</span>
+					</button>
+				{% endif %}
+			</div>
+			<div class="text-xs opacity-90 font-medium">
+				<i class="sicon-shipping-fast mx-1"></i>
+				{{ trans('blocks.header.free_shipping') }}
+				+299 ر.س
+			</div>
+		</div>
+	</div>
 
-            {# الشعار #}
-            <a href="{{ store.url }}" class="shrink-0">
-                <img src="{{ store.logo }}" alt="{{ store.name }}" class="h-10 md:h-12 w-auto object-contain">
-            </a>
+	{# 2. الهيدر الرئيسي #}
+	<div class="th-main-header py-3">
+		<div
+			class="container flex items-center justify-between gap-6">
 
-            {# البحث #}
-            <div class="header-search flex-1 hidden lg:block">
-                <salla-search inline placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
-            </div>
+			{# زر الموبايل (Hamburger) #}
+			<a href="#mobile-menu" class="hamburger-btn lg:hidden text-2xl text-gray-800 w-11 h-11 flex items-center justify-center hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" aria-label="{{ trans('blocks.header.menu') }}">
+				<i class="sicon-menu"></i>
+			</a>
 
-            {# الأيقونات #}
-            <div class="header-actions flex items-center gap-6">
-                <button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')"><i class="sicon-search"></i></button>
+			{# الشعار #}
+			<a href="{{ store.url }}" class="shrink-0">
+				<img src="{{ store.logo }}" alt="{{ store.name }}" class="h-10 md:h-12 w-auto object-contain">
+			</a>
 
-                <div class="hidden lg:block">
-                    <salla-user-menu avatar-only show-header></salla-user-menu>
-                </div>
-                <button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')"><i class="sicon-user"></i></button>
+			{# البحث #}
+			<div class="header-search flex-1 hidden lg:block">
+				<salla-search inline placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
+			</div>
 
-                {% if user.type=='user' %}
+			{# الأيقونات #}
+			<div class="header-actions flex items-center gap-6">
+				<button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')">
+					<i class="sicon-search"></i>
+				</button>
 
-                <a href="{{ link('wishlist') }}" class="th-icon-btn hidden lg:flex">
-                    <i class="sicon-heart"></i>
-                    <span class="th-icon-label">{{ trans('blocks.header.wishlist') }}</span>
-                </a>
-                {% endif %}
+				<div class="hidden lg:block">
+					<salla-user-menu avatar-only show-header></salla-user-menu>
+				</div>
+				<button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')">
+					<i class="sicon-user"></i>
+				</button>
 
-                <salla-cart-summary class="th-icon-btn">
-                    <div slot="icon" class="relative">
-                        <i class="sicon-shopping-bag"></i>
-                        <i class="sicon-shopping-cart"></i>
-                       
-                    </div>
-                    <span class="th-icon-label hidden lg:block">{{ trans('blocks.header.cart') }}</span>
-                </salla-cart-summary>
-            </div>
-        </div>
-    </div>
+				{% if user.type=='user' %}
 
-    {# 3. الناف بار #}
-    <div class="th-navbar hidden lg:block">
-        <div class="container h-full">
-            {% component 'header.menu' %}
-        </div>
-    </div>
+					<a href="{{ link('wishlist') }}" class="th-icon-btn hidden lg:flex">
+						<i class="sicon-heart"></i>
+						<span class="th-icon-label">{{ trans('blocks.header.wishlist') }}</span>
+					</a>
+				{% endif %}
+
+				<salla-cart-summary class="th-icon-btn">
+					<div slot="icon" class="relative">
+						<i class="sicon-shopping-bag"></i>
+						<i class="sicon-shopping-cart"></i>
+
+					</div>
+					<span class="th-icon-label hidden lg:block">{{ trans('blocks.header.cart') }}</span>
+				</salla-cart-summary>
+			</div>
+		</div>
+	</div>
+
+	{# 3. الناف بار #}
+	<div class="th-navbar hidden lg:block">
+		<div
+			class="container h-full">
+			{# Desktop menu content only - mobile drawer is rendered separately below #}
+			{% include 'components.header.menu' with {desktop_only: true} %}
+		</div>
+	</div>
 
 </header>
 
+{# Mobile Menu - Rendered outside header to avoid hidden parent issues #}
+{% component 'header.menu' %}
+
 {# استدعاء المودالز #}
 <salla-localization-modal></salla-localization-modal>
-{% if store.scope %} <salla-scopes></salla-scopes> {% endif %}
+{% if store.scope %}
+	<salla-scopes></salla-scopes>
+{% endif %}
