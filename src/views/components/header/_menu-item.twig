@@ -1,51 +1,39 @@
-{% if is_mobile %}
-    {# --- MOBILE ACCORDION --- #}
-    <li class="border-b border-gray-50 last:border-0" x-data="{ open: false }">
-        {% if not menu.has_children %}
-            <a href="{{ menu.url }}" class="block py-3 px-4 font-bold text-gray-700 hover:text-gold">{{ menu.title }}</a>
-        {% else %}
-            <div class="flex items-center justify-between py-3 px-4 cursor-pointer hover:bg-gray-50 transition" @click="open = !open">
-                <a href="{{ menu.url }}" class="font-bold text-gray-700">{{ menu.title }}</a>
-                <span class="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full transition-transform duration-300" :class="open ? 'rotate-180' : ''">
-                    <i class="sicon-keyboard_arrow_down text-xs"></i>
-                </span>
-            </div>
-            <ul x-show="open" x-collapse class="bg-gray-50 px-4 pb-2 space-y-1 hidden" :class="open ? '!block' : ''">
-                {% for child in menu.children %}
-                    <li><a href="{{ child.url }}" class="block text-sm text-gray-600 py-2 border-b border-gray-100 last:border-0 hover:text-gold">{{ child.title }}</a></li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </li>
+{#
+| Variable   | Type | Description                    |
+|------------|------|--------------------------------|
+| menu       | Menu | القائمة الحالية                |
+| is_root    | Bool | هل هذه قائمة رئيسية أم فرعية   |
+#}
 
-{% else %}
-    {# --- DESKTOP CASCADING --- #}
-    <li class="th-nav-item th-cascading-item group/item {{ is_root ? '' : 'w-full' }}">
-        
-        <a href="{{ menu.url }}" class="{{ is_root ? 'th-nav-link' : 'th-cascading-link' }}">
-            {% if not is_root %}
-                <div class="flex items-center gap-3">
-                    <i class="sicon-layout-grid text-gray-300 text-lg group-hover/item:text-gold transition"></i>
-                    <span>{{ menu.title }}</span>
-                </div>
-            {% else %}
-                {{ menu.title }}
-            {% endif %}
+<li class="th-nav-item th-cascading-item {{ is_root ? '' : 'w-full' }}">
 
-            {% if menu.has_children %}
-                <i class="{{ is_root ? 'sicon-keyboard_arrow_down mt-1 text-[10px]' : 'sicon-keyboard_arrow_left text-[10px]' }} opacity-60 group-hover/item:text-gold"></i>
-            {% endif %}
-        </a>
+	<a href="{{ menu.url }}" class="{{ is_root ? 'th-nav-link' : 'th-cascading-link' }}">
+		{% if not is_root %}
+			<div class="flex items-center gap-2.5">
+				{% if menu.image %}
+					<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-6 h-6 rounded-full object-cover bg-gray-50">
+				{% else %}
+					<i class="sicon-layout-grid text-gray-300 text-base"></i>
+				{% endif %}
+				<span>{{ menu.title }}</span>
+			</div>
+		{% else %}
+			{{ menu.title }}
+		{% endif %}
 
-        {% if menu.has_children %}
-            {# القائمة المنسدلة #}
-            <div class="th-dropdown {{ is_root ? 'root-level' : 'side-level' }}">
-                <ul class="flex flex-col">
-                    {% for child in menu.children %}
-                        {% include 'components.header._menu-item' with { menu: child, is_root: false, is_mobile: false } %}
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-    </li>
-{% endif %}
+		{% if menu.has_children %}
+			<i class="{{ is_root ? 'sicon-keyboard_arrow_down mt-0.5 text-[10px]' : 'sicon-keyboard_arrow_left text-[10px]' }} opacity-60"></i>
+		{% endif %}
+	</a>
+
+	{% if menu.has_children %}
+		{# القائمة المنسدلة #}
+		<div class="th-dropdown {{ is_root ? 'root-level' : 'side-level' }}">
+			<ul class="flex flex-col">
+				{% for child in menu.children %}
+					{% include 'components.header._menu-item' with { menu: child, is_root: false } %}
+				{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+</li>

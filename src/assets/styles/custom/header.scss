@@ -191,18 +191,31 @@ salla-search {
     height: 54px;
     position: relative;
     z-index: 990;
-}
 
-.th-navbar .container {
-    display: flex;
-    align-items: center;
-    height: 100%;
+    .container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        flex-wrap: nowrap;
+        gap: 0;
+    }
+
+    /* Direct child flex container from menu.twig */
+    >.container>.th-nav-list {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
 }
 
 /* All Categories Button */
 .th-all-cats-wrapper {
     height: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
 
     .th-all-cats-btn {
         height: 44px;
@@ -232,31 +245,45 @@ salla-search {
     }
 }
 
-/* Vertical Mega Menu */
-.th-mega-menu {
+/* Vertical Mega Menu - nested inside wrapper for correct positioning */
+.th-all-cats-wrapper .th-mega-menu {
     position: absolute;
-    top: 100%;
+    top: 54px;
+    /* Exact height of navbar */
     right: 0;
-    /* LTR: left: 0 handled via direction */
     width: 900px;
+    max-width: calc(100vw - 40px);
     background: #fff;
     border: 1px solid var(--th-border-color);
-    border-top: none;
-    box-shadow: var(--th-shadow-lg);
-    border-radius: 0 0 8px 8px;
+    border-top: 3px solid var(--th-primary);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 12px 12px;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px);
-    transition: var(--th-transition);
+    transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     display: flex;
     overflow: hidden;
+    margin-top: 0;
+
+    /* Fix for RTL/LTR alignment */
+    [dir="rtl"] & {
+        right: 0;
+        left: auto;
+    }
 
     [dir="ltr"] & {
         right: auto;
         left: 0;
     }
 }
+
+/* Hide duplicate button in main header if present */
+.th-main-header .th-all-cats-wrapper {
+    display: none !important;
+}
+
 
 .th-all-cats-wrapper:hover .th-mega-menu {
     opacity: 1;
