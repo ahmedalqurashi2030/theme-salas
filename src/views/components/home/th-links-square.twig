@@ -1,0 +1,132 @@
+{#
+  ============================================
+  Tharaa Theme - Square Links Component
+  ============================================
+  Component: th-links-square
+  Purpose: Display square category/brand links with rounded corners
+  Fields: section_title, section_description, display_mode, autoplay, show_controls, two_rows, items_per_view, items[]
+  Theme JSON Path: components.th-links-square
+  SCSS Classes: .tharaa-links-section.style-square
+  ============================================
+#}
+
+{# Get component data from theme.json #}
+{% set section_title = component.section_title|default('تسوق حسب الفئة') %}
+{% set section_description = component.section_description|default('') %}
+{% set display_mode = component.display_mode.selected[0].label|default('slider') %}
+{% set autoplay = component.autoplay|default(false) %}
+{% set show_controls = component.show_controls|default(true) %}
+{% set two_rows = component.two_rows|default(false) %}
+{% set items_mobile = component.items_per_view_mobile.selected[0].value|default('3') %}
+{% set items_desktop = component.items_per_view_desktop.selected[0].value|default('5') %}
+{% set items = component.items|default([]) %}
+
+{# Generate unique ID for this section instance #}
+{% set section_id = 'tharaa-square-' ~ random() %}
+
+{# Only render if we have items #}
+{% if items is not empty %}
+
+{# 
+  Main Section Container 
+  Classes:
+  - tharaa-links-section: Base component class
+  - style-square: Modifier for square style (border-radius: 24px)
+  - mode-grid: Applied when display_mode is 'list'
+  - mode-double: Applied when two_rows is enabled
+#}
+<section 
+  class="tharaa-links-section style-square {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" 
+  id="{{ section_id }}"
+  data-autoplay="{{ autoplay ? 'true' : 'false' }}"
+  data-items-mobile="{{ items_mobile }}"
+  data-items-desktop="{{ items_desktop }}">
+  
+  <div class="tharaa-container">
+    
+    {# 
+      Section Header 
+      Contains: Title, Description
+      SCSS: .tharaa-header
+    #}
+    <header class="tharaa-header">
+      <div class="tharaa-header__content">
+        {# Section Title - Controlled by theme.json: section_title #}
+        <h2 class="tharaa-header__title">{{ section_title }}</h2>
+        
+        {# Section Description (Optional) - Controlled by theme.json: section_description #}
+        {% if section_description %}
+          <p class="tharaa-header__subtitle">{{ section_description }}</p>
+        {% endif %}
+      </div>
+    </header>
+
+    {# Track Wrapper - Contains slider and navigation #}
+    <div class="tharaa-track-wrapper">
+      
+      {# Navigation Buttons - Controlled by theme.json: show_controls #}
+      {% if show_controls %}
+        <button 
+          class="tharaa-nav-btn btn-prev" 
+          aria-label="{{ trans('common.previous') }}">
+          <i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'right' : 'left' }}"></i>
+        </button>
+        
+        <button 
+          class="tharaa-nav-btn btn-next" 
+          aria-label="{{ trans('common.next') }}">
+          <i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'left' : 'right' }}"></i>
+        </button>
+      {% endif %}
+
+      {# 
+        Slider Track
+        SCSS: .tharaa-track
+      #}
+      <div class="tharaa-track">
+        
+        {# Loop through items from theme.json #}
+        {% for item in items %}
+          {# 
+            Single Card Component
+            SCSS: .tharaa-card (width and border-radius controlled by .style-square)
+          #}
+          <a 
+            href="{{ item.url|default('#') }}" 
+            class="tharaa-card"
+            aria-label="{{ item.title }}">
+            
+            {# Visual Container - Square shape with rounded corners #}
+            <div class="tharaa-card__visual">
+              <img 
+                class="tharaa-card__img" 
+                src="{{ item.image }}" 
+                alt="{{ item.title }}"
+                loading="lazy"
+                decoding="async">
+            </div>
+            
+            {# Content Container #}
+            <div class="tharaa-card__content">
+              <span class="tharaa-card__title">{{ item.title }}</span>
+              
+              {# Optional: Product count #}
+              {% if item.count is defined %}
+                <span class="tharaa-card__count">{{ item.count }}</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+
+      </div>
+    </div>
+
+    {# Progress Bar #}
+    <div class="tharaa-progress">
+      <div class="tharaa-progress__bar"></div>
+    </div>
+
+  </div>
+</section>
+
+{% endif %}
