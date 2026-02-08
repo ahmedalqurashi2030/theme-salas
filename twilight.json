@@ -1640,10 +1640,10 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "section_description",
+                    "id": "section_subtitle",
                     "type": "string",
                     "format": "text",
-                    "label": "وصف مختصر (اختياري)",
+                    "label": "عنوان فرعي (اختياري)",
                     "description": "سطر أو سطرين يظهران تحت العنوان.",
                     "labelHTML": null,
                     "placeholder": "Placeholder text ..",
@@ -1662,7 +1662,13 @@
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-keyboard_arrow_down",
-                    "selected": [],
+                    "selected": [
+                        {
+                            "label": "slider",
+                            "value": "سلايدر",
+                            "key": "7e3d7cb0-3e00-4964-a497-88aa8725375c"
+                        }
+                    ],
                     "options": [
                         {
                             "label": "slider",
@@ -1816,6 +1822,21 @@
                             "format": "text",
                             "label": "العنوان",
                             "description": "مثال: العطو",
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": null,
+                            "multilanguage": true,
+                            "required": true,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "items.subtitle",
+                            "type": "string",
+                            "format": "text",
+                            "label": "عنوان فرعي (اختياري)",
+                            "description": "مثال: جديد",
                             "labelHTML": null,
                             "placeholder": "Placeholder text ..",
                             "icon": "sicon-format-text-alt",
