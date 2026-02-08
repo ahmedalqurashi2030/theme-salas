@@ -1869,19 +1869,218 @@
             "path": "home.th-links-square",
             "fields": [
                 {
-                    "id": "aanoan_alqsm",
+                    "id": "title",
+                    "type": "static",
+                    "format": "title",
+                    "label": "إعدادات القسم",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "description",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": "اختر طريقة العرض، فعّل الأسهم أو التحريك التلقائي، ثم أضف العناصر (صورة + عنوان + رابط).",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "line",
+                    "type": "static",
+                    "format": "line",
+                    "label": "Line",
+                    "icon": "sicon-minus"
+                },
+                {
+                    "id": "section_title",
                     "type": "string",
                     "format": "text",
                     "label": "عنوان القسم",
-                    "description": null,
+                    "description": "يظهر أعلى القسم في الصفحة",
                     "labelHTML": null,
                     "placeholder": "Placeholder text ..",
                     "icon": "sicon-format-text-alt",
-                    "value": null,
+                    "value": "مثال: تسوق حسب الأقسام",
                     "multilanguage": false,
                     "required": false,
                     "minLength": 6,
                     "maxLength": 30
+                },
+                {
+                    "id": "text_area",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "Text Area",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Your text here",
+                    "icon": "sicon-typography",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 20,
+                    "maxLength": 255
+                },
+                {
+                    "id": "display_mode",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "طريقة العرض",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [],
+                    "options": [
+                        {
+                            "label": "slider",
+                            "value": "سلايدر",
+                            "key": "95dedd1a-790d-4698-bca7-ae1502acf68d"
+                        },
+                        {
+                            "label": "list",
+                            "value": "قائمة",
+                            "key": "58c2bfb9-c773-4bdc-9b31-f56e603af9d3"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": false
+                },
+                {
+                    "id": "autoplay",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "تحريك تلقائي",
+                    "description": "تحريك العناصر تلقائياً (مناسب للعروض).",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "show_controls",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "عرض أسهم التنقل",
+                    "description": "عرض أسهم التنقل",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "items_per_view_desktop",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "عدد العناصر الظاهرة (كمبيوتر)",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [],
+                    "options": [
+                        {
+                            "label": "4",
+                            "value": "4",
+                            "key": "a05bd5c9-f05a-4756-909a-2dcab1421dcd"
+                        },
+                        {
+                            "label": "5",
+                            "value": "5",
+                            "key": "5a9b6f3f-4d82-4289-a64f-19c393981f71"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": false
+                },
+                {
+                    "id": "items_per_view_mobile",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "عدد العناصر الظاهرة (جوال)",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [],
+                    "options": [
+                        {
+                            "label": "3",
+                            "value": "3",
+                            "key": "a05bd5c9-f05a-4756-909a-2dcab1421dcd"
+                        },
+                        {
+                            "label": "2",
+                            "value": "2",
+                            "key": "c82d8de6-19dc-4cef-914d-b616fc2b4d0c"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": false
+                },
+                {
+                    "id": "items",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "العناصر",
+                    "description": null,
+                    "labelHTML": null,
+                    "item_label": null,
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "items.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "الصوره",
+                            "description": "يفضل 300×300 (مربع)",
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "required": false
+                        },
+                        {
+                            "id": "items.title",
+                            "type": "string",
+                            "format": "text",
+                            "label": "العنوان",
+                            "description": "يفضل 300×300 (مربع)",
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": null,
+                            "multilanguage": false,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "items.url",
+                            "type": "string",
+                            "format": "url",
+                            "inputType": "url",
+                            "label": "الرابط",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://salla.sa",
+                            "icon": "sicon-link",
+                            "value": null,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        }
+                    ],
+                    "value": [],
+                    "minLength": 1,
+                    "maxLength": 5
                 }
             ]
         },
