@@ -1,101 +1,90 @@
-<header
-	class="store-header th-header">
+<header id="mainnav" class="store-header th-header">
+	<div class="inner">
+		{# 1. الشريط العلوي #}
+		<div class="th-topbar hidden md:block">
+			<div class="container flex justify-between items-center">
+				<div class="flex items-center gap-4">
+					{% component 'footer.menu' with {is_header:true} %}
 
-	{# 1. الشريط العلوي #}
-	<div class="th-topbar hidden md:block">
-		<div class="container flex justify-between items-center">
-			<div class="flex items-center gap-4">
-				{% component 'footer.menu' with {is_header:true} %}
-
-				{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-					<button type="button" onclick="salla.event.dispatch('localization::open')" class="th-topbtn text-xs">
-						<span class="flag iti__flag iti__{{ user.language.country_code }}"></span>
-						<span>{{ currency.symbol }}</span>
-					</button>
-				{% endif %}
-			</div>
-			<div class="text-xs opacity-90 font-medium">
-				<i class="sicon-shipping-fast mx-1"></i>
-				{{ trans('blocks.header.free_shipping') }}
-				+299 ر.س
-			</div>
-		</div>
-	</div>
-
-	{# 2. الهيدر الرئيسي #}
-	<div class="th-main-header py-3">
-		<div
-			class="container flex items-center justify-between gap-6">
-
-			{# زر الموبايل (Hamburger) #}
-			<a href="#mobile-menu-custom" class="hamburger-btn lg:hidden text-2xl text-gray-800 w-11 h-11 flex items-center justify-center hover:text-primary transition-colors" aria-label="{{ trans('blocks.header.menu') }}">
-				<i class="sicon-menu"></i>
-			</a>
-
-			{# الشعار #}
-			<a href="{{ store.url }}" class="shrink-0">
-				<img src="{{ store.logo }}" alt="{{ store.name }}" class="h-10 md:h-12 w-auto object-contain">
-			</a>
-
-			{# البحث #}
-			<div class="header-search flex-1 hidden lg:block">
-				<salla-search inline placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
-			</div>
-
-			{# الأيقونات #}
-			<div class="header-actions flex items-center gap-6">
-				<button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')">
-					<i class="sicon-search"></i>
-				</button>
-
-				<div class="hidden lg:block">
-					<salla-user-menu avatar-only show-header></salla-user-menu>
+					{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+						<button type="button" onclick="salla.event.dispatch('localization::open')" class="th-topbtn text-xs">
+							<span class="flag iti__flag iti__{{ user.language.country_code }}"></span>
+							<span>{{ currency.symbol }}</span>
+						</button>
+					{% endif %}
 				</div>
-				<button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')">
-					<i class="sicon-user"></i>
-				</button>
+				<div class="text-xs opacity-90 font-medium">
+					<i class="sicon-shipping-fast mx-1"></i>
+					{{ trans('blocks.header.free_shipping') }}
+				</div>
+			</div>
+		</div>
 
-				{% if user.type=='user' %}
-					<a href="{{ link('wishlist') }}" class="th-icon-btn hidden lg:flex">
-						<i class="sicon-heart"></i>
-						<span class="th-icon-label">{{ trans('blocks.header.wishlist') }}</span>
-					</a>
-				{% endif %}
+		{# 2. الهيدر الرئيسي #}
+		<div class="th-main-header py-3">
+			<div class="container flex items-center justify-between gap-6">
+				<a href="#mobile-menu" class="hamburger-btn lg:hidden text-2xl text-gray-800 w-11 h-11 flex items-center justify-center hover:text-primary transition-colors" aria-label="{{ trans('blocks.header.menu') }}">
+					<i class="sicon-menu"></i>
+				</a>
 
-				<salla-cart-summary class="th-icon-btn">
-					<div slot="icon" class="relative">
-						<i class="sicon-shopping-bag"></i>
+				<a href="{{ store.url }}" class="store-logo shrink-0" aria-label="{{ store.name }}">
+					<img src="{{ store.logo }}" alt="{{ store.name }}" class="h-10 md:h-12 w-auto object-contain">
+				</a>
+
+				<div class="header-search flex-1 hidden lg:block">
+					<salla-search inline placeholder="{{ trans('blocks.header.search_placeholder') }}"></salla-search>
+				</div>
+
+				<div class="header-actions flex items-center gap-6">
+					<button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')" aria-label="{{ trans('blocks.header.search') }}">
+						<i class="sicon-search"></i>
+					</button>
+
+					<div class="hidden lg:block">
+						<salla-user-menu avatar-only show-header></salla-user-menu>
 					</div>
-					<span class="th-icon-label hidden lg:block">{{ trans('blocks.header.cart') }}</span>
-				</salla-cart-summary>
+					<button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')" aria-label="{{ trans('common.elements.login') }}">
+						<i class="sicon-user"></i>
+					</button>
+
+					{% if user.type=='user' %}
+						<a href="{{ link('wishlist') }}" class="th-icon-btn hidden lg:flex" aria-label="{{ trans('blocks.header.wishlist') }}">
+							<i class="sicon-heart"></i>
+							<span class="th-icon-label">{{ trans('blocks.header.wishlist') }}</span>
+						</a>
+					{% endif %}
+
+					<salla-cart-summary class="th-icon-btn" aria-label="{{ trans('blocks.header.cart') }}">
+						<div slot="icon" class="relative">
+							<i class="sicon-shopping-bag"></i>
+						</div>
+						<span class="th-icon-label hidden lg:block">{{ trans('blocks.header.cart') }}</span>
+					</salla-cart-summary>
+				</div>
+			</div>
+		</div>
+
+		{# 3. الناف بار - Desktop Only #}
+		<div class="th-navbar hidden lg:block">
+			<div class="container h-full">
+				{% include 'components.header.menu' %}
 			</div>
 		</div>
 	</div>
-
-	{# 3. الناف بار - Desktop Only #}
-	<div class="th-navbar hidden lg:block">
-		<div class="container h-full">
-			{% include 'components.header.menu' %}
-		</div>
-	</div>
-
 </header>
 
-{# ============================================ #}
-{# Mobile Menu - القائمة المحمولة #}
-{# ============================================ #}
-	<nav id="mobile-menu-custom" class="mobile-menu"> <ul class="main-menu">
+{# Mobile Menu for mmenu-light in app.js #}
+<nav id="mobile-menu" class="mobile-menu">
+	<ul class="main-menu">
 		{% for menu in menus %}
 			<li class="text-sm font-bold">
 				{% if not menu.has_children %}
-					{# قائمة بدون أطفال #}
-					<a href="{{ menu.url }}" class="text-gray-500 block py-2">{{ menu.title }}</a>
+					<a href="{{ menu.url }}" class="text-gray-500 block py-2" {{ menu.link_attrs|raw }}>{{ menu.title }}</a>
 				{% else %}
-					{# قائمة بها قوائم فرعية #}
 					<span>{{ menu.title }}</span>
 					<ul>
 						<li class="text-sm font-bold">
-							<a href="{{ menu.url }}" class="text-gray-500 block py-2">{{ trans('blocks.home.view_all') }}</a>
+							<a href="{{ menu.url }}" class="text-gray-500 block py-2">{{ trans('blocks.home.display_all') }}</a>
 						</li>
 						{% for submenu in menu.children %}
 							<li class="text-sm">
@@ -107,739 +96,11 @@
 			</li>
 		{% endfor %}
 	</ul>
-	<button class="btn--close close-mobile-menu sicon-cancel"></button>
+	<button class="btn--close close-mobile-menu sicon-cancel lg:hidden" aria-label="{{ trans('common.close') }}"></button>
 </nav>
-<button class="btn--close-sm close-mobile-menu sicon-cancel"></button>
+<button class="btn--close-sm close-mobile-menu sicon-cancel hidden" aria-label="{{ trans('common.close') }}"></button>
 
-{# المودالز #}
 <salla-localization-modal></salla-localization-modal>
 {% if store.scope %}
 	<salla-scopes></salla-scopes>
 {% endif %}
-
-
-<style>
-	/* ============================================
-   🎨 COMPLETE MENU FIX - CSS
-   ============================================ */
-
-	/* ============================================
-   1. MOBILE MENU - القائمة المحمولة
-   ============================================ */
-
-	.mobile-menu {
-		position: fixed;
-		top: 0;
-		right: -100%;
-		width: 320px;
-		max-width: 85vw;
-		height: 100vh;
-		background: white;
-		z-index: 99999;
-		overflow-y: auto;
-		transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-		box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
-	}
-
-	.text-gold {
-		color: #d4af37 !important;
-	}
-
-	.th-navbar {
-		z-index: 990 !important;
-	}
-
-	.mobile-menu.show {
-		right: 0;
-	}
-
-	/* القائمة الرئيسية */
-	.main-menu {
-		padding: 80px 0 20px;
-		list-style: none;
-		margin: 0;
-	}
-
-	.main-menu > li {
-		border-bottom: 1px solid #f3f4f6;
-	}
-
-	.main-menu > li:last-child {
-		border-bottom: none;
-	}
-
-	/* الروابط */
-	.main-menu > li > a,
-	.main-menu > li > span {
-		display: block;
-		padding: 14px 20px;
-		color: #1f2937;
-		font-weight: 600;
-		font-size: 14px;
-		text-decoration: none;
-		transition: all 0.2s;
-	}
-
-	.main-menu > li > a:hover {
-		color: #d4af37;
-		background: #fafafa;
-		padding-right: 24px;
-	}
-
-	/* القوائم الفرعية */
-	.main-menu ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		background: #f9fafb;
-		border-top: 1px solid #e5e7eb;
-	}
-
-	.main-menu ul li a {
-		display: block;
-		padding: 10px 20px 10px 40px;
-		color: #6b7280;
-		font-size: 13px;
-		font-weight: 500;
-		text-decoration: none;
-		border-bottom: 1px solid #e5e7eb;
-		transition: all 0.2s;
-	}
-
-	.main-menu ul li:last-child a {
-		border-bottom: none;
-	}
-
-	.main-menu ul li a:hover {
-		color: #d4af37;
-		background: white;
-		padding-right: 44px;
-	}
-
-	.main-menu ul li.font-bold a {
-		font-weight: 700;
-		color: #1f2937;
-	}
-
-	/* أزرار الإغلاق */
-	.btn--close,
-	.btn--close-sm {
-		position: absolute;
-		top: 20px;
-		left: 20px;
-		width: 40px;
-		height: 40px;
-		background: #f3f4f6;
-		border: none;
-		border-radius: 50%;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #6b7280;
-		font-size: 20px;
-		transition: all 0.2s;
-		z-index: 10;
-	}
-
-	.btn--close:hover,
-	.btn--close-sm:hover {
-		background: #e5e7eb;
-		color: #1f2937;
-		transform: rotate(90deg);
-	}
-
-	/* الخلفية الشفافة */
-	.btn--close-sm {
-		display: none;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background: rgba(0, 0, 0, 0.4);
-		border-radius: 0;
-		backdrop-filter: blur(2px);
-	}
-
-	.mobile-menu.show ~ .btn--close-sm {
-		display: block;
-		right: 320px;
-	}
-
-	/* ============================================
-   2. DESKTOP MEGA MENU - قائمة جميع الأقسام
-   ============================================ */
-
-	/* التأكد من positioning صحيح */
-	.th-navbar {
-		position: relative;
-		z-index: 40;
-	}
-
-	.th-all-cats-wrapper {
-		position: relative;
-		height: 100%;
-		display: flex;
-		align-items: center;
-	}
-
-	/* زر جميع الأقسام */
-	.th-all-cats-btn {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		padding: 11px 22px;
-		background: linear-gradient(135deg, #d4af37 0%, #c9a028 100%);
-		color: white;
-		border-radius: 10px;
-		cursor: pointer;
-		font-weight: 600;
-		font-size: 14px;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		white-space: nowrap;
-		box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
-	}
-
-	.th-all-cats-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 16px rgba(212, 175, 55, 0.35);
-		background: linear-gradient(135deg, #e0be4a 0%, #d4af37 100%);
-	}
-
-	/* Mega Menu Container */
-	.th-mega-menu {
-		position: absolute;
-		right: 0;
-		top: 100%;
-		margin-top: 8px;
-		opacity: 0;
-		visibility: hidden;
-		pointer-events: none;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		transform: translateY(-10px);
-		z-index: 100;
-	}
-
-	.th-all-cats-wrapper:hover .th-mega-menu {
-		opacity: 1;
-		visibility: visible;
-		pointer-events: all;
-		transform: translateY(0);
-	}
-
-	/* Mega Menu Sidebar */
-	.th-mega-sidebar {
-		background: #f9fafb;
-		width: 260px;
-		border-left: 1px solid #e5e7eb;
-		max-height: 520px;
-		overflow-y: auto;
-	}
-
-	.th-mega-tab {
-		padding: 14px 18px;
-		cursor: pointer;
-		transition: all 0.2s;
-		border-bottom: 1px solid #e5e7eb;
-		position: relative;
-	}
-
-	.th-mega-tab:hover {
-		background: white;
-		padding-right: 22px;
-	}
-
-	.th-mega-tab.active {
-		background: white;
-		color: #d4af37;
-		font-weight: 600;
-	}
-
-	.th-mega-tab.active::before {
-		content: '';
-		position: absolute;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		width: 4px;
-		background: linear-gradient(180deg, #d4af37 0%, #c9a028 100%);
-		border-radius: 2px 0 0 2px;
-	}
-
-	/* Mega Menu Content */
-	.th-mega-content {
-		width: 820px;
-		max-height: 520px;
-		overflow-y: auto;
-		background: white;
-	}
-
-	.th-mega-pane {
-		padding: 28px;
-		display: none;
-	}
-
-	.th-mega-pane.active {
-		display: block !important;
-	}
-
-	/* Scrollbar Styling */
-	.th-mega-sidebar::-webkit-scrollbar,
-	.th-mega-content::-webkit-scrollbar {
-		width: 6px;
-	}
-
-	.th-mega-sidebar::-webkit-scrollbar-thumb,
-	.th-mega-content::-webkit-scrollbar-thumb {
-		background: #d1d5db;
-		border-radius: 10px;
-	}
-
-	.th-mega-sidebar::-webkit-scrollbar-track,
-	.th-mega-content::-webkit-scrollbar-track {
-		background: #f3f4f6;
-	}
-
-	/* ============================================
-   3. CASCADING MENUS - القوائم المنسدلة
-   ============================================ */
-
-	.th-nav-list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: flex;
-		align-items: center;
-		gap: 24px;
-		height: 100%;
-	}
-
-	.th-nav-item {
-		position: relative;
-		height: 100%;
-		display: flex;
-		align-items: center;
-	}
-
-	.th-nav-link {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		padding: 12px 18px;
-		color: #1f2937;
-		font-weight: 600;
-		font-size: 14px;
-		text-decoration: none;
-		transition: all 0.2s;
-		border-radius: 8px;
-		height: 100%;
-	}
-
-	.th-nav-link:hover {
-		color: #d4af37;
-		background: rgba(212, 175, 55, 0.08);
-	}
-
-	/* Dropdown Menus */
-	.th-dropdown {
-		position: absolute;
-		background: white;
-		border-radius: 10px;
-		box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
-		border: 1px solid #e5e7eb;
-		padding: 10px 0;
-		opacity: 0;
-		visibility: hidden;
-		pointer-events: none;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		z-index: 60;
-	}
-
-	.th-dropdown.root-level {
-		right: 0;
-		top: 100%;
-		margin-top: 10px;
-		min-width: 240px;
-		transform: translateY(-8px);
-	}
-
-	.th-nav-item:hover > .th-dropdown.root-level {
-		opacity: 1;
-		visibility: visible;
-		pointer-events: all;
-		transform: translateY(0);
-	}
-
-	.th-dropdown.side-level {
-		right: 100%;
-		top: -10px;
-		margin-right: 10px;
-		min-width: 220px;
-		transform: translateX(8px);
-	}
-
-	.th-cascading-item:hover > .th-dropdown.side-level {
-		opacity: 1;
-		visibility: visible;
-		pointer-events: all;
-		transform: translateX(0);
-	}
-
-	.th-cascading-link {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 10px;
-		padding: 12px 18px;
-		color: #4b5563;
-		font-size: 13px;
-		text-decoration: none;
-		transition: all 0.2s;
-		border-radius: 6px;
-		margin: 0 6px;
-	}
-
-	.th-cascading-link:hover {
-		background: linear-gradient(90deg, #fafafa 0%, #f9fafb 100%);
-		color: #d4af37;
-		padding-right: 14px;
-	}
-
-	/* منع التداخل بين Mega Menu والقوائم الأخرى */
-	.th-all-cats-wrapper:hover ~ .th-nav-list .th-dropdown {
-		opacity: 0 !important;
-		visibility: hidden !important;
-		pointer-events: none !important;
-	}
-
-	/* ============================================
-   4. RESPONSIVE - للشاشات الصغيرة
-   ============================================ */
-
-	@media(max-width: 1023px) {
-		.th-navbar,
-		.th-all-cats-wrapper,
-		.th-nav-list {
-			display: none !important;
-		}
-	}
-
-	/* ============================================
-   5. ANIMATIONS - الحركات
-   ============================================ */
-
-	@keyframes slideInRight {
-		from {
-			right: -100%;
-		}
-		to {
-			right: 0;
-		}
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(-10px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	.mobile-menu.show {
-		animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
-	.th-mega-menu {
-		animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
-</style>
-
-<script>
-	/* ============================================
-   🚀 COMPLETE MENU FUNCTIONS - JavaScript
-   ============================================ */
-
-(function () {
-'use strict';
-
-// ============================================
-// 1. MOBILE MENU - القائمة المحمولة
-// ============================================
-
-function initMobileMenu() {
-const mobileMenu = document.getElementById('mobile-menu-custom');
-const hamburgerBtn = document.querySelector('.hamburger-btn');
-const closeBtn = document.querySelector('.close-mobile-menu');
-const closeOverlay = document.querySelector('.btn--close-sm');
-
-if (! mobileMenu || ! hamburgerBtn) 
-return;
-
-
-
-// فتح القائمة
-console.log('Initializing Mobile Menu Custom Logic');
-hamburgerBtn.addEventListener('click', function (e) {
-e.preventDefault();
-mobileMenu.classList.add('show');
-document.body.style.overflow = 'hidden';
-});
-
-// إغلاق القائمة
-function closeMobileMenu() {
-mobileMenu.classList.remove('show');
-document.body.style.overflow = '';
-}
-
-if (closeBtn) {
-closeBtn.addEventListener('click', closeMobileMenu);
-}
-
-if (closeOverlay) {
-closeOverlay.addEventListener('click', closeMobileMenu);
-}
-
-// إغلاق عند الضغط على ESC
-document.addEventListener('keydown', function (e) {
-if (e.key === 'Escape' && mobileMenu.classList.contains('show')) {
-closeMobileMenu();
-}
-});
-}
-
-// ============================================
-// 2. MEGA MENU TABS - تبديل الأقسام
-// ============================================
-
-window.tharaaOpenTab = function (evt, tabId) { // إخفاء جميع المحتويات
-const allPanes = document.querySelectorAll('.th-mega-pane');
-allPanes.forEach(function (pane) {
-pane.classList.remove('active', 'block');
-pane.classList.add('hidden');
-pane.style.display = 'none';
-});
-
-// إزالة active من جميع التابات
-const allTabs = document.querySelectorAll('.th-mega-tab');
-allTabs.forEach(function (tab) {
-tab.classList.remove('active');
-});
-
-// إظهار المحتوى المطلوب
-const targetPane = document.getElementById(tabId);
-if (targetPane) {
-targetPane.classList.remove('hidden');
-targetPane.classList.add('active', 'block');
-targetPane.style.display = 'block';
-}
-
-// إضافة active للتاب الحالي
-if (evt && evt.currentTarget) {
-evt.currentTarget.classList.add('active');
-}
-};
-
-// ============================================
-// 3. PREVENT MEGA MENU & DROPDOWN OVERLAP
-// ============================================
-
-function preventMenuOverlap() {
-const megaMenuWrapper = document.querySelector('.th-all-cats-wrapper');
-const navList = document.querySelector('.th-nav-list');
-
-if (! megaMenuWrapper || ! navList) 
-return;
-
-
-
-// عند hover على Mega Menu
-megaMenuWrapper.addEventListener('mouseenter', function () {
-navList.style.pointerEvents = 'none';
-});
-
-megaMenuWrapper.addEventListener('mouseleave', function () {
-navList.style.pointerEvents = '';
-});
-}
-
-// ============================================
-// 4. SMOOTH SCROLLING للقوائم الطويلة
-// ============================================
-
-function initSmoothScroll() {
-const scrollContainers = document.querySelectorAll('.th-mega-content, .th-mega-sidebar, .mobile-menu');
-
-scrollContainers.forEach(function (container) {
-if (! container) 
-return;
-
-
-
-container.style.scrollBehavior = 'smooth';
-});
-}
-
-// ============================================
-// 5. CLOSE DROPDOWNS عند النقر خارجها
-// ============================================
-
-function closeDropdownsOnClickOutside() {
-document.addEventListener('click', function (e) {
-const navItems = document.querySelectorAll('.th-nav-item');
-
-navItems.forEach(function (item) {
-if (! item.contains(e.target)) {
-const dropdown = item.querySelector('.th-dropdown');
-if (dropdown) {
-dropdown.style.opacity = '0';
-dropdown.style.visibility = 'hidden';
-dropdown.style.pointerEvents = 'none';
-}
-}
-});
-});
-}
-
-// ============================================
-// 6. FIX MEGA MENU POSITION عند التمرير
-// ============================================
-
-function fixMegaMenuPosition() {
-const navbar = document.querySelector('.th-navbar');
-const megaMenu = document.querySelector('.th-mega-menu');
-
-if (! navbar || ! megaMenu) 
-return;
-
-
-
-let lastScrollTop = 0;
-
-window.addEventListener('scroll', function () {
-const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-// إذا كان المستخدم يسكرول، أغلق Mega Menu
-if (scrollTop > lastScrollTop || scrollTop < lastScrollTop) {
-const wrapper = document.querySelector('.th-all-cats-wrapper');
-if (wrapper) {
-wrapper.classList.remove('active');
-}
-}
-
-lastScrollTop = scrollTop;
-});
-}
-
-// ============================================
-// 7. ACCESSIBILITY - إمكانية الوصول
-// ============================================
-
-function enhanceAccessibility() { // إضافة ARIA attributes
-const navItems = document.querySelectorAll('.th-nav-item');
-
-navItems.forEach(function (item, index) {
-const link = item.querySelector('.th-nav-link');
-const dropdown = item.querySelector('.th-dropdown');
-
-if (link && dropdown) {
-link.setAttribute('aria-haspopup', 'true');
-link.setAttribute('aria-expanded', 'false');
-link.setAttribute('id', 'nav-link-' + index);
-dropdown.setAttribute('aria-labelledby', 'nav-link-' + index);
-
-item.addEventListener('mouseenter', function () {
-link.setAttribute('aria-expanded', 'true');
-});
-
-item.addEventListener('mouseleave', function () {
-link.setAttribute('aria-expanded', 'false');
-});
-}
-});
-
-// دعم keyboard navigation
-const allLinks = document.querySelectorAll('.th-nav-link, .th-cascading-link');
-
-allLinks.forEach(function (link) {
-link.addEventListener('keydown', function (e) {
-if (e.key === 'Enter' || e.key === ' ') {
-e.preventDefault();
-link.click();
-}
-});
-});
-}
-
-// ============================================
-// 8. INITIALIZE ALL - تشغيل جميع الوظائف
-// ============================================
-
-function initializeAll() {
-initMobileMenu();
-preventMenuOverlap();
-initSmoothScroll();
-closeDropdownsOnClickOutside();
-fixMegaMenuPosition();
-enhanceAccessibility();
-
-console.log('✅ Menu system initialized successfully!');
-}
-
-// تشغيل عند تحميل الصفحة
-if (document.readyState === 'loading') {
-document.addEventListener('DOMContentLoaded', initializeAll);
-} else {
-initializeAll();
-}
-
-// تشغيل عند تحميل Turbo/Ajax (إذا كان موجود)
-if (window.Turbo) {
-document.addEventListener('turbo:load', initializeAll);
-}
-
-})();
-
-/* ============================================
-   🎯 UTILITY FUNCTIONS - دوال مساعدة
-   ============================================ */
-
-// دالة لإغلاق جميع القوائم المفتوحة
-window.closeAllMenus = function () { // إغلاق Mobile Menu
-const mobileMenu = document.getElementById('mobile-menu');
-if (mobileMenu) {
-mobileMenu.classList.remove('show');
-document.body.style.overflow = '';
-}
-
-// إغلاق جميع Dropdowns
-const dropdowns = document.querySelectorAll('.th-dropdown');
-dropdowns.forEach(function (dropdown) {
-dropdown.style.opacity = '0';
-dropdown.style.visibility = 'hidden';
-});
-
-// إغلاق Mega Menu
-const megaWrapper = document.querySelector('.th-all-cats-wrapper');
-if (megaWrapper) {
-megaWrapper.classList.remove('active');
-}
-};
-
-// دالة لفتح قسم معين في Mega Menu
-window.openMegaMenuTab = function (tabIndex) {
-const tabId = 'mega-' + tabIndex;
-const tab = document.querySelector('[onmouseover*="' + tabId + '"]');
-
-if (tab) {
-tharaaOpenTab({
-currentTarget: tab
-}, tabId);
-}
-};
-
-</script>

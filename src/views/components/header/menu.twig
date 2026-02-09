@@ -11,24 +11,24 @@
 | menus[].products     | ?Product[] *Collection | List of selected products or null                  |
 #}
 
-{# DESKTOP MENU #}
 <div class="flex items-center h-full gap-8">
-	{# 1. زر جميع الأقسام (Mega Menu) #}
-	<div class="th-all-cats-wrapper group">
-		<div class="th-all-cats-btn">
+	{# Mega Menu #}
+	<div class="th-all-cats-wrapper group" data-th-mega>
+		<button type="button" class="th-all-cats-btn" aria-expanded="false" aria-controls="th-mega-menu-panel">
 			<i class="sicon-layout-grid text-lg"></i>
 			<span>{{ trans('blocks.header.all_categories') }}</span>
 			<i class="sicon-keyboard_arrow_down text-xs opacity-50 mt-1 mr-auto"></i>
-		</div>
+		</button>
 
-		<div class="th-mega-menu">
-			{# القائمة الجانبية #}
+		<div id="th-mega-menu-panel" class="th-mega-menu">
 			<div class="th-mega-sidebar">
 				{% for menu in menus %}
-                    <!-- DEBUG: Processing menu {{ menu.title }} -->
-					<!-- Item with Children -->
 					{% if menu.has_children %}
-						<div class="th-mega-tab {{ loop.first ? 'active' : '' }}" onmouseover="tharaaOpenTab(event, 'mega-{{ loop.index }}')">
+						<button type="button"
+								class="th-mega-tab {{ loop.first ? 'active' : '' }}"
+								data-mega-tab="mega-{{ loop.index }}"
+								aria-controls="mega-{{ loop.index }}"
+								aria-selected="{{ loop.first ? 'true' : 'false' }}">
 							<div class="flex items-center gap-2">
 								{% if menu.image %}
 									<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-6 h-6 rounded-full object-cover bg-gray-50">
@@ -38,10 +38,9 @@
 								<span>{{ menu.title }}</span>
 							</div>
 							<i class="sicon-keyboard_arrow_left text-xs opacity-50"></i>
-						</div>
+						</button>
 					{% else %}
-						<!-- Item without Children (Link) -->
-						<a href="{{ menu.url }}" class="th-mega-tab block hover:bg-white hover:text-gold transition">
+						<a href="{{ menu.url }}" class="th-mega-tab block hover:bg-white hover:text-gold transition" {{ menu.link_attrs|raw }}>
 							<div class="flex items-center gap-2">
 								{% if menu.image %}
 									<img src="{{ menu.image }}" alt="{{ menu.title }}" class="w-6 h-6 rounded-full object-cover bg-gray-50">
@@ -54,8 +53,7 @@
 					{% endif %}
 				{% endfor %}
 			</div>
-			
-			{# المحتوى #}
+
 			<div class="th-mega-content overflow-y-auto">
 				{% for menu in menus %}
 					{% if menu.has_children %}
@@ -85,8 +83,7 @@
 									</div>
 								{% endfor %}
 							</div>
-							
-							{# منتجات مقترحة #}
+
 							{% if menu.products %}
 								<div class="mt-8 pt-6 border-t border-gray-100">
 									<h4 class="font-bold mb-4 text-sm text-gold">{{ trans('blocks.header.featured_products') }}</h4>
@@ -104,23 +101,10 @@
 		</div>
 	</div>
 
-	{# 2. الروابط الرئيسية (Cascading) #}
+	{# Cascading Menu #}
 	<ul class="th-nav-list flex items-center gap-6 h-full">
-		{% if menus|length == 0 %}
-			<li class="text-sm text-red-500 font-bold px-4">DEBUG: No menus found in 'menus' variable.</li>
-		{% endif %}
 		{% for menu in menus %}
 			{% include 'components.header._menu-item' with { is_root: true } %}
 		{% endfor %}
 	</ul>
 </div>
-
-<script>
-	// Mega Menu Tab Switching
-	function tharaaOpenTab(evt, id) {
-		document.querySelectorAll('.th-mega-pane').forEach(el => el.classList.remove('active'));
-		document.querySelectorAll('.th-mega-tab').forEach(el => el.classList.remove('active'));
-		document.getElementById(id).classList.add('active');
-		evt.currentTarget.classList.add('active');
-	}
-</script>
