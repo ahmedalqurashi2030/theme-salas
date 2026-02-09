@@ -2147,7 +2147,13 @@
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-keyboard_arrow_down",
-                    "selected": [],
+                    "selected": [
+                        {
+                            "label": "slider",
+                            "value": "سلايدر",
+                            "key": "098db87d-3668-4c94-aea2-fd09ba3c1851"
+                        }
+                    ],
                     "options": [
                         {
                             "label": "slider",
