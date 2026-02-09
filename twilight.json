@@ -2110,6 +2110,21 @@
                     "maxLength": 30
                 },
                 {
+                    "id": "section_subtitle",
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان فرعي (اختياري)",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "ظهر أعلى القسم في الصفحة",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
                     "id": "section_description",
                     "type": "string",
                     "format": "text",
