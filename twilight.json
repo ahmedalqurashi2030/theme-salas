@@ -1758,7 +1758,7 @@
                             "icon": "sicon-format-text-alt",
                             "value": null,
                             "multilanguage": true,
-                            "required": true,
+                            "required": false,
                             "minLength": 6,
                             "maxLength": 30
                         },
