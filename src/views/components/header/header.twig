@@ -36,14 +36,14 @@
 				</div>
 
 				<div class="header-actions flex items-center gap-6">
-					<button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')" aria-label="{{ trans('blocks.header.search') }}">
+					<button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')" aria-label="{{ trans('blocks.header.menu') }}">
 						<i class="sicon-search"></i>
 					</button>
 
 					<div class="hidden lg:block">
 						<salla-user-menu avatar-only show-header></salla-user-menu>
 					</div>
-					<button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')" aria-label="{{ trans('common.elements.login') }}">
+					<button class="lg:hidden text-xl" onclick="salla.event.dispatch('login::open')" aria-label="{{ trans('blocks.header.login') }}">
 						<i class="sicon-user"></i>
 					</button>
 
@@ -67,38 +67,16 @@
 		{# 3. الناف بار - Desktop Only #}
 		<div class="th-navbar hidden lg:block">
 			<div class="container h-full">
-				{% include 'components.header.menu' %}
+				{% component 'header.menu' %}
 			</div>
 		</div>
 	</div>
 </header>
 
 {# Mobile Menu for mmenu-light in app.js #}
-<nav id="mobile-menu" class="mobile-menu">
-	<ul class="main-menu">
-		{% for menu in menus %}
-			<li class="text-sm font-bold">
-				{% if not menu.has_children %}
-					<a href="{{ menu.url }}" class="text-gray-500 block py-2" {{ menu.link_attrs|raw }}>{{ menu.title }}</a>
-				{% else %}
-					<span>{{ menu.title }}</span>
-					<ul>
-						<li class="text-sm font-bold">
-							<a href="{{ menu.url }}" class="text-gray-500 block py-2">{{ trans('blocks.home.display_all') }}</a>
-						</li>
-						{% for submenu in menu.children %}
-							<li class="text-sm">
-								<a href="{{ submenu.url }}" class="text-gray-500 block py-2">{{ submenu.title }}</a>
-							</li>
-						{% endfor %}
-					</ul>
-				{% endif %}
-			</li>
-		{% endfor %}
-	</ul>
-	<button class="btn--close close-mobile-menu sicon-cancel lg:hidden" aria-label="{{ trans('common.close') }}"></button>
-</nav>
-<button class="btn--close-sm close-mobile-menu sicon-cancel hidden" aria-label="{{ trans('common.close') }}"></button>
+{# Important: use custom-main-menu as the single source for mobile menus,
+   because it fetches menu data from Salla API and avoids empty scope issues in header.twig #}
+<custom-main-menu class="lg:hidden"></custom-main-menu>
 
 <salla-localization-modal></salla-localization-modal>
 {% if store.scope %}

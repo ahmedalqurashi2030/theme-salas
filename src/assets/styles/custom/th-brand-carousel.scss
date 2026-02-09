@@ -1,0 +1,391 @@
+// =====================================================
+// Tharaa Theme - Brand Carousel Component SCSS
+// =====================================================
+// Component: th-brand-carousel
+// Architecture: BEM + Modular + Responsive + RTL Ready
+// Features: Infinite marquee, pause on hover, two-row support
+// Version: 1.0.0
+// =====================================================
+
+// =====================================================
+// 1. Design Tokens (From Tharaa Design System)
+// =====================================================
+
+// Colors
+$tharaa-color-primary: var(--tharaa-primary, #1a1a1a) !default;
+$tharaa-color-secondary: var(--tharaa-secondary, #d4af37) !default;
+$tharaa-color-bg-light: var(--tharaa-bg-light, #fafafa) !default;
+$tharaa-color-text: var(--tharaa-text, #2c2c2c) !default;
+
+// Typography
+$tharaa-font-body: var(--tharaa-font-body, 'Almarai', -apple-system, sans-serif) !default;
+$tharaa-font-heading: var(--tharaa-font-heading, 'Playfair Display', Georgia, serif) !default;
+
+// Spacing & Layout
+$tharaa-container-width: var(--tharaa-container, 1300px) !default;
+$tharaa-gap-base: var(--tharaa-gap, 20px) !default;
+
+// Border Radius
+$tharaa-radius-md: var(--tharaa-radius-md, 8px) !default;
+$tharaa-radius-lg: var(--tharaa-radius-lg, 16px) !default;
+
+// Shadows
+$tharaa-shadow-sm: var(--tharaa-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05)) !default;
+$tharaa-shadow-md: var(--tharaa-shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07)) !default;
+
+// Transitions
+$tharaa-transition-base: var(--tharaa-transition, 300ms cubic-bezier(0.4, 0, 0.2, 1)) !default;
+
+// Breakpoints
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+
+// =====================================================
+// 2. Base Section Styles
+// =====================================================
+
+.tharaa-brands-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 40px 0;
+  
+  @media (max-width: $breakpoint-mobile) {
+    padding: 30px 0;
+  }
+}
+
+// Container
+.tharaa-container {
+  max-width: $tharaa-container-width;
+  margin: 0 auto;
+  padding: 0 20px;
+  
+  @media (max-width: $breakpoint-mobile) {
+    padding: 0 15px;
+  }
+}
+
+// =====================================================
+// 3. Header Section
+// =====================================================
+
+.tharaa-brands-header {
+  text-align: center;
+  margin-bottom: 30px;
+  
+  @media (max-width: $breakpoint-mobile) {
+    margin-bottom: 20px;
+  }
+}
+
+.tharaa-brands-header__title {
+  font-family: $tharaa-font-heading;
+  font-size: 28px;
+  font-weight: 700;
+  color: $tharaa-color-primary;
+  margin: 0;
+  line-height: 1.2;
+  
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 22px;
+  }
+}
+
+// =====================================================
+// 4. Marquee Wrapper & Gradient Masks
+// =====================================================
+
+.tharaa-brands-wrapper {
+  position: relative;
+  width: 100%;
+  
+  // Gradient fade masks (left and right)
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 150px;
+    z-index: 10;
+    pointer-events: none;
+    
+    @media (max-width: $breakpoint-mobile) {
+      width: 80px;
+    }
+  }
+  
+  // Left gradient (RTL/LTR aware)
+  &::before {
+    left: 0;
+    background: linear-gradient(
+      to right, 
+      rgba(255, 255, 255, 1) 0%, 
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+  
+  // Right gradient (RTL/LTR aware)
+  &::after {
+    right: 0;
+    background: linear-gradient(
+      to left, 
+      rgba(255, 255, 255, 1) 0%, 
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+}
+
+// =====================================================
+// 5. Brand Row & Track (Seamless Infinite Scroll)
+// =====================================================
+
+.tharaa-brands-row {
+  width: 100%;
+  overflow: hidden;
+  
+  // Add spacing between rows if two rows mode
+  .tharaa-brands-marquee.mode-double & {
+    &:not(:last-child) {
+      margin-bottom: $tharaa-gap-base;
+    }
+  }
+}
+
+.tharaa-brands-track {
+  display: flex;
+  width: max-content;
+  /* CRITICAL: NO gap here - groups must be adjacent with no space between them */
+  will-change: transform;
+  
+  // Performance optimizations for smooth animation
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+// =====================================================
+// 6. Brand Group (Original + Clone for seamless loop)
+// =====================================================
+
+.tharaa-brands-group {
+  display: flex;
+  gap: $tharaa-gap-base;
+  flex-shrink: 0;
+  
+  @media (max-width: $breakpoint-mobile) {
+    gap: 15px;
+  }
+}
+
+// =====================================================
+// 7. Brand Item (Single Logo)
+// =====================================================
+
+.tharaa-brand-item {
+  // Default size
+  width: 180px;
+  height: 100px;
+  
+  // Layout
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  // Styling
+  background-color: var(--brand-bg-color, #f3f4f6);
+  border-radius: $tharaa-radius-lg;
+  padding: 15px;
+  
+  // Interaction
+  cursor: pointer;
+  transition: transform $tharaa-transition-base;
+  text-decoration: none;
+  
+  // Hover effect
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: $tharaa-shadow-md;
+  }
+  
+  // Mobile responsive
+  @media (max-width: $breakpoint-mobile) {
+    width: 140px;
+    height: 80px;
+    padding: 12px;
+  }
+}
+
+// Brand image
+.tharaa-brand-item img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  
+  // Grayscale effect with color on hover
+  filter: grayscale(80%) opacity(0.8);
+  transition: filter $tharaa-transition-base;
+  
+  .tharaa-brand-item:hover & {
+    filter: grayscale(0%) opacity(1);
+  }
+}
+
+// =====================================================
+// 8. Size Modifier - Larger Logos
+// =====================================================
+
+.tharaa-brands-marquee.size-large {
+  .tharaa-brand-item {
+    width: 220px;
+    height: 130px;
+    
+    @media (max-width: $breakpoint-mobile) {
+      width: 160px;
+      height: 100px;
+    }
+  }
+}
+
+// =====================================================
+// 9. No Background Modifier
+// =====================================================
+
+.tharaa-brands-marquee.no-background {
+  .tharaa-brand-item {
+    background-color: transparent;
+    padding: 10px;
+    
+    &:hover {
+      box-shadow: none;
+      transform: scale(1.08);
+    }
+  }
+  
+  .tharaa-brand-item img {
+    filter: grayscale(0%) opacity(1);
+  }
+}
+
+// =====================================================
+// 10. Animations - Seamless Infinite Marquee
+// =====================================================
+
+// Row 1: Scroll Left (same as original code)
+.tharaa-brands-row-1 .tharaa-brands-track {
+  animation: tharaa-scroll-left 30s linear infinite;
+}
+
+// Row 2: Scroll Right (same as original code)
+.tharaa-brands-row-2 .tharaa-brands-track {
+  animation: tharaa-scroll-right 35s linear infinite;
+}
+
+// Keyframes - exactly as original code
+@keyframes tharaa-scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes tharaa-scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+// =====================================================
+// 11. RTL Support
+// =====================================================
+
+[dir="rtl"] {
+  // Reverse animation direction for RTL
+  .tharaa-brands-row-1 .tharaa-brands-track {
+    animation-name: tharaa-marquee-scroll-right;
+  }
+  
+  .tharaa-brands-row-2 .tharaa-brands-track {
+    animation-name: tharaa-marquee-scroll-left;
+  }
+}
+
+// =====================================================
+// 12. Pause on Hover
+// =====================================================
+
+.tharaa-brands-marquee:hover .tharaa-brands-track {
+  animation-play-state: paused;
+}
+
+// =====================================================
+// 13. Accessibility & Reduced Motion
+// =====================================================
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .tharaa-brands-track {
+    animation: none !important;
+  }
+  
+  .tharaa-brand-item {
+    transition: none !important;
+  }
+}
+
+// Focus indicators
+.tharaa-brand-item:focus-visible {
+  outline: 2px solid $tharaa-color-secondary;
+  outline-offset: 4px;
+}
+
+// =====================================================
+// 14. Print Styles
+// =====================================================
+
+@media print {
+  .tharaa-brands-marquee {
+    page-break-inside: avoid;
+  }
+  
+  .tharaa-brands-track {
+    animation: none !important;
+  }
+  
+  .tharaa-brands-wrapper::before,
+  .tharaa-brands-wrapper::after {
+    display: none;
+  }
+  
+  .tharaa-brands-group {
+    flex-wrap: wrap;
+  }
+}
+
+// =====================================================
+// 15. Performance Optimizations
+// =====================================================
+
+// Hardware acceleration for smooth animations
+.tharaa-brands-track {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+// Optimize rendering
+.tharaa-brand-item img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+// =====================================================
+// END OF STYLES
+// =====================================================

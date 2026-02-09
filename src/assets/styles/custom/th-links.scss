@@ -329,7 +329,13 @@ $breakpoint-desktop: 1280px;
 
 // Circle Style (Default)
 .tharaa-links-section.style-circle {
+  .tharaa-card {
+    width: 120px;
 
+    @media (max-width: $breakpoint-mobile) {
+      width: 100px;
+    }
+  }
 
   .tharaa-card__visual {
     border-radius: $tharaa-radius-full; // Perfect circle
@@ -338,7 +344,13 @@ $breakpoint-desktop: 1280px;
 
 // Square Style
 .tharaa-links-section.style-square {
+  .tharaa-card {
+    width: 130px;
 
+    @media (max-width: $breakpoint-mobile) {
+      width: 110px;
+    }
+  }
 
   .tharaa-card__visual {
     border-radius: $tharaa-radius-xl; // 24px rounded corners
@@ -347,7 +359,16 @@ $breakpoint-desktop: 1280px;
 
 // rect Style (Overlay Text)
 .tharaa-links-section.style-rect {
+  .tharaa-card {
+    width: 150px;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 10px;
 
+    @media (max-width: $breakpoint-mobile) {
+      width: 130px;
+    }
+  }
 
   .tharaa-card__visual {
     width: 100%;

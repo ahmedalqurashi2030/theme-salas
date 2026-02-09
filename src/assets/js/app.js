@@ -24,6 +24,7 @@ class App extends AppHelpers {
     this.initiateCollapse();
     this.initAttachWishlistListeners();
     this.changeMenuDirection()
+    this.initTharaaHeaderMenu();
     initTootTip();
     this.loadModalImgOnclick();
 
@@ -37,6 +38,33 @@ class App extends AppHelpers {
   log(message) {
     salla.log(`ThemeApp(Raed)::${message}`);
     return this;
+  }
+
+
+
+  initTharaaHeaderMenu() {
+    const header = document.querySelector('.th-header');
+    if (!header) return;
+
+    const tabs = header.querySelectorAll('[data-mega-tab]');
+    const panes = header.querySelectorAll('.th-mega-pane');
+
+    if (!tabs.length || !panes.length) return;
+
+    const activate = (id) => {
+      panes.forEach((pane) => pane.classList.toggle('active', pane.id === id));
+      tabs.forEach((tab) => {
+        const isActive = tab.dataset.megaTab === id;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('mouseenter', () => activate(tab.dataset.megaTab));
+      tab.addEventListener('focus', () => activate(tab.dataset.megaTab));
+      tab.addEventListener('click', () => activate(tab.dataset.megaTab));
+    });
   }
 
   // fix Menu Direction at the third level >> The menu at the third level was popping off the page
@@ -138,20 +166,32 @@ class App extends AppHelpers {
 
 
   initiateMobileMenu() {
-    let menu = this.element("#mobile-menu");
-    //in landing menu will not be their
-    if (!menu) {
-      return;
-    }
-    menu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
-    salla.lang.onLoaded(() => {
-      menu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
-    });
-    const drawer = menu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
+  let menuElement = this.element("#mobile-menu");
 
-    this.onClick("a[href='#mobile-menu']", event => event.preventDefault() || drawer.close() || drawer.open());
-    this.onClick(".close-mobile-menu", event => event.preventDefault() || drawer.close());
+  // custom-main-menu renders #mobile-menu asynchronously after fetching API menus
+  if (!menuElement) {
+    customElements.whenDefined('custom-main-menu').then(() => {
+      setTimeout(() => this.initiateMobileMenu(), 150);
+    });
+    return;
   }
+
+  // prevent duplicate initialization
+  if (menuElement.dataset.mmInitialized === 'true') {
+    return;
+  }
+  menuElement.dataset.mmInitialized = 'true';
+
+  const menu = new MobileMenu(menuElement, "(max-width: 1024px)", "( slidingSubmenus: false)");
+  salla.lang.onLoaded(() => {
+    menu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
+  });
+  const drawer = menu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
+
+  this.onClick("a[href='#mobile-menu']", event => event.preventDefault() || drawer.close() || drawer.open());
+  this.onClick(".close-mobile-menu", event => event.preventDefault() || drawer.close());
+}
+
   initAttachWishlistListeners() {
     let isListenerAttached = false;
 
