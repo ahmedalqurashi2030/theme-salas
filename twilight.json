@@ -2739,30 +2739,6 @@
                     "required": false
                 },
                 {
-                    "id": "background_color",
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "label": "لون خلفية الشعارات",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-format-fill",
-                    "value": "#004956",
-                    "required": false
-                },
-                {
-                    "id": "remove_background",
-                    "type": "boolean",
-                    "format": "switch",
-                    "label": "إلغاء لون الخلفية للشعارات",
-                    "description": "يرجى عدم تفعيل هذه الخاصية إلا في حالة توفر 10 عناصر في القائمة، هذه الخاصية تعطي لمسة من الأناقة للتصميم بسبب الانيميشن الانسيابي المطبق",
-                    "labelHTML": null,
-                    "icon": "sicon-toggle-off",
-                    "value": true,
-                    "selected": false,
-                    "required": false
-                },
-                {
                     "id": "almarkat_altgaret",
                     "type": "static",
                     "format": "title",
