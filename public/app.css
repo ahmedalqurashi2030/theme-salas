@@ -26446,40 +26446,13 @@ body.drawer-open {
     color: var(--tharaa-secondary, #d4af37);
   }
 }
-.tharaa-links-section.style-circle .tharaa-card {
-  width: 120px;
-}
-@media (max-width: 768px) {
-  .tharaa-links-section.style-circle .tharaa-card {
-    width: 100px;
-  }
-}
 .tharaa-links-section.style-circle .tharaa-card__visual {
   border-radius: 9999px;
   border-radius: var(--tharaa-radius-full, 9999px);
 }
-.tharaa-links-section.style-square .tharaa-card {
-  width: 130px;
-}
-@media (max-width: 768px) {
-  .tharaa-links-section.style-square .tharaa-card {
-    width: 110px;
-  }
-}
 .tharaa-links-section.style-square .tharaa-card__visual {
   border-radius: 24px;
   border-radius: var(--tharaa-radius-xl, 24px);
-}
-.tharaa-links-section.style-rect .tharaa-card {
-  width: 150px;
-  border-radius: 18px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-@media (max-width: 768px) {
-  .tharaa-links-section.style-rect .tharaa-card {
-    width: 130px;
-  }
 }
 .tharaa-links-section.style-rect .tharaa-card__visual {
   width: 100%;
