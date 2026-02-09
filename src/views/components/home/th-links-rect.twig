@@ -1,9 +1,10 @@
 {# Get component data from theme.json #}
 {% set section_title = component.section_title|default('تسوق حسب الفئة') %}
-{% set section_description = component.section_description|default('') %}
-{% set display_mode = component.display_mode.selected[0].label|default('slider') %}
+{% set section_description = component.section_description|default(component.section_subtitle)|default('') %}
+{% set display_mode_raw = component.display_mode.selected[0].label|default(component.display_mode.selected[0].value|default('slider'))|lower %}
+{% set display_mode = (display_mode_raw in ['list','قائمة']) ? 'list' : 'slider' %}
 {% set autoplay = component.autoplay|default(false) %}
-{% set show_controls = component.show_arrows|default(true) %}
+{% set show_controls = component.show_arrows|default(component.show_controls)|default(true) %}
 {% set two_rows = component.two_rows|default(false) %}
 {% set items_mobile = component.items_per_view_mobile.selected[0].value|default('3') %}
 {% set items_desktop = component.items_per_view_desktop.selected[0].value|default('5') %}
@@ -16,23 +17,23 @@
 {% if items is not empty %}
 
 	{# 
-				  Main Section Container 
-				  Classes:
-				  - tharaa-links-section: Base component class
-				  - style-rect: Modifier for rectangular style
-				  - mode-grid: Applied when display_mode is 'list'
-				  - mode-double: Applied when two_rows is enabled
-				#}
-	<section class="s-block  tharaa-links-section style-rect {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}">
+					  Main Section Container 
+					  Classes:
+					  - tharaa-links-section: Base component class
+					  - style-rect: Modifier for rectangular style
+					  - mode-grid: Applied when display_mode is 'list'
+					  - mode-double: Applied when two_rows is enabled
+					#}
+	<section class="s-block  tharaa-links-section style-rect {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile|default('3') }}; --th-items-desktop: {{ items_desktop|default('6') }}; --th-gap: 20px;">
 
 		<div
 			class="container">
 
 			{# 
-												      Section Header 
-												      Contains: Title, Description
-												      SCSS: .tharaa-header
-												    #}
+															      Section Header 
+															      Contains: Title, Description
+															      SCSS: .tharaa-header
+															    #}
 			<div class="tharaa-header">
 				<div
 					class="tharaa-header__content">
@@ -62,18 +63,18 @@
 				{% endif %}
 
 				{# 
-																        Slider Track
-																        SCSS: .tharaa-track
-																      #}
+																				        Slider Track
+																				        SCSS: .tharaa-track
+																				      #}
 				<div
 					class="tharaa-track">
 
 					{# Loop through items from theme.json #}
 					{% for item in items %}
 						{# 
-																								            Single Card Component
-																								            SCSS: .tharaa-card (width and border-radius controlled by .style-rect)
-																								          #}
+																														            Single Card Component
+																														            SCSS: .tharaa-card (width and border-radius controlled by .style-rect)
+																														          #}
 						<a
 							href="{{ item.url|default('#') }}" class="tharaa-card" aria-label="{{ item.title }}">
 

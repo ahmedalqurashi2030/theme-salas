@@ -2,7 +2,7 @@
  * =====================================================
  * Tharaa Theme - Links Components JavaScript
  * =====================================================
- * Components: th-links-circle, th-links-square, th-links-portrait
+ * Components: th-links-circle, th-links-square, th-links-rect
  * Features: Slider, Layout Switching, Progress Bar, Navigation, Drag to Scroll
  * Compatible with: Salla Platform
  * Version: 1.0.0
@@ -39,6 +39,11 @@
      * @param {HTMLElement} section - The section element
      */
     initSection: function (section) {
+      if (section.dataset.tharaaLinksInitialized === 'true') {
+        return;
+      }
+      section.dataset.tharaaLinksInitialized = 'true';
+
       const track = section.querySelector('.tharaa-track');
       const prevBtn = section.querySelector('.btn-prev');
       const nextBtn = section.querySelector('.btn-next');
@@ -135,7 +140,7 @@
           const scrollAmount = getScrollAmount();
 
           track.scrollBy({
-            left: isRTL ? scrollAmount : -scrollAmount,
+            left: isRTL ? -scrollAmount : scrollAmount,
             behavior: 'smooth'
           });
         });
@@ -147,7 +152,7 @@
           const scrollAmount = getScrollAmount();
 
           track.scrollBy({
-            left: isRTL ? -scrollAmount : scrollAmount,
+            left: isRTL ? scrollAmount : -scrollAmount,
             behavior: 'smooth'
           });
         });
@@ -234,7 +239,7 @@
             } else {
               // Scroll forward
               track.scrollBy({
-                left: isRTL ? 200 : -200,
+                left: isRTL ? -200 : 200,
                 behavior: 'smooth'
               });
             }
@@ -285,7 +290,7 @@
               autoplayInterval = setInterval(() => {
                 const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
                 track.scrollBy({
-                  left: isRTL ? 200 : -200,
+                  left: isRTL ? -200 : 200,
                   behavior: 'smooth'
                 });
               }, 3000);
@@ -321,6 +326,7 @@
     refresh: function (sectionId) {
       const section = document.getElementById(sectionId);
       if (section) {
+        section.dataset.tharaaLinksInitialized = 'false';
         this.initSection(section);
       }
     },
@@ -332,6 +338,8 @@
     destroy: function (sectionId) {
       const section = document.getElementById(sectionId);
       if (!section) return;
+
+      section.dataset.tharaaLinksInitialized = 'false';
 
       // Remove event listeners and intervals
       const track = section.querySelector('.tharaa-track');
