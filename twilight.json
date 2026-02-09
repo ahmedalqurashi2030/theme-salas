@@ -2336,7 +2336,7 @@
                             "labelHTML": null,
                             "placeholder": "e.g. https://hostname.com/image.png",
                             "icon": "sicon-image",
-                            "value": "يفضل 300×300 (مربع)",
+                            "value": "https://res.cloudinary.com/dkbnpozos/image/upload/v1770013893/faces/Site/2026/campaigns/ramadan/icons-cat/Icons-Perfumes.jpg",
                             "required": false
                         },
                         {
