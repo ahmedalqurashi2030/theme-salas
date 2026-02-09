@@ -340,48 +340,6 @@
                     ]
                 },
                 {
-                    "id": "category_section_style",
-                    "type": "items",
-                    "format": "dropdown-list",
-                    "label": "Dropdown List",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-keyboard_arrow_down",
-                    "selected": [
-                        {
-                            "label": "style-circle",
-                            "value": "دائري (كلاسيكي)",
-                            "key": "ee01f737-c20f-41be-aa38-9e00d827d9df"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "مربع بحواف ناعمة (عصري)",
-                            "value": "style-square",
-                            "key": "8951d60c-ca70-42de-9675-ef18f33df7c3"
-                        },
-                        {
-                            "label": "style-circle",
-                            "value": "دائري (كلاسيكي)",
-                            "key": "ee01f737-c20f-41be-aa38-9e00d827d9df"
-                        },
-                        {
-                            "label": "style-square",
-                            "value": "مربع بحواف ناعمة (عصري)",
-                            "key": "1caf88cd-fb01-445b-a230-236d5bebfeb6"
-                        },
-                        {
-                            "label": "style-portrait",
-                            "value": "مستطيل طولي (للأزياء)",
-                            "key": "9154bddc-975c-47de-986b-22fbe2a57540"
-                        }
-                    ],
-                    "source": "Manual",
-                    "multichoice": false,
-                    "searchable": true,
-                    "required": false
-                },
-                {
                     "type": "string",
                     "icon": "sicon-format-text-alt",
                     "label": "العنوان",
@@ -601,6 +559,22 @@
                                     "value": "custom"
                                 }
                             ]
+                        },
+                        {
+                            "id": "links.alroabt",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "label": "الروابط",
+                            "description": null,
+                            "labelHTML": null,
+                            "icon": "sicon-keyboard_arrow_down",
+                            "selected": [],
+                            "options": [],
+                            "source": "Taxes",
+                            "multichoice": true,
+                            "searchable": true,
+                            "required": false,
+                            "value": []
                         }
                     ],
                     "conditions": [
