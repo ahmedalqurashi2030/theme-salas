@@ -2766,6 +2766,16 @@
             "icon": "sicon-store",
             "path": "home.th-store-features",
             "fields": []
+        },
+        {
+            "key": "d399f373-ac13-4f56-8187-b132e3f52bb6",
+            "title": {
+                "en": "moving announcement bar (tharaa)",
+                "ar": "شريط إعلاني متحرك (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.moving-announcement-bar",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
