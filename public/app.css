@@ -26363,7 +26363,8 @@ body.drawer-open {
 }
 @media (max-width: 768px) {
   .tharaa-card {
-    width: 100px;
+    width: calc((100% - 16px * (var(--th-items-mobile) - 1)) / var(--th-items-mobile));
+    width: calc((100% - var(--th-gap) * (var(--th-items-mobile) - 1)) / var(--th-items-mobile));
   }
 }
 .tharaa-card__visual {

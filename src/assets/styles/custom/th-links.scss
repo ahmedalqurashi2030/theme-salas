@@ -63,7 +63,7 @@ $breakpoint-desktop: 1280px;
   padding: 40px 0;
   position: relative;
   overflow: hidden;
-  
+
   // Responsive padding
   @media (max-width: $breakpoint-mobile) {
     padding: 30px 0;
@@ -75,7 +75,7 @@ $breakpoint-desktop: 1280px;
   max-width: $tharaa-container-width;
   margin: 0 auto;
   padding: 0 20px;
-  
+
   @media (max-width: $breakpoint-mobile) {
     padding: 0 15px;
   }
@@ -92,7 +92,7 @@ $breakpoint-desktop: 1280px;
   margin-bottom: 24px;
   flex-wrap: wrap;
   gap: 15px;
-  
+
   @media (max-width: $breakpoint-mobile) {
     margin-bottom: 20px;
     gap: 10px;
@@ -111,7 +111,7 @@ $breakpoint-desktop: 1280px;
   color: $tharaa-color-primary;
   margin: 0;
   line-height: 1.2;
-  
+
   @media (max-width: $breakpoint-mobile) {
     font-size: 22px;
   }
@@ -123,7 +123,7 @@ $breakpoint-desktop: 1280px;
   color: $tharaa-color-text-light;
   margin: 5px 0 0;
   font-weight: 400;
-  
+
   @media (max-width: $breakpoint-mobile) {
     font-size: 13px;
   }
@@ -148,23 +148,23 @@ $breakpoint-desktop: 1280px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   cursor: grab;
-  
+
   // Scroll snap for better mobile experience
   scroll-snap-type: x mandatory;
   scroll-padding: 20px;
-  
+
   // Hide scrollbar
   &::-webkit-scrollbar {
     display: none;
   }
-  
+
   // Dragging state
   &.is-dragging {
     cursor: grabbing;
     scroll-behavior: auto;
     scroll-snap-type: none;
   }
-  
+
   @media (max-width: $breakpoint-mobile) {
     gap: 15px;
     padding-bottom: 20px;
@@ -185,14 +185,14 @@ $breakpoint-desktop: 1280px;
     scroll-snap-type: none;
     padding-bottom: 0;
     cursor: default;
-    
+
     @media (max-width: $breakpoint-mobile) {
       justify-content: flex-start;
       gap: 10px;
       padding: 0 10px;
     }
   }
-  
+
   // Hide navigation buttons and progress in grid mode
   .tharaa-nav-btn,
   .tharaa-progress {
@@ -208,7 +208,7 @@ $breakpoint-desktop: 1280px;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
     gap: $tharaa-gap-base;
-    
+
     @media (max-width: $breakpoint-mobile) {
       // Revert to single row on mobile
       display: flex;
@@ -232,9 +232,9 @@ $breakpoint-desktop: 1280px;
   scroll-snap-align: start;
   text-decoration: none;
   transition: $tharaa-transition-base;
-  
+
   @media (max-width: $breakpoint-mobile) {
-    width: 100px;
+    width: calc((100% - (var(--th-gap) * (var(--th-items-mobile) - 1))) / var(--th-items-mobile));
   }
 }
 
@@ -265,7 +265,7 @@ $breakpoint-desktop: 1280px;
   width: 100%;
   transition: $tharaa-transition-base;
   z-index: 2;
-  
+
   @media (max-width: $breakpoint-mobile) {
     margin-top: 10px;
   }
@@ -279,7 +279,7 @@ $breakpoint-desktop: 1280px;
   color: $tharaa-color-primary;
   display: block;
   margin-bottom: 2px;
-  
+
   @media (max-width: $breakpoint-mobile) {
     font-size: 13px;
   }
@@ -312,11 +312,11 @@ $breakpoint-desktop: 1280px;
       box-shadow: $tharaa-shadow-lg;
       border-color: $tharaa-color-secondary;
     }
-    
+
     .tharaa-card__img {
       transform: scale(1.1);
     }
-    
+
     .tharaa-card__title {
       color: $tharaa-color-secondary;
     }
@@ -331,12 +331,12 @@ $breakpoint-desktop: 1280px;
 .tharaa-links-section.style-circle {
   .tharaa-card {
     width: 120px;
-    
+
     @media (max-width: $breakpoint-mobile) {
       width: 100px;
     }
   }
-  
+
   .tharaa-card__visual {
     border-radius: $tharaa-radius-full; // Perfect circle
   }
@@ -346,12 +346,12 @@ $breakpoint-desktop: 1280px;
 .tharaa-links-section.style-square {
   .tharaa-card {
     width: 130px;
-    
+
     @media (max-width: $breakpoint-mobile) {
       width: 110px;
     }
   }
-  
+
   .tharaa-card__visual {
     border-radius: $tharaa-radius-xl; // 24px rounded corners
   }
@@ -364,32 +364,30 @@ $breakpoint-desktop: 1280px;
     border-radius: 18px;
     overflow: hidden;
     margin-bottom: 10px;
-    
+
     @media (max-width: $breakpoint-mobile) {
       width: 130px;
     }
   }
-  
+
   .tharaa-card__visual {
     width: 100%;
     height: 100%;
     border-radius: 0;
     aspect-ratio: 3 / 4; // rect aspect ratio
-    
+
     // Gradient overlay for text readability
     &::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(26, 26, 26, 0.9) 0%,
-        transparent 60%
-      );
+      background: linear-gradient(to top,
+          rgba(26, 26, 26, 0.9) 0%,
+          transparent 60%);
       pointer-events: none;
     }
   }
-  
+
   // Position content absolutely over image
   .tharaa-card__content {
     position: absolute;
@@ -400,13 +398,13 @@ $breakpoint-desktop: 1280px;
     margin: 0;
     z-index: 3;
   }
-  
+
   .tharaa-card__title {
     color: white;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     font-size: 15px;
   }
-  
+
   .tharaa-card__count,
   .tharaa-card__badge {
     color: rgba(255, 255, 255, 0.8);
@@ -437,19 +435,19 @@ $breakpoint-desktop: 1280px;
   pointer-events: none;
   transition: $tharaa-transition-base;
   font-size: 14px;
-  
+
   // Show on hover (desktop only)
   .tharaa-links-section:hover &.is-visible {
     opacity: 1;
     pointer-events: all;
   }
-  
+
   &:hover {
     background: $tharaa-color-secondary;
     color: white;
     border-color: $tharaa-color-secondary;
   }
-  
+
   // Accessibility
   &:focus-visible {
     outline: 2px solid $tharaa-color-secondary;
@@ -457,7 +455,7 @@ $breakpoint-desktop: 1280px;
     opacity: 1;
     pointer-events: all;
   }
-  
+
   // Hide on mobile
   @media (max-width: $breakpoint-mobile) {
     display: none !important;
@@ -470,7 +468,7 @@ $breakpoint-desktop: 1280px;
     left: auto;
     right: 10px;
   }
-  
+
   .btn-next {
     right: auto;
     left: 10px;
@@ -481,7 +479,7 @@ $breakpoint-desktop: 1280px;
   .btn-prev {
     right: 10px;
   }
-  
+
   .btn-next {
     left: 10px;
   }
@@ -500,7 +498,7 @@ $breakpoint-desktop: 1280px;
   position: relative;
   overflow: hidden;
   transition: opacity 0.3s;
-  
+
   @media (max-width: $breakpoint-mobile) {
     width: 100px;
   }
@@ -549,6 +547,7 @@ $breakpoint-desktop: 1280px;
 
 // Reduced motion support
 @media (prefers-reduced-motion: reduce) {
+
   .tharaa-card,
   .tharaa-card__visual,
   .tharaa-card__img,
@@ -572,12 +571,12 @@ $breakpoint-desktop: 1280px;
   .tharaa-links-section {
     page-break-inside: avoid;
   }
-  
+
   .tharaa-nav-btn,
   .tharaa-progress {
     display: none !important;
   }
-  
+
   .tharaa-track {
     overflow: visible;
     display: flex;

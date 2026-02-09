@@ -1,6 +1,6 @@
 {# Get component data from theme.json #}
 {% set section_title = component.section_title|default('تصفح حسب الفئة') %}
-{% set section_description = component.section_description|default('') %}
+{% set section_description = component.section_subtitle|default('') %}
 {% set display_mode = component.display_mode.selected[0].label|default('slider') %}
 {% set autoplay = component.autoplay|default(false) %}
 {% set show_controls = component.show_controls|default(true) %}
@@ -16,7 +16,7 @@
 {% if items is not empty %}
 
 
-	<section class="s-block  tharaa-links-section style-circle {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}">
+	<section class="s-block  tharaa-links-section style-circle {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-desktop: {{ items_desktop }}; --th-items-mobile: {{ items_mobile }};">
 
 		<div class="container">
 
@@ -52,10 +52,10 @@
 					{# Loop through items from theme.json: items[] #}
 					{% for item in items %}
 						{# 
-																								            Single Card Component
-																								            SCSS: .tharaa-card, .tharaa-card__visual, .tharaa-card__img, .tharaa-card__content
-																								            Data: item.title, item.image, item.url
-																								          #}
+																																				            Single Card Component
+																																				            SCSS: .tharaa-card, .tharaa-card__visual, .tharaa-card__img, .tharaa-card__content
+																																				            Data: item.title, item.image, item.url
+																																				          #}
 						<a
 							href="{{ item.url|default('#') }}" class="tharaa-card" aria-label="{{ item.title }}">
 
@@ -80,10 +80,10 @@
 			</div>
 
 			{# 
-												      Progress Bar - Shows scroll position
-												      SCSS: .tharaa-progress, .tharaa-progress__bar
-												      Hidden in grid mode via CSS
-												    #}
+																		      Progress Bar - Shows scroll position
+																		      SCSS: .tharaa-progress, .tharaa-progress__bar
+																		      Hidden in grid mode via CSS
+																		    #}
 			<div class="tharaa-progress">
 				<div class="tharaa-progress__bar"></div>
 			</div>
