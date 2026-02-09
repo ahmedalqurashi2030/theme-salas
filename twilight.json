@@ -1831,21 +1831,6 @@
                     "icon": "sicon-minus"
                 },
                 {
-                    "id": "section_description",
-                    "type": "string",
-                    "format": "text",
-                    "label": "وصف مختصر (اختياري)",
-                    "description": "يظهر أعلى القسم في الصفحة",
-                    "labelHTML": null,
-                    "placeholder": "Placeholder text ..",
-                    "icon": "sicon-format-text-alt",
-                    "value": "مثال: اختر فئتك بسرعة واستكشف",
-                    "multilanguage": false,
-                    "required": false,
-                    "minLength": 6,
-                    "maxLength": 30
-                },
-                {
                     "id": "section_title",
                     "type": "string",
                     "format": "text",
