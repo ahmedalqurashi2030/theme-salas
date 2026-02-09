@@ -2756,6 +2756,16 @@
                     "maxLength": "20"
                 }
             ]
+        },
+        {
+            "key": "683cc627-ea4f-4755-a21b-eb383ac38e69",
+            "title": {
+                "en": "(STORE FEATURES MOHSEN (tharaa",
+                "ar": "مميزات المتجر محسن( ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.th-store-features",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
