@@ -1,0 +1,84 @@
+{#
+|--------------------------------------------------------------------------
+| Component: Brand Carousel (Tharaa)
+| Path: views/components/home/th-brand-carousel.twig
+|--------------------------------------------------------------------------
+#}
+
+{# تعريف المتغيرات من الـ Component للحفاظ على نظافة الكود #}
+{% set brands = component.brands %}
+{% set title = component.section_title %}
+{% set is_large = component.larger_size %}
+{% set has_two_rows = component.two_rows %}
+
+{# التحقق: لا نعرض القسم إذا كانت القائمة فارغة لتجنب تشويه التصميم #}
+{% if brands|length > 0 %}
+<section class="s-brand-carousel {{ is_large ? 'is-large' : '' }} {{ has_two_rows ? 'has-two-rows' : '' }}"
+         id="brand-carousel-{{ component.key }}">
+    
+    <div class="container">
+        {# 1. عنوان القسم (اختياري) #}
+        {% if title %}
+            <div class="s-brand-carousel__header">
+                <h2 class="s-brand-carousel__title">{{ title }}</h2>
+            </div>
+        {% endif %}
+
+        {# 2. حاوية الشريط المتحرك #}
+        <div class="s-brand-carousel__wrapper">
+            
+            {# --- الصف الأول (افتراضي) --- #}
+            <div class="s-brand-carousel__row dir-normal">
+                <div class="s-brand-carousel__track">
+                    {# نقوم بتكرار الدالة 4 مرات لضمان تغطية الشاشات العريضة جداً وضمان سلاسة الحركة #}
+                    {% for i in 1..4 %}
+                        {{ _self.render_brand_items(brands, (i > 1)) }}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {# --- الصف الثاني (إذا تم تفعيله) --- #}
+            {% if has_two_rows %}
+            <div class="s-brand-carousel__row dir-reverse">
+                <div class="s-brand-carousel__track">
+                    {% for i in 1..4 %}
+                        {{ _self.render_brand_items(brands, (i > 1)) }}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{# 
+   ماكرو (Macro) لرسم العناصر
+   يساعد في تقليل حجم الكود وتوحيد التصميم 
+   Param: is_hidden -> يضيف aria-hidden للعناصر المكررة لتحسين الوصولية
+#}
+{% macro render_brand_items(brands, is_hidden) %}
+    {% for brand in brands %}
+        <div class="s-brand-carousel__item" {{ is_hidden ? 'aria-hidden="true"' : '' }}>
+            {% if brand.url %}
+                <a href="{{ brand.url }}" 
+                   class="s-brand-carousel__link" 
+                   aria-label="{{ brand.title|default('Brand') }}"
+                   {{ is_hidden ? 'tabindex="-1"' : '' }}>
+            {% endif %}
+            
+            {# استخدام lazy loading مع cdn filter هو أفضل ممارسة في سلة #}
+            <img src="{{ brand.image|cdn }}" 
+                 alt="{{ brand.title|default('Brand Logo') }}" 
+                 loading="lazy"
+                 width="120"
+                 height="80"
+                 class="s-brand-carousel__img">
+
+            {% if brand.url %}
+                </a>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endmacro %}

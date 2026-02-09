@@ -83,17 +83,6 @@
 									</div>
 								{% endfor %}
 							</div>
-
-							{% if menu.products %}
-								<div class="mt-8 pt-6 border-t border-gray-100">
-									<h4 class="font-bold mb-4 text-sm text-gold">{{ trans('blocks.header.featured_products') }}</h4>
-									<div class="grid grid-cols-4 gap-4">
-										{% for product in menu.products|slice(0, 4) %}
-											<salla-product-card shadow-on-hover product="{{ product }}" class="text-xs"></salla-product-card>
-										{% endfor %}
-									</div>
-								</div>
-							{% endif %}
 						</div>
 					{% endif %}
 				{% endfor %}
