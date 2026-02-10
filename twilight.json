@@ -2775,7 +2775,78 @@
             },
             "icon": "sicon-store",
             "path": "home.moving-announcement-bar",
-            "fields": []
+            "fields": [
+                {
+                    "id": "announcement_text",
+                    "type": "string",
+                    "format": "text",
+                    "label": "نص الشريط",
+                    "description": "يجب ألا يقل عدد حروف الإعلان عن 15 حرفاً وألا يزيد عن 100 حرف.",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "تخفيضات الصيف خصم 30%",
+                    "multilanguage": true,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30,
+                    "public": true
+                },
+                {
+                    "id": "announcement_link",
+                    "type": "string",
+                    "format": "url",
+                    "inputType": "url",
+                    "label": "رابط الشريط (إختياري)",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://salla.sa",
+                    "icon": "sicon-link",
+                    "value": null,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "bg_color",
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "label": "لون الخلفية",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-format-fill",
+                    "value": "#000000",
+                    "required": false
+                },
+                {
+                    "id": "text_color",
+                    "type": "string",
+                    "format": "color",
+                    "inputType": "color",
+                    "label": "لون النص",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-format-fill",
+                    "value": "#ffffff",
+                    "required": false
+                },
+                {
+                    "id": "custom_class",
+                    "type": "string",
+                    "format": "text",
+                    "label": "كلاس CSS مخصص",
+                    "description": "حقل خاص بالمطورين ومصممي المتاجر",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
