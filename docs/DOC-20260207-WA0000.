@@ -1,285 +1,285 @@
-           .       **Tharaa**      .
+سأقوم بفحص التوثيق الرسمي لسلة أولاً للتأكد من تقديم معلومات دقيقة ومحدثة.الآن سأقوم بإنشاء دليل شامل لبناء ثيم **Tharaa** الفاخر استناداً إلى التوثيق الرسمي لسلة.
 
-#      **Tharaa**    
+# 🎯 الدليل الشامل لبناء ثيم **Tharaa** الفاخر على منصة سلة
 
 <div dir="rtl">
 
 ---
 
-##  
-1. [  ](#hybrid-strategy)
-2. [  ](#folder-structure)
-3. [ ](#theme-architecture)
-4. [  Tharaa](#tharaa-identity)
-5. [  ](#successful-themes)
-6. [ ](#performance-compliance)
+## 📚 المحتويات
+1. [الاستراتيجية الهجينة للكلاسات](#hybrid-strategy)
+2. [هيكل المجلدات الكامل](#folder-structure)
+3. [هندسة الثيم](#theme-architecture)
+4. [هوية ثيم Tharaa](#tharaa-identity)
+5. [تحليل الثيمات الناجحة](#successful-themes)
+6. [الأداء والامتثال](#performance-compliance)
 
 ---
 
 <a name="hybrid-strategy"></a>
-## 1    (Hybrid Classes Strategy)
+## 1️⃣ الاستراتيجية الهجينة للكلاسات (Hybrid Classes Strategy)
 
-###   
+### 🎨 المبدأ الأساسي
 
 ```
-   () +  Tharaa  () =    
+كلاسات سلة الافتراضية (للتوافقية) + كلاسات Tharaa المخصصة (للهوية) = ثيم قابل للتحديث ومتميز
 ```
 
-###    
+### 📋 قواعد استخدام الكلاسات
 
-####  **     :**
+#### ✅ **متى تستخدم كلاسات سلة الافتراضية فقط:**
 
-**  :**
--  : `s-button-primary`, `s-button-add-to-cart`
--  : `s-input`, `s-form-group`
-- Quantity selectors  Salla SDK
--  : `s-block`, `container`
+**العناصر الوظيفية الأساسية:**
+- أزرار السلة: `s-button-primary`, `s-button-add-to-cart`
+- نماذج الإدخال: `s-input`, `s-form-group`
+- Quantity selectors من Salla SDK
+- نظام الشبكة: `s-block`, `container`
 
-** :**
+**مثال عملي:**
 ```html
-<!--  :      -->
+<!-- ✅ صحيح: استخدام كلاسات سلة للوظائف الأساسية -->
 <button class="s-button-primary" 
         salla-add-product
         data-id="{{ product.id }}">
-   
+  أضف للسلة
 </button>
 
 <div class="s-block s-product-card">
-  <!--  -->
+  <!-- المحتوى -->
 </div>
 ```
 
-####  **    (Salla + Tharaa):**
+#### ✅ **متى تستخدم الكلاسات الهجينة (Salla + Tharaa):**
 
-**    :**
--   
--   
--    
--  
+**العناصر التي تحتاج هوية بصرية:**
+- بطاقات المنتجات المخصصة
+- العناوين والنصوص الفاخرة
+- الأزرار ذات التأثيرات الخاصة
+- المكونات الفريدة
 
-** :**
+**مثال عملي:**
 ```html
-<!--  :    + Tharaa -->
+<!-- ✅ صحيح: دمج كلاسات سلة + Tharaa -->
 <button class="s-button-primary tharaa-btn tharaa-btn--luxury" 
         salla-add-product>
-  <span class="tharaa-btn__icon"></span>
-  <span class="tharaa-btn__text"> </span>
+  <span class="tharaa-btn__icon">✦</span>
+  <span class="tharaa-btn__text">أضف للسلة</span>
 </button>
 
 <div class="s-block s-product-card tharaa-product tharaa-product--featured">
-  <!--   -->
+  <!-- المحتوى المخصص -->
 </div>
 ```
 
-####  **    :**
+#### ❌ **متى لا تستبدل كلاسات سلة:**
 
-** :**
+**العناصر الحرجة:**
 ```html
-<!--  :     -->
+<!-- ❌ خطأ: استبدال كلاسات سلة بالكامل -->
 <div class="tharaa-product-only">
-  <!--     -->
+  <!-- سيفشل التكامل مع سلة -->
 </div>
 
-<!--  :    -->
+<!-- ✅ صحيح: الاحتفاظ بكلاسات سلة -->
 <div class="s-product-card tharaa-product">
-  <!--      Tharaa -->
+  <!-- يعمل مع سلة ولديه هوية Tharaa -->
 </div>
 ```
 
-###    (Naming Convention)  Tharaa
+### 🏗️ نظام التسمية (Naming Convention) لـ Tharaa
 
-#### ** :**
+#### **البنية الأساسية:**
 ```
 tharaa-[component]__[element]--[modifier]
 ```
 
-#### ** :**
+#### **أمثلة عملية:**
 
 ```css
-/* 1.   (Components) */
+/* 1. المكونات الأساسية (Components) */
 .tharaa-header { }
 .tharaa-footer { }
 .tharaa-product { }
 .tharaa-banner { }
 
-/* 2.  (Elements) */
+/* 2. العناصر (Elements) */
 .tharaa-product__image { }
 .tharaa-product__title { }
 .tharaa-product__price { }
 .tharaa-header__logo { }
 
-/* 3.  (Modifiers) */
-.tharaa-btn--luxury { }      /*   */
-.tharaa-btn--outline { }     /*   */
-.tharaa-product--featured { } /*   */
-.tharaa-text--gold { }       /*   */
+/* 3. المعدلات (Modifiers) */
+.tharaa-btn--luxury { }      /* الأزرار الفاخرة */
+.tharaa-btn--outline { }     /* الأزرار المحددة */
+.tharaa-product--featured { } /* المنتجات المميزة */
+.tharaa-text--gold { }       /* النصوص الذهبية */
 
-/* 4.  (States) */
+/* 4. الحالات (States) */
 .tharaa-btn.is-loading { }
 .tharaa-product.is-sold-out { }
 .tharaa-header.is-sticky { }
 ```
 
-###    
+### 📊 جدول القرار السريع
 
-|  |    |   Tharaa |  |
+| العنصر | استخدم كلاسات سلة | أضف كلاسات Tharaa | مثال |
 |--------|-------------------|-------------------|------|
-|  " " |   |   | `s-button-primary tharaa-btn--luxury` |
-|    |   |   | `s-product-card tharaa-product` |
-|    |   |   | `s-product-card tharaa-product--hero` |
-|    |    |   | `s-form s-login-form` |
-| Header  |   |   | `s-header tharaa-header--elegant` |
-| Footer  |   |   | `s-footer tharaa-footer` |
+| زر "أضف للسلة" | ✅ نعم | ✅ نعم | `s-button-primary tharaa-btn--luxury` |
+| بطاقة منتج عادية | ✅ نعم | ⚠️ اختياري | `s-product-card tharaa-product` |
+| بطاقة منتج مميزة | ✅ نعم | ✅ نعم | `s-product-card tharaa-product--hero` |
+| نموذج تسجيل دخول | ✅ فقط سلة | ❌ لا | `s-form s-login-form` |
+| Header مخصص | ✅ نعم | ✅ نعم | `s-header tharaa-header--elegant` |
+| Footer مخصص | ✅ نعم | ✅ نعم | `s-footer tharaa-footer` |
 
 ---
 
 <a name="folder-structure"></a>
-## 2    (Complete Folder Structure)
+## 2️⃣ هيكل المجلدات الكامل (Complete Folder Structure)
 
-###     +  Tharaa
+### 📁 البنية الرسمية لسلة + تحسينات Tharaa
 
 ```
 tharaa-theme/
-
-  twilight.json              #    
-  webpack.config.js          #  Webpack
-  package.json               # Dependencies
-  .gitignore
-
-  src/                       #   
-   
-     assets/                #  
-        images/
-          logo/
-             logo-light.svg
-             logo-dark.svg
-          icons/
-             tharaa-icons.svg     #  Tharaa 
-          placeholders/
-      
-        styles/            #  CSS/SCSS
-           main.scss      #  
-         
-           00-settings/   # Design Tokens
-             _variables.scss
-             _colors.scss
-             _typography.scss
-             _spacing.scss
-         
-           01-tools/      # Mixins & Functions
-             _mixins.scss
-             _functions.scss
-             _animations.scss
-         
-           02-base/       #  
-             _reset.scss
-             _fonts.scss
-             _global.scss
-         
-           03-components/ #  Tharaa
-             _buttons.scss
-             _cards.scss
-             _forms.scss
-             _header.scss
-             _footer.scss
-         
-           04-sections/   # Sections
-             _hero.scss
-             _products-grid.scss
-             _testimonials.scss
-         
-           05-pages/      #  
-              _home.scss
-              _product.scss
-              _cart.scss
-      
-        js/                #  JavaScript
-            app.js         #  
-            home.js        # Home page specific
-            product.js     # Product page specific
-            modules/
-               animations.js
-               cart-enhancements.js
-               tharaa-interactions.js
-   
-     locales/               # 
-       ar.json               # 
-       en.json               # 
-   
-     views/                 #  Twig
-       
-         layouts/           #  
-           master.twig       # Layout  ()
-       
-         pages/             #  (  -  )
-           index.twig        #  
-           cart.twig         # 
-           loyalty.twig      # 
-           thank-you.twig    # 
-           page-single.twig  #  
-           landing-page.twig # Landing page
-          
-            product/
-              index.twig    #  
-              single.twig   #   
-          
-            customer/
-              profile.twig
-              wishlist.twig
-              notifications.twig
-               orders/
-                  index.twig
-                  single.twig
-          
-            blog/
-              index.twig
-              single.twig
-          
-            brands/
-               index.twig
-               single.twig
-       
-         components/        #    
-          
-            header/        #  
-              header.twig
-              nav-primary.twig
-              search.twig
-              cart-icon.twig
-          
-            footer/        #  
-              footer.twig
-              links.twig
-              payment-methods.twig
-          
-            home/          #   
-              hero-banner.twig        # Custom Component
-              featured-categories.twig # Custom Component
-              luxury-slider.twig       # Custom Component
-              testimonials.twig        # Custom Component
-          
-            product/       #  
-               card.twig             #  
-               card-full-image.twig  #   
-               card-mini.twig        #  
-               slider.twig           #  
-               options.twig          #  
-       
-         partials/          #     
-            breadcrumbs.twig
-            pagination.twig
-            social-share.twig
-            single-comment.twig
-
-  dist/                      #   (  )
-     app.css
-     app.js
-     images/
+│
+├── 📄 twilight.json              # ملف إعدادات الثيم الرئيسي
+├── 📄 webpack.config.js          # إعدادات Webpack
+├── 📄 package.json               # Dependencies
+├── 📄 .gitignore
+│
+├── 📁 src/                       # المجلد الرئيسي للمصادر
+│   │
+│   ├── 📁 assets/                # الأصول الثابتة
+│   │   ├── 📁 images/
+│   │   │   ├── logo/
+│   │   │   │   ├── logo-light.svg
+│   │   │   │   └── logo-dark.svg
+│   │   │   ├── icons/
+│   │   │   │   └── tharaa-icons.svg     # أيقونات Tharaa المخصصة
+│   │   │   └── placeholders/
+│   │   │
+│   │   ├── 📁 styles/            # ملفات CSS/SCSS
+│   │   │   ├── 📄 main.scss      # الملف الرئيسي
+│   │   │   │
+│   │   │   ├── 📁 00-settings/   # Design Tokens
+│   │   │   │   ├── _variables.scss
+│   │   │   │   ├── _colors.scss
+│   │   │   │   ├── _typography.scss
+│   │   │   │   └── _spacing.scss
+│   │   │   │
+│   │   │   ├── 📁 01-tools/      # Mixins & Functions
+│   │   │   │   ├── _mixins.scss
+│   │   │   │   ├── _functions.scss
+│   │   │   │   └── _animations.scss
+│   │   │   │
+│   │   │   ├── 📁 02-base/       # أساسيات عامة
+│   │   │   │   ├── _reset.scss
+│   │   │   │   ├── _fonts.scss
+│   │   │   │   └── _global.scss
+│   │   │   │
+│   │   │   ├── 📁 03-components/ # مكونات Tharaa
+│   │   │   │   ├── _buttons.scss
+│   │   │   │   ├── _cards.scss
+│   │   │   │   ├── _forms.scss
+│   │   │   │   ├── _header.scss
+│   │   │   │   └── _footer.scss
+│   │   │   │
+│   │   │   ├── 📁 04-sections/   # Sections
+│   │   │   │   ├── _hero.scss
+│   │   │   │   ├── _products-grid.scss
+│   │   │   │   └── _testimonials.scss
+│   │   │   │
+│   │   │   └── 📁 05-pages/      # صفحات محددة
+│   │   │       ├── _home.scss
+│   │   │       ├── _product.scss
+│   │   │       └── _cart.scss
+│   │   │
+│   │   └── 📁 js/                # ملفات JavaScript
+│   │       ├── 📄 app.js         # الملف الرئيسي
+│   │       ├── 📄 home.js        # Home page specific
+│   │       ├── 📄 product.js     # Product page specific
+│   │       └── 📁 modules/
+│   │           ├── animations.js
+│   │           ├── cart-enhancements.js
+│   │           └── tharaa-interactions.js
+│   │
+│   ├── 📁 locales/               # الترجمات
+│   │   ├── ar.json               # العربية
+│   │   └── en.json               # الإنجليزية
+│   │
+│   └── 📁 views/                 # ملفات Twig
+│       │
+│       ├── 📁 layouts/           # التخطيطات الأساسية
+│       │   └── master.twig       # Layout رئيسي (إلزامي)
+│       │
+│       ├── 📁 pages/             # الصفحات (مسارات ثابتة - لا تغيرها)
+│       │   ├── index.twig        # الصفحة الرئيسية
+│       │   ├── cart.twig         # السلة
+│       │   ├── loyalty.twig      # الولاء
+│       │   ├── thank-you.twig    # شكراً
+│       │   ├── page-single.twig  # صفحة واحدة
+│       │   ├── landing-page.twig # Landing page
+│       │   │
+│       │   ├── 📁 product/
+│       │   │   ├── index.twig    # قائمة المنتجات
+│       │   │   └── single.twig   # صفحة منتج واحد
+│       │   │
+│       │   ├── 📁 customer/
+│       │   │   ├── profile.twig
+│       │   │   ├── wishlist.twig
+│       │   │   ├── notifications.twig
+│       │   │   └── 📁 orders/
+│       │   │       ├── index.twig
+│       │   │       └── single.twig
+│       │   │
+│       │   ├── 📁 blog/
+│       │   │   ├── index.twig
+│       │   │   └── single.twig
+│       │   │
+│       │   └── 📁 brands/
+│       │       ├── index.twig
+│       │       └── single.twig
+│       │
+│       ├── 📁 components/        # المكونات القابلة لإعادة الاستخدام
+│       │   │
+│       │   ├── 📁 header/        # مكونات الهيدر
+│       │   │   ├── header.twig
+│       │   │   ├── nav-primary.twig
+│       │   │   ├── search.twig
+│       │   │   └── cart-icon.twig
+│       │   │
+│       │   ├── 📁 footer/        # مكونات الفوتر
+│       │   │   ├── footer.twig
+│       │   │   ├── links.twig
+│       │   │   └── payment-methods.twig
+│       │   │
+│       │   ├── 📁 home/          # مكونات الصفحة الرئيسية
+│       │   │   ├── hero-banner.twig        # Custom Component
+│       │   │   ├── featured-categories.twig # Custom Component
+│       │   │   ├── luxury-slider.twig       # Custom Component
+│       │   │   └── testimonials.twig        # Custom Component
+│       │   │
+│       │   └── 📁 product/       # مكونات المنتجات
+│       │       ├── card.twig             # بطاقة عادية
+│       │       ├── card-full-image.twig  # بطاقة بصورة كاملة
+│       │       ├── card-mini.twig        # بطاقة صغيرة
+│       │       ├── slider.twig           # سلايدر منتجات
+│       │       └── options.twig          # خيارات المنتج
+│       │
+│       └── 📁 partials/          # أجزاء صغيرة قابلة لإعادة الاستخدام
+│           ├── breadcrumbs.twig
+│           ├── pagination.twig
+│           ├── social-share.twig
+│           └── single-comment.twig
+│
+└── 📁 dist/                      # ملفات الإخراج (يتم إنشاؤها تلقائياً)
+    ├── app.css
+    ├── app.js
+    └── images/
 ```
 
-###     :
+### 🔑 ملاحظات مهمة على الهيكل:
 
-####  **   (  ):**
+#### ✅ **الملفات والمسارات الثابتة (لا تغيرها أبداً):**
 ```
 src/views/pages/index.twig
 src/views/pages/product/single.twig
@@ -289,41 +289,41 @@ src/views/pages/customer/profile.twig
 src/views/layouts/master.twig
 ```
 
-####  **   :**
--     
--    
--    
--    Tharaa 
+#### ✅ **يمكنك تعديل المحتوى، لكن:**
+- ❌ لا تغير أسماء الملفات
+- ❌ لا تغير المسارات
+- ✅ عدّل المحتوى بحرية
+- ✅ أضف كلاسات Tharaa المخصصة
 
 ---
 
 <a name="theme-architecture"></a>
-## 3   (Theme Architecture)
+## 3️⃣ هندسة الثيم (Theme Architecture)
 
-###  1.  CSS  (Hybrid BEM + Utility)
+### 🏛️ 1. بنية CSS المعمارية (Hybrid BEM + Utility)
 
-#### **    Tharaa:**
+#### **النهج الموصى به لـ Tharaa:**
 
 ```scss
-//  src/assets/styles/00-settings/_variables.scss
+// 📁 src/assets/styles/00-settings/_variables.scss
 
 // ===================================
 // Design Tokens - Tharaa Identity
 // ===================================
 
 // Colors - Luxury Palette
-$tharaa-color-primary: #1a1a1a;        //  
-$tharaa-color-secondary: #d4af37;      // 
-$tharaa-color-accent: #8b7355;         //  
-$tharaa-color-bg-light: #fafafa;       //  
-$tharaa-color-bg-dark: #0f0f0f;        //  
-$tharaa-color-text: #2c2c2c;           //  
-$tharaa-color-text-light: #6b6b6b;     //  
+$tharaa-color-primary: #1a1a1a;        // فحمي فاخر
+$tharaa-color-secondary: #d4af37;      // ذهبي
+$tharaa-color-accent: #8b7355;         // بني فاتح
+$tharaa-color-bg-light: #fafafa;       // خلفية فاتحة
+$tharaa-color-bg-dark: #0f0f0f;        // خلفية داكنة
+$tharaa-color-text: #2c2c2c;           // نص أساسي
+$tharaa-color-text-light: #6b6b6b;     // نص ثانوي
 
 // Typography - Elegant Fonts
 $tharaa-font-primary: 'Almarai', -apple-system, sans-serif;
-$tharaa-font-heading: 'Playfair Display', serif; //  
-$tharaa-font-accent: 'Libre Baskerville', serif; // 
+$tharaa-font-heading: 'Playfair Display', serif; // للعناوين الفاخرة
+$tharaa-font-accent: 'Libre Baskerville', serif; // للتفاصيل
 
 // Font Sizes - Modular Scale
 $tharaa-text-xs: 0.75rem;    // 12px
@@ -349,7 +349,7 @@ $tharaa-space-16: 4rem;     // 64px
 $tharaa-radius-sm: 0.25rem;   // 4px
 $tharaa-radius-md: 0.5rem;    // 8px
 $tharaa-radius-lg: 1rem;      // 16px
-$tharaa-radius-full: 9999px;  // 
+$tharaa-radius-full: 9999px;  // دائري
 
 // Shadows - Subtle Luxury
 $tharaa-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -363,17 +363,17 @@ $tharaa-transition-base: 250ms ease;
 $tharaa-transition-slow: 400ms ease;
 ```
 
-#### **  - Button Component:**
+#### **مثال تطبيقي - Button Component:**
 
 ```scss
-//  src/assets/styles/03-components/_buttons.scss
+// 📁 src/assets/styles/03-components/_buttons.scss
 
 // ===================================
 // Tharaa Buttons
 // ===================================
 
 .tharaa-btn {
-  // Base styles (  )
+  // Base styles (متوافقة مع سلة)
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -471,20 +471,20 @@ $tharaa-transition-slow: 400ms ease;
 }
 ```
 
-###  2.  Sections & Blocks
+### 🎨 2. بنية Sections & Blocks
 
-#### **  Sections  Components:**
+#### **الفرق بين Sections و Components:**
 
-|  |  |  |  |
+| المفهوم | الاستخدام | الموقع | مثال |
 |---------|-----------|---------|------|
-| **Section** |     |   | Hero, Products Grid, Testimonials |
-| **Component** |     |    | Button, Card, Modal |
-| **Block** |   Twig | twilight.json | `{% block content %}` |
+| **Section** | كتل كبيرة من المحتوى | داخل الصفحات | Hero, Products Grid, Testimonials |
+| **Component** | عناصر قابلة لإعادة الاستخدام | في أي مكان | Button, Card, Modal |
+| **Block** | وحدة من Twig | twilight.json | `{% block content %}` |
 
-#### **  - Home Page Architecture:**
+#### **مثال عملي - Home Page Architecture:**
 
 ```twig
-{#  src/views/pages/index.twig #}
+{# 📁 src/views/pages/index.twig #}
 
 {% extends "layouts.master" %}
 
@@ -502,7 +502,7 @@ $tharaa-transition-slow: 400ms ease;
   
   {# Section 3: Salla Pre-defined Components #}
   {% component 'home' %}
-  {#     Features   twilight.json #}
+  {# هذا سيعرض جميع الـ Features المفعلة في twilight.json #}
   
   {# Section 4: Testimonials - Custom #}
   <section class="tharaa-testimonials">
@@ -516,36 +516,36 @@ $tharaa-transition-slow: 400ms ease;
 {% endblock %}
 ```
 
-###  3. JavaScript Scope (   )
+### ⚙️ 3. JavaScript Scope (بدون كسر وظائف سلة)
 
-#### ** :**
+#### **القواعد الذهبية:**
 
 ```javascript
-//  src/assets/js/app.js
+// 📁 src/assets/js/app.js
 
 // ===================================
-//  DO:  Salla SDK Events
+// ✅ DO: استخدم Salla SDK Events
 // ===================================
 
-//    
+// الاستماع لإضافة منتج للسلة
 salla.cart.event.onItemAdded((response) => {
-  console.log('  :', response);
+  console.log('تم إضافة المنتج:', response);
   
-  //   Tharaa 
+  // أضف تأثير Tharaa الخاص
   showTharaaCartNotification(response.item);
 });
 
-//   
+// الاستماع لتحديث الكمية
 salla.cart.event.onItemUpdated((response) => {
-  console.log('  :', response);
+  console.log('تم تحديث الكمية:', response);
 });
 
 // ===================================
-//  DO:    
+// ✅ DO: تحسين التجربة بدون تعارض
 // ===================================
 
 function initTharaaEnhancements() {
-  //  smooth scroll
+  // إضافة smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
@@ -556,7 +556,7 @@ function initTharaaEnhancements() {
     });
   });
   
-  //  lazy loading 
+  // إضافة lazy loading للصور
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -576,22 +576,22 @@ function initTharaaEnhancements() {
 }
 
 // ===================================
-//  DON'T:    Cart form 
+// ❌ DON'T: لا تعدّل على Cart form مباشرة
 // ===================================
 
-//   -   
+// ❌ خطأ - سيكسر وظائف سلة
 document.querySelector('.cart-form').addEventListener('submit', (e) => {
-  e.preventDefault(); //   !
+  e.preventDefault(); // لا تفعل هذا!
   // ... custom logic
 });
 
-//   -  events  Salla
+// ✅ صحيح - استخدم events من Salla
 salla.cart.event.onUpdated(() => {
-  // custom logic 
+  // custom logic هنا
 });
 
 // ===================================
-//  DO:  Namespacing
+// ✅ DO: استخدم Namespacing
 // ===================================
 
 const Tharaa = {
@@ -623,10 +623,10 @@ if (document.readyState === 'loading') {
 }
 ```
 
-###  4. Master Layout Structure
+### 📝 4. Master Layout Structure
 
 ```twig
-{#  src/views/layouts/master.twig #}
+{# 📁 src/views/layouts/master.twig #}
 
 <!DOCTYPE html>
 <html lang="{{ user.language.code }}" dir="{{ user.language.dir }}">
@@ -634,12 +634,12 @@ if (document.readyState === 'loading') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    {#  : SEO Hooks #}
+    {# ✅ إلزامي: SEO Hooks #}
     {% hook 'head:start' %}
     
     <title>{{ page.title }} - {{ store.name }}</title>
     
-    {#  : Meta tags hook #}
+    {# ✅ إلزامي: Meta tags hook #}
     {% hook 'head' %}
     
     {# Tharaa Custom Fonts #}
@@ -692,12 +692,12 @@ if (document.readyState === 'loading') {
 ---
 
 <a name="tharaa-identity"></a>
-## 4   Tharaa (Tharaa Theme Identity)
+## 4️⃣ هوية ثيم Tharaa (Tharaa Theme Identity)
 
-###  Design Tokens 
+### 🎨 Design Tokens الكاملة
 
 ```scss
-//  src/assets/styles/00-settings/_tharaa-tokens.scss
+// 📁 src/assets/styles/00-settings/_tharaa-tokens.scss
 
 // ===================================
 // THARAA IDENTITY SYSTEM
@@ -837,7 +837,7 @@ $tharaa-z-index: (
   'tooltip': 1070,
 );
 
-// Helper function  
+// Helper function للوصول للقيم
 @function tharaa-color($key) {
   @return map-get($tharaa-colors, $key);
 }
@@ -851,17 +851,17 @@ $tharaa-z-index: (
 }
 ```
 
-###    - Product Card Example
+### 🎯 تطبيق الهوية - Product Card Example
 
 ```twig
-{#  src/views/components/product/card.twig #}
+{# 📁 src/views/components/product/card.twig #}
 
 <div class="s-product-card tharaa-product-card">
   {# Image Container #}
   <div class="tharaa-product-card__image-wrapper">
     {% if product.has_sale %}
       <span class="tharaa-badge tharaa-badge--sale">
-         {{ product.sale_percent }}%
+        خصم {{ product.sale_percent }}%
       </span>
     {% endif %}
     
@@ -909,15 +909,15 @@ $tharaa-z-index: (
     <button class="s-button-primary tharaa-btn tharaa-btn--luxury"
             salla-add-product
             data-id="{{ product.id }}">
-      <span class="tharaa-btn__icon"></span>
-      <span class="tharaa-btn__text"> </span>
+      <span class="tharaa-btn__icon">✦</span>
+      <span class="tharaa-btn__text">أضف للسلة</span>
     </button>
   </div>
 </div>
 ```
 
 ```scss
-//  src/assets/styles/03-components/_product-card.scss
+// 📁 src/assets/styles/03-components/_product-card.scss
 
 .tharaa-product-card {
   position: relative;
@@ -1061,13 +1061,13 @@ $tharaa-z-index: (
 ---
 
 <a name="successful-themes"></a>
-## 5    (Successful Themes Analysis)
+## 5️⃣ تحليل الثيمات الناجحة (Successful Themes Analysis)
 
-###    :
+### ✅ الممارسات الناجحة المستخلصة:
 
-#### 1. **   Features :**
+#### 1. **التوافق الكامل مع Features سلة:**
 ```json
-//  twilight.json
+// 📁 twilight.json
 
 {
   "features": [
@@ -1085,72 +1085,72 @@ $tharaa-z-index: (
 }
 ```
 
-** :**
--    Features   
--   Feature  
--   Styling   Features
+**✅ افعل:**
+- فعّل جميع الـ Features التي يدعمها ثيمك
+- اختبر كل Feature بشكل منفصل
+- تأكد من Styling متناسق لجميع Features
 
-**  :**
--   Features    
--   Styling   Features
+**❌ لا تفعل:**
+- لا تترك Features غير مدعومة في القائمة
+- لا تكسر Styling الافتراضي للـ Features
 
-#### 2. **Custom Components :**
+#### 2. **Custom Components مبتكرة:**
 
 ```json
-//  twilight.json - Custom Components
+// 📁 twilight.json - Custom Components
 
 {
   "components": [
     {
       "name": "hero-banner",
-      "label": "  ",
+      "label": "بانر رئيسي فاخر",
       "path": "home.hero-banner",
       "icon": "https://example.com/icons/hero.svg",
       "fields": [
         {
           "key": "title",
           "type": "string",
-          "label": " ",
-          "default": " "
+          "label": "العنوان الرئيسي",
+          "default": "اكتشف الفخامة"
         },
         {
           "key": "subtitle",
           "type": "string",
-          "label": " "
+          "label": "العنوان الفرعي"
         },
         {
           "key": "background_image",
           "type": "image",
-          "label": " "
+          "label": "صورة الخلفية"
         },
         {
           "key": "cta_text",
           "type": "string",
-          "label": " ",
-          "default": " "
+          "label": "نص الزر",
+          "default": "تسوق الآن"
         },
         {
           "key": "cta_link",
           "type": "string",
-          "label": " "
+          "label": "رابط الزر"
         }
       ]
     },
     {
       "name": "featured-categories",
-      "label": " ",
+      "label": "أقسام مميزة",
       "path": "home.featured-categories",
       "icon": "https://example.com/icons/categories.svg",
       "fields": [
         {
           "key": "title",
           "type": "string",
-          "label": ""
+          "label": "العنوان"
         },
         {
           "key": "categories_count",
           "type": "number",
-          "label": " ",
+          "label": "عدد الأقسام",
           "default": 4,
           "min": 2,
           "max": 8
@@ -1158,7 +1158,7 @@ $tharaa-z-index: (
         {
           "key": "layout_style",
           "type": "list",
-          "label": " ",
+          "label": "نمط العرض",
           "options": ["grid", "slider", "masonry"],
           "default": "grid"
         }
@@ -1168,7 +1168,7 @@ $tharaa-z-index: (
 }
 ```
 
-#### 3. **Theme Settings :**
+#### 3. **Theme Settings المتقدمة:**
 
 ```json
 {
@@ -1176,24 +1176,24 @@ $tharaa-z-index: (
     {
       "key": "colors",
       "type": "collection",
-      "label": "",
+      "label": "الألوان",
       "fields": [
         {
           "key": "primary_color",
           "type": "color",
-          "label": " ",
+          "label": "اللون الأساسي",
           "default": "#1a1a1a"
         },
         {
           "key": "secondary_color",
           "type": "color",
-          "label": " ",
+          "label": "اللون الثانوي",
           "default": "#d4af37"
         },
         {
           "key": "accent_color",
           "type": "color",
-          "label": " ",
+          "label": "لون التأكيد",
           "default": "#8b7355"
         }
       ]
@@ -1201,19 +1201,19 @@ $tharaa-z-index: (
     {
       "key": "typography",
       "type": "collection",
-      "label": "",
+      "label": "الخطوط",
       "fields": [
         {
           "key": "font_body",
           "type": "list",
-          "label": " ",
+          "label": "خط النصوص",
           "options": ["Almarai", "Cairo", "Tajawal", "IBM Plex Sans Arabic"],
           "default": "Almarai"
         },
         {
           "key": "font_headings",
           "type": "list",
-          "label": " ",
+          "label": "خط العناوين",
           "options": ["Playfair Display", "Libre Baskerville", "Almarai"],
           "default": "Playfair Display"
         }
@@ -1222,26 +1222,26 @@ $tharaa-z-index: (
     {
       "key": "layout",
       "type": "collection",
-      "label": "",
+      "label": "التخطيط",
       "fields": [
         {
           "key": "header_style",
           "type": "list",
-          "label": " ",
+          "label": "نمط الهيدر",
           "options": ["minimal", "elegant", "bold"],
           "default": "elegant"
         },
         {
           "key": "product_card_style",
           "type": "list",
-          "label": "  ",
+          "label": "نمط بطاقة المنتج",
           "options": ["modern", "classic", "luxury"],
           "default": "luxury"
         },
         {
           "key": "enable_animations",
           "type": "boolean",
-          "label": " ",
+          "label": "تفعيل الحركات",
           "default": true
         }
       ]
@@ -1250,24 +1250,24 @@ $tharaa-z-index: (
 }
 ```
 
-###      :
+### ❌ الأخطاء الشائعة التي يجب تجنبها:
 
-#### 1. **    :**
+#### 1. **كسر التوافق مع تحديثات سلة:**
 ```html
-<!--  :     -->
+<!-- ❌ خطأ: إزالة كلاسات سلة الأساسية -->
 <div class="my-custom-product-only">
-  <!--      -->
+  <!-- لن يعمل مع تحديثات سلة -->
 </div>
 
-<!--  :    +   -->
+<!-- ✅ صحيح: إبقاء كلاسات سلة + إضافة المخصص -->
 <div class="s-product-card tharaa-product">
-  <!--    -->
+  <!-- يعمل مع التحديثات -->
 </div>
 ```
 
-#### 2. **   :**
+#### 2. **عدم اختبار جميع الصفحات:**
 ```
-  :
+✅ يجب اختبار:
 - Home Page
 - Product Listing (Category page)
 - Single Product
@@ -1282,21 +1282,21 @@ $tharaa-z-index: (
 - 404 page
 ```
 
-#### 3. ** RTL Support:**
+#### 3. **تجاهل RTL Support:**
 ```scss
-//  :  
+// ❌ خطأ: قيم ثابتة
 .element {
-  margin-left: 20px; //    RTL
-  text-align: left;   //    RTL
+  margin-left: 20px; // سيكون خطأ في RTL
+  text-align: left;   // سيكون خطأ في RTL
 }
 
-//  :  logical properties
+// ✅ صحيح: استخدام logical properties
 .element {
-  margin-inline-start: 20px;  //   LTR  RTL
-  text-align: start;           //   LTR  RTL
+  margin-inline-start: 20px;  // يعمل في LTR و RTL
+  text-align: start;           // يعمل في LTR و RTL
 }
 
-//   Mixins
+// أو استخدام Mixins
 @mixin spacing-inline-start($value) {
   [dir="ltr"] & {
     margin-left: $value;
@@ -1307,12 +1307,12 @@ $tharaa-z-index: (
 }
 ```
 
-#### 4. **  :**
+#### 4. **صور غير محسّنة:**
 ```html
-<!--  :    lazy loading -->
+<!-- ❌ خطأ: صور ضخمة بدون lazy loading -->
 <img src="large-image.jpg" alt="Product">
 
-<!--  :   -->
+<!-- ✅ صحيح: صور محسّنة -->
 <img 
   src="{{ product.image.url }}"
   srcset="{{ product.image.url }}?w=400 400w,
@@ -1324,32 +1324,32 @@ $tharaa-z-index: (
 >
 ```
 
-#### 5. **   :**
+#### 5. **عدم اتباع معايير المراجعة:**
 
-** UI/UX :**
--  Product page   : title, price, description, images, add to cart button, options
--  Cart page   : line items, quantities, totals, checkout button
--  Product cards   : image, title, price, quick actions
--  Header   : logo, navigation, search, cart icon
--  Footer   : links, contact info, payment methods
+**متطلبات UI/UX الإلزامية:**
+- ✅ Product page يجب أن تحتوي: title, price, description, images, add to cart button, options
+- ✅ Cart page يجب أن تحتوي: line items, quantities, totals, checkout button
+- ✅ Product cards يجب أن تحتوي: image, title, price, quick actions
+- ✅ Header يجب أن يحتوي: logo, navigation, search, cart icon
+- ✅ Footer يجب أن يحتوي: links, contact info, payment methods
 
-** :**
--  Performance: Lighthouse score > 80
--  Accessibility: WCAG 2.1 Level AA
--  Mobile-first responsive design
--  Cross-browser compatibility
+**متطلبات تقنية:**
+- ✅ Performance: Lighthouse score > 80
+- ✅ Accessibility: WCAG 2.1 Level AA
+- ✅ Mobile-first responsive design
+- ✅ Cross-browser compatibility
 
 ---
 
 <a name="performance-compliance"></a>
-## 6   (Performance & Compliance)
+## 6️⃣ الأداء والامتثال (Performance & Compliance)
 
-###   
+### ⚡ استراتيجيات الأداء
 
-#### 1. ** CSS:**
+#### 1. **تحسين CSS:**
 
 ```scss
-//   CSS Variables  
+// ✅ استخدم CSS Variables للقيم المتكررة
 :root {
   --tharaa-primary: #1a1a1a;
   --tharaa-transition: 250ms ease;
@@ -1360,33 +1360,33 @@ $tharaa-z-index: (
   transition: all var(--tharaa-transition);
 }
 
-//   CSS  
-//  PurgeCSS  webpack.config.js
+// ✅ تجنب CSS غير المستخدم
+// استخدم PurgeCSS في webpack.config.js
 
-//   will-change 
+// ✅ استخدم will-change بحذر
 .animated-element {
   will-change: transform, opacity;
   
   &.is-animating {
-    will-change: auto; //   
+    will-change: auto; // أزله بعد الانتهاء
   }
 }
 ```
 
-#### 2. ** JavaScript:**
+#### 2. **تحسين JavaScript:**
 
 ```javascript
-//  Code Splitting
+// ✅ Code Splitting
 // webpack.config.js
 module.exports = {
   entry: {
     app: './src/assets/js/app.js',
-    home: './src/assets/js/home.js',      //   home page
-    product: './src/assets/js/product.js', //   product page
+    home: './src/assets/js/home.js',      // فقط للـ home page
+    product: './src/assets/js/product.js', // فقط للـ product page
   }
 };
 
-//  Lazy Loading 
+// ✅ Lazy Loading للمكونات
 const lazyLoadImages = () => {
   const imageObserver = new IntersectionObserver(
     (entries, observer) => {
@@ -1407,7 +1407,7 @@ const lazyLoadImages = () => {
   });
 };
 
-//  Debounce  events
+// ✅ Debounce للـ events
 function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
@@ -1420,7 +1420,7 @@ function debounce(func, wait) {
   };
 }
 
-// 
+// استخدام
 window.addEventListener('resize', debounce(() => {
   // handle resize
 }, 250));
@@ -1429,10 +1429,10 @@ window.addEventListener('resize', debounce(() => {
 #### 3. **SEO Optimization:**
 
 ```twig
-{#  src/views/layouts/master.twig #}
+{# 📁 src/views/layouts/master.twig #}
 
 <head>
-    {#  Structured Data #}
+    {# ✅ Structured Data #}
     {% if page.type == 'product' %}
     <script type="application/ld+json">
     {
@@ -1457,13 +1457,13 @@ window.addEventListener('resize', debounce(() => {
     </script>
     {% endif %}
     
-    {#  Open Graph Tags #}
+    {# ✅ Open Graph Tags #}
     <meta property="og:title" content="{{ page.title }} - {{ store.name }}">
     <meta property="og:description" content="{{ page.description|striptags|slice(0, 155) }}">
     <meta property="og:image" content="{{ page.image.url }}">
     <meta property="og:url" content="{{ page.url }}">
     
-    {#  Twitter Cards #}
+    {# ✅ Twitter Cards #}
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ page.title }}">
     <meta name="twitter:description" content="{{ page.description|striptags|slice(0, 155) }}">
@@ -1473,30 +1473,30 @@ window.addEventListener('resize', debounce(() => {
 #### 4. **Accessibility (A11y):**
 
 ```html
-<!--  Semantic HTML -->
-<nav aria-label=" ">
+<!-- ✅ Semantic HTML -->
+<nav aria-label="التنقل الرئيسي">
   <ul>
-    <li><a href="/"></a></li>
+    <li><a href="/">الرئيسية</a></li>
   </ul>
 </nav>
 
-<!--  ARIA Labels -->
+<!-- ✅ ARIA Labels -->
 <button 
-  aria-label=" {{ product.name }} "
+  aria-label="أضف {{ product.name }} للسلة"
   salla-add-product
   data-id="{{ product.id }}">
-   
+  أضف للسلة
 </button>
 
-<!--  Keyboard Navigation -->
+<!-- ✅ Keyboard Navigation -->
 <div class="tharaa-modal" 
      role="dialog" 
      aria-modal="true"
      aria-labelledby="modal-title">
-  <h2 id="modal-title"> </h2>
+  <h2 id="modal-title">عنوان النافذة</h2>
 </div>
 
-<!--  Focus Management -->
+<!-- ✅ Focus Management -->
 <style>
 .tharaa-btn:focus-visible {
   outline: 2px solid var(--tharaa-primary);
@@ -1505,145 +1505,145 @@ window.addEventListener('resize', debounce(() => {
 </style>
 ```
 
-###  Checklist  
+### 📋 Checklist قبل النشر
 
 ```markdown
 ## Performance Checklist
-- [ ] CSS   (<100KB)
-- [ ] JavaScript  
-- [ ]   (WebP + fallbacks)
-- [ ] Lazy loading 
-- [ ] Critical CSS 
-- [ ] Fonts  (subset + preload)
+- [ ] CSS مضغوط ومحسّن (<100KB)
+- [ ] JavaScript مقسّم ومحسّن
+- [ ] الصور محسّنة (WebP + fallbacks)
+- [ ] Lazy loading مفعّل
+- [ ] Critical CSS مضمّن
+- [ ] Fonts محسّنة (subset + preload)
 
 ## SEO Checklist
-- [ ] Meta tags    
-- [ ] Structured Data 
-- [ ] Sitemap 
-- [ ] Robots.txt 
-- [ ] URLs    SEO
-- [ ] Alt tags  
+- [ ] Meta tags موجودة في كل صفحة
+- [ ] Structured Data صحيحة
+- [ ] Sitemap جاهز
+- [ ] Robots.txt صحيح
+- [ ] URLs واضحة وصديقة للـ SEO
+- [ ] Alt tags لجميع الصور
 
 ## Accessibility Checklist
-- [ ] Semantic HTML 
-- [ ] ARIA labels 
-- [ ] Keyboard navigation 
+- [ ] Semantic HTML مستخدم
+- [ ] ARIA labels صحيحة
+- [ ] Keyboard navigation يعمل
 - [ ] Color contrast ratio > 4.5:1
-- [ ] Focus indicators 
+- [ ] Focus indicators واضحة
 - [ ] Screen reader friendly
 
 ## Compatibility Checklist
-- [ ]   Chrome, Safari, Firefox
-- [ ]   iOS  Android
-- [ ]  RTL  LTR
-- [ ]  responsive (Mobile, Tablet, Desktop)
+- [ ] اختبار على Chrome, Safari, Firefox
+- [ ] اختبار على iOS و Android
+- [ ] اختبار RTL و LTR
+- [ ] اختبار responsive (Mobile, Tablet, Desktop)
 
 ## Salla Compliance Checklist
-- [ ]    
-- [ ]   
-- [ ] Salla SDK events 
-- [ ] Theme Features  
-- [ ] Custom Components   Partners Portal
-- [ ] twilight.json  
-- [ ] Screenshots  1366x768 (3  )
-- [ ]   README 
+- [ ] جميع الصفحات الإلزامية موجودة
+- [ ] كلاسات سلة محفوظة
+- [ ] Salla SDK events تعمل
+- [ ] Theme Features كلها مختبرة
+- [ ] Custom Components تعمل في Partners Portal
+- [ ] twilight.json صحيح ومكتمل
+- [ ] Screenshots بدقة 1366x768 (3 على الأقل)
+- [ ] التوثيق والـ README محدّث
 ```
 
 ---
 
-##   
+## 🎓 التوصيات النهائية
 
-###  Best Practices  Tharaa:
+### ✨ Best Practices لثيم Tharaa:
 
-#### 1. **  Theme Raed :**
+#### 1. **ابدأ من Theme Raed الرسمي:**
 ```bash
-# Clone  GitHub
+# Clone من GitHub
 git clone https://github.com/SallaApp/theme-raed.git tharaa-theme
 cd tharaa-theme
 npm install
 ```
 
-#### 2. **   :**
+#### 2. **اتبع نهج التطوير التدريجي:**
 ```
- 1:   
-  twilight.json
-  Design Tokens
-  Folder Structure
+المرحلة 1: إعداد البنية الأساسية
+├── تعديل twilight.json
+├── إعداد Design Tokens
+└── إنشاء Folder Structure
 
- 2:   
- Header & Footer
- Product Card
- Buttons & Forms
- Typography System
+المرحلة 2: تطوير المكونات الأساسية
+├── Header & Footer
+├── Product Card
+├── Buttons & Forms
+└── Typography System
 
- 3:  
- Home Page
- Product Pages
- Cart & Checkout
- Customer Pages
+المرحلة 3: تطوير الصفحات
+├── Home Page
+├── Product Pages
+├── Cart & Checkout
+└── Customer Pages
 
- 4: Custom Components
- Hero Banner
- Featured Categories
- Testimonials
- Advanced Sliders
+المرحلة 4: Custom Components
+├── Hero Banner
+├── Featured Categories
+├── Testimonials
+└── Advanced Sliders
 
- 5:  
- Performance Optimization
- SEO Implementation
- Accessibility Testing
- Cross-browser Testing
+المرحلة 5: التحسين والاختبار
+├── Performance Optimization
+├── SEO Implementation
+├── Accessibility Testing
+└── Cross-browser Testing
 
- 6:  
- Salla Review Checklist
- Documentation
- Screenshots
- Submit for Review
+المرحلة 6: المراجعة والنشر
+├── Salla Review Checklist
+├── Documentation
+├── Screenshots
+└── Submit for Review
 ```
 
-#### 3. ** Version Control :**
+#### 3. **استخدم Version Control بفعالية:**
 ```bash
 # Branch strategy
-main          #   
- develop   #  
- feature/* #  
- hotfix/*  #  
+main          # للإصدارات المستقرة فقط
+├── develop   # للتطوير النشط
+├── feature/* # للميزات الجديدة
+└── hotfix/*  # لإصلاحات عاجلة
 ```
 
-#### 4. **  :**
+#### 4. **وثّق كل شيء:**
 ```markdown
-#  README.md
+# 📁 README.md
 
 # Tharaa Theme
 
-## 
+## التثبيت
 ...
 
-## 
+## التخصيص
 ...
 
-##  
+## المكونات المخصصة
 ...
 
-## 
+## الدعم
 ...
 ```
 
 ---
 
-##   
+## 🚀 الخطوات التالية
 
-1. **  Partner  **
-2. **  GitHub**
-3. **  Theme Raed **
-4. ** Tharaa Identity **
-5. **  **
-6. **   **
-7. **    **
+1. **أنشئ حساب Partner في سلة**
+2. **اربط حساب GitHub**
+3. **ابدأ بـ Theme Raed كأساس**
+4. **طبّق Tharaa Identity تدريجياً**
+5. **اختبر بشكل مكثف**
+6. **اقرأ متطلبات المراجعة بعناية**
+7. **اطلب المراجعة من فريق سلة**
 
 ---
 
-##   
+## 📚 مصادر إضافية
 
 - [Salla Documentation](https://docs.salla.dev/)
 - [Theme Raed Repository](https://github.com/SallaApp/theme-raed)
@@ -1652,7 +1652,7 @@ main          #   
 
 ---
 
-** :**           .          .
+**ملاحظة مهمة:** هذا الدليل مبني على التوثيق الرسمي لسلة ويتبع أفضل الممارسات المعتمدة. تأكد دائماً من مراجعة التوثيق الرسمي للحصول على أحدث المعلومات.
 
 </div>
 
@@ -1660,7 +1660,10 @@ main          #   
 
 
 
-# 📚 Tharaa Theme - Complete Development Reference Manual
+
+
+
+# ðŸ“š Tharaa Theme - Complete Development Reference Manual
 ### Comprehensive Guide for Building Professional Salla Themes
 
 **Version:** 2.0  
@@ -2729,16 +2732,16 @@ Product cards, product pages - the main CTA for adding products to cart.
 | `product-type` | String | Product type: product, service, digital, donating, booking |
 
 **Product Status Types:**
-- `sale` - Product available for purchase → Shows "Add to Cart"
-- `out` - Product out of stock → Shows "Sold Out" (disabled)
-- `out-and-notify` - Out of stock with notification → Shows "Notify Me"
+- `sale` - Product available for purchase â†’ Shows "Add to Cart"
+- `out` - Product out of stock â†’ Shows "Sold Out" (disabled)
+- `out-and-notify` - Out of stock with notification â†’ Shows "Notify Me"
 
 **Product Type Labels:**
-- `product` → "Add to Cart"
-- `service` → "Book Service"
-- `digital` → "Download"
-- `donating` → "Donate"
-- `booking` → "Book Now"
+- `product` â†’ "Add to Cart"
+- `service` â†’ "Book Service"
+- `digital` â†’ "Download"
+- `donating` â†’ "Donate"
+- `booking` â†’ "Book Now"
 
 **Events:**
 - `productAdded` - When product successfully added to cart
@@ -2760,7 +2763,7 @@ Product cards, product pages - the main CTA for adding products to cart.
   product-id="{{ product.id }}"
   product-status="sale"
   product-type="product">
-  <span class="tharaa-btn__icon">✦</span>
+  <span class="tharaa-btn__icon">âœ¦</span>
   <span class="tharaa-btn__text">{{ trans('products.add_to_cart') }}</span>
 </salla-add-product-button>
 ```
@@ -2776,7 +2779,7 @@ salla.cart.event.onItemAdded((response) => {
     type: 'success',
     title: 'Added to Cart',
     message: `${response.item.name} has been added to your cart`,
-    icon: '✓'
+    icon: 'âœ“'
   });
   
   // Update cart count
@@ -2794,7 +2797,7 @@ salla.cart.event.onItemAddFailed((error) => {
     type: 'error',
     title: 'Error',
     message: error.message,
-    icon: '✕'
+    icon: 'âœ•'
   });
 });
 ```
@@ -2873,8 +2876,8 @@ Product grids, sliders, related products.
 ```
 
 **When to Use:**
-- ✅ Use `<salla-product-card>` for quick implementation with zero styling needed
-- ✅ Use custom card (recommended for Tharaa) for full design control and brand identity
+- âœ… Use `<salla-product-card>` for quick implementation with zero styling needed
+- âœ… Use custom card (recommended for Tharaa) for full design control and brand identity
 
 ---
 
@@ -3152,7 +3155,7 @@ Header or footer - allows customers to change language and currency preferences.
 ```
 
 **Important Notes:**
-- ⚠️ **Must NOT be called more than once on the same page**
+- âš ï¸ **Must NOT be called more than once on the same page**
 - Automatically detects available languages and currencies from store settings
 - Changes are persisted in session
 
@@ -3692,8 +3695,8 @@ Theme Features are pre-defined components built by Salla that can be enabled in 
 - Content is managed by the merchant through Salla admin panel
 
 **Best Practice:**  
-✅ Only include Theme Features that your theme actually supports  
-❌ Don't leave unsupported features in the features array
+âœ… Only include Theme Features that your theme actually supports  
+âŒ Don't leave unsupported features in the features array
 
 ### 2.2 Complete List of Theme Features
 
@@ -4378,57 +4381,57 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
     {
       "key": "colors",
       "type": "collection",
-      "label": "الألوان",
+      "label": "Ø§Ù„Ø£Ù„ÙˆØ§Ù†",
       "label_en": "Colors",
       "fields": [
         {
           "key": "primary_color",
           "type": "color",
-          "label": "اللون الأساسي",
+          "label": "Ø§Ù„Ù„ÙˆÙ† Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ",
           "label_en": "Primary Color",
           "default": "#1a1a1a",
-          "hint": "اللون الرئيسي للثيم"
+          "hint": "Ø§Ù„Ù„ÙˆÙ† Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠ Ù„Ù„Ø«ÙŠÙ…"
         },
         {
           "key": "secondary_color",
           "type": "color",
-          "label": "اللون الثانوي",
+          "label": "Ø§Ù„Ù„ÙˆÙ† Ø§Ù„Ø«Ø§Ù†ÙˆÙŠ",
           "label_en": "Secondary Color",
           "default": "#d4af37",
-          "hint": "اللون الذهبي للعناصر المميزة"
+          "hint": "Ø§Ù„Ù„ÙˆÙ† Ø§Ù„Ø°Ù‡Ø¨ÙŠ Ù„Ù„Ø¹Ù†Ø§ØµØ± Ø§Ù„Ù…Ù…ÙŠØ²Ø©"
         },
         {
           "key": "accent_color",
           "type": "color",
-          "label": "لون التأكيد",
+          "label": "Ù„ÙˆÙ† Ø§Ù„ØªØ£ÙƒÙŠØ¯",
           "label_en": "Accent Color",
           "default": "#8b7355"
         },
         {
           "key": "text_color",
           "type": "color",
-          "label": "لون النص الأساسي",
+          "label": "Ù„ÙˆÙ† Ø§Ù„Ù†Øµ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ",
           "label_en": "Text Color",
           "default": "#2c2c2c"
         },
         {
           "key": "text_light",
           "type": "color",
-          "label": "لون النص الثانوي",
+          "label": "Ù„ÙˆÙ† Ø§Ù„Ù†Øµ Ø§Ù„Ø«Ø§Ù†ÙˆÙŠ",
           "label_en": "Light Text Color",
           "default": "#6b6b6b"
         },
         {
           "key": "bg_light",
           "type": "color",
-          "label": "خلفية فاتحة",
+          "label": "Ø®Ù„ÙÙŠØ© ÙØ§ØªØ­Ø©",
           "label_en": "Light Background",
           "default": "#fafafa"
         },
         {
           "key": "border_color",
           "type": "color",
-          "label": "لون الحدود",
+          "label": "Ù„ÙˆÙ† Ø§Ù„Ø­Ø¯ÙˆØ¯",
           "label_en": "Border Color",
           "default": "#e5e5e5"
         }
@@ -4459,13 +4462,13 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
     {
       "key": "typography",
       "type": "collection",
-      "label": "الخطوط",
+      "label": "Ø§Ù„Ø®Ø·ÙˆØ·",
       "label_en": "Typography",
       "fields": [
         {
           "key": "font_body",
           "type": "list",
-          "label": "خط النصوص",
+          "label": "Ø®Ø· Ø§Ù„Ù†ØµÙˆØµ",
           "label_en": "Body Font",
           "options": [
             "Almarai",
@@ -4481,7 +4484,7 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
         {
           "key": "font_headings",
           "type": "list",
-          "label": "خط العناوين",
+          "label": "Ø®Ø· Ø§Ù„Ø¹Ù†Ø§ÙˆÙŠÙ†",
           "label_en": "Headings Font",
           "options": [
             "Almarai",
@@ -4496,7 +4499,7 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
         {
           "key": "font_size_base",
           "type": "number",
-          "label": "حجم الخط الأساسي",
+          "label": "Ø­Ø¬Ù… Ø§Ù„Ø®Ø· Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ",
           "label_en": "Base Font Size",
           "default": 16,
           "min": 14,
@@ -4506,7 +4509,7 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
         {
           "key": "line_height",
           "type": "number",
-          "label": "ارتفاع السطر",
+          "label": "Ø§Ø±ØªÙØ§Ø¹ Ø§Ù„Ø³Ø·Ø±",
           "label_en": "Line Height",
           "default": 1.6,
           "min": 1.2,
@@ -4529,13 +4532,13 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
     {
       "key": "layout",
       "type": "collection",
-      "label": "التخطيط",
+      "label": "Ø§Ù„ØªØ®Ø·ÙŠØ·",
       "label_en": "Layout",
       "fields": [
         {
           "key": "container_width",
           "type": "list",
-          "label": "عرض الحاوية",
+          "label": "Ø¹Ø±Ø¶ Ø§Ù„Ø­Ø§ÙˆÙŠØ©",
           "label_en": "Container Width",
           "options": [
             "1200px",
@@ -4548,7 +4551,7 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
         {
           "key": "header_style",
           "type": "list",
-          "label": "نمط الهيدر",
+          "label": "Ù†Ù…Ø· Ø§Ù„Ù‡ÙŠØ¯Ø±",
           "label_en": "Header Style",
           "options": [
             "minimal",
@@ -4557,20 +4560,20 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
             "classic"
           ],
           "default": "elegant",
-          "hint": "اختر تصميم الهيدر المناسب"
+          "hint": "Ø§Ø®ØªØ± ØªØµÙ…ÙŠÙ… Ø§Ù„Ù‡ÙŠØ¯Ø± Ø§Ù„Ù…Ù†Ø§Ø³Ø¨"
         },
         {
           "key": "header_sticky",
           "type": "boolean",
-          "label": "هيدر ثابت",
+          "label": "Ù‡ÙŠØ¯Ø± Ø«Ø§Ø¨Øª",
           "label_en": "Sticky Header",
           "default": true,
-          "hint": "جعل الهيدر يبقى ظاهراً عند التمرير"
+          "hint": "Ø¬Ø¹Ù„ Ø§Ù„Ù‡ÙŠØ¯Ø± ÙŠØ¨Ù‚Ù‰ Ø¸Ø§Ù‡Ø±Ø§Ù‹ Ø¹Ù†Ø¯ Ø§Ù„ØªÙ…Ø±ÙŠØ±"
         },
         {
           "key": "product_card_style",
           "type": "list",
-          "label": "نمط بطاقة المنتج",
+          "label": "Ù†Ù…Ø· Ø¨Ø·Ø§Ù‚Ø© Ø§Ù„Ù…Ù†ØªØ¬",
           "label_en": "Product Card Style",
           "options": [
             "modern",
@@ -4583,7 +4586,7 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
         {
           "key": "product_card_hover",
           "type": "list",
-          "label": "تأثير Hover للمنتج",
+          "label": "ØªØ£Ø«ÙŠØ± Hover Ù„Ù„Ù…Ù†ØªØ¬",
           "label_en": "Product Card Hover",
           "options": [
             "none",
@@ -4596,14 +4599,14 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
         {
           "key": "show_breadcrumbs",
           "type": "boolean",
-          "label": "إظهار التنقل",
+          "label": "Ø¥Ø¸Ù‡Ø§Ø± Ø§Ù„ØªÙ†Ù‚Ù„",
           "label_en": "Show Breadcrumbs",
           "default": true
         },
         {
           "key": "products_per_row",
           "type": "number",
-          "label": "عدد المنتجات في الصف",
+          "label": "Ø¹Ø¯Ø¯ Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª ÙÙŠ Ø§Ù„ØµÙ",
           "label_en": "Products Per Row",
           "default": 4,
           "min": 2,
@@ -4625,20 +4628,20 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
     {
       "key": "effects",
       "type": "collection",
-      "label": "التأثيرات والحركات",
+      "label": "Ø§Ù„ØªØ£Ø«ÙŠØ±Ø§Øª ÙˆØ§Ù„Ø­Ø±ÙƒØ§Øª",
       "label_en": "Effects & Animations",
       "fields": [
         {
           "key": "enable_animations",
           "type": "boolean",
-          "label": "تفعيل الحركات",
+          "label": "ØªÙØ¹ÙŠÙ„ Ø§Ù„Ø­Ø±ÙƒØ§Øª",
           "label_en": "Enable Animations",
           "default": true
         },
         {
           "key": "animation_speed",
           "type": "list",
-          "label": "سرعة الحركات",
+          "label": "Ø³Ø±Ø¹Ø© Ø§Ù„Ø­Ø±ÙƒØ§Øª",
           "label_en": "Animation Speed",
           "options": [
             "fast",
@@ -4650,14 +4653,14 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
         {
           "key": "hover_effects",
           "type": "boolean",
-          "label": "تأثيرات Hover",
+          "label": "ØªØ£Ø«ÙŠØ±Ø§Øª Hover",
           "label_en": "Hover Effects",
           "default": true
         },
         {
           "key": "page_transitions",
           "type": "boolean",
-          "label": "انتقالات الصفحات",
+          "label": "Ø§Ù†ØªÙ‚Ø§Ù„Ø§Øª Ø§Ù„ØµÙØ­Ø§Øª",
           "label_en": "Page Transitions",
           "default": false
         }
@@ -4677,13 +4680,13 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
     {
       "key": "footer",
       "type": "collection",
-      "label": "الفوتر",
+      "label": "Ø§Ù„ÙÙˆØªØ±",
       "label_en": "Footer",
       "fields": [
         {
           "key": "footer_style",
           "type": "list",
-          "label": "نمط الفوتر",
+          "label": "Ù†Ù…Ø· Ø§Ù„ÙÙˆØªØ±",
           "label_en": "Footer Style",
           "options": [
             "classic",
@@ -4695,30 +4698,30 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
         {
           "key": "footer_bg_color",
           "type": "color",
-          "label": "لون خلفية الفوتر",
+          "label": "Ù„ÙˆÙ† Ø®Ù„ÙÙŠØ© Ø§Ù„ÙÙˆØªØ±",
           "label_en": "Footer Background",
           "default": "#1a1a1a"
         },
         {
           "key": "show_payment_methods",
           "type": "boolean",
-          "label": "إظهار طرق الدفع",
+          "label": "Ø¥Ø¸Ù‡Ø§Ø± Ø·Ø±Ù‚ Ø§Ù„Ø¯ÙØ¹",
           "label_en": "Show Payment Methods",
           "default": true
         },
         {
           "key": "show_social_links",
           "type": "boolean",
-          "label": "إظهار روابط التواصل",
+          "label": "Ø¥Ø¸Ù‡Ø§Ø± Ø±ÙˆØ§Ø¨Ø· Ø§Ù„ØªÙˆØ§ØµÙ„",
           "label_en": "Show Social Links",
           "default": true
         },
         {
           "key": "copyright_text",
           "type": "string",
-          "label": "نص حقوق الملكية",
+          "label": "Ù†Øµ Ø­Ù‚ÙˆÙ‚ Ø§Ù„Ù…Ù„ÙƒÙŠØ©",
           "label_en": "Copyright Text",
-          "default": "© 2026 All rights reserved"
+          "default": "Â© 2026 All rights reserved"
         }
       ]
     }
@@ -4764,9 +4767,9 @@ Theme settings allow merchants to customize colors, fonts, layouts, and other vi
 ```
 
 **Best Practice:**
-- ✅ Only include features your theme actually supports
-- ✅ Test each feature before including it
-- ❌ Don't include all features by default
+- âœ… Only include features your theme actually supports
+- âœ… Test each feature before including it
+- âŒ Don't include all features by default
 
 ---
 
@@ -4779,7 +4782,7 @@ Custom components are unique features you create specifically for your theme.
   "components": [
     {
       "name": "hero-banner",
-      "label": "بانر رئيسي فاخر",
+      "label": "Ø¨Ø§Ù†Ø± Ø±Ø¦ÙŠØ³ÙŠ ÙØ§Ø®Ø±",
       "label_en": "Luxury Hero Banner",
       "path": "home.hero-banner",
       "icon": "https://your-cdn.com/icons/hero.svg",
@@ -4787,30 +4790,30 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "title",
           "type": "string",
-          "label": "العنوان الرئيسي",
+          "label": "Ø§Ù„Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠ",
           "label_en": "Main Title",
-          "default": "اكتشف الفخامة",
+          "default": "Ø§ÙƒØªØ´Ù Ø§Ù„ÙØ®Ø§Ù…Ø©",
           "required": true
         },
         {
           "key": "subtitle",
           "type": "string",
-          "label": "العنوان الفرعي",
+          "label": "Ø§Ù„Ø¹Ù†ÙˆØ§Ù† Ø§Ù„ÙØ±Ø¹ÙŠ",
           "label_en": "Subtitle",
           "default": ""
         },
         {
           "key": "background_image",
           "type": "image",
-          "label": "صورة الخلفية",
+          "label": "ØµÙˆØ±Ø© Ø§Ù„Ø®Ù„ÙÙŠØ©",
           "label_en": "Background Image",
           "required": true,
-          "hint": "الحجم الموصى به: 1920x800 بكسل"
+          "hint": "Ø§Ù„Ø­Ø¬Ù… Ø§Ù„Ù…ÙˆØµÙ‰ Ø¨Ù‡: 1920x800 Ø¨ÙƒØ³Ù„"
         },
         {
           "key": "overlay_opacity",
           "type": "number",
-          "label": "شفافية الطبقة",
+          "label": "Ø´ÙØ§ÙÙŠØ© Ø§Ù„Ø·Ø¨Ù‚Ø©",
           "label_en": "Overlay Opacity",
           "default": 0.5,
           "min": 0,
@@ -4820,21 +4823,21 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "cta_text",
           "type": "string",
-          "label": "نص الزر",
+          "label": "Ù†Øµ Ø§Ù„Ø²Ø±",
           "label_en": "Button Text",
-          "default": "تسوق الآن"
+          "default": "ØªØ³ÙˆÙ‚ Ø§Ù„Ø¢Ù†"
         },
         {
           "key": "cta_link",
           "type": "string",
-          "label": "رابط الزر",
+          "label": "Ø±Ø§Ø¨Ø· Ø§Ù„Ø²Ø±",
           "label_en": "Button Link",
           "default": "/products"
         },
         {
           "key": "text_position",
           "type": "list",
-          "label": "موضع النص",
+          "label": "Ù…ÙˆØ¶Ø¹ Ø§Ù„Ù†Øµ",
           "label_en": "Text Position",
           "options": [
             "left",
@@ -4847,7 +4850,7 @@ Custom components are unique features you create specifically for your theme.
     },
     {
       "name": "featured-categories",
-      "label": "أقسام مميزة",
+      "label": "Ø£Ù‚Ø³Ø§Ù… Ù…Ù…ÙŠØ²Ø©",
       "label_en": "Featured Categories",
       "path": "home.featured-categories",
       "icon": "https://your-cdn.com/icons/categories.svg",
@@ -4855,14 +4858,14 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "title",
           "type": "string",
-          "label": "العنوان",
+          "label": "Ø§Ù„Ø¹Ù†ÙˆØ§Ù†",
           "label_en": "Title",
-          "default": "تسوق حسب القسم"
+          "default": "ØªØ³ÙˆÙ‚ Ø­Ø³Ø¨ Ø§Ù„Ù‚Ø³Ù…"
         },
         {
           "key": "categories_count",
           "type": "number",
-          "label": "عدد الأقسام",
+          "label": "Ø¹Ø¯Ø¯ Ø§Ù„Ø£Ù‚Ø³Ø§Ù…",
           "label_en": "Categories Count",
           "default": 6,
           "min": 3,
@@ -4871,7 +4874,7 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "layout_style",
           "type": "list",
-          "label": "نمط العرض",
+          "label": "Ù†Ù…Ø· Ø§Ù„Ø¹Ø±Ø¶",
           "label_en": "Layout Style",
           "options": [
             "grid",
@@ -4883,7 +4886,7 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "show_product_count",
           "type": "boolean",
-          "label": "إظهار عدد المنتجات",
+          "label": "Ø¥Ø¸Ù‡Ø§Ø± Ø¹Ø¯Ø¯ Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª",
           "label_en": "Show Product Count",
           "default": true
         }
@@ -4891,7 +4894,7 @@ Custom components are unique features you create specifically for your theme.
     },
     {
       "name": "luxury-slider",
-      "label": "سلايدر فاخر",
+      "label": "Ø³Ù„Ø§ÙŠØ¯Ø± ÙØ§Ø®Ø±",
       "label_en": "Luxury Slider",
       "path": "home.luxury-slider",
       "icon": "https://your-cdn.com/icons/slider.svg",
@@ -4899,31 +4902,31 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "slides",
           "type": "collection",
-          "label": "الشرائح",
+          "label": "Ø§Ù„Ø´Ø±Ø§Ø¦Ø­",
           "label_en": "Slides",
           "fields": [
             {
               "key": "image",
               "type": "image",
-              "label": "الصورة",
+              "label": "Ø§Ù„ØµÙˆØ±Ø©",
               "label_en": "Image"
             },
             {
               "key": "title",
               "type": "string",
-              "label": "العنوان",
+              "label": "Ø§Ù„Ø¹Ù†ÙˆØ§Ù†",
               "label_en": "Title"
             },
             {
               "key": "description",
               "type": "string",
-              "label": "الوصف",
+              "label": "Ø§Ù„ÙˆØµÙ",
               "label_en": "Description"
             },
             {
               "key": "link",
               "type": "string",
-              "label": "الرابط",
+              "label": "Ø§Ù„Ø±Ø§Ø¨Ø·",
               "label_en": "Link"
             }
           ]
@@ -4931,14 +4934,14 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "autoplay",
           "type": "boolean",
-          "label": "تشغيل تلقائي",
+          "label": "ØªØ´ØºÙŠÙ„ ØªÙ„Ù‚Ø§Ø¦ÙŠ",
           "label_en": "Autoplay",
           "default": true
         },
         {
           "key": "autoplay_speed",
           "type": "number",
-          "label": "سرعة التشغيل التلقائي (ثانية)",
+          "label": "Ø³Ø±Ø¹Ø© Ø§Ù„ØªØ´ØºÙŠÙ„ Ø§Ù„ØªÙ„Ù‚Ø§Ø¦ÙŠ (Ø«Ø§Ù†ÙŠØ©)",
           "label_en": "Autoplay Speed (seconds)",
           "default": 5,
           "min": 2,
@@ -4957,7 +4960,7 @@ Custom components are unique features you create specifically for your theme.
 ```json
 {
   "version": "2.0.0",
-  "theme_name": "Tharaa - ثراء",
+  "theme_name": "Tharaa - Ø«Ø±Ø§Ø¡",
   "repo_url": "https://github.com/your-username/tharaa-theme",
   "support_url": "https://tharaa-theme.com/support",
   
@@ -4965,27 +4968,27 @@ Custom components are unique features you create specifically for your theme.
     {
       "key": "colors",
       "type": "collection",
-      "label": "الألوان",
+      "label": "Ø§Ù„Ø£Ù„ÙˆØ§Ù†",
       "label_en": "Colors",
       "fields": [
         {
           "key": "primary_color",
           "type": "color",
-          "label": "اللون الأساسي",
+          "label": "Ø§Ù„Ù„ÙˆÙ† Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ",
           "label_en": "Primary Color",
           "default": "#1a1a1a"
         },
         {
           "key": "secondary_color",
           "type": "color",
-          "label": "اللون الثانوي (الذهبي)",
+          "label": "Ø§Ù„Ù„ÙˆÙ† Ø§Ù„Ø«Ø§Ù†ÙˆÙŠ (Ø§Ù„Ø°Ù‡Ø¨ÙŠ)",
           "label_en": "Secondary Color (Gold)",
           "default": "#d4af37"
         },
         {
           "key": "accent_color",
           "type": "color",
-          "label": "لون التأكيد",
+          "label": "Ù„ÙˆÙ† Ø§Ù„ØªØ£ÙƒÙŠØ¯",
           "label_en": "Accent Color",
           "default": "#8b7355"
         }
@@ -4994,13 +4997,13 @@ Custom components are unique features you create specifically for your theme.
     {
       "key": "typography",
       "type": "collection",
-      "label": "الخطوط",
+      "label": "Ø§Ù„Ø®Ø·ÙˆØ·",
       "label_en": "Typography",
       "fields": [
         {
           "key": "font_body",
           "type": "list",
-          "label": "خط النصوص",
+          "label": "Ø®Ø· Ø§Ù„Ù†ØµÙˆØµ",
           "label_en": "Body Font",
           "options": ["Almarai", "Cairo", "Tajawal"],
           "default": "Almarai"
@@ -5008,7 +5011,7 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "font_headings",
           "type": "list",
-          "label": "خط العناوين",
+          "label": "Ø®Ø· Ø§Ù„Ø¹Ù†Ø§ÙˆÙŠÙ†",
           "label_en": "Headings Font",
           "options": ["Playfair Display", "Libre Baskerville", "Almarai"],
           "default": "Playfair Display"
@@ -5018,13 +5021,13 @@ Custom components are unique features you create specifically for your theme.
     {
       "key": "layout",
       "type": "collection",
-      "label": "التخطيط",
+      "label": "Ø§Ù„ØªØ®Ø·ÙŠØ·",
       "label_en": "Layout",
       "fields": [
         {
           "key": "header_style",
           "type": "list",
-          "label": "نمط الهيدر",
+          "label": "Ù†Ù…Ø· Ø§Ù„Ù‡ÙŠØ¯Ø±",
           "label_en": "Header Style",
           "options": ["minimal", "elegant", "bold"],
           "default": "elegant"
@@ -5032,7 +5035,7 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "product_card_style",
           "type": "list",
-          "label": "نمط بطاقة المنتج",
+          "label": "Ù†Ù…Ø· Ø¨Ø·Ø§Ù‚Ø© Ø§Ù„Ù…Ù†ØªØ¬",
           "label_en": "Product Card Style",
           "options": ["modern", "classic", "luxury"],
           "default": "luxury"
@@ -5040,7 +5043,7 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "enable_animations",
           "type": "boolean",
-          "label": "تفعيل الحركات",
+          "label": "ØªÙØ¹ÙŠÙ„ Ø§Ù„Ø­Ø±ÙƒØ§Øª",
           "label_en": "Enable Animations",
           "default": true
         }
@@ -5060,7 +5063,7 @@ Custom components are unique features you create specifically for your theme.
   "components": [
     {
       "name": "hero-banner",
-      "label": "بانر رئيسي فاخر",
+      "label": "Ø¨Ø§Ù†Ø± Ø±Ø¦ÙŠØ³ÙŠ ÙØ§Ø®Ø±",
       "label_en": "Luxury Hero Banner",
       "path": "home.hero-banner",
       "icon": "https://cdn.tharaa-theme.com/icons/hero.svg",
@@ -5068,34 +5071,34 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "title",
           "type": "string",
-          "label": "العنوان",
+          "label": "Ø§Ù„Ø¹Ù†ÙˆØ§Ù†",
           "label_en": "Title",
-          "default": "اكتشف الفخامة"
+          "default": "Ø§ÙƒØªØ´Ù Ø§Ù„ÙØ®Ø§Ù…Ø©"
         },
         {
           "key": "background_image",
           "type": "image",
-          "label": "صورة الخلفية",
+          "label": "ØµÙˆØ±Ø© Ø§Ù„Ø®Ù„ÙÙŠØ©",
           "label_en": "Background Image"
         },
         {
           "key": "cta_text",
           "type": "string",
-          "label": "نص الزر",
+          "label": "Ù†Øµ Ø§Ù„Ø²Ø±",
           "label_en": "Button Text",
-          "default": "تسوق الآن"
+          "default": "ØªØ³ÙˆÙ‚ Ø§Ù„Ø¢Ù†"
         },
         {
           "key": "cta_link",
           "type": "string",
-          "label": "رابط الزر",
+          "label": "Ø±Ø§Ø¨Ø· Ø§Ù„Ø²Ø±",
           "label_en": "Button Link"
         }
       ]
     },
     {
       "name": "featured-categories",
-      "label": "أقسام مميزة",
+      "label": "Ø£Ù‚Ø³Ø§Ù… Ù…Ù…ÙŠØ²Ø©",
       "label_en": "Featured Categories",
       "path": "home.featured-categories",
       "icon": "https://cdn.tharaa-theme.com/icons/categories.svg",
@@ -5103,7 +5106,7 @@ Custom components are unique features you create specifically for your theme.
         {
           "key": "categories_count",
           "type": "number",
-          "label": "عدد الأقسام",
+          "label": "Ø¹Ø¯Ø¯ Ø§Ù„Ø£Ù‚Ø³Ø§Ù…",
           "label_en": "Number of Categories",
           "default": 6,
           "min": 3,
@@ -5787,21 +5790,21 @@ This is the main template that all pages extend.
 
 | Page | Location | Purpose | Required |
 |------|----------|---------|----------|
-| Home | `/pages/index.twig` | Landing page | ✅ Yes |
-| Product Listing | `/pages/product/index.twig` | Category/search results | ✅ Yes |
-| Single Product | `/pages/product/single.twig` | Product details | ✅ Yes |
-| Cart | `/pages/cart.twig` | Shopping cart | ✅ Yes |
-| Thank You | `/pages/thank-you.twig` | Order confirmation | ✅ Yes |
-| Profile | `/pages/customer/profile.twig` | User profile | ✅ Yes |
-| Orders List | `/pages/customer/orders/index.twig` | Order history | ✅ Yes |
-| Order Details | `/pages/customer/orders/single.twig` | Single order view | ✅ Yes |
-| Wishlist | `/pages/customer/wishlist.twig` | Saved products | ✅ Yes |
-| Blog List | `/pages/blog/index.twig` | Blog listing | ⚠️ If enabled |
-| Blog Single | `/pages/blog/single.twig` | Blog post | ⚠️ If enabled |
-| Brands List | `/pages/brands/index.twig` | Brand directory | ⚠️ If enabled |
-| Brand Single | `/pages/brands/single.twig` | Brand products | ⚠️ If enabled |
-| Page Single | `/pages/page-single.twig` | Static pages | ✅ Yes |
-| 404 | Auto-generated | Not found page | ✅ Yes |
+| Home | `/pages/index.twig` | Landing page | âœ… Yes |
+| Product Listing | `/pages/product/index.twig` | Category/search results | âœ… Yes |
+| Single Product | `/pages/product/single.twig` | Product details | âœ… Yes |
+| Cart | `/pages/cart.twig` | Shopping cart | âœ… Yes |
+| Thank You | `/pages/thank-you.twig` | Order confirmation | âœ… Yes |
+| Profile | `/pages/customer/profile.twig` | User profile | âœ… Yes |
+| Orders List | `/pages/customer/orders/index.twig` | Order history | âœ… Yes |
+| Order Details | `/pages/customer/orders/single.twig` | Single order view | âœ… Yes |
+| Wishlist | `/pages/customer/wishlist.twig` | Saved products | âœ… Yes |
+| Blog List | `/pages/blog/index.twig` | Blog listing | âš ï¸ If enabled |
+| Blog Single | `/pages/blog/single.twig` | Blog post | âš ï¸ If enabled |
+| Brands List | `/pages/brands/index.twig` | Brand directory | âš ï¸ If enabled |
+| Brand Single | `/pages/brands/single.twig` | Brand products | âš ï¸ If enabled |
+| Page Single | `/pages/page-single.twig` | Static pages | âœ… Yes |
+| 404 | Auto-generated | Not found page | âœ… Yes |
 
 ---
 
@@ -5867,7 +5870,7 @@ Hooks are Twig tags that allow Salla to inject content into your theme.
 - `body:start` - Injects tracking pixels (Google Tag Manager, Facebook Pixel top code)
 - `body:end` - **CRITICAL** - Initializes Salla SDK (calls `salla.init()` automatically)
 
-⚠️ **IMPORTANT:** Without `{% hook 'body:end' %}`, Salla SDK will NOT work!
+âš ï¸ **IMPORTANT:** Without `{% hook 'body:end' %}`, Salla SDK will NOT work!
 
 ---
 
@@ -5897,67 +5900,67 @@ Hooks are Twig tags that allow Salla to inject content into your theme.
 
 ```
 tharaa-theme/
-├── src/
-│   ├── assets/
-│   │   ├── images/
-│   │   │   ├── logo/
-│   │   │   ├── icons/
-│   │   │   └── placeholders/
-│   │   ├── styles/
-│   │   │   ├── 00-settings/       # Variables, tokens
-│   │   │   ├── 01-tools/          # Mixins, functions
-│   │   │   ├── 02-base/           # Reset, global
-│   │   │   ├── 03-components/     # Buttons, cards
-│   │   │   ├── 04-sections/       # Hero, products grid
-│   │   │   └── 05-pages/          # Page-specific styles
-│   │   └── js/
-│   │       ├── app.js
-│   │       ├── home.js
-│   │       ├── product.js
-│   │       └── modules/
-│   │           ├── cart.js
-│   │           └── animations.js
-│   ├── locales/
-│   │   ├── ar.json
-│   │   └── en.json
-│   └── views/
-│       ├── layouts/
-│       │   └── master.twig
-│       ├── pages/
-│       │   ├── index.twig
-│       │   ├── cart.twig
-│       │   ├── product/
-│       │   │   ├── index.twig
-│       │   │   └── single.twig
-│       │   ├── customer/
-│       │   │   ├── profile.twig
-│       │   │   ├── wishlist.twig
-│       │   │   └── orders/
-│       │   │       ├── index.twig
-│       │   │       └── single.twig
-│       │   └── blog/
-│       │       ├── index.twig
-│       │       └── single.twig
-│       └── components/
-│           ├── header/
-│           │   ├── header.twig
-│           │   ├── nav.twig
-│           │   └── search.twig
-│           ├── footer/
-│           │   ├── footer.twig
-│           │   └── links.twig
-│           ├── home/
-│           │   ├── hero-banner.twig          # Custom
-│           │   ├── featured-categories.twig  # Custom
-│           │   ├── featured-products.twig    # Salla Feature
-│           │   └── testimonials.twig
-│           └── product/
-│               ├── card.twig
-│               ├── card-full-image.twig
-│               └── options.twig
-├── twilight.json
-├── package.json
-└── webpack.config.js
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ assets/
+â”‚   â”‚   â”œâ”€â”€ images/
+â”‚   â”‚   â”‚   â”œâ”€â”€ logo/
+â”‚   â”‚   â”‚   â”œâ”€â”€ icons/
+â”‚   â”‚   â”‚   â””â”€â”€ placeholders/
+â”‚   â”‚   â”œâ”€â”€ styles/
+â”‚   â”‚   â”‚   â”œâ”€â”€ 00-settings/       # Variables, tokens
+â”‚   â”‚   â”‚   â”œâ”€â”€ 01-tools/          # Mixins, functions
+â”‚   â”‚   â”‚   â”œâ”€â”€ 02-base/           # Reset, global
+â”‚   â”‚   â”‚   â”œâ”€â”€ 03-components/     # Buttons, cards
+â”‚   â”‚   â”‚   â”œâ”€â”€ 04-sections/       # Hero, products grid
+â”‚   â”‚   â”‚   â””â”€â”€ 05-pages/          # Page-specific styles
+â”‚   â”‚   â””â”€â”€ js/
+â”‚   â”‚       â”œâ”€â”€ app.js
+â”‚   â”‚       â”œâ”€â”€ home.js
+â”‚   â”‚       â”œâ”€â”€ product.js
+â”‚   â”‚       â””â”€â”€ modules/
+â”‚   â”‚           â”œâ”€â”€ cart.js
+â”‚   â”‚           â””â”€â”€ animations.js
+â”‚   â”œâ”€â”€ locales/
+â”‚   â”‚   â”œâ”€â”€ ar.json
+â”‚   â”‚   â””â”€â”€ en.json
+â”‚   â””â”€â”€ views/
+â”‚       â”œâ”€â”€ layouts/
+â”‚       â”‚   â””â”€â”€ master.twig
+â”‚       â”œâ”€â”€ pages/
+â”‚       â”‚   â”œâ”€â”€ index.twig
+â”‚       â”‚   â”œâ”€â”€ cart.twig
+â”‚       â”‚   â”œâ”€â”€ product/
+â”‚       â”‚   â”‚   â”œâ”€â”€ index.twig
+â”‚       â”‚   â”‚   â””â”€â”€ single.twig
+â”‚       â”‚   â”œâ”€â”€ customer/
+â”‚       â”‚   â”‚   â”œâ”€â”€ profile.twig
+â”‚       â”‚   â”‚   â”œâ”€â”€ wishlist.twig
+â”‚       â”‚   â”‚   â””â”€â”€ orders/
+â”‚       â”‚   â”‚       â”œâ”€â”€ index.twig
+â”‚       â”‚   â”‚       â””â”€â”€ single.twig
+â”‚       â”‚   â””â”€â”€ blog/
+â”‚       â”‚       â”œâ”€â”€ index.twig
+â”‚       â”‚       â””â”€â”€ single.twig
+â”‚       â””â”€â”€ components/
+â”‚           â”œâ”€â”€ header/
+â”‚           â”‚   â”œâ”€â”€ header.twig
+â”‚           â”‚   â”œâ”€â”€ nav.twig
+â”‚           â”‚   â””â”€â”€ search.twig
+â”‚           â”œâ”€â”€ footer/
+â”‚           â”‚   â”œâ”€â”€ footer.twig
+â”‚           â”‚   â””â”€â”€ links.twig
+â”‚           â”œâ”€â”€ home/
+â”‚           â”‚   â”œâ”€â”€ hero-banner.twig          # Custom
+â”‚           â”‚   â”œâ”€â”€ featured-categories.twig  # Custom
+â”‚           â”‚   â”œâ”€â”€ featured-products.twig    # Salla Feature
+â”‚           â”‚   â””â”€â”€ testimonials.twig
+â”‚           â””â”€â”€ product/
+â”‚               â”œâ”€â”€ card.twig
+â”‚               â”œâ”€â”€ card-full-image.twig
+â”‚               â””â”€â”€ options.twig
+â”œâ”€â”€ twilight.json
+â”œâ”€â”€ package.json
+â””â”€â”€ webpack.config.js
 ```
 
 ---
@@ -6273,14 +6276,14 @@ CSS:
 
 **1. Semantic HTML:**
 ```twig
-<nav aria-label="التنقل الرئيسي">
+<nav aria-label="Ø§Ù„ØªÙ†Ù‚Ù„ Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠ">
   <ul>
-    <li><a href="/">الرئيسية</a></li>
-    <li><a href="/products">المنتجات</a></li>
+    <li><a href="/">Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©</a></li>
+    <li><a href="/products">Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª</a></li>
   </ul>
 </nav>
 
-<main aria-label="المحتوى الرئيسي">
+<main aria-label="Ø§Ù„Ù…Ø­ØªÙˆÙ‰ Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠ">
   {# Page content #}
 </main>
 ```
@@ -6288,16 +6291,16 @@ CSS:
 **2. ARIA Labels:**
 ```twig
 <button 
-  aria-label="أضف {{ product.name }} للسلة"
+  aria-label="Ø£Ø¶Ù {{ product.name }} Ù„Ù„Ø³Ù„Ø©"
   salla-add-product
   data-id="{{ product.id }}">
-  أضف للسلة
+  Ø£Ø¶Ù Ù„Ù„Ø³Ù„Ø©
 </button>
 
 <input 
   type="search"
-  aria-label="البحث في المتجر"
-  placeholder="ابحث عن منتجات...">
+  aria-label="Ø§Ù„Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ù…ØªØ¬Ø±"
+  placeholder="Ø§Ø¨Ø­Ø« Ø¹Ù† Ù…Ù†ØªØ¬Ø§Øª...">
 ```
 
 **3. Focus Management:**
@@ -6329,13 +6332,13 @@ CSS:
 
 **Use logical properties:**
 ```scss
-// ❌ Wrong
+// âŒ Wrong
 .element {
   margin-left: 20px;
   text-align: left;
 }
 
-// ✅ Correct
+// âœ… Correct
 .element {
   margin-inline-start: 20px;
   text-align: start;
@@ -6383,12 +6386,12 @@ CSS:
 
 **1. Removing Salla Classes:**
 ```html
-<!-- ❌ Wrong: Removing s-product-card -->
+<!-- âŒ Wrong: Removing s-product-card -->
 <div class="tharaa-product-only">
   <!-- Will break Salla functionality -->
 </div>
 
-<!-- ✅ Correct: Keep Salla classes + add custom -->
+<!-- âœ… Correct: Keep Salla classes + add custom -->
 <div class="s-product-card tharaa-product">
   <!-- Works with Salla + has custom styling -->
 </div>
@@ -6396,13 +6399,13 @@ CSS:
 
 **2. Not Using Hooks:**
 ```twig
-<!-- ❌ Wrong: Missing body:end -->
+<!-- âŒ Wrong: Missing body:end -->
 <body>
   {# content #}
   <script src="{{ 'app.js' | asset }}"></script>
 </body>
 
-<!-- ✅ Correct: Include body:end -->
+<!-- âœ… Correct: Include body:end -->
 <body>
   {# content #}
   <script src="{{ 'app.js' | asset }}"></script>
@@ -6412,13 +6415,13 @@ CSS:
 
 **3. Breaking Salla SDK:**
 ```javascript
-// ❌ Wrong: Preventing default on cart form
+// âŒ Wrong: Preventing default on cart form
 document.querySelector('.cart-form').addEventListener('submit', (e) => {
   e.preventDefault(); // Don't do this!
   // custom logic
 });
 
-// ✅ Correct: Use Salla SDK events
+// âœ… Correct: Use Salla SDK events
 salla.cart.event.onItemAdded(() => {
   // custom logic
 });
@@ -6426,7 +6429,7 @@ salla.cart.event.onItemAdded(() => {
 
 ---
 
-## 📚 Additional Resources
+## ðŸ“š Additional Resources
 
 **Official Documentation:**
 - Salla Docs: https://docs.salla.dev/
@@ -6443,7 +6446,7 @@ salla.cart.event.onItemAdded(() => {
 
 ---
 
-## ✅ Final Checklist for Tharaa Theme
+## âœ… Final Checklist for Tharaa Theme
 
 ### Phase 1: Setup
 - [ ] Create theme via Salla Partners Portal
