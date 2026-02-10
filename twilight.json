@@ -3027,7 +3027,106 @@
             },
             "icon": "sicon-store",
             "path": "home.th-faq",
-            "fields": []
+            "fields": [
+                {
+                    "id": "section_title",
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان القسم",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "الأسئلة الشائعة",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "section_sub",
+                    "type": "string",
+                    "format": "text",
+                    "label": "العنوان الفرعي",
+                    "description": "وصف مختصر",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "نجيب هنا على أكثر الأسئلة التي",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "faq_items",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "عناصر الأسئلة",
+                    "description": null,
+                    "labelHTML": null,
+                    "item_label": "الاسئلة",
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "faq_items.question",
+                            "type": "string",
+                            "format": "text",
+                            "label": "السؤال",
+                            "description": "نص السؤال",
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": "هل المنتج أصلي؟",
+                            "multilanguage": true,
+                            "required": true,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "faq_items.answer",
+                            "type": "string",
+                            "format": "text",
+                            "label": "الإجابة",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": "نعم، جميع منتجاتنا أصلية ومضمو",
+                            "multilanguage": true,
+                            "required": true,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "faq_items.Icon",
+                            "type": "string",
+                            "format": "icon",
+                            "label": "الايقونة",
+                            "description": "الايقونة بجانب السؤال اختيار",
+                            "labelHTML": null,
+                            "icon": "sicon-user-circle",
+                            "value": "sicon-store",
+                            "required": false
+                        },
+                        {
+                            "id": "faq_items.enable_schema",
+                            "type": "boolean",
+                            "format": "switch",
+                            "label": "تحسين الظهور في محركات البحث",
+                            "description": "تحسين الظهور في Google (FAQ Schema)",
+                            "labelHTML": null,
+                            "icon": "sicon-toggle-off",
+                            "value": true,
+                            "selected": false,
+                            "required": false
+                        }
+                    ],
+                    "value": [],
+                    "minLength": 1,
+                    "maxLength": "10"
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
