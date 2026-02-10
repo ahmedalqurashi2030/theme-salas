@@ -1,3 +1,1665 @@
+           .       **Tharaa**      .
+
+#      **Tharaa**    
+
+<div dir="rtl">
+
+---
+
+##  
+1. [  ](#hybrid-strategy)
+2. [  ](#folder-structure)
+3. [ ](#theme-architecture)
+4. [  Tharaa](#tharaa-identity)
+5. [  ](#successful-themes)
+6. [ ](#performance-compliance)
+
+---
+
+<a name="hybrid-strategy"></a>
+## 1    (Hybrid Classes Strategy)
+
+###   
+
+```
+   () +  Tharaa  () =    
+```
+
+###    
+
+####  **     :**
+
+**  :**
+-  : `s-button-primary`, `s-button-add-to-cart`
+-  : `s-input`, `s-form-group`
+- Quantity selectors  Salla SDK
+-  : `s-block`, `container`
+
+** :**
+```html
+<!--  :      -->
+<button class="s-button-primary" 
+        salla-add-product
+        data-id="{{ product.id }}">
+   
+</button>
+
+<div class="s-block s-product-card">
+  <!--  -->
+</div>
+```
+
+####  **    (Salla + Tharaa):**
+
+**    :**
+-   
+-   
+-    
+-  
+
+** :**
+```html
+<!--  :    + Tharaa -->
+<button class="s-button-primary tharaa-btn tharaa-btn--luxury" 
+        salla-add-product>
+  <span class="tharaa-btn__icon"></span>
+  <span class="tharaa-btn__text"> </span>
+</button>
+
+<div class="s-block s-product-card tharaa-product tharaa-product--featured">
+  <!--   -->
+</div>
+```
+
+####  **    :**
+
+** :**
+```html
+<!--  :     -->
+<div class="tharaa-product-only">
+  <!--     -->
+</div>
+
+<!--  :    -->
+<div class="s-product-card tharaa-product">
+  <!--      Tharaa -->
+</div>
+```
+
+###    (Naming Convention)  Tharaa
+
+#### ** :**
+```
+tharaa-[component]__[element]--[modifier]
+```
+
+#### ** :**
+
+```css
+/* 1.   (Components) */
+.tharaa-header { }
+.tharaa-footer { }
+.tharaa-product { }
+.tharaa-banner { }
+
+/* 2.  (Elements) */
+.tharaa-product__image { }
+.tharaa-product__title { }
+.tharaa-product__price { }
+.tharaa-header__logo { }
+
+/* 3.  (Modifiers) */
+.tharaa-btn--luxury { }      /*   */
+.tharaa-btn--outline { }     /*   */
+.tharaa-product--featured { } /*   */
+.tharaa-text--gold { }       /*   */
+
+/* 4.  (States) */
+.tharaa-btn.is-loading { }
+.tharaa-product.is-sold-out { }
+.tharaa-header.is-sticky { }
+```
+
+###    
+
+|  |    |   Tharaa |  |
+|--------|-------------------|-------------------|------|
+|  " " |   |   | `s-button-primary tharaa-btn--luxury` |
+|    |   |   | `s-product-card tharaa-product` |
+|    |   |   | `s-product-card tharaa-product--hero` |
+|    |    |   | `s-form s-login-form` |
+| Header  |   |   | `s-header tharaa-header--elegant` |
+| Footer  |   |   | `s-footer tharaa-footer` |
+
+---
+
+<a name="folder-structure"></a>
+## 2    (Complete Folder Structure)
+
+###     +  Tharaa
+
+```
+tharaa-theme/
+
+  twilight.json              #    
+  webpack.config.js          #  Webpack
+  package.json               # Dependencies
+  .gitignore
+
+  src/                       #   
+   
+     assets/                #  
+        images/
+          logo/
+             logo-light.svg
+             logo-dark.svg
+          icons/
+             tharaa-icons.svg     #  Tharaa 
+          placeholders/
+      
+        styles/            #  CSS/SCSS
+           main.scss      #  
+         
+           00-settings/   # Design Tokens
+             _variables.scss
+             _colors.scss
+             _typography.scss
+             _spacing.scss
+         
+           01-tools/      # Mixins & Functions
+             _mixins.scss
+             _functions.scss
+             _animations.scss
+         
+           02-base/       #  
+             _reset.scss
+             _fonts.scss
+             _global.scss
+         
+           03-components/ #  Tharaa
+             _buttons.scss
+             _cards.scss
+             _forms.scss
+             _header.scss
+             _footer.scss
+         
+           04-sections/   # Sections
+             _hero.scss
+             _products-grid.scss
+             _testimonials.scss
+         
+           05-pages/      #  
+              _home.scss
+              _product.scss
+              _cart.scss
+      
+        js/                #  JavaScript
+            app.js         #  
+            home.js        # Home page specific
+            product.js     # Product page specific
+            modules/
+               animations.js
+               cart-enhancements.js
+               tharaa-interactions.js
+   
+     locales/               # 
+       ar.json               # 
+       en.json               # 
+   
+     views/                 #  Twig
+       
+         layouts/           #  
+           master.twig       # Layout  ()
+       
+         pages/             #  (  -  )
+           index.twig        #  
+           cart.twig         # 
+           loyalty.twig      # 
+           thank-you.twig    # 
+           page-single.twig  #  
+           landing-page.twig # Landing page
+          
+            product/
+              index.twig    #  
+              single.twig   #   
+          
+            customer/
+              profile.twig
+              wishlist.twig
+              notifications.twig
+               orders/
+                  index.twig
+                  single.twig
+          
+            blog/
+              index.twig
+              single.twig
+          
+            brands/
+               index.twig
+               single.twig
+       
+         components/        #    
+          
+            header/        #  
+              header.twig
+              nav-primary.twig
+              search.twig
+              cart-icon.twig
+          
+            footer/        #  
+              footer.twig
+              links.twig
+              payment-methods.twig
+          
+            home/          #   
+              hero-banner.twig        # Custom Component
+              featured-categories.twig # Custom Component
+              luxury-slider.twig       # Custom Component
+              testimonials.twig        # Custom Component
+          
+            product/       #  
+               card.twig             #  
+               card-full-image.twig  #   
+               card-mini.twig        #  
+               slider.twig           #  
+               options.twig          #  
+       
+         partials/          #     
+            breadcrumbs.twig
+            pagination.twig
+            social-share.twig
+            single-comment.twig
+
+  dist/                      #   (  )
+     app.css
+     app.js
+     images/
+```
+
+###     :
+
+####  **   (  ):**
+```
+src/views/pages/index.twig
+src/views/pages/product/single.twig
+src/views/pages/product/index.twig
+src/views/pages/cart.twig
+src/views/pages/customer/profile.twig
+src/views/layouts/master.twig
+```
+
+####  **   :**
+-     
+-    
+-    
+-    Tharaa 
+
+---
+
+<a name="theme-architecture"></a>
+## 3   (Theme Architecture)
+
+###  1.  CSS  (Hybrid BEM + Utility)
+
+#### **    Tharaa:**
+
+```scss
+//  src/assets/styles/00-settings/_variables.scss
+
+// ===================================
+// Design Tokens - Tharaa Identity
+// ===================================
+
+// Colors - Luxury Palette
+$tharaa-color-primary: #1a1a1a;        //  
+$tharaa-color-secondary: #d4af37;      // 
+$tharaa-color-accent: #8b7355;         //  
+$tharaa-color-bg-light: #fafafa;       //  
+$tharaa-color-bg-dark: #0f0f0f;        //  
+$tharaa-color-text: #2c2c2c;           //  
+$tharaa-color-text-light: #6b6b6b;     //  
+
+// Typography - Elegant Fonts
+$tharaa-font-primary: 'Almarai', -apple-system, sans-serif;
+$tharaa-font-heading: 'Playfair Display', serif; //  
+$tharaa-font-accent: 'Libre Baskerville', serif; // 
+
+// Font Sizes - Modular Scale
+$tharaa-text-xs: 0.75rem;    // 12px
+$tharaa-text-sm: 0.875rem;   // 14px
+$tharaa-text-base: 1rem;     // 16px
+$tharaa-text-lg: 1.125rem;   // 18px
+$tharaa-text-xl: 1.25rem;    // 20px
+$tharaa-text-2xl: 1.5rem;    // 24px
+$tharaa-text-3xl: 1.875rem;  // 30px
+$tharaa-text-4xl: 2.25rem;   // 36px
+
+// Spacing - Consistent Scale
+$tharaa-space-1: 0.25rem;   // 4px
+$tharaa-space-2: 0.5rem;    // 8px
+$tharaa-space-3: 0.75rem;   // 12px
+$tharaa-space-4: 1rem;      // 16px
+$tharaa-space-6: 1.5rem;    // 24px
+$tharaa-space-8: 2rem;      // 32px
+$tharaa-space-12: 3rem;     // 48px
+$tharaa-space-16: 4rem;     // 64px
+
+// Border Radius
+$tharaa-radius-sm: 0.25rem;   // 4px
+$tharaa-radius-md: 0.5rem;    // 8px
+$tharaa-radius-lg: 1rem;      // 16px
+$tharaa-radius-full: 9999px;  // 
+
+// Shadows - Subtle Luxury
+$tharaa-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$tharaa-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+$tharaa-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+$tharaa-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+// Transitions
+$tharaa-transition-fast: 150ms ease;
+$tharaa-transition-base: 250ms ease;
+$tharaa-transition-slow: 400ms ease;
+```
+
+#### **  - Button Component:**
+
+```scss
+//  src/assets/styles/03-components/_buttons.scss
+
+// ===================================
+// Tharaa Buttons
+// ===================================
+
+.tharaa-btn {
+  // Base styles (  )
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $tharaa-space-3 $tharaa-space-6;
+  font-family: $tharaa-font-primary;
+  font-size: $tharaa-text-base;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  border: 2px solid transparent;
+  border-radius: $tharaa-radius-md;
+  cursor: pointer;
+  transition: all $tharaa-transition-base;
+  
+  // Luxury touch
+  letter-spacing: 0.025em;
+  
+  // Icon support
+  &__icon {
+    margin-inline-end: $tharaa-space-2;
+    font-size: 1.125em;
+  }
+  
+  // ===================================
+  // Modifiers
+  // ===================================
+  
+  // Primary Luxury
+  &--luxury {
+    background: linear-gradient(135deg, $tharaa-color-primary 0%, #2a2a2a 100%);
+    color: $tharaa-color-secondary;
+    border-color: $tharaa-color-secondary;
+    box-shadow: $tharaa-shadow-md;
+    
+    &:hover {
+      background: $tharaa-color-secondary;
+      color: $tharaa-color-primary;
+      box-shadow: $tharaa-shadow-lg;
+      transform: translateY(-2px);
+    }
+  }
+  
+  // Outline style
+  &--outline {
+    background: transparent;
+    color: $tharaa-color-primary;
+    border-color: currentColor;
+    
+    &:hover {
+      background: $tharaa-color-primary;
+      color: white;
+    }
+  }
+  
+  // Gold accent
+  &--gold {
+    background: $tharaa-color-secondary;
+    color: $tharaa-color-primary;
+    
+    &:hover {
+      background: darken($tharaa-color-secondary, 10%);
+      box-shadow: $tharaa-shadow-lg;
+    }
+  }
+  
+  // ===================================
+  // States
+  // ===================================
+  
+  &.is-loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+```
+
+###  2.  Sections & Blocks
+
+#### **  Sections  Components:**
+
+|  |  |  |  |
+|---------|-----------|---------|------|
+| **Section** |     |   | Hero, Products Grid, Testimonials |
+| **Component** |     |    | Button, Card, Modal |
+| **Block** |   Twig | twilight.json | `{% block content %}` |
+
+#### **  - Home Page Architecture:**
+
+```twig
+{#  src/views/pages/index.twig #}
+
+{% extends "layouts.master" %}
+
+{% block content %}
+  
+  {# Section 1: Hero Banner - Custom Tharaa Component #}
+  <section class="tharaa-hero">
+    {% include 'components.home.hero-banner' %}
+  </section>
+  
+  {# Section 2: Featured Categories - Custom #}
+  <section class="tharaa-featured-cats">
+    {% include 'components.home.featured-categories' %}
+  </section>
+  
+  {# Section 3: Salla Pre-defined Components #}
+  {% component 'home' %}
+  {#     Features   twilight.json #}
+  
+  {# Section 4: Testimonials - Custom #}
+  <section class="tharaa-testimonials">
+    {% include 'components.home.testimonials' %}
+  </section>
+
+{% endblock %}
+
+{% block scripts %}
+  <script defer src="{{ 'home.js' | asset }}"></script>
+{% endblock %}
+```
+
+###  3. JavaScript Scope (   )
+
+#### ** :**
+
+```javascript
+//  src/assets/js/app.js
+
+// ===================================
+//  DO:  Salla SDK Events
+// ===================================
+
+//    
+salla.cart.event.onItemAdded((response) => {
+  console.log('  :', response);
+  
+  //   Tharaa 
+  showTharaaCartNotification(response.item);
+});
+
+//   
+salla.cart.event.onItemUpdated((response) => {
+  console.log('  :', response);
+});
+
+// ===================================
+//  DO:    
+// ===================================
+
+function initTharaaEnhancements() {
+  //  smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  //  lazy loading 
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.add('loaded');
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+    
+    document.querySelectorAll('img[data-src]').forEach(img => {
+      imageObserver.observe(img);
+    });
+  }
+}
+
+// ===================================
+//  DON'T:    Cart form 
+// ===================================
+
+//   -   
+document.querySelector('.cart-form').addEventListener('submit', (e) => {
+  e.preventDefault(); //   !
+  // ... custom logic
+});
+
+//   -  events  Salla
+salla.cart.event.onUpdated(() => {
+  // custom logic 
+});
+
+// ===================================
+//  DO:  Namespacing
+// ===================================
+
+const Tharaa = {
+  animations: {
+    fadeIn(element) {
+      element.style.opacity = '0';
+      element.style.transition = 'opacity 0.4s ease';
+      setTimeout(() => element.style.opacity = '1', 10);
+    }
+  },
+  
+  cart: {
+    showNotification(item) {
+      // custom notification
+    }
+  },
+  
+  init() {
+    initTharaaEnhancements();
+    this.animations.init();
+  }
+};
+
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => Tharaa.init());
+} else {
+  Tharaa.init();
+}
+```
+
+###  4. Master Layout Structure
+
+```twig
+{#  src/views/layouts/master.twig #}
+
+<!DOCTYPE html>
+<html lang="{{ user.language.code }}" dir="{{ user.language.dir }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {#  : SEO Hooks #}
+    {% hook 'head:start' %}
+    
+    <title>{{ page.title }} - {{ store.name }}</title>
+    
+    {#  : Meta tags hook #}
+    {% hook 'head' %}
+    
+    {# Tharaa Custom Fonts #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    {# Main CSS #}
+    <link rel="stylesheet" href="{{ 'app.css' | asset }}">
+    
+    {# Custom theme settings CSS Variables #}
+    <style>
+      :root {
+        --tharaa-primary: {{ theme.settings.get('primary_color', '#1a1a1a') }};
+        --tharaa-secondary: {{ theme.settings.get('secondary_color', '#d4af37') }};
+        --tharaa-font-body: {{ theme.settings.get('font_body', 'Almarai') }};
+      }
+    </style>
+    
+    {% hook 'head:end' %}
+</head>
+<body class="tharaa-theme {{ page.slug }}">
+    
+    {% hook 'body:start' %}
+    
+    {# Header Component #}
+    <header class="tharaa-header">
+        {% component 'header' %}
+    </header>
+    
+    {# Main Content #}
+    <main class="tharaa-main">
+        {% block content %}{% endblock %}
+    </main>
+    
+    {# Footer Component #}
+    <footer class="tharaa-footer">
+        {% component 'footer' %}
+    </footer>
+    
+    {# Scripts #}
+    <script src="{{ 'app.js' | asset }}" defer></script>
+    
+    {% block scripts %}{% endblock %}
+    
+    {% hook 'body:end' %}
+</body>
+</html>
+```
+
+---
+
+<a name="tharaa-identity"></a>
+## 4   Tharaa (Tharaa Theme Identity)
+
+###  Design Tokens 
+
+```scss
+//  src/assets/styles/00-settings/_tharaa-tokens.scss
+
+// ===================================
+// THARAA IDENTITY SYSTEM
+// ===================================
+
+// Brand Colors
+$tharaa-colors: (
+  // Primary Palette - Dark Luxury
+  'charcoal': #1a1a1a,
+  'charcoal-light': #2c2c2c,
+  'charcoal-dark': #0f0f0f,
+  
+  // Accent Palette - Gold
+  'gold': #d4af37,
+  'gold-light': #f0d98e,
+  'gold-dark': #b8941f,
+  
+  // Supporting Colors
+  'bronze': #8b7355,
+  'cream': #faf8f3,
+  'stone': #e8e6e1,
+  
+  // Neutrals
+  'white': #ffffff,
+  'gray-50': #fafafa,
+  'gray-100': #f5f5f5,
+  'gray-200': #e5e5e5,
+  'gray-300': #d4d4d4,
+  'gray-400': #a3a3a3,
+  'gray-500': #737373,
+  'gray-600': #525252,
+  'gray-700': #404040,
+  'gray-800': #262626,
+  'gray-900': #171717,
+  'black': #000000,
+);
+
+// Typography Scale
+$tharaa-typography: (
+  // Font Families
+  'font-primary': ('Almarai', -apple-system, BlinkMacSystemFont, sans-serif),
+  'font-heading': ('Playfair Display', Georgia, serif),
+  'font-accent': ('Libre Baskerville', 'Times New Roman', serif),
+  'font-mono': ('IBM Plex Mono', 'Courier New', monospace),
+  
+  // Font Sizes - Modular Scale (1.250 - Major Third)
+  'text-2xs': 0.64rem,   // 10.24px
+  'text-xs': 0.8rem,     // 12.8px
+  'text-sm': 0.875rem,   // 14px
+  'text-base': 1rem,     // 16px
+  'text-lg': 1.125rem,   // 18px
+  'text-xl': 1.25rem,    // 20px
+  'text-2xl': 1.563rem,  // 25px
+  'text-3xl': 1.953rem,  // 31.25px
+  'text-4xl': 2.441rem,  // 39px
+  'text-5xl': 3.052rem,  // 48.8px
+  'text-6xl': 3.815rem,  // 61px
+  
+  // Line Heights
+  'leading-tight': 1.25,
+  'leading-snug': 1.375,
+  'leading-normal': 1.5,
+  'leading-relaxed': 1.625,
+  'leading-loose': 2,
+  
+  // Letter Spacing
+  'tracking-tighter': -0.05em,
+  'tracking-tight': -0.025em,
+  'tracking-normal': 0,
+  'tracking-wide': 0.025em,
+  'tracking-wider': 0.05em,
+  'tracking-widest': 0.1em,
+);
+
+// Spacing Scale - Based on 4px (0.25rem)
+$tharaa-spacing: (
+  '0': 0,
+  '1': 0.25rem,   // 4px
+  '2': 0.5rem,    // 8px
+  '3': 0.75rem,   // 12px
+  '4': 1rem,      // 16px
+  '5': 1.25rem,   // 20px
+  '6': 1.5rem,    // 24px
+  '8': 2rem,      // 32px
+  '10': 2.5rem,   // 40px
+  '12': 3rem,     // 48px
+  '16': 4rem,     // 64px
+  '20': 5rem,     // 80px
+  '24': 6rem,     // 96px
+  '32': 8rem,     // 128px
+  '40': 10rem,    // 160px
+  '48': 12rem,    // 192px
+  '56': 14rem,    // 224px
+  '64': 16rem,    // 256px
+);
+
+// Shadows - Luxury Elevation
+$tharaa-shadows: (
+  'sm': 0 1px 2px rgba(0, 0, 0, 0.04),
+  'DEFAULT': 0 1px 3px rgba(0, 0, 0, 0.05),
+  'md': 0 4px 6px rgba(0, 0, 0, 0.05),
+  'lg': 0 10px 15px rgba(0, 0, 0, 0.08),
+  'xl': 0 20px 25px rgba(0, 0, 0, 0.1),
+  '2xl': 0 25px 50px rgba(0, 0, 0, 0.12),
+  'inner': inset 0 2px 4px rgba(0, 0, 0, 0.06),
+  'gold': 0 4px 14px rgba(212, 175, 55, 0.25),
+);
+
+// Border Radius
+$tharaa-radius: (
+  'none': 0,
+  'sm': 0.25rem,    // 4px
+  'DEFAULT': 0.5rem, // 8px
+  'md': 0.75rem,    // 12px
+  'lg': 1rem,       // 16px
+  'xl': 1.5rem,     // 24px
+  '2xl': 2rem,      // 32px
+  'full': 9999px,
+);
+
+// Transitions
+$tharaa-transitions: (
+  'fast': 150ms cubic-bezier(0.4, 0, 0.2, 1),
+  'base': 250ms cubic-bezier(0.4, 0, 0.2, 1),
+  'slow': 400ms cubic-bezier(0.4, 0, 0.2, 1),
+  'bounce': 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55),
+);
+
+// Z-index Scale
+$tharaa-z-index: (
+  'dropdown': 1000,
+  'sticky': 1020,
+  'fixed': 1030,
+  'modal-backdrop': 1040,
+  'modal': 1050,
+  'popover': 1060,
+  'tooltip': 1070,
+);
+
+// Helper function  
+@function tharaa-color($key) {
+  @return map-get($tharaa-colors, $key);
+}
+
+@function tharaa-space($key) {
+  @return map-get($tharaa-spacing, $key);
+}
+
+@function tharaa-shadow($key) {
+  @return map-get($tharaa-shadows, $key);
+}
+```
+
+###    - Product Card Example
+
+```twig
+{#  src/views/components/product/card.twig #}
+
+<div class="s-product-card tharaa-product-card">
+  {# Image Container #}
+  <div class="tharaa-product-card__image-wrapper">
+    {% if product.has_sale %}
+      <span class="tharaa-badge tharaa-badge--sale">
+         {{ product.sale_percent }}%
+      </span>
+    {% endif %}
+    
+    <a href="{{ product.url }}" class="tharaa-product-card__image-link">
+      <img 
+        src="{{ product.image.url }}" 
+        alt="{{ product.name }}"
+        class="tharaa-product-card__image"
+        loading="lazy"
+      >
+    </a>
+    
+    {# Quick View & Wishlist #}
+    <div class="tharaa-product-card__actions">
+      <button class="tharaa-icon-btn" 
+              salla-wishlist 
+              data-id="{{ product.id }}">
+        <i class="sicon-heart"></i>
+      </button>
+    </div>
+  </div>
+  
+  {# Content #}
+  <div class="tharaa-product-card__content">
+    <h3 class="tharaa-product-card__title">
+      <a href="{{ product.url }}">{{ product.name }}</a>
+    </h3>
+    
+    <div class="tharaa-product-card__price">
+      {% if product.has_sale %}
+        <span class="tharaa-price tharaa-price--original">
+          {{ product.regular_price|money }}
+        </span>
+        <span class="tharaa-price tharaa-price--sale">
+          {{ product.price|money }}
+        </span>
+      {% else %}
+        <span class="tharaa-price">
+          {{ product.price|money }}
+        </span>
+      {% endif %}
+    </div>
+    
+    {# Add to Cart Button #}
+    <button class="s-button-primary tharaa-btn tharaa-btn--luxury"
+            salla-add-product
+            data-id="{{ product.id }}">
+      <span class="tharaa-btn__icon"></span>
+      <span class="tharaa-btn__text"> </span>
+    </button>
+  </div>
+</div>
+```
+
+```scss
+//  src/assets/styles/03-components/_product-card.scss
+
+.tharaa-product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: map-get($tharaa-radius, 'lg');
+  box-shadow: map-get($tharaa-shadows, 'sm');
+  transition: all map-get($tharaa-transitions, 'base');
+  overflow: hidden;
+  
+  &:hover {
+    box-shadow: map-get($tharaa-shadows, 'xl');
+    transform: translateY(-4px);
+    
+    .tharaa-product-card__image {
+      transform: scale(1.05);
+    }
+  }
+  
+  // Image Section
+  &__image-wrapper {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: map-get($tharaa-colors, 'gray-100');
+  }
+  
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform map-get($tharaa-transitions, 'slow');
+  }
+  
+  &__actions {
+    position: absolute;
+    top: map-get($tharaa-spacing, '3');
+    right: map-get($tharaa-spacing, '3');
+    display: flex;
+    gap: map-get($tharaa-spacing, '2');
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all map-get($tharaa-transitions, 'base');
+  }
+  
+  &:hover &__actions {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  // Content Section
+  &__content {
+    padding: map-get($tharaa-spacing, '4');
+    display: flex;
+    flex-direction: column;
+    gap: map-get($tharaa-spacing, '3');
+  }
+  
+  &__title {
+    font-family: map-get(map-get($tharaa-typography, 'font-heading'));
+    font-size: map-get($tharaa-typography, 'text-lg');
+    font-weight: 600;
+    color: map-get($tharaa-colors, 'charcoal');
+    line-height: map-get($tharaa-typography, 'leading-tight');
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+      
+      &:hover {
+        color: map-get($tharaa-colors, 'gold');
+      }
+    }
+  }
+  
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: map-get($tharaa-spacing, '2');
+  }
+}
+
+// Price Styling
+.tharaa-price {
+  font-size: map-get($tharaa-typography, 'text-xl');
+  font-weight: 700;
+  color: map-get($tharaa-colors, 'charcoal');
+  
+  &--original {
+    font-size: map-get($tharaa-typography, 'text-base');
+    font-weight: 400;
+    color: map-get($tharaa-colors, 'gray-400');
+    text-decoration: line-through;
+  }
+  
+  &--sale {
+    color: map-get($tharaa-colors, 'gold');
+  }
+}
+
+// Badge
+.tharaa-badge {
+  position: absolute;
+  top: map-get($tharaa-spacing, '3');
+  left: map-get($tharaa-spacing, '3');
+  padding: map-get($tharaa-spacing, '1') map-get($tharaa-spacing, '3');
+  font-size: map-get($tharaa-typography, 'text-xs');
+  font-weight: 700;
+  border-radius: map-get($tharaa-radius, 'full');
+  z-index: 10;
+  
+  &--sale {
+    background: map-get($tharaa-colors, 'gold');
+    color: map-get($tharaa-colors, 'charcoal');
+  }
+}
+
+// Icon Button
+.tharaa-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: none;
+  border-radius: map-get($tharaa-radius, 'full');
+  cursor: pointer;
+  transition: all map-get($tharaa-transitions, 'base');
+  box-shadow: map-get($tharaa-shadows, 'md');
+  
+  &:hover {
+    background: map-get($tharaa-colors, 'gold');
+    color: white;
+    transform: scale(1.1);
+  }
+}
+```
+
+---
+
+<a name="successful-themes"></a>
+## 5    (Successful Themes Analysis)
+
+###    :
+
+#### 1. **   Features :**
+```json
+//  twilight.json
+
+{
+  "features": [
+    "component-featured-products",
+    "component-fixed-banner",
+    "component-fixed-products",
+    "component-products-slider",
+    "component-parallax-background",
+    "component-testimonials",
+    "component-square-photos",
+    "component-store-features",
+    "component-youtube",
+    "filters"
+  ]
+}
+```
+
+** :**
+-    Features   
+-   Feature  
+-   Styling   Features
+
+**  :**
+-   Features    
+-   Styling   Features
+
+#### 2. **Custom Components :**
+
+```json
+//  twilight.json - Custom Components
+
+{
+  "components": [
+    {
+      "name": "hero-banner",
+      "label": "  ",
+      "path": "home.hero-banner",
+      "icon": "https://example.com/icons/hero.svg",
+      "fields": [
+        {
+          "key": "title",
+          "type": "string",
+          "label": " ",
+          "default": " "
+        },
+        {
+          "key": "subtitle",
+          "type": "string",
+          "label": " "
+        },
+        {
+          "key": "background_image",
+          "type": "image",
+          "label": " "
+        },
+        {
+          "key": "cta_text",
+          "type": "string",
+          "label": " ",
+          "default": " "
+        },
+        {
+          "key": "cta_link",
+          "type": "string",
+          "label": " "
+        }
+      ]
+    },
+    {
+      "name": "featured-categories",
+      "label": " ",
+      "path": "home.featured-categories",
+      "icon": "https://example.com/icons/categories.svg",
+      "fields": [
+        {
+          "key": "title",
+          "type": "string",
+          "label": ""
+        },
+        {
+          "key": "categories_count",
+          "type": "number",
+          "label": " ",
+          "default": 4,
+          "min": 2,
+          "max": 8
+        },
+        {
+          "key": "layout_style",
+          "type": "list",
+          "label": " ",
+          "options": ["grid", "slider", "masonry"],
+          "default": "grid"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### 3. **Theme Settings :**
+
+```json
+{
+  "settings": [
+    {
+      "key": "colors",
+      "type": "collection",
+      "label": "",
+      "fields": [
+        {
+          "key": "primary_color",
+          "type": "color",
+          "label": " ",
+          "default": "#1a1a1a"
+        },
+        {
+          "key": "secondary_color",
+          "type": "color",
+          "label": " ",
+          "default": "#d4af37"
+        },
+        {
+          "key": "accent_color",
+          "type": "color",
+          "label": " ",
+          "default": "#8b7355"
+        }
+      ]
+    },
+    {
+      "key": "typography",
+      "type": "collection",
+      "label": "",
+      "fields": [
+        {
+          "key": "font_body",
+          "type": "list",
+          "label": " ",
+          "options": ["Almarai", "Cairo", "Tajawal", "IBM Plex Sans Arabic"],
+          "default": "Almarai"
+        },
+        {
+          "key": "font_headings",
+          "type": "list",
+          "label": " ",
+          "options": ["Playfair Display", "Libre Baskerville", "Almarai"],
+          "default": "Playfair Display"
+        }
+      ]
+    },
+    {
+      "key": "layout",
+      "type": "collection",
+      "label": "",
+      "fields": [
+        {
+          "key": "header_style",
+          "type": "list",
+          "label": " ",
+          "options": ["minimal", "elegant", "bold"],
+          "default": "elegant"
+        },
+        {
+          "key": "product_card_style",
+          "type": "list",
+          "label": "  ",
+          "options": ["modern", "classic", "luxury"],
+          "default": "luxury"
+        },
+        {
+          "key": "enable_animations",
+          "type": "boolean",
+          "label": " ",
+          "default": true
+        }
+      ]
+    }
+  ]
+}
+```
+
+###      :
+
+#### 1. **    :**
+```html
+<!--  :     -->
+<div class="my-custom-product-only">
+  <!--      -->
+</div>
+
+<!--  :    +   -->
+<div class="s-product-card tharaa-product">
+  <!--    -->
+</div>
+```
+
+#### 2. **   :**
+```
+  :
+- Home Page
+- Product Listing (Category page)
+- Single Product
+- Cart
+- Checkout (if customizable)
+- Customer Profile
+- Orders List
+- Wishlist
+- Blog pages
+- Brands pages
+- Search results
+- 404 page
+```
+
+#### 3. ** RTL Support:**
+```scss
+//  :  
+.element {
+  margin-left: 20px; //    RTL
+  text-align: left;   //    RTL
+}
+
+//  :  logical properties
+.element {
+  margin-inline-start: 20px;  //   LTR  RTL
+  text-align: start;           //   LTR  RTL
+}
+
+//   Mixins
+@mixin spacing-inline-start($value) {
+  [dir="ltr"] & {
+    margin-left: $value;
+  }
+  [dir="rtl"] & {
+    margin-right: $value;
+  }
+}
+```
+
+#### 4. **  :**
+```html
+<!--  :    lazy loading -->
+<img src="large-image.jpg" alt="Product">
+
+<!--  :   -->
+<img 
+  src="{{ product.image.url }}"
+  srcset="{{ product.image.url }}?w=400 400w,
+          {{ product.image.url }}?w=800 800w"
+  sizes="(max-width: 768px) 100vw, 400px"
+  alt="{{ product.name }}"
+  loading="lazy"
+  decoding="async"
+>
+```
+
+#### 5. **   :**
+
+** UI/UX :**
+-  Product page   : title, price, description, images, add to cart button, options
+-  Cart page   : line items, quantities, totals, checkout button
+-  Product cards   : image, title, price, quick actions
+-  Header   : logo, navigation, search, cart icon
+-  Footer   : links, contact info, payment methods
+
+** :**
+-  Performance: Lighthouse score > 80
+-  Accessibility: WCAG 2.1 Level AA
+-  Mobile-first responsive design
+-  Cross-browser compatibility
+
+---
+
+<a name="performance-compliance"></a>
+## 6   (Performance & Compliance)
+
+###   
+
+#### 1. ** CSS:**
+
+```scss
+//   CSS Variables  
+:root {
+  --tharaa-primary: #1a1a1a;
+  --tharaa-transition: 250ms ease;
+}
+
+.element {
+  color: var(--tharaa-primary);
+  transition: all var(--tharaa-transition);
+}
+
+//   CSS  
+//  PurgeCSS  webpack.config.js
+
+//   will-change 
+.animated-element {
+  will-change: transform, opacity;
+  
+  &.is-animating {
+    will-change: auto; //   
+  }
+}
+```
+
+#### 2. ** JavaScript:**
+
+```javascript
+//  Code Splitting
+// webpack.config.js
+module.exports = {
+  entry: {
+    app: './src/assets/js/app.js',
+    home: './src/assets/js/home.js',      //   home page
+    product: './src/assets/js/product.js', //   product page
+  }
+};
+
+//  Lazy Loading 
+const lazyLoadImages = () => {
+  const imageObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.add('loaded');
+          observer.unobserve(img);
+        }
+      });
+    },
+    { rootMargin: '50px' }
+  );
+  
+  document.querySelectorAll('img[data-src]').forEach(img => {
+    imageObserver.observe(img);
+  });
+};
+
+//  Debounce  events
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// 
+window.addEventListener('resize', debounce(() => {
+  // handle resize
+}, 250));
+```
+
+#### 3. **SEO Optimization:**
+
+```twig
+{#  src/views/layouts/master.twig #}
+
+<head>
+    {#  Structured Data #}
+    {% if page.type == 'product' %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "{{ product.name }}",
+      "image": "{{ product.image.url }}",
+      "description": "{{ product.description|striptags|slice(0, 155) }}",
+      "sku": "{{ product.sku }}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{ store.name }}"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "{{ product.url }}",
+        "priceCurrency": "SAR",
+        "price": "{{ product.price }}",
+        "availability": "{{ product.is_available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' }}"
+      }
+    }
+    </script>
+    {% endif %}
+    
+    {#  Open Graph Tags #}
+    <meta property="og:title" content="{{ page.title }} - {{ store.name }}">
+    <meta property="og:description" content="{{ page.description|striptags|slice(0, 155) }}">
+    <meta property="og:image" content="{{ page.image.url }}">
+    <meta property="og:url" content="{{ page.url }}">
+    
+    {#  Twitter Cards #}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title }}">
+    <meta name="twitter:description" content="{{ page.description|striptags|slice(0, 155) }}">
+</head>
+```
+
+#### 4. **Accessibility (A11y):**
+
+```html
+<!--  Semantic HTML -->
+<nav aria-label=" ">
+  <ul>
+    <li><a href="/"></a></li>
+  </ul>
+</nav>
+
+<!--  ARIA Labels -->
+<button 
+  aria-label=" {{ product.name }} "
+  salla-add-product
+  data-id="{{ product.id }}">
+   
+</button>
+
+<!--  Keyboard Navigation -->
+<div class="tharaa-modal" 
+     role="dialog" 
+     aria-modal="true"
+     aria-labelledby="modal-title">
+  <h2 id="modal-title"> </h2>
+</div>
+
+<!--  Focus Management -->
+<style>
+.tharaa-btn:focus-visible {
+  outline: 2px solid var(--tharaa-primary);
+  outline-offset: 2px;
+}
+</style>
+```
+
+###  Checklist  
+
+```markdown
+## Performance Checklist
+- [ ] CSS   (<100KB)
+- [ ] JavaScript  
+- [ ]   (WebP + fallbacks)
+- [ ] Lazy loading 
+- [ ] Critical CSS 
+- [ ] Fonts  (subset + preload)
+
+## SEO Checklist
+- [ ] Meta tags    
+- [ ] Structured Data 
+- [ ] Sitemap 
+- [ ] Robots.txt 
+- [ ] URLs    SEO
+- [ ] Alt tags  
+
+## Accessibility Checklist
+- [ ] Semantic HTML 
+- [ ] ARIA labels 
+- [ ] Keyboard navigation 
+- [ ] Color contrast ratio > 4.5:1
+- [ ] Focus indicators 
+- [ ] Screen reader friendly
+
+## Compatibility Checklist
+- [ ]   Chrome, Safari, Firefox
+- [ ]   iOS  Android
+- [ ]  RTL  LTR
+- [ ]  responsive (Mobile, Tablet, Desktop)
+
+## Salla Compliance Checklist
+- [ ]    
+- [ ]   
+- [ ] Salla SDK events 
+- [ ] Theme Features  
+- [ ] Custom Components   Partners Portal
+- [ ] twilight.json  
+- [ ] Screenshots  1366x768 (3  )
+- [ ]   README 
+```
+
+---
+
+##   
+
+###  Best Practices  Tharaa:
+
+#### 1. **  Theme Raed :**
+```bash
+# Clone  GitHub
+git clone https://github.com/SallaApp/theme-raed.git tharaa-theme
+cd tharaa-theme
+npm install
+```
+
+#### 2. **   :**
+```
+ 1:   
+  twilight.json
+  Design Tokens
+  Folder Structure
+
+ 2:   
+ Header & Footer
+ Product Card
+ Buttons & Forms
+ Typography System
+
+ 3:  
+ Home Page
+ Product Pages
+ Cart & Checkout
+ Customer Pages
+
+ 4: Custom Components
+ Hero Banner
+ Featured Categories
+ Testimonials
+ Advanced Sliders
+
+ 5:  
+ Performance Optimization
+ SEO Implementation
+ Accessibility Testing
+ Cross-browser Testing
+
+ 6:  
+ Salla Review Checklist
+ Documentation
+ Screenshots
+ Submit for Review
+```
+
+#### 3. ** Version Control :**
+```bash
+# Branch strategy
+main          #   
+ develop   #  
+ feature/* #  
+ hotfix/*  #  
+```
+
+#### 4. **  :**
+```markdown
+#  README.md
+
+# Tharaa Theme
+
+## 
+...
+
+## 
+...
+
+##  
+...
+
+## 
+...
+```
+
+---
+
+##   
+
+1. **  Partner  **
+2. **  GitHub**
+3. **  Theme Raed **
+4. ** Tharaa Identity **
+5. **  **
+6. **   **
+7. **    **
+
+---
+
+##   
+
+- [Salla Documentation](https://docs.salla.dev/)
+- [Theme Raed Repository](https://github.com/SallaApp/theme-raed)
+- [Salla CLI Documentation](https://docs.salla.dev/doc-421925)
+- [Twilight SDK](https://docs.salla.dev/doc-422620)
+
+---
+
+** :**           .          .
+
+</div>
+
+
+
+
+
 # 📚 Tharaa Theme - Complete Development Reference Manual
 ### Comprehensive Guide for Building Professional Salla Themes
 
