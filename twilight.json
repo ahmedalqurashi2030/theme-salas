@@ -2765,7 +2765,178 @@
             },
             "icon": "sicon-store",
             "path": "home.th-store-features",
-            "fields": []
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "static",
+                    "format": "title",
+                    "label": "Title",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "component-preview",
+                    "type": "static",
+                    "format": "description",
+                    "label": "معاينة مرئية للقسم",
+                    "value": "صورة توضيحية تعرض شكل القسم داخل المتجر",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "component-info",
+                    "type": "static",
+                    "format": "description",
+                    "label": "ملاحظة توضيحية",
+                    "value": "ملاحظة توضّح أن هذا القسم مخصص لعرض مميزات المتجر بتأثيرات حركية وتصميم متجاوب",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "section_title",
+                    "type": "string",
+                    "format": "text",
+                    "label": "عنوان القسم الرئيسي",
+                    "description": "العنوان الذي يظهر في أعلى القسم",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "مميزات المتجر",
+                    "multilanguage": false,
+                    "required": true,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "section_subtitle",
+                    "type": "string",
+                    "format": "text",
+                    "label": "العنوان الفرعي",
+                    "description": "نص يظهر أسفل العنوان الرئيسي",
+                    "labelHTML": null,
+                    "placeholder": null,
+                    "icon": "sicon-format-text-alt",
+                    "value": "نحن لا نقدم منتجات فحسب، بل نصنع تجربة ف",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": "60"
+                },
+                {
+                    "id": "features",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "المميزات",
+                    "description": "قائمة المميزات التي سيتم عرضها داخل القسم",
+                    "labelHTML": null,
+                    "item_label": "المميزات",
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "features.title",
+                            "type": "string",
+                            "format": "text",
+                            "label": "عنوان الميزة",
+                            "description": "عنوان قصير يعبّر عن الميزة",
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": "أصالة مضمونة",
+                            "multilanguage": false,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "features.description",
+                            "type": "string",
+                            "format": "richtext",
+                            "label": "وصف الميزة",
+                            "description": "شرح تفصيلي للميزة",
+                            "labelHTML": null,
+                            "placeholder": "Your text here ..",
+                            "icon": "sicon-touch-type",
+                            "value": "منتجات فاخرة مختارة بعناية فائقة...",
+                            "multilanguage": false,
+                            "required": false,
+                            "minLength": 60,
+                            "maxLength": 1000
+                        },
+                        {
+                            "id": "features.icon",
+                            "type": "string",
+                            "format": "icon",
+                            "label": "الأيقونة",
+                            "description": null,
+                            "labelHTML": null,
+                            "icon": "sicon-user-circle",
+                            "value": "sicon-store",
+                            "required": false
+                        },
+                        {
+                            "id": "features.stats_badge",
+                            "type": "string",
+                            "format": "text",
+                            "label": "شارة الإحصائية",
+                            "description": "نص قصير يظهر كبادج (مثل: 48 ساعة – 24/7)",
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": "100% أصلي",
+                            "multilanguage": false,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        }
+                    ],
+                    "value": [],
+                    "minLength": "3",
+                    "maxLength": "6"
+                },
+                {
+                    "id": "mobile_nav_style",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "نمط التنقل",
+                    "description": "طريقة التنقل بين المميزات في الجوال",
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [
+                        {
+                            "label": "dots",
+                            "value": "نقاط",
+                            "key": "7cf37722-8b75-42b1-b5e3-e6974bec2495"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "dots",
+                            "value": "نقاط",
+                            "key": "7cf37722-8b75-42b1-b5e3-e6974bec2495"
+                        },
+                        {
+                            "label": "progress",
+                            "value": "شريط تقدم",
+                            "key": "91c8d27d-9c0d-47aa-ba35-cfb396c994a5"
+                        },
+                        {
+                            "label": "numbers",
+                            "value": "أرقام",
+                            "key": "054de477-8543-4116-b072-577089b331a8"
+                        },
+                        {
+                            "label": "thumbnails",
+                            "value": "صور مصغرة",
+                            "key": "e35bcd0c-4a2e-4e9b-8025-a83e2984d639"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": false
+                }
+            ]
         },
         {
             "key": "d399f373-ac13-4f56-8187-b132e3f52bb6",
