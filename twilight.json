@@ -2945,7 +2945,7 @@
                 "ar": "شريط إعلاني متحرك (ثراء)"
             },
             "icon": "sicon-store",
-            "path": "home.moving-announcement-bar",
+            "path": "home.th-moving-announcement-bar",
             "fields": [
                 {
                     "id": "announcement_text",
