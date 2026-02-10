@@ -3018,6 +3018,16 @@
                     "maxLength": 30
                 }
             ]
+        },
+        {
+            "key": "fc22b1e7-b02c-404d-9b03-45f0186dc6af",
+            "title": {
+                "en": "FAQ (Tharaa)",
+                "ar": "الأسئلة الشائعة (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.th-faq",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
