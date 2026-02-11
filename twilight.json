@@ -2824,6 +2824,38 @@
                     "maxLength": "60"
                 },
                 {
+                    "id": "mobile_nav_style",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "طريقة عرض التنقل (موبايل)",
+                    "description": "\"اختر كيف سيتنقل الزوار بين البطاقات على الأجهزة المحمولة",
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [
+                        {
+                            "label": "dots",
+                            "value": "نقاط",
+                            "key": "7cf37722-8b75-42b1-b5e3-e6974bec2495"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "dots",
+                            "value": "نقاط (Dots) - بسيط وأنيق",
+                            "key": "7cf37722-8b75-42b1-b5e3-e6974bec2495"
+                        },
+                        {
+                            "label": "thumbnails",
+                            "value": "أيقونات (Thumbnails) - تفاعلي",
+                            "key": "e35bcd0c-4a2e-4e9b-8025-a83e2984d639"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": false
+                },
+                {
                     "id": "features",
                     "type": "collection",
                     "format": "collection",
@@ -2838,7 +2870,7 @@
                             "type": "string",
                             "format": "text",
                             "label": "عنوان الميزة",
-                            "description": "عنوان قصير يعبّر عن الميزة",
+                            "description": "عنوان الميزة (قصير ومعبّر)",
                             "labelHTML": null,
                             "placeholder": "Placeholder text ..",
                             "icon": "sicon-format-text-alt",
@@ -2893,48 +2925,6 @@
                     "value": [],
                     "minLength": "3",
                     "maxLength": "6"
-                },
-                {
-                    "id": "mobile_nav_style",
-                    "type": "items",
-                    "format": "dropdown-list",
-                    "label": "نمط التنقل",
-                    "description": "طريقة التنقل بين المميزات في الجوال",
-                    "labelHTML": null,
-                    "icon": "sicon-keyboard_arrow_down",
-                    "selected": [
-                        {
-                            "label": "dots",
-                            "value": "نقاط",
-                            "key": "7cf37722-8b75-42b1-b5e3-e6974bec2495"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "dots",
-                            "value": "نقاط",
-                            "key": "7cf37722-8b75-42b1-b5e3-e6974bec2495"
-                        },
-                        {
-                            "label": "progress",
-                            "value": "شريط تقدم",
-                            "key": "91c8d27d-9c0d-47aa-ba35-cfb396c994a5"
-                        },
-                        {
-                            "label": "numbers",
-                            "value": "أرقام",
-                            "key": "054de477-8543-4116-b072-577089b331a8"
-                        },
-                        {
-                            "label": "thumbnails",
-                            "value": "صور مصغرة",
-                            "key": "e35bcd0c-4a2e-4e9b-8025-a83e2984d639"
-                        }
-                    ],
-                    "source": "Manual",
-                    "multichoice": true,
-                    "searchable": true,
-                    "required": false
                 }
             ]
         },
