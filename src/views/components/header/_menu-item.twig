@@ -5,7 +5,7 @@
 | is_root    | Bool | هل هذه قائمة رئيسية أم فرعية   |
 #}
 
-<li class="th-nav-item th-cascading-item group/item {{ is_root ? '' : 'w-full' }}">
+<li class="th-nav-item th-cascading-item group/item {{ menu.has_children ? 'has-children' : '' }} {{ is_root ? '' : 'w-full' }}">
 
 	<a href="{{ menu.url }}" class="{{ is_root ? 'th-nav-link' : 'th-cascading-link' }}">
 		{% if not is_root %}
