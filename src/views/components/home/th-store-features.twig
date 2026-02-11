@@ -99,4 +99,95 @@
         </div>
     </div>
 </section>
+
+<script>
+
+    /**
+ * Tharaa Store Features Component
+ */
+export default function initThStoreFeatures() {
+    const sections = document.querySelectorAll('[data-th-store-features]');
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+        const track = section.querySelector('[data-th-store-features-track]');
+        if (!track) return;
+
+        const cards = section.querySelectorAll('.th-store-features__card');
+        const dots = section.querySelectorAll('.th-store-features__dot');
+        const thumbs = section.querySelectorAll('.th-store-features__thumb');
+        const counter = section.querySelector('[data-th-store-features-current]');
+        const mobileNavs = section.querySelectorAll('[data-th-store-features-nav]');
+        const total = cards.length;
+        if (!total) return;
+
+        let activeIndex = 0;
+        let isMobile = window.innerWidth < 1024;
+        const defaultStyle = section.dataset.navStyle === 'thumbnails' ? 'thumbnails' : 'dots';
+
+        const setActive = (index) => {
+            activeIndex = Math.max(0, Math.min(index, total - 1));
+            dots.forEach((dot, i) => dot.classList.toggle('is-active', i === activeIndex));
+            thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === activeIndex));
+            if (counter) counter.textContent = String(activeIndex + 1);
+        };
+
+        const scrollToCard = (index) => {
+            if (!isMobile) return;
+            const card = cards[index];
+            if (!card) return;
+
+            const offset = card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+            track.scrollTo({ left: offset, behavior: 'smooth' });
+            setActive(index);
+        };
+
+        const updateVisibleNav = () => {
+            mobileNavs.forEach((nav) => nav.classList.add('th-store-features__mobile-nav--hidden'));
+            if (!isMobile) return;
+
+            const activeNav = section.querySelector(`[data-th-store-features-nav="${defaultStyle}"]`);
+            activeNav?.classList.remove('th-store-features__mobile-nav--hidden');
+        };
+
+        const updateFromScroll = app.helpers.debounce(() => {
+            if (!isMobile) return;
+
+            const center = track.getBoundingClientRect().left + track.clientWidth / 2;
+            let nextIndex = 0;
+            let minDistance = Infinity;
+
+            cards.forEach((card, index) => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const distance = Math.abs(cardCenter - center);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nextIndex = index;
+                }
+            });
+
+            setActive(nextIndex);
+        }, 120);
+
+        track.addEventListener('scroll', updateFromScroll);
+
+        section.querySelectorAll('[data-go-to]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const index = Number(button.dataset.goTo || 0);
+                scrollToCard(index);
+            });
+        });
+
+        window.addEventListener('resize', app.helpers.debounce(() => {
+            isMobile = window.innerWidth < 1024;
+            updateVisibleNav();
+        }, 200));
+
+        updateVisibleNav();
+        setActive(0);
+    });
+}
+
+</script>
 {% endif %}
