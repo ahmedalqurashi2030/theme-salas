@@ -1,0 +1,34 @@
+{# -------------------------------------------------------
+  Component: th-moving-announcement-bar
+  Path: home.th-moving-announcement-bar
+-------------------------------------------------------- #}
+
+{% set announcement_text = component.announcement_text|default('')|striptags|trim %}
+{% set announcement_link = component.announcement_link|default('')|trim %}
+{% set bg_color = component.bg_color|default('#000000')|trim %}
+{% set text_color = component.text_color|default('#ffffff')|trim %}
+{% set custom_class = component.custom_class|default('')|trim %}
+
+{% if announcement_text %}
+	<section
+		class="th-moving-announcement-bar {{ custom_class }}"
+		aria-label="{{ trans('common.announcements')|default('Announcements') }}"
+		style="--th-announcement-bg: {{ bg_color }}; --th-announcement-text: {{ text_color }};">
+		<div class="th-moving-announcement-bar__inner">
+			<div class="th-moving-announcement-bar__track">
+				{% for i in 1..8 %}
+					{% if announcement_link %}
+						<a href="{{ announcement_link }}" class="th-moving-announcement-bar__item" {{ i > 1 ? 'tabindex="-1" aria-hidden="true"' : '' }}>
+							<span>{{ announcement_text }}</span>
+						</a>
+					{% else %}
+						<span class="th-moving-announcement-bar__item" {{ i > 1 ? 'aria-hidden="true"' : '' }}>
+							<span>{{ announcement_text }}</span>
+						</span>
+					{% endif %}
+					<span class="th-moving-announcement-bar__separator" aria-hidden="true">•</span>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+{% endif %}
