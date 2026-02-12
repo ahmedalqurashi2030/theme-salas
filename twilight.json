@@ -3049,15 +3049,6 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "title",
-                    "type": "static",
-                    "format": "title",
-                    "label": "Title",
-                    "value": null,
-                    "variant": "h1",
-                    "icon": "sicon-format-text"
-                },
-                {
                     "id": "show_featured_card",
                     "type": "boolean",
                     "format": "switch",
@@ -3066,7 +3057,7 @@
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
                     "value": true,
-                    "selected": true,
+                    "selected": false,
                     "required": false
                 },
                 {
