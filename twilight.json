@@ -3173,7 +3173,7 @@
             "path": "home.th-fourth-banner",
             "fields": [
                 {
-                    "id": "\"iaadadat_alqsm",
+                    "id": "title",
                     "type": "static",
                     "format": "title",
                     "label": "إعدادات القسم",
