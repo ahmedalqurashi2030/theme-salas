@@ -3180,7 +3180,111 @@
             },
             "icon": "sicon-store",
             "path": "home.th-quad-banner",
-            "fields": []
+            "fields": [
+                {
+                    "id": "\"iaadadat_alqsm",
+                    "type": "static",
+                    "format": "title",
+                    "label": "\"إعدادات القسم",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "description",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": "يعرض 4 بنرات بجانب بعضها مع تحكم كامل بالعرض والمسافات والاستجابة.",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "uniform_height",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "جعل جميع البنرات بنفس الارتفاع",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "gap",
+                    "type": "number",
+                    "format": "float",
+                    "inputType": "number",
+                    "label": "المسافة بين البنرات (بكسل)",
+                    "description": "المسافة بين البنرات (بكسل)",
+                    "labelHTML": null,
+                    "placeholder": "Input a number between -10.10 and 100.",
+                    "icon": "sicon-hashtag",
+                    "value": 16,
+                    "required": false,
+                    "step": 0.1,
+                    "minimum": "0",
+                    "maximum": "50"
+                },
+                {
+                    "id": "banners",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "البنرات",
+                    "description": null,
+                    "labelHTML": null,
+                    "item_label": null,
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "banners.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "صورة البنر",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": null,
+                            "required": true
+                        },
+                        {
+                            "id": "banners.url",
+                            "type": "string",
+                            "format": "url",
+                            "inputType": "url",
+                            "label": "الرابط",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://salla.sa",
+                            "icon": "sicon-link",
+                            "value": null,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
+                            "id": "banners.alt_txt",
+                            "type": "string",
+                            "format": "text",
+                            "label": "نص بديل للصورة (SEO)",
+                            "description": "نص بديل لتحسين محركات البحث",
+                            "labelHTML": null,
+                            "placeholder": "Placeholder text ..",
+                            "icon": "sicon-format-text-alt",
+                            "value": null,
+                            "multilanguage": false,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        }
+                    ],
+                    "value": [],
+                    "minLength": "4",
+                    "maxLength": "4"
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
