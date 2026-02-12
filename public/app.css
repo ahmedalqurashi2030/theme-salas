@@ -27846,10 +27846,6 @@ body.drawer-open {
         font-size: 1rem;
         line-height: 1.5rem;
     }
-    .md\:text-xl{
-        font-size: 1.25rem;
-        line-height: 1.75rem;
-    }
     .md\:first\:pt-24:first-child{
         padding-top: 6rem;
     }
