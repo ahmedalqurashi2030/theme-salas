@@ -1,0 +1,47 @@
+{# =========================================================
+  Tharaa | Quad Banner (Home Component)
+  - Compatible with twilight.json path: home.th-fourth-banner
+========================================================= #}
+
+{% set mobile_two_columns = component.mobile_two_columns ?? true %}
+{% set uniform_height = component.uniform_height ?? true %}
+{% set gap = component.gap ?? 16 %}
+{% set banners = component.banners ?? [] %}
+
+{% if banners|length %}
+  <section class="s-block th-banners th-banners--quad">
+    <div class="th-banners__container">
+      <div class="th-banners__grid th-banners__grid--4 {{ mobile_two_columns ? 'th-banners__grid--mobile-two' : '' }} {{ uniform_height ? 'th-banners__grid--uniform' : '' }}" style="--th-gap: {{ gap }}px;">
+
+        {% for banner in banners|slice(0, 4) %}
+          {% set img = banner['banners.image'] ?? banner.image ?? null %}
+          {% set url = banner['banners.url'] ?? banner.url ?? '' %}
+          {% set alt_txt = banner['banners.alt_txt'] ?? banner.alt_txt ?? '' %}
+
+          {% if img and img.url is defined %}
+            {% set img = img.url %}
+          {% endif %}
+          {% if img and img.original is defined %}
+            {% set img = img.original %}
+          {% endif %}
+
+          {% if img %}
+            {% if url %}
+              <a href="{{ url }}" class="th-banner" aria-label="{{ alt_txt|default('banner-' ~ loop.index) }}">
+            {% else %}
+              <div class="th-banner">
+            {% endif %}
+
+            <img class="th-banner__img" src="{{ img }}" alt="{{ alt_txt|default('') }}" loading="{{ loop.first ? 'eager' : 'lazy' }}" decoding="async" fetchpriority="{{ loop.first ? 'high' : 'auto' }}">
+
+            {% if url %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
