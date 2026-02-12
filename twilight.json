@@ -3164,18 +3164,6 @@
                             "icon": "sicon-user-circle",
                             "value": "sicon-store",
                             "required": false
-                        },
-                        {
-                            "id": "faq_items.enable_schema",
-                            "type": "boolean",
-                            "format": "switch",
-                            "label": "تحسين الظهور في محركات البحث",
-                            "description": "تحسين الظهور في Google (FAQ Schema)",
-                            "labelHTML": null,
-                            "icon": "sicon-toggle-off",
-                            "value": true,
-                            "selected": false,
-                            "required": false
                         }
                     ],
                     "value": [],
