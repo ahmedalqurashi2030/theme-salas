@@ -132,3 +132,8 @@
     min-height: auto;
   }
 }
+
+
+.tharaa-banners-slider .tharaa-banners-slider__slider .swiper:where([dir="rtl"], [dir="rtl"] *) {
+  padding-left: 0 !important;
+}
