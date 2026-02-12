@@ -21,7 +21,7 @@
 	{% set multiple = banners|length > 1 %}
 
 	{# Swiper config via slider-config #}
-	{% set sliderConfig = {
+	{% set slider_config = {
     "slidesPerView": 1,
     "spaceBetween": 0,
     "centeredSlides": false,
@@ -33,7 +33,7 @@
 	<section class="s-block tharaa-banners-slider {{ custom_class }}{{ full_width ? ' is-fullwidth' : '' }}{{ rounded ? ' is-rounded' : '' }}">
 		<div class="tharaa-banners-slider__wrap{{ full_width ? ' tharaa-banners-slider__wrap--full' : ' container' }}">
 
-			<salla-slider class="tharaa-banners-slider__slider" type="carousel" slides-per-view="1" show-controls="{{ (show_arrows and multiple) ? 'true' : 'false' }}" {% if show_arrows and multiple %} controls-outer arrows-centered {% endif %} auto-play="{{ (autoplay and multiple) ? 'true' : 'false' }}" loop="{{ multiple ? 'true' : 'false' }}" slider-config='{{ sliderConfig|json_encode|e("html_attr") }}'>
+			<salla-slider class="tharaa-banners-slider__slider" type="carousel" slides-per-view="1" show-controls="{{ (show_arrows and multiple) ? 'true' : 'false' }}" {% if show_arrows and multiple %} controls-outer arrows-centered {% endif %} auto-play="{{ (autoplay and multiple) ? 'true' : 'false' }}" loop="{{ multiple ? 'true' : 'false' }}" slider-config='{{ slider_config|json_encode|e("html_attr") }}'>
 				{% set rendered = 0 %}
 
 				{% for banner in banners %}
