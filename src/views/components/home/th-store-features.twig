@@ -140,11 +140,14 @@
             const card = cards[index];
             if (!card) return;
 
-            // Works in both LTR/RTL and avoids manual scrollLeft math issues
-            card.scrollIntoView({
-                behavior: 'smooth',
-                inline: 'center',
-                block: 'nearest'
+            // Robust centering for both LTR/RTL (works better than offset/scrollLeft math)
+            const trackRect = track.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
+            const deltaX = (cardRect.left + cardRect.width / 2) - (trackRect.left + trackRect.width / 2);
+
+            track.scrollBy({
+                left: deltaX,
+                behavior: 'smooth'
             });
 
             setActive(index);
@@ -181,7 +184,8 @@
         track.addEventListener('scroll', updateFromScroll);
 
         section.querySelectorAll('[data-go-to]').forEach((button) => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
                 const index = Number(button.dataset.goTo || 0);
                 scrollToCard(index);
             });
