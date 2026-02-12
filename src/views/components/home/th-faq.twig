@@ -1,22 +1,29 @@
 {#
   Tharaa FAQ Section (Salla Theme - Twig)
-  Expected settings keys (as provided):
+  Expected settings keys:
   - section_title
   - section_sub
   - show_featured_card
   - featured_badge
   - featured_title
   - featured_content
-  - faq_items (collection: question, answer, Icon, enable_schema)
+  - faq_items (collection: question, answer, icon, enable_schema)
 #}
 
-{% set section_title = section.settings.section_title|default('الأسئلة الشائعة') %}
-{% set section_sub = section.settings.section_sub|default('نجيب هنا على أكثر الأسئلة التي تصلنا من عملاء ثراء.') %}
-{% set show_featured_card = section.settings.show_featured_card ?? true %}
-{% set featured_badge = section.settings.featured_badge|default('موضوع مميز') %}
-{% set featured_title = section.settings.featured_title|default('كيف تعمل سياسة الاسترجاع للمنتجات الفاخرة؟') %}
-{% set featured_content = section.settings.featured_content|default('يمكنك استرجاع المنتج خلال 30 يومًا من تاريخ الاستلام وفق الشروط الموضحة في سياسة المتجر.') %}
-{% set faq_items = section.settings.faq_items|default([]) %}
+{#
+  Note:
+  Twilight home components receive values through `component`.
+  Keep fallback to `section.settings` for backward compatibility.
+#}
+{% set source = component|default(section.settings|default({})) %}
+
+{% set section_title = source.section_title|default('الأسئلة الشائعة') %}
+{% set section_sub = source.section_sub|default('نجيب هنا على أكثر الأسئلة التي تصلنا من عملاء ثراء.') %}
+{% set show_featured_card = source.show_featured_card ?? true %}
+{% set featured_badge = source.featured_badge|default('موضوع مميز') %}
+{% set featured_title = source.featured_title|default('كيف تعمل سياسة الاسترجاع للمنتجات الفاخرة؟') %}
+{% set featured_content = source.featured_content|default('يمكنك استرجاع المنتج خلال 30 يومًا من تاريخ الاستلام وفق الشروط الموضحة في سياسة المتجر.') %}
+{% set faq_items = source.faq_items|default([]) %}
 
 {% set faq_count = faq_items|length %}
 {% set split_index = (faq_count / 2)|round(0, 'ceil') %}
@@ -58,16 +65,19 @@
         {% else %}
           <div class="th-faq__list">
             {% for item in left_faq_items %}
+              {% set item_question = item.question|default(attribute(item, 'faq_items.question')|default('')) %}
+              {% set item_answer = item.answer|default(attribute(item, 'faq_items.answer')|default('')) %}
+              {% set item_icon = item.icon|default(item.Icon|default(attribute(item, 'faq_items.icon')|default(attribute(item, 'faq_items.Icon')|default('sicon-help')))) %}
               <article class="th-faq__item">
                 <details>
                   <summary>
                     <span class="th-faq__item-heading">
-                      <span class="th-faq__item-icon {{ item.Icon|default('sicon-help') }}"></span>
-                      <span class="th-faq__item-question">{{ item.question|default('') }}</span>
+                      <span class="th-faq__item-icon {{ item_icon }}"></span>
+                      <span class="th-faq__item-question">{{ item_question }}</span>
                     </span>
                     <span class="th-faq__item-arrow sicon-keyboard_arrow_down"></span>
                   </summary>
-                  <div class="th-faq__item-answer">{{ item.answer|default('') }}</div>
+                  <div class="th-faq__item-answer">{{ item_answer }}</div>
                 </details>
               </article>
             {% endfor %}
@@ -78,16 +88,19 @@
       <div class="th-faq__right">
         <div class="th-faq__list">
           {% for item in right_faq_items %}
+            {% set item_question = item.question|default(attribute(item, 'faq_items.question')|default('')) %}
+            {% set item_answer = item.answer|default(attribute(item, 'faq_items.answer')|default('')) %}
+            {% set item_icon = item.icon|default(item.Icon|default(attribute(item, 'faq_items.icon')|default(attribute(item, 'faq_items.Icon')|default('sicon-help')))) %}
             <article class="th-faq__item">
               <details>
                 <summary>
                   <span class="th-faq__item-heading">
-                    <span class="th-faq__item-icon {{ item.Icon|default('sicon-help') }}"></span>
-                    <span class="th-faq__item-question">{{ item.question|default('') }}</span>
+                    <span class="th-faq__item-icon {{ item_icon }}"></span>
+                    <span class="th-faq__item-question">{{ item_question }}</span>
                   </span>
                   <span class="th-faq__item-arrow sicon-keyboard_arrow_down"></span>
                 </summary>
-                <div class="th-faq__item-answer">{{ item.answer|default('') }}</div>
+                <div class="th-faq__item-answer">{{ item_answer }}</div>
               </details>
             </article>
           {% else %}
@@ -100,13 +113,16 @@
 
   {% set schema_entities = [] %}
   {% for item in faq_items %}
-    {% if item.enable_schema %}
+    {% set item_question = item.question|default(attribute(item, 'faq_items.question')|default('')) %}
+    {% set item_answer = item.answer|default(attribute(item, 'faq_items.answer')|default('')) %}
+    {% set enable_schema = item.enable_schema ?? attribute(item, 'faq_items.enable_schema') %}
+    {% if enable_schema and item_question and item_answer %}
       {% set schema_entities = schema_entities|merge([{
         '@type': 'Question',
-        'name': item.question|default(''),
+        'name': item_question,
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': item.answer|default('')
+          'text': item_answer
         }
       }]) %}
     {% endif %}
