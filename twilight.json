@@ -3185,7 +3185,7 @@
                     "id": "\"iaadadat_alqsm",
                     "type": "static",
                     "format": "title",
-                    "label": "\"إعدادات القسم",
+                    "label": "إعدادات القسم",
                     "value": null,
                     "variant": "h1",
                     "icon": "sicon-format-text"
