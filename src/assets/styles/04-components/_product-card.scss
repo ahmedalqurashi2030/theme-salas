@@ -591,3 +591,83 @@
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+  /* ============================================
+     Fixed Products Section (Scoped UI/UX polish)
+     ============================================ */
+  .th-fixed-products {
+    margin-top: 1rem;
+
+    &__title {
+      margin-bottom: 1.25rem;
+      align-items: center;
+
+      h2 {
+        font-size: clamp(1.15rem, 1.8vw, 1.65rem);
+        font-weight: 800;
+        letter-spacing: -.01em;
+      }
+    }
+
+    &__display-all {
+      font-size: .92rem;
+      font-weight: 600;
+    }
+
+    &__list {
+      .s-products-list-wrapper {
+        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        @media (min-width: 768px) {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        @media (min-width: 1024px) {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @media (min-width: 1280px) {
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+      }
+
+      .s-product-card-entry {
+        border-radius: 14px;
+        border: 1px solid #f0f0f0;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+      }
+
+      .s-product-card-image,
+      .s-product-card-image-full {
+        min-height: 185px;
+        padding: 16px 12px 8px;
+
+        img {
+          max-height: 165px;
+        }
+      }
+
+      .s-product-card-content {
+        padding: 10px 12px 14px;
+      }
+
+      .s-product-card-content-title a {
+        height: auto;
+        min-height: 2.9em;
+      }
+
+      .s-product-card-price-row {
+        margin-top: .45rem;
+      }
+    }
+  }

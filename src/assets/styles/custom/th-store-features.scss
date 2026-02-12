@@ -147,15 +147,7 @@
         0 16px 28px rgba(20, 20, 20, .08);
     }
 
-    &.is-featured {
-      background:
-        linear-gradient(180deg, #fff, #fff8ea 100%),
-        linear-gradient(135deg, rgba(212, 175, 55, .08), transparent 72%);
-      border: 1px solid rgba(212, 175, 55, .4);
-      box-shadow:
-        0 24px 52px -18px rgba(212, 175, 55, .35),
-        0 14px 24px rgba(20, 20, 20, .07);
-    }
+   
 
     @media (max-width: 767px) {
       border-radius: 1.35rem;
@@ -234,28 +226,7 @@
     }
   }
 
-  &__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: .25rem;
-    margin-top: .8rem;
-    margin-bottom: .95rem;
-    padding: .28rem .88rem;
-    border-radius: 999px;
-    background: var(--th-gold-soft);
-    color: #a57a17;
-    border: 1px solid rgba(212, 175, 55, .2);
-    font-size: .78rem;
-    font-weight: 800;
-    letter-spacing: .04em;
-
-    @media (min-width: 768px) {
-      margin-top: 1.25rem;
-      margin-bottom: 1rem;
-      font-size: .86rem;
-    }
-  }
-
+ 
   &__card-title {
     margin: 0 0 .9rem;
     font-size: clamp(1.25rem, 1.7vw, 1.9rem);
