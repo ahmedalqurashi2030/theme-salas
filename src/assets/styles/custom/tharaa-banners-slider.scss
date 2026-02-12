@@ -105,11 +105,33 @@
   transform: scale(1.02);
 }
 
+
+.tharaa-banners-slider__slider .swiper-pagination {
+  bottom: 12px !important;
+}
+
+.tharaa-banners-slider__slider .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  opacity: 0.45;
+  background: #fff;
+}
+
+.tharaa-banners-slider__slider .swiper-pagination-bullet-active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 /* Empty state */
 .tharaa-banners-slider__empty {
+  display: grid;
+  place-items: center;
+  min-height: 140px;
   padding: 12px;
   text-align: center;
   opacity: 0.7;
+  background: #f8f8f8;
+  border-radius: var(--tharaa-banner-radius-mobile);
 }
 
 /* Mobile */
