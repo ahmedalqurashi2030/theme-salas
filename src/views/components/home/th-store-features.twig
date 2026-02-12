@@ -101,13 +101,17 @@
 </section>
 
 <script>
-
-    /**
- * Tharaa Store Features Component
- */
-export default function initThStoreFeatures() {
+(() => {
     const sections = document.querySelectorAll('[data-th-store-features]');
     if (!sections.length) return;
+
+    const debounce = (fn, wait = 120) => {
+        let timeout;
+        return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => fn(...args), wait);
+        };
+    };
 
     sections.forEach((section) => {
         const track = section.querySelector('[data-th-store-features-track]');
@@ -133,12 +137,16 @@ export default function initThStoreFeatures() {
         };
 
         const scrollToCard = (index) => {
-            if (!isMobile) return;
             const card = cards[index];
             if (!card) return;
 
-            const offset = card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
-            track.scrollTo({ left: offset, behavior: 'smooth' });
+            // Works in both LTR/RTL and avoids manual scrollLeft math issues
+            card.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest'
+            });
+
             setActive(index);
         };
 
@@ -147,10 +155,10 @@ export default function initThStoreFeatures() {
             if (!isMobile) return;
 
             const activeNav = section.querySelector(`[data-th-store-features-nav="${defaultStyle}"]`);
-            activeNav?.classList.remove('th-store-features__mobile-nav--hidden');
+            if (activeNav) activeNav.classList.remove('th-store-features__mobile-nav--hidden');
         };
 
-        const updateFromScroll = app.helpers.debounce(() => {
+        const updateFromScroll = debounce(() => {
             if (!isMobile) return;
 
             const center = track.getBoundingClientRect().left + track.clientWidth / 2;
@@ -179,7 +187,7 @@ export default function initThStoreFeatures() {
             });
         });
 
-        window.addEventListener('resize', app.helpers.debounce(() => {
+        window.addEventListener('resize', debounce(() => {
             isMobile = window.innerWidth < 1024;
             updateVisibleNav();
         }, 200));
@@ -187,7 +195,6 @@ export default function initThStoreFeatures() {
         updateVisibleNav();
         setActive(0);
     });
-}
-
+})();
 </script>
 {% endif %}
