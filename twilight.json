@@ -2420,7 +2420,7 @@
                     "labelHTML": null,
                     "placeholder": "Input a number between -10.10 and 100.",
                     "icon": "sicon-hashtag",
-                    "value": 10,
+                    "value": 16,
                     "required": false,
                     "step": 0.1,
                     "minimum": "0",
