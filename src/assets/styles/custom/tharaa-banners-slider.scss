@@ -37,6 +37,16 @@
   margin-bottom: 0;
 }
 
+/* منع أي padding داخلي قد يُظهر جزء من السلايد التالي */
+.tharaa-banners-slider__slider .swiper {
+  overflow: hidden;
+  padding-inline: 0 !important;
+}
+
+.tharaa-banners-slider__slider .swiper-wrapper {
+  align-items: stretch;
+}
+
 /* تأكيد ملء الشرائح للمساحة */
 .tharaa-banners-slider__slider .swiper,
 .tharaa-banners-slider__slider .swiper-wrapper,
@@ -46,6 +56,8 @@
 
 .tharaa-banners-slider__slide {
   width: 100%;
+  min-width: 100%;
+  flex: 0 0 100%;
   display: block;
   height: 100%;
 }
@@ -107,19 +119,43 @@
 
 
 .tharaa-banners-slider__slider .swiper-pagination {
-  bottom: 12px !important;
+  inset-inline-start: auto !important;
+  inset-inline-end: 14px !important;
+  left: auto !important;
+  right: 14px !important;
+  bottom: 14px !important;
+  width: auto !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  z-index: 3;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(4px);
 }
 
 .tharaa-banners-slider__slider .swiper-pagination-bullet {
-  width: 8px;
-  height: 8px;
-  opacity: 0.45;
-  background: #fff;
+  width: 9px;
+  height: 9px;
+  margin: 0 !important;
+  border-radius: 999px;
+  opacity: 1;
+  background: rgba(120, 120, 120, 0.45);
+  transition: transform .25s ease, width .25s ease, background-color .25s ease;
+}
+
+.tharaa-banners-slider__slider .swiper-pagination-bullet:hover {
+  transform: translateY(-1px);
+  background: rgba(90, 90, 90, 0.65);
 }
 
 .tharaa-banners-slider__slider .swiper-pagination-bullet-active {
   opacity: 1;
-  transform: scale(1.1);
+  width: 22px;
+  transform: none;
+  background: #6f6f6f;
 }
 
 /* Empty state */
@@ -153,9 +189,28 @@
     aspect-ratio: var(--tharaa-banner-mobile-ratio);
     min-height: auto;
   }
+  .tharaa-banners-slider__slider .swiper-pagination {
+    inset-inline-end: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    gap: 6px;
+    padding: 4px 7px;
+  }
+
+  .tharaa-banners-slider__slider .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+  }
+
+  .tharaa-banners-slider__slider .swiper-pagination-bullet-active {
+    width: 18px;
+  }
+
 }
 
 
 .tharaa-banners-slider .tharaa-banners-slider__slider .swiper:where([dir="rtl"], [dir="rtl"] *) {
+  padding-inline: 0 !important;
   padding-left: 0 !important;
+  padding-right: 0 !important;
 }
