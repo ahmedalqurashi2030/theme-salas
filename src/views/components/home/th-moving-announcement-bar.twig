@@ -47,6 +47,8 @@
         color: var(--th-announcement-color);
         border-bottom: 1px solid rgba(255, 255, 255, .2);
         min-height: 42px;
+        display: flex;
+        align-items: center;
       }
 
       #{{ section_id }} .th-moving-announcement-bar__viewport {
@@ -54,14 +56,18 @@
         overflow: hidden;
         display: flex;
         align-items: center;
+        justify-content: center;
+        min-height: 42px;
       }
 
       #{{ section_id }} .th-moving-announcement-bar__track {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 2.5rem;
         white-space: nowrap;
         min-width: max-content;
+        margin-inline: auto;
         padding-inline: 1rem;
         animation: th-moving-announcement-{{ section.id }} 26s linear infinite;
         will-change: transform;
@@ -74,11 +80,13 @@
       #{{ section_id }} .th-moving-announcement-bar__item {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: .5rem;
         color: inherit;
         font-size: .9rem;
         font-weight: 600;
-        line-height: 1;
+        line-height: 1.4;
+        min-height: 42px;
         text-decoration: none;
       }
 
