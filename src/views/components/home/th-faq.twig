@@ -1,0 +1,142 @@
+{#
+  Tharaa FAQ Section (Salla Theme - Twig)
+  Expected settings keys (as provided):
+  - section_title
+  - section_sub
+  - show_featured_card
+  - featured_badge
+  - featured_title
+  - featured_content
+  - faq_items (collection: question, answer, Icon, enable_schema)
+#}
+
+{% set section_title = section.settings.section_title|default('الأسئلة الشائعة') %}
+{% set section_sub = section.settings.section_sub|default('نجيب هنا على أكثر الأسئلة التي تصلنا من عملاء ثراء.') %}
+{% set show_featured_card = section.settings.show_featured_card ?? true %}
+{% set featured_badge = section.settings.featured_badge|default('موضوع مميز') %}
+{% set featured_title = section.settings.featured_title|default('كيف تعمل سياسة الاسترجاع للمنتجات الفاخرة؟') %}
+{% set featured_content = section.settings.featured_content|default('يمكنك استرجاع المنتج خلال 30 يومًا من تاريخ الاستلام وفق الشروط الموضحة في سياسة المتجر.') %}
+{% set faq_items = section.settings.faq_items|default([]) %}
+
+{% set faq_count = faq_items|length %}
+{% set split_index = (faq_count / 2)|round(0, 'ceil') %}
+
+{% if show_featured_card %}
+  {% set left_faq_items = [] %}
+  {% set right_faq_items = faq_items %}
+{% else %}
+  {% set left_faq_items = faq_items|slice(0, split_index) %}
+  {% set right_faq_items = faq_items|slice(split_index) %}
+{% endif %}
+
+<section class="th-faq" id="tharaa-faq-{{ section.id }}">
+  <div class="th-faq__container container">
+    <header class="th-faq__header">
+      <h2 class="th-faq__title">{{ section_title }}</h2>
+      {% if section_sub %}
+        <p class="th-faq__subtitle">{{ section_sub }}</p>
+      {% endif %}
+    </header>
+
+    <div class="th-faq__grid{% if not show_featured_card %} th-faq__grid--without-featured{% endif %}">
+      <aside class="th-faq__left">
+        {% if show_featured_card %}
+          <article class="th-faq__featured-card">
+            <div class="th-faq__featured-head">
+              <span class="th-faq__featured-icon sicon-star"></span>
+              <span class="th-faq__featured-badge">{{ featured_badge }}</span>
+            </div>
+
+            {% if featured_title %}
+              <h3 class="th-faq__featured-title">{{ featured_title }}</h3>
+            {% endif %}
+
+            {% if featured_content %}
+              <p class="th-faq__featured-content">{{ featured_content }}</p>
+            {% endif %}
+          </article>
+        {% else %}
+          <div class="th-faq__list">
+            {% for item in left_faq_items %}
+              <article class="th-faq__item">
+                <details>
+                  <summary>
+                    <span class="th-faq__item-heading">
+                      <span class="th-faq__item-icon {{ item.Icon|default('sicon-help') }}"></span>
+                      <span class="th-faq__item-question">{{ item.question|default('') }}</span>
+                    </span>
+                    <span class="th-faq__item-arrow sicon-keyboard_arrow_down"></span>
+                  </summary>
+                  <div class="th-faq__item-answer">{{ item.answer|default('') }}</div>
+                </details>
+              </article>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </aside>
+
+      <div class="th-faq__right">
+        <div class="th-faq__list">
+          {% for item in right_faq_items %}
+            <article class="th-faq__item">
+              <details>
+                <summary>
+                  <span class="th-faq__item-heading">
+                    <span class="th-faq__item-icon {{ item.Icon|default('sicon-help') }}"></span>
+                    <span class="th-faq__item-question">{{ item.question|default('') }}</span>
+                  </span>
+                  <span class="th-faq__item-arrow sicon-keyboard_arrow_down"></span>
+                </summary>
+                <div class="th-faq__item-answer">{{ item.answer|default('') }}</div>
+              </details>
+            </article>
+          {% else %}
+            <p class="th-faq__empty">لا توجد أسئلة مضافة حاليًا.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% set schema_entities = [] %}
+  {% for item in faq_items %}
+    {% if item.enable_schema %}
+      {% set schema_entities = schema_entities|merge([{
+        '@type': 'Question',
+        'name': item.question|default(''),
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': item.answer|default('')
+        }
+      }]) %}
+    {% endif %}
+  {% endfor %}
+
+  {% if schema_entities|length %}
+    <script type="application/ld+json">
+      {{ {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': schema_entities
+      }|json_encode(constant('JSON_UNESCAPED_UNICODE'))|raw }}
+    </script>
+  {% endif %}
+
+  <script>
+    (function () {
+      var root = document.getElementById('tharaa-faq-{{ section.id }}');
+      if (!root) return;
+
+      var detailsNodes = root.querySelectorAll('.th-faq__item details');
+      detailsNodes.forEach(function (target) {
+        target.addEventListener('toggle', function () {
+          if (!target.open) return;
+
+          detailsNodes.forEach(function (node) {
+            if (node !== target) node.removeAttribute('open');
+          });
+        });
+      });
+    })();
+  </script>
+</section>

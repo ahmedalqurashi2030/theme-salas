@@ -1,0 +1,184 @@
+$th-primary: #BFA15F;
+$th-primary-dark: #9A8146;
+$th-text: #2D2A26;
+$th-muted: #8C8A85;
+$th-border: #ECE7DE;
+$th-bg: #FCFCFA;
+$th-white: #FFFFFF;
+
+.th-faq {
+  padding: 3rem 0;
+  background: $th-bg;
+  color: $th-text;
+
+  &__container {
+    max-width: 1200px;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  &__title {
+    margin: 0 0 .75rem;
+    font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.3;
+  }
+
+  &__subtitle {
+    margin: 0 auto;
+    color: $th-muted;
+    max-width: 700px;
+    line-height: 1.9;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media (min-width: 1024px) {
+      grid-template-columns: 5fr 7fr;
+      gap: 1.5rem;
+    }
+
+    &--without-featured {
+      @media (min-width: 1024px) {
+        grid-template-columns: 5fr 7fr;
+      }
+    }
+  }
+
+  &__list {
+    display: grid;
+    gap: .9rem;
+  }
+
+  &__featured-card {
+    background: $th-white;
+    border: 1px solid rgba($th-primary, .4);
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(45, 42, 38, .06);
+    padding: 1.5rem;
+
+    @media (min-width: 768px) {
+      padding: 2rem;
+    }
+  }
+
+  &__featured-head {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    margin-bottom: 1rem;
+  }
+
+  &__featured-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: .55rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $th-white;
+    background: linear-gradient(135deg, $th-primary, $th-primary-dark);
+  }
+
+  &__featured-badge {
+    color: $th-primary-dark;
+    font-size: .8rem;
+    font-weight: 800;
+  }
+
+  &__featured-title {
+    margin: 0 0 .75rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+  }
+
+  &__featured-content {
+    margin: 0;
+    color: $th-muted;
+    line-height: 1.9;
+  }
+
+  &__item {
+    background: $th-white;
+    border: 1px solid $th-border;
+    border-radius: 12px;
+    transition: border-color .2s ease, box-shadow .2s ease;
+
+    &:hover {
+      border-color: rgba($th-primary, .5);
+      box-shadow: 0 8px 22px rgba(45, 42, 38, .08);
+    }
+
+    details > summary {
+      list-style: none;
+    }
+
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1rem;
+    }
+
+    details[open] .th-faq__item-arrow {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__item-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+  }
+
+  &__item-icon {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #F6F2E8;
+    color: $th-primary-dark;
+    font-size: 1rem;
+  }
+
+  &__item-question {
+    font-weight: 700;
+    line-height: 1.7;
+  }
+
+  &__item-arrow {
+    color: $th-muted;
+    transition: transform .25s ease;
+  }
+
+  &__item-answer {
+    border-top: 1px dashed $th-border;
+    color: $th-muted;
+    line-height: 1.9;
+    padding: .75rem 1rem 1rem 3.85rem;
+  }
+
+  &__empty {
+    text-align: center;
+    color: $th-muted;
+    margin: 0;
+    padding: 1rem;
+    background: $th-white;
+    border: 1px dashed $th-border;
+    border-radius: 10px;
+  }
+}
