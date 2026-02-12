@@ -3191,6 +3191,18 @@
                     "icon": "sicon-format-size"
                 },
                 {
+                    "id": "mobile_two_columns",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "عرض بنرين في الصف (الهاتف)",
+                    "description": "عند التفعيل يتم عرض البنرات بعمودين في الجوال، وعند الإيقاف يتم عرض صورة واحدة بعرض كامل.",
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
                     "id": "uniform_height",
                     "type": "boolean",
                     "format": "switch",
