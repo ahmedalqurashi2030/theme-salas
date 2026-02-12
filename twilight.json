@@ -3171,6 +3171,16 @@
                     "maxLength": "10"
                 }
             ]
+        },
+        {
+            "key": "ec73422a-6a34-492d-a309-da63c1817fe5",
+            "title": {
+                "en": "Quad Banner (Tharaa)",
+                "ar": "أربعة بنرات (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.th-quad-banner",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
