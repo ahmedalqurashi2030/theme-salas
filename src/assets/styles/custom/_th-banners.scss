@@ -1,5 +1,5 @@
 // =====================================================
-// Shared Banners Grid (Double + Quad)
+// Tharaa Shared Banners (Double + Square/Quad)
 // =====================================================
 
 .th-banners {
@@ -17,6 +17,9 @@
     display: grid;
     gap: var(--th-gap);
 
+    // ==============================
+    // Double banners section
+    // ==============================
     &--2 {
       grid-template-columns: 1fr;
 
@@ -25,6 +28,9 @@
       }
     }
 
+    // ==============================
+    // Quad banners section (square)
+    // ==============================
     &--4 {
       grid-template-columns: 1fr;
 
@@ -45,9 +51,20 @@
       }
     }
 
+    // Same height behavior differs by section type:
+    // - double banners => rectangular cards
+    // - quad banners => square cards
     &--uniform {
-      .th-banner {
-        aspect-ratio: 16 / 8;
+      &.th-banners__grid--2 {
+        .th-banner {
+          aspect-ratio: 16 / 8;
+        }
+      }
+
+      &.th-banners__grid--4 {
+        .th-banner {
+          aspect-ratio: 1 / 1;
+        }
       }
     }
 

@@ -1,105 +1,134 @@
 /* ===========================================
    Tharaa | Banners Slider (Isolated)
-   - RTL ready
-   - 1 slide per view
-   - Arrows click fix: controls-outer needs safe padding
-   - Pagination dots: spacing + styling
+   الهدف:
+   - الصورة تملأ الحاوية بالكامل بدون فراغات
+   - سلاسة أفضل في العرض والتحريك
+   - دعم ممتاز للجوال مع صورة مخصصة
 =========================================== */
 
 .tharaa-banners-slider {
   direction: rtl;
   position: relative;
   margin-top: 16px;
+
+  --tharaa-banner-ratio: 1300 / 300;
+  --tharaa-banner-mobile-ratio: 1 / 1;
+  --tharaa-banner-radius: 18px;
+  --tharaa-banner-radius-mobile: 14px;
 }
 
-/* Wrap base */
-.tharaa-banners-slider__wrap {
-  max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: 16px;
-}
 
-/* Full width */
+
 .tharaa-banners-slider__wrap--full {
   max-width: 100%;
   padding-inline: 0;
 }
 
-/* IMPORTANT: controls-outer adds arrows outside; give padding so they show + clickable */
+/* مساحة آمنة للأسهم الخارجية */
 .tharaa-banners-slider__wrap.container,
 .tharaa-banners-slider__wrap--full {
-  padding-inline: 28px;
-}
-
-@media (max-width: 768px) {
-  .tharaa-banners-slider__wrap.container,
-  .tharaa-banners-slider__wrap--full {
-    padding-inline: 14px;
-  }
+  padding-inline: 20px;
 }
 
 /* Slider root */
 .tharaa-banners-slider__slider {
   display: block;
   width: 100%;
-  margin-bottom: 14px; /* space for pagination dots */
+  margin-bottom: 0;
 }
 
-/* Each slide full width */
+/* تأكيد ملء الشرائح للمساحة */
+.tharaa-banners-slider__slider .swiper,
+.tharaa-banners-slider__slider .swiper-wrapper,
+.tharaa-banners-slider__slider .swiper-slide {
+  height: 100%;
+}
+
 .tharaa-banners-slider__slide {
   width: 100%;
+  display: block;
+  height: 100%;
 }
 
-/* Link/Box */
+.tharaa-banners-slider__slide > .tharaa-banners-slider__link,
+.tharaa-banners-slider__slide > div.tharaa-banners-slider__link {
+  height: 100%;
+}
+
+/* Banner link/box */
 .tharaa-banners-slider__link {
+  position: relative;
   display: block;
   width: 100%;
   overflow: hidden;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
+
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
   transform: translateZ(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
+  }
 }
 
 .tharaa-banners-slider.is-rounded .tharaa-banners-slider__link {
-  border-radius: 18px;
+  border-radius: var(--tharaa-banner-radius);
 }
 
 /* Media area */
 .tharaa-banners-slider__media {
+  position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 1300 / 300;
+  aspect-ratio: var(--tharaa-banner-ratio);
+  min-height: 160px;
+  overflow: hidden;
+  background: #f5f5f5;
 }
 
-/* Image fill */
+/* Fill image */
 .tharaa-banners-slider__img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transition: transform 0.45s ease;
 }
 
-/* Empty */
+.tharaa-banners-slider__link:hover .tharaa-banners-slider__img {
+  transform: scale(1.02);
+}
+
+/* Empty state */
 .tharaa-banners-slider__empty {
   padding: 12px;
   text-align: center;
   opacity: 0.7;
 }
 
-/* Mobile refinements */
+/* Mobile */
 @media (max-width: 768px) {
   .tharaa-banners-slider {
     margin-top: 12px;
   }
 
-  .tharaa-banners-slider.is-rounded .tharaa-banners-slider__link {
-    border-radius: 16px;
+  .tharaa-banners-slider__wrap.container,
+  .tharaa-banners-slider__wrap--full {
+    padding-inline: 10px;
   }
 
-  /* If mobile_image exists => square ratio */
+  .tharaa-banners-slider.is-rounded .tharaa-banners-slider__link {
+    border-radius: var(--tharaa-banner-radius-mobile);
+  }
+
   .tharaa-banners-slider__media.has-mobile {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: var(--tharaa-banner-mobile-ratio);
+    min-height: auto;
   }
 }
