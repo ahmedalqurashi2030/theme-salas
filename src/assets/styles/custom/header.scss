@@ -184,11 +184,14 @@ salla-search {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
+.s-search-input {
+    border-radius: 8rem;
+ }
 /* 3. Navigation Bar */
 .th-navbar {
-    background: #fff;
-    border-bottom: 1px solid var(--th-border-color);
-    height: 54px;
+    background: #e6effd;
+    height: 56px;
     position: relative;
     z-index: 990;
 

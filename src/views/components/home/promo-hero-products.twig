@@ -20,6 +20,17 @@
     {# نحصر الـ CSS داخل القسم حتى لا يؤثّر على بقية الثيم #}
     <style>
         .th-hero-promo {
+            background: #fff; /* Fallback */
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(213,63%,90%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(340,100%,94%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 100%, hsla(213,63%,90%,1) 0, transparent 50%), 
+                radial-gradient(at 0% 100%, hsla(340,100%,94%,1) 0, transparent 50%);
+            border-radius: 8px;
+
+
+
+
             --th-primary: #0071e3;
             --th-primary-dark: #005bb5;
             --th-text-main: #1d1d1f;
@@ -45,21 +56,13 @@
 
         /* الكارت الرئيسي */
         .th-hero-promo__card {
-            background: #fff; /* Fallback */
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(213,63%,90%,1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(340,100%,94%,1) 0, transparent 50%), 
-                radial-gradient(at 100% 100%, hsla(213,63%,90%,1) 0, transparent 50%), 
-                radial-gradient(at 0% 100%, hsla(340,100%,94%,1) 0, transparent 50%);
-            border-radius: 8px;
+
             padding: 60px 50px;
-            box-shadow: var(--th-shadow-lg);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             gap: 50px;
-            border: 1px solid rgba(255,255,255,0.8);
         }
 
         .th-hero-promo__glow {
@@ -139,7 +142,6 @@
         .th-timer {
             display: flex;
             gap: 12px;
-            margin-bottom: 35px;
         }
 
         .th-timer__item {
@@ -172,7 +174,7 @@
         .th-timer__lbl {
             font-size: 11px;
             color: #666;
-            margin-top: 3px;
+            margin-top: 1px;
         }
 
         /* الزر */
@@ -381,7 +383,6 @@
 
             .th-hero-promo__header {
                 flex-direction: column-reverse;
-                text-align: center;
             }
 
             .th-visual-col {
@@ -400,14 +401,9 @@
                 font-size: 26px;
             }
 
-            .th-subtitle {
-                margin: 0 auto 22px;
-            }
+           
 
-            .th-timer {
-                justify-content: center;
-            }
-
+           
             .th-products-list {
                 display: flex;
                 overflow-x: auto;
