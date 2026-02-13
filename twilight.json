@@ -2004,44 +2004,6 @@
                     "public": false
                 },
                 {
-                    "id": "items_per_view_mobile",
-                    "type": "items",
-                    "format": "dropdown-list",
-                    "label": "عدد العناصر الظاهرة (جوال)",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-keyboard_arrow_down",
-                    "selected": [
-                        {
-                            "label": "2",
-                            "value": "2",
-                            "key": "dea2b405-7001-4daf-a77f-898d8973a2e6"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "2",
-                            "value": "2",
-                            "key": "dea2b405-7001-4daf-a77f-898d8973a2e6"
-                        },
-                        {
-                            "label": "3",
-                            "value": "3",
-                            "key": "e85ce81d-fb5a-4c77-bfc6-8e711a134e1d"
-                        },
-                        {
-                            "label": "4",
-                            "value": "4",
-                            "key": "5d21e71d-19bd-4f14-b862-2d35f43fe4cd"
-                        }
-                    ],
-                    "source": "Manual",
-                    "multichoice": false,
-                    "searchable": false,
-                    "required": false,
-                    "public": true
-                },
-                {
                     "id": "items",
                     "type": "collection",
                     "format": "collection",
