@@ -1735,38 +1735,6 @@
                     "required": false
                 },
                 {
-                    "id": "items_per_view_mobile",
-                    "type": "items",
-                    "format": "dropdown-list",
-                    "label": "عدد العناصر الظاهرة (جوال)",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-keyboard_arrow_down",
-                    "selected": [
-                        {
-                            "label": "2",
-                            "value": "2",
-                            "key": "c82d8de6-19dc-4cef-914d-b616fc2b4d0c"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "3",
-                            "value": "3",
-                            "key": "a05bd5c9-f05a-4756-909a-2dcab1421dcd"
-                        },
-                        {
-                            "label": "2",
-                            "value": "2",
-                            "key": "c82d8de6-19dc-4cef-914d-b616fc2b4d0c"
-                        }
-                    ],
-                    "source": "Manual",
-                    "multichoice": false,
-                    "searchable": false,
-                    "required": false
-                },
-                {
                     "id": "items",
                     "type": "collection",
                     "format": "collection",
