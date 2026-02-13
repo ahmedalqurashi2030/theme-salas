@@ -3068,7 +3068,35 @@
             },
             "icon": "sicon-store",
             "path": "home.th-full-width-banner",
-            "fields": []
+            "fields": [
+                {
+                    "id": "image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صوره البنر",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://hostname.com/image.png",
+                    "icon": "sicon-image",
+                    "value": null,
+                    "required": true
+                },
+                {
+                    "id": "url",
+                    "type": "string",
+                    "format": "url",
+                    "inputType": "url",
+                    "label": "الرابط",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://salla.sa",
+                    "icon": "sicon-link",
+                    "value": null,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
