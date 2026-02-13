@@ -188,6 +188,18 @@ salla-search {
 .s-search-input {
     border-radius: 8rem;
  }
+
+
+ .s-search-icon-wrap {
+    background-color: #1c61e7;
+width: 36px;
+height: 36px;
+border-radius: 50%;
+color: #333;
+display: flex;
+align-items: center;
+justify-content: center;
+ }
 /* 3. Navigation Bar */
 .th-navbar {
     background: #e6effd;
