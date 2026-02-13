@@ -1716,7 +1716,13 @@
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-keyboard_arrow_down",
-                    "selected": [],
+                    "selected": [
+                        {
+                            "label": "6",
+                            "value": "6",
+                            "key": "d7037660-844a-46d2-a2d0-42a57e687769"
+                        }
+                    ],
                     "options": [
                         {
                             "label": "4",
@@ -1727,6 +1733,21 @@
                             "label": "5",
                             "value": "5",
                             "key": "5a9b6f3f-4d82-4289-a64f-19c393981f71"
+                        },
+                        {
+                            "label": "6",
+                            "value": "6",
+                            "key": "d7037660-844a-46d2-a2d0-42a57e687769"
+                        },
+                        {
+                            "label": "7",
+                            "value": "7",
+                            "key": "0e5b0e29-4750-4c66-9739-63909a6a92c7"
+                        },
+                        {
+                            "label": "8",
+                            "value": "8",
+                            "key": "5ac7de6c-7995-4cfc-94f2-15c15be6eb16"
                         }
                     ],
                     "source": "Manual",
