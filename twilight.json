@@ -3059,6 +3059,16 @@
                     "maxLength": "4"
                 }
             ]
+        },
+        {
+            "key": "80742114-459c-43c9-b945-742353a3089b",
+            "title": {
+                "en": "Full Width Banner (Tharaa)",
+                "ar": "بنر عريض (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.th-full-width-banner",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
