@@ -25996,7 +25996,7 @@ salla-search {
   border-radius: 8rem;
 }
 .s-search-icon-wrap {
-  background-color: #1c61e7;
+  background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -26082,11 +26082,6 @@ salla-search {
   width: 900px;
   max-width: calc(100vw - 40px);
   background: #fff;
-  border: 1px solid #e5e7eb;
-  border: 1px solid var(--th-border-color);
-  border-top: 3px solid #d4af37;
-  border-top: 3px solid var(--th-primary);
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
   border-radius: 0 0 12px 12px;
   opacity: 0;
   visibility: hidden;
