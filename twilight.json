@@ -1272,18 +1272,6 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "bg_color",
-                    "type": "string",
-                    "format": "color",
-                    "inputType": "color",
-                    "label": "لون خلفية القسم",
-                    "description": "لتغيير لون الخلفية لقسم قبل / بعد",
-                    "labelHTML": null,
-                    "icon": "sicon-format-fill",
-                    "value": "#004956",
-                    "required": false
-                },
-                {
                     "id": "before_image",
                     "type": "string",
                     "format": "image",
