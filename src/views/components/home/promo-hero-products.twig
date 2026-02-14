@@ -7,7 +7,6 @@
 {% set title           = component.title           ?? 'عروض آبل الخارقة وصلت الآن.' %}
 {% set description     = component.description     ?? 'احصل على خصومات فورية تصل إلى 20% عند شراء أجهزة مختارة.' %}
 {% set hero_image      = component.hero_image      ?? 'https://i.ibb.co/68v8zN6/Apple-Set-Transparent.png' %}
-{% set countdown_label = component.countdown_label ?? trans('components.promo_hero.countdown_label') %}
 {% set countdown_end   = component.countdown_end   ?? '' %}
 {% set show_countdown  = component.show_countdown  ?? false %}
 {# ملاحظة: show_price في JSON لكن نستخدمه هنا كـ show_rating #}
@@ -445,10 +444,8 @@
                         </p>
                     {% endif %}
 
-                    {% if show_countdown and countdown_end %}
-                        <div class="th-countdown-label">
-                            {{ countdown_label }}
-                        </div>
+                    {% if show_countdown %}
+                     
 
                         <div class="th-timer" data-end="{{ countdown_end|e('html_attr') }}">
                             <div class="th-timer__item">
