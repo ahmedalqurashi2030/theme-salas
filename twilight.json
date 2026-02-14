@@ -1192,7 +1192,7 @@
             "path": "home.before-after-hero",
             "fields": [
                 {
-                    "id": "section_sub",
+                    "id": "subtitle",
                     "type": "string",
                     "format": "text",
                     "label": "النص المميز فوق العنوان",
