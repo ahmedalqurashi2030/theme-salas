@@ -59,17 +59,18 @@
                         
                         {# حاوية الصور (للقص) #}
                         <div class="th-comparison-images">
+                              {# الطبقة الأمامية (قبل - Before) #}
+                              <div class="th-comparison-slider__layer th-comparison-slider__layer--overlay">
+                                <img src="{{ img_before }}" alt="Before">
+                                <span class="th-comparison-slider__label th-comparison-slider__label--before">{{ trans('components.comparison.before') }}</span>
+                            </div>
                             {# الطبقة الخلفية (بعد - After) #}
                             <div class="th-comparison-slider__layer th-comparison-slider__layer--base">
                                 <img src="{{ img_after }}" alt="After">
                                 <span class="th-comparison-slider__label th-comparison-slider__label--after">{{ trans('components.comparison.after') }}</span>
                             </div>
 
-                            {# الطبقة الأمامية (قبل - Before) #}
-                            <div class="th-comparison-slider__layer th-comparison-slider__layer--overlay">
-                                <img src="{{ img_before }}" alt="Before">
-                                <span class="th-comparison-slider__label th-comparison-slider__label--before">{{ trans('components.comparison.before') }}</span>
-                            </div>
+                          
                         </div>
 
                         {# المقبض (Handle) #}
