@@ -2750,7 +2750,7 @@
                     "type": "items",
                     "format": "dropdown-list",
                     "label": "طريقة عرض التنقل (موبايل)",
-                    "description": "\"اختر كيف سيتنقل الزوار بين البطاقات على الأجهزة المحمولة",
+                    "description": "اختر كيف سيتنقل الزوار بين البطاقات على الأجهزة المحمولة",
                     "labelHTML": null,
                     "icon": "sicon-keyboard_arrow_down",
                     "selected": [
@@ -2827,21 +2827,6 @@
                             "icon": "sicon-user-circle",
                             "value": "sicon-store",
                             "required": false
-                        },
-                        {
-                            "id": "features.stats_badge",
-                            "type": "string",
-                            "format": "text",
-                            "label": "شارة الإحصائية",
-                            "description": "نص قصير يظهر كبادج (مثل: 48 ساعة – 24/7)",
-                            "labelHTML": null,
-                            "placeholder": "Placeholder text ..",
-                            "icon": "sicon-format-text-alt",
-                            "value": "100% أصلي",
-                            "multilanguage": false,
-                            "required": false,
-                            "minLength": 6,
-                            "maxLength": 30
                         }
                     ],
                     "value": [],
