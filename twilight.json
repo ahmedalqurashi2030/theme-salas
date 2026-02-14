@@ -156,13 +156,6 @@
             "required": false
         },
         {
-            "id": "line_1",
-            "type": "static",
-            "format": "line",
-            "label": "Line 1",
-            "icon": "sicon-minus"
-        },
-        {
             "id": "line",
             "type": "static",
             "format": "line",
