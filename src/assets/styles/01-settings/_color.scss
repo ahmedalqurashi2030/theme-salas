@@ -1,0 +1,68 @@
+/* الوضع العادي */
+:root {
+    --th-bg-main: {{ theme.settings.get('main_bg_color') }};
+    --th-bg-secondary: {{ theme.settings.get('secondary_bg_color') }};
+    --th-text-primary: {{ theme.settings.get('primary_text_color') }};
+    --th-text-secondary: {{ theme.settings.get('secondary_text_color') }};
+    --th-header-bg: {{ theme.settings.get('header_bg_color') }};
+    --th-header-elements: {{ theme.settings.get('header_elements_color') }};
+    --th-promo-tag: {{ theme.settings.get('promo_tag_bg') }};
+  }
+  
+  /* الوضع الليلي يطبق فقط عند اختيار العميل أو التبديل */
+ // [data-theme="dark"] {
+   // {% if theme.settings.get('force_dark_mode') %}
+     // --th-bg-main: {{ theme.settings.get('main_bg_color_dark', '#111827') }};
+   //   --th-bg-secondary: {{ theme.settings.get('secondary_bg_color_dark', '#1f2937') }};
+     // --th-text-primary: {{ theme.settings.get('primary_text_color_dark', '#f9fafb') }};
+    //  --th-text-secondary: {{ theme.settings.get('secondary_text_color_dark', '#d1d5db') }};
+    //  --th-header-bg: {{ theme.settings.get('header_bg_color_dark', '#1f2937') }};
+    //  --th-header-elements: {{ theme.settings.get('header_elements_color_dark', '#f9fafb') }};
+     // --th-promo-tag: {{ theme.settings.get('promo_tag_bg_dark', '#f87171') }};
+   // {% endif %}
+ // }
+  body,
+  .tharaa-theme {
+    background-color: var(--th-bg-main);
+    color: var(--th-text-primary);
+  }
+  
+  .th-header,
+  .main-header,
+  .th-main-header,
+  .nav-bar,
+  .th-navbar {
+    background-color: var(--th-header-bg);
+    color: var(--th-header-elements);
+  }
+  
+  .th-header a,
+  .th-header button,
+  .th-header i,
+  .th-navbar .th-nav-item > a,
+  .th-navbar .th-mega-tab {
+    color: var(--th-header-elements);
+  }
+  
+  .s-product-card-entry,
+  salla-product-card,
+  .s-product-card-vertical {
+    color: var(--th-text-primary);
+    border-color: var(--th-border-soft);
+  }
+  
+  .s-product-card-content,
+  .s-product-card-content-title a,
+  .s-product-card-brand,
+  .s-product-card-rating {
+    color: var(--th-text-primary);
+  }
+  
+  .s-product-card-promotion-title,
+  .s-product-card-quantity,
+  .s-product-card-out-badge,
+  .th-promo-badge,
+  .th-tag--promo {
+    background-color: var(--th-promo-tag-bg);
+    color: var(--th-on-promo-tag);
+  }

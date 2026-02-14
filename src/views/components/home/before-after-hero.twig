@@ -52,12 +52,7 @@
                 {# === الجزء البصري (Visuals) === #}
                 <div class="th-comparison-hero__visual">
                     
-                    {# صورة المنتج العائمة #}
-                    {% if product_img %}
-                        <div class="th-comparison-hero__product-floating">
-                            <img src="{{ product_img }}" alt="Product Result" loading="lazy">
-                        </div>
-                    {% endif %}
+                 
 
                     {# سلايدر المقارنة #}
                     <div class="th-comparison-slider js-th-comparison">
@@ -214,18 +209,6 @@
     align-items: center;
 }
 
-/* المنتج العائم */
-.th-comparison-hero__product-floating {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 20; /* فوق السلايدر */
-    width: 200px; /* أصغر قليلاً لعدم التغطية */
-    pointer-events: none; 
-    filter: drop-shadow(0 25px 40px rgba(0,0,0,0.2));
-    animation: thFloat 6s ease-in-out infinite;
-}
 
 /* حركة عائمة ناعمة */
 @keyframes thFloat {
@@ -367,9 +350,7 @@
         border-radius: calc(var(--th-radius-lg) - 4px);
     }
 
-    .th-comparison-hero__product-floating { 
-        width: 140px; 
-    }
+   
 }
 </style>
 

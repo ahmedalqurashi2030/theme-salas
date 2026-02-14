@@ -51,10 +51,13 @@
  */
 
 //@import './01-settings/tailwind';
+
 @use './01-settings/tailwind';
 @import './01-settings/fonts';
 @import './01-settings/global';
 @import './01-settings/breakpoints';
+
+@import './01-settings/_color';
 
 @import './02-generic/reset';
 @import './02-generic/common';
@@ -98,7 +101,6 @@
 
 
 @import './4-layout/sidebar';
-@import './tharaa/store_category';
 @import './custom/_before-after-hero';
 @import './custom/header';
 //@import './custom/store-categories';
