@@ -1,59 +1,51 @@
-/* الوضع العادي */
-:root {
-    --th-bg-main: {{ theme.settings.get('main_bg_color') }};
-    --th-bg-secondary: {{ theme.settings.get('secondary_bg_color') }};
-    --th-primary-color: {{ theme.settings.get('primary_brand_color') }};
+body,
+.tharaa-theme {
+  background-color: var(--th-bg-main, #ffffff);
+  color: var(--th-text-primary, #111827);
+}
 
-    --th-text-primary: {{ theme.settings.get('primary_text_color') }};
-    --th-text-secondary: {{ theme.settings.get('secondary_text_color') }};
-    --th-header-bg: {{ theme.settings.get('header_bg_color') }};
-    --th-header-elements: {{ theme.settings.get('header_elements_color') }};
-    --th-promo-tag: {{ theme.settings.get('promo_tag_bg') }};
-  }
-  
- 
-  body,
-  .tharaa-theme {
-    background-color: var(--th-bg-main);
-    color: var(--th-text-primary);
-  }
-  
-  .th-header,
-  .main-header,
-  .th-main-header,
-  .nav-bar,
-  .th-navbar {
-    background-color: var(--th-header-bg);
-    color: var(--th-header-elements);
-  }
-  
-  .th-header a,
-  .th-header button,
-  .th-header i,
-  .th-navbar .th-nav-item > a,
-  .th-navbar .th-mega-tab {
-    color: var(--th-header-elements);
-  }
-  
-  .s-product-card-entry,
-  salla-product-card,
-  .s-product-card-vertical {
-    color: var(--th-text-primary);
-    border-color: var(--th-border-soft);
-  }
-  
-  .s-product-card-content,
-  .s-product-card-content-title a,
-  .s-product-card-brand,
-  .s-product-card-rating {
-    color: var(--th-text-primary);
-  }
-  
-  .s-product-card-promotion-title,
-  .s-product-card-quantity,
-  .s-product-card-out-badge,
-  .th-promo-badge,
-  .th-tag--promo {
-    background-color: var(--th-promo-tag-bg);
-    color: var(--th-on-promo-tag);
-  }
+.th-header,
+.main-header,
+.th-main-header,
+.nav-bar,
+.th-navbar {
+  background-color: var(--th-header-bg, #ffffff);
+  color: var(--th-header-elements, #111827);
+}
+
+.th-header a,
+.th-header button,
+.th-header i,
+.th-navbar .th-nav-item>a,
+.th-navbar .th-mega-tab {
+  color: var(--th-header-elements, #111827);
+}
+
+.s-product-card-entry,
+salla-product-card,
+.s-product-card-vertical {
+  color: var(--th-text-primary, #111827);
+  border-color: var(--th-border-soft, #e5e7eb);
+}
+
+.s-product-card-content,
+.s-product-card-content-title a,
+.s-product-card-brand,
+.s-product-card-rating {
+  color: var(--th-text-primary, #111827);
+}
+
+.s-product-card-content-subtitle,
+.s-product-card-description,
+.s-product-card-price-before {
+  color: var(--th-text-secondary, #6b7280);
+}
+
+.s-product-card-promotion-title,
+.s-product-card-quantity,
+.s-product-card-out-badge,
+.th-promo-badge,
+.th-tag--promo {
+  background-color: var(--th-promo-tag-bg, #ffffff);
+  color: var(--th-on-promo-tag, #111827);
+}
