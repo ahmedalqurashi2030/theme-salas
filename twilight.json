@@ -84,6 +84,18 @@
             "required": false
         },
         {
+            "id": "primary_brand_color",
+            "type": "string",
+            "format": "color",
+            "inputType": "color",
+            "label": "لون المتجر الأساسي",
+            "description": "سيتم استخدام هذا اللون في الأزرار والروابط والعناصر التفاعلية الرئيسية",
+            "labelHTML": null,
+            "icon": "sicon-format-fill",
+            "value": "#fed700",
+            "required": false
+        },
+        {
             "id": "primary_text_color",
             "type": "string",
             "format": "color",
