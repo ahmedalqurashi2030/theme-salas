@@ -6,8 +6,10 @@
 {% set autoplay = component.autoplay|default(false) %}
 {% set show_controls = component.show_controls|default(true) %}
 {% set two_rows = component.two_rows|default(false) %}
-{% set items_mobile = component.items_per_view_mobile.selected[0].value|default('3') %}
-{% set items_desktop = component.items_per_view_desktop.selected[0].value|default('6') %}
+{% set items_mobile_raw = component.items_per_view_mobile.selected[0].value|default(component.items_per_view_mobile.selected[0].label|default(component.items_per_view_mobile.value|default(component.items_per_view_mobile|default('3')))) %}
+{% set items_mobile = (items_mobile_raw in ['1','2','3','4']) ? items_mobile_raw : '3' %}
+{% set items_desktop_raw = component.items_per_view_desktop.selected[0].value|default(component.items_per_view_desktop.selected[0].label|default(component.items_per_view_desktop.value|default(component.items_per_view_desktop|default('6')))) %}
+{% set items_desktop = (items_desktop_raw in ['4','5','6','7','8']) ? items_desktop_raw : '6' %}
 {% set items = component.items|default([]) %}
 
 {# Generate unique ID for this section instance #}
@@ -22,14 +24,18 @@
 		<div class="container">
 
 
-			
+			<div class="tharaa-header">
+				<div
+					class="tharaa-header__content">
+					{# Section Title - Controlled by theme.json: section_title #}
+					<h2 class="tharaa-header__title">{{ section_title }}</h2>
 
-			<div class="s-block__title">
-				<h2 class="s-block__title-head">{{ section_title }}</h2>
-				{% if section_description %}
-				  <p class="s-block__title-sub">{{ section_description }}</p>
-				{% endif %}
-			  </div>
+					{# Section Description (Optional) - Controlled by theme.json: section_description #}
+					{% if section_description %}
+						<p class="tharaa-header__subtitle">{{ section_description }}</p>
+					{% endif %}
+				</div>
+			</div>
 
 			<div class="tharaa-track-wrapper">
 
@@ -48,11 +54,6 @@
 
 					{# Loop through items from theme.json: items[] #}
 					{% for item in items %}
-						{# 
-																																																            Single Card Component
-																																																            SCSS: .tharaa-card, .tharaa-card__visual, .tharaa-card__img, .tharaa-card__content
-																																																            Data: item.title, item.image, item.url
-																																																          #}
 						<a
 							href="{{ item.url|default('#') }}" class="tharaa-card" aria-label="{{ item.title }}">
 
@@ -76,11 +77,6 @@
 				</div>
 			</div>
 
-			{# 
-																								      Progress Bar - Shows scroll position
-																								      SCSS: .tharaa-progress, .tharaa-progress__bar
-																								      Hidden in grid mode via CSS
-																								    #}
 			<div class="tharaa-progress">
 				<div class="tharaa-progress__bar"></div>
 			</div>
