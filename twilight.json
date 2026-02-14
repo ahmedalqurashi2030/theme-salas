@@ -1192,6 +1192,21 @@
             "path": "home.before-after-hero",
             "fields": [
                 {
+                    "id": "section_sub",
+                    "type": "string",
+                    "format": "text",
+                    "label": "النص المميز فوق العنوان",
+                    "description": "العنوان الرئيسي الظاهر بجانب الصور.",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": true,
+                    "required": true,
+                    "minLength": 6,
+                    "maxLength": "60"
+                },
+                {
                     "id": "title",
                     "type": "string",
                     "format": "text",
@@ -1204,7 +1219,7 @@
                     "multilanguage": true,
                     "required": true,
                     "minLength": 6,
-                    "maxLength": 30
+                    "maxLength": "60"
                 },
                 {
                     "id": "description",
@@ -1264,6 +1279,18 @@
                     "required": false
                 },
                 {
+                    "id": "before_image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة قبل",
+                    "description": "الصورة التي تمثل الحالة قبل استخدام المنتج.",
+                    "labelHTML": null,
+                    "placeholder": "e.g. https://hostname.com/image.png",
+                    "icon": "sicon-image",
+                    "value": null,
+                    "required": true
+                },
+                {
                     "id": "before_label",
                     "type": "string",
                     "format": "text",
@@ -1279,11 +1306,11 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "before_image",
+                    "id": "after_image",
                     "type": "string",
                     "format": "image",
-                    "label": "صورة قبل",
-                    "description": "الصورة التي تمثل الحالة قبل استخدام المنتج.",
+                    "label": "صورة بعد",
+                    "description": "الصورة التي تمثل النتيجة بعد الاستخدام",
                     "labelHTML": null,
                     "placeholder": "e.g. https://hostname.com/image.png",
                     "icon": "sicon-image",
@@ -1304,18 +1331,6 @@
                     "required": false,
                     "minLength": 6,
                     "maxLength": 30
-                },
-                {
-                    "id": "after_image",
-                    "type": "string",
-                    "format": "image",
-                    "label": "صورة بعد",
-                    "description": "الصورة التي تمثل النتيجة بعد الاستخدام",
-                    "labelHTML": null,
-                    "placeholder": "e.g. https://hostname.com/image.png",
-                    "icon": "sicon-image",
-                    "value": null,
-                    "required": false
                 }
             ]
         },
