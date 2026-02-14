@@ -81,11 +81,21 @@
     
     <style>
         :root {
-            --font-main: '{{theme.font.name}}';
+            --font-main: '{{ theme.font.name }}';
             --color-primary: {{ theme.color.primary }};
             --color-primary-dark: {{ theme.color.darker(0.15) }};
             --color-primary-light: {{ theme.color.lighter(0.15) }};
             --color-primary-reverse: {{ theme.color.reverse_text }};
+
+            /* Runtime theme settings (merchant-controlled from twilight.json settings) */
+            --th-bg-main: {{ theme.settings.get('main_bg_color', '#ffffff') }};
+            --th-bg-secondary: {{ theme.settings.get('secondary_bg_color', '#fbfbfb') }};
+            --th-text-primary: {{ theme.settings.get('primary_text_color', '#111827') }};
+            --th-text-secondary: {{ theme.settings.get('secondary_text_color', '#111827') }};
+            --th-header-bg: {{ theme.settings.get('header_bg_color', '#ffffff') }};
+            --th-header-elements: {{ theme.settings.get('header_elements_color', '#111827') }};
+            --th-promo-tag-bg: {{ theme.settings.get('promo_tag_bg', '#ffffff') }};
+            --th-on-promo-tag: {{ theme.settings.get('primary_text_color', '#111827') }};
         }
     </style>
     {# tracking services, custom css feature. #}

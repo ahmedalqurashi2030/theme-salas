@@ -2920,6 +2920,7 @@ textarea.s-input{
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .sicon-layout-grid .s-accordion-head-wrapper-toggle {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -3761,6 +3762,7 @@ input[type=radio].sr-only:checked ~ div.s-app-install-alert-cancel-button {
     color: var(--color-primary-dark);
 }
 .sicon-layout-grid .s-bottom-alert-modal-content-title {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -3852,6 +3854,7 @@ input[type=radio].sr-only:checked ~ div.s-app-install-alert-cancel-button {
     font-weight: 700;
 }
 .sicon-layout-grid .s-bottom-alert-modal-price-wrapper-amount {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -4533,6 +4536,7 @@ input[type=radio].sr-only:checked ~ div.s-button-loader-center .s-button-loader 
     color: rgba(22, 163, 74, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .s-cart-item-offers-icon {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -4696,6 +4700,7 @@ input[type=radio].sr-only:checked ~ div.s-cart-summary-count {
     line-height: 1.75rem;
 }
 .sicon-layout-grid .s-color-picker-widget span {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -4810,6 +4815,7 @@ input[type=radio].sr-only:checked ~ div.s-cart-summary-count {
     font-weight: 700;
 }
 .sicon-layout-grid .s-comments-title {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -4833,6 +4839,7 @@ input[type=radio].sr-only:checked ~ div.s-cart-summary-count {
     color: rgba(107, 114, 128, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .s-comments-count-label {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -5478,6 +5485,7 @@ input[type=radio].sr-only:checked ~ div.s-conditional-offer-checkpoint-label {
     font-weight: 700;
 }
 .sicon-layout-grid .s-contacts-title {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -5669,6 +5677,7 @@ input[type=radio].sr-only:checked ~ div.s-conditional-offer-checkpoint-label {
     font-weight: 500;
 }
 .sicon-layout-grid .s-count-down-md .s-count-down-item {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -5689,6 +5698,7 @@ input[type=radio].sr-only:checked ~ div.s-conditional-offer-checkpoint-label {
     font-weight: 500;
 }
 .sicon-layout-grid .s-count-down-md + .s-count-down-end-text {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -6073,6 +6083,7 @@ input[type=radio].sr-only:checked ~ div.s-drawer-close {
     font-weight: 500;
 }
 .sicon-layout-grid .s-drawer-header-inner {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -6202,6 +6213,7 @@ input[type=radio].sr-only:checked ~ div.s-drawer-close {
     color: rgba(17, 24, 39, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .s-drawer-title {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -9056,6 +9068,7 @@ input[type=radio].sr-only:checked ~ div.s-modal-close {
     color: rgba(17, 24, 39, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .s-modal-title {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -10143,6 +10156,7 @@ input[type=radio].sr-only:checked ~ div.s-offer-bank-payment-discount-percent {
     color: rgba(239, 68, 68, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .s-offer-.s-offer-wrapper .s-slider-block__title h2 {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -11290,6 +11304,7 @@ input[type=radio].s-order-totals-card-heading:checked ~ div.absolute {
     line-height: 1.75rem;
 }
 .sicon-layout-grid .s-orders-status-rated {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -14217,6 +14232,7 @@ input[type=radio].sr-only:checked ~ div.s-quick-order-expandable .s-form-group >
     font-weight: 700;
 }
 .sicon-layout-grid .s-rating-modal-title {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -14680,6 +14696,7 @@ unicode{
     color: rgba(31, 41, 55, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .s-rating-modal-delete-wrapper h3 {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -14998,6 +15015,7 @@ input[type=radio].sr-only:checked ~ div.s-review-card-slider-dots {
     line-height: 1.2;
 }
 .sicon-layout-grid .s-reviews-header {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -15607,6 +15625,7 @@ input[type=radio].sr-only:checked ~ div.s-reviews-testimonial__icon svg {
     color: rgba(31, 41, 55, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .s-reviews-summary-header-section.s-reviews-summary-recommendation-only p {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -15652,6 +15671,7 @@ input[type=radio].sr-only:checked ~ div.s-reviews-testimonial__icon svg {
     color: rgba(156, 163, 175, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .s-scopes-header-title {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -16377,6 +16397,7 @@ input[type=radio].sr-only:checked ~ div.s-search-action {
     line-height: 1.2;
 }
 .sicon-layout-grid .s-slider-block__title h2 {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -17254,6 +17275,7 @@ input[type=radio].sr-only:checked ~ div.s-social-share-list {
     line-height: 1.75rem;
 }
 .sicon-layout-grid .s-tiered-offer-current-tier-name-wrapper h2 {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -17279,6 +17301,7 @@ input[type=radio].sr-only:checked ~ div.s-social-share-list {
     line-height: 1.75rem;
 }
 .sicon-layout-grid .s-tiered-offer-program-title h2 {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -18298,6 +18321,7 @@ input[type=radio].sr-only:checked ~ div.s-user-menu-red-dot .s-user-menu-avatar-
     transition-duration: 150ms;
 }
 .sicon-layout-grid .s-verify-input {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -18441,6 +18465,7 @@ input[type=radio].sr-only:checked ~ div.s-verify-back {
   border-color: var(--color-main);
 }
 .sicon-layout-grid .s-verify-back {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -18786,13 +18811,13 @@ input[type=radio].sr-only:checked ~ div.s-wallet-table-tbody-tr a {
 :root {
   --th-bg-main: {{ theme.settings.get("main_bg_color") }};
   --th-bg-secondary: {{ theme.settings.get("secondary_bg_color") }};
+  --th-primary-color: {{ theme.settings.get("primary_brand_color") }};
   --th-text-primary: {{ theme.settings.get("primary_text_color") }};
   --th-text-secondary: {{ theme.settings.get("secondary_text_color") }};
   --th-header-bg: {{ theme.settings.get("header_bg_color") }};
   --th-header-elements: {{ theme.settings.get("header_elements_color") }};
   --th-promo-tag: {{ theme.settings.get("promo_tag_bg") }};
 }
-/* الوضع الليلي يطبق فقط عند اختيار العميل أو التبديل */
 body,
 .tharaa-theme {
   background-color: {{ theme.settings.get("main_bg_color") }};
@@ -20788,6 +20813,7 @@ input[type=radio].sr-only:checked ~ div.main-header .header-actions .action-btn 
     font-weight: 700;
 }
 .sicon-layout-grid .store-footer h3 {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -20933,6 +20959,7 @@ input[type=radio].sr-only:checked ~ div.main-header .header-actions .action-btn 
     transition-duration: 300ms;
   }
 .sicon-layout-grid .main-menu .has-children > a:after {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -21545,6 +21572,7 @@ input[type=radio].sr-only:checked ~ div.dropdown__menu {
     line-height: 1.2;
 }
 .sicon-layout-grid .s-block__title h2 {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -23147,6 +23175,7 @@ input[type=radio].sr-only:checked ~ div.offer-slider .s-slider-block__title:befo
     color: rgba(248, 113, 113, var(--tw-text-opacity, 1));
 }
 .sicon-layout-grid .offer-slider .s-slider-block__title h2 {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -25996,6 +26025,7 @@ salla-search {
   border-radius: 8rem;
 }
 .s-search-icon-wrap {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
@@ -26028,6 +26058,7 @@ salla-search {
   width: 100%;
 }
 .sicon-layout-grid .text-lg {
+  background-color: {{ theme.settings.get("primary_brand_color") }};
   background-color: var(--th-primary-color);
   width: 36px;
   height: 36px;
