@@ -7,7 +7,6 @@
 {% set show_controls = component.show_controls|default(true) %}
 {% set two_rows = component.two_rows|default(false) %}
 {% set items_mobile_raw = component.items_per_view_mobile.selected[0].value|default(component.items_per_view_mobile.selected[0].label|default(component.items_per_view_mobile.value|default(component.items_per_view_mobile|default('3')))) %}
-{% set items_mobile = (items_mobile_raw in ['1','2','3','4']) ? items_mobile_raw : '3' %}
 {% set items_desktop_raw = component.items_per_view_desktop.selected[0].value|default(component.items_per_view_desktop.selected[0].label|default(component.items_per_view_desktop.value|default(component.items_per_view_desktop|default('6')))) %}
 {% set items_desktop = (items_desktop_raw in ['4','5','6','7','8']) ? items_desktop_raw : '6' %}
 {% set items = component.items|default([]) %}
@@ -19,7 +18,7 @@
 {% if items is not empty %}
 
 
-	<section class="s-block  tharaa-links-section style-circle {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile|default('3') }}; --th-items-desktop: {{ items_desktop|default('6') }}; --th-gap: 20px;">
+	<section class="s-block  tharaa-links-section style-circle {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}"  data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile|default('3') }}; --th-items-desktop: {{ items_desktop|default('6') }}; --th-gap: 20px;">
 
 		<div class="container">
 

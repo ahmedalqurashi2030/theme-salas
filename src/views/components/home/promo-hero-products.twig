@@ -1,4 +1,4 @@
-"{# ================================================
+{# ================================================
    Tharaa Theme – Promo Hero With Products
    Path: home.promo-hero-products
 ================================================ #}
@@ -9,8 +9,8 @@
 {% set hero_image      = component.hero_image      ?? 'https://i.ibb.co/68v8zN6/Apple-Set-Transparent.png' %}
 {% set countdown_end   = component.countdown_end   ?? '' %}
 {% set show_countdown  = component.show_countdown  ?? false %}
-{# ملاحظة: show_price في JSON لكن نستخدمه هنا كـ show_rating #}
-{% set show_rating     = component.show_price      ?? true %}
+{# show_price في twilight.json يتحكم بعرض التقييم النجمي #}
+{% set show_price      = component.show_price      ?? true %}
 {% set button_text     = component.button_text     ?? 'تصفح المجموعة كاملة' %}
 {% set button_link     = component.button_link     ?? '#' %}
 {% set products        = component.products        ?? [] %}
@@ -315,6 +315,7 @@
         salla-add-product-button.th-add-btn {
             width: 32px;
             height: 32px;
+            opacity: 0;
             transition: 0.3s;
             cursor: pointer;
             flex-shrink: 0;
@@ -398,9 +399,6 @@
                 font-size: 26px;
             }
 
-           
-
-           
             .th-products-list {
                 display: flex;
                 overflow-x: auto;
@@ -444,8 +442,8 @@
                         </p>
                     {% endif %}
 
-                    {% if show_countdown %}
-                     
+                    {% if show_countdown and countdown_end %}
+                        <div class="th-countdown-label">{{ trans('components.promo_hero.countdown_label') }}</div>
 
                         <div class="th-timer" data-end="{{ countdown_end|e('html_attr') }}">
                             <div class="th-timer__item">
@@ -489,13 +487,13 @@
                         <a href="{{ product.url }}" class="th-prod-card" title="{{ product.name }}">
                             {# صورة المنتج #}
                             {% if product.image is defined %}
-                                <img src="{{ product.image.url }}" alt="{{ product.image.alt ?? product.name }}" class="th-p-img" loading="lazy">
+                                <img src="{{ product.image.url ?? product.image }}" alt="{{ product.image.alt ?? product.name }}" class="th-p-img" loading="lazy">
                             {% endif %}
 
                             <div class="th-p-info">
                                 <span class="th-p-title">{{ product.name }}</span>
 
-                                {% if show_rating %}
+                                {% if show_price %}
                                     {# 
                                        =======================================================
                                        [وضع التصميم] تقييم وهمي 5 نجوم
@@ -537,7 +535,7 @@
                                 <img src="https://via.placeholder.com/80x80?text=Product" class="th-p-img" alt="Product">
                                 <div class="th-p-info">
                                     <span class="th-p-title">اسم المنتج التجريبي {{ i }}</span>
-                                    {% if show_rating %}
+                                    {% if show_price %}
                                         <div class="th-p-rating">
                                             {% for s in 1..5 %}
                                                 <span class="th-p-star{% if s <= 4 %} is-active{% endif %}">★</span>

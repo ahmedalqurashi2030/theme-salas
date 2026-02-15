@@ -1,8 +1,73 @@
-npx update-browserslist-db@latest
-<<<<<<< Updated upstream
-salla theme preview --browser=edge
-salla theme preview --with-editor
+pnpm -s production
 
- pnpm run prod  
-=======
->>>>>>> Stashed changes
+# لتسجيل الدخول إلى حسابك كمطور في سلة (يتم مرة واحدة)
+salla login
+
+# تشغيل المعاينة الحية: يربط الكود في جهازك بالمتجر لترى التغييرات فوراً دون رفعها
+salla theme preview
+
+# بناء الثيم محلياً: يتأكد من سلامة ملفات Twig و CSS و JS قبل الرفع
+salla theme build
+
+# فحص ملف الإعدادات: للتأكد من أن ملف twilight.json سليم ولا ينقصه بيانات إجبارية
+salla theme check
+
+# تجهيز البيئة: تثبيت المكتبات وتحديث التبعيات (dependencies) في المشروع
+salla theme setup
+
+# مراقبة الملفات: يقوم بإعادة بناء ملفات التنسيق تلقائياً عند أي تعديل
+salla theme watch
+
+# رفع الثيم مباشرة: يرفع التعديلات إلى سلة (استخدمه فقط إذا كنت لا تستخدم GitHub)
+salla theme push
+
+# عرض قائمة الثيمات: لمشاهدة جميع الثيمات المربوطة بحسابك وحالاتها
+salla theme list
+
+
+
+
+
+
+# لمعرفة حالة الملفات الحالية وما تم تعديله
+git status
+
+# إضافة كافة الملفات المعدلة لتجهيزها للرفع
+git add .
+
+# توثيق التعديلات برسالة وصفية (مهم جداً لتتبع عملك)
+git commit -m "وصف التعديل الذي قمت به هنا"
+
+# رفع الكود إلى المستودع (عندها سيبدأ TwilightCI بفحص الكود تلقائياً)
+git push origin master
+
+# عرض سجل التعديلات: لمعرفة أرقام النسخ (IDs) للعودة إليها عند الحاجة
+git log --oneline
+
+# التراجع عن آخر تعديل محلي (إذا لم ترفع الكود بعد)
+git reset --soft HEAD~1
+
+# التراجع الإجباري: للعودة لنسخة قديمة سليمة (استبدل [commit_id] بالرقم من السجل)
+git reset --hard [commit_id]
+
+# إجبار السيرفر على العودة للنسخة السليمة (حل مشكلة العلامة الحمراء في GitHub)
+git push origin master --force
+ 
+
+ حذف يانات المتصفح
+
+npx update-browserslist-db@latest
+
+ npm run development
+
+salla theme preview --browser=edge
+
+{% block styles %}
+      <link rel="stylesheet" href="{{ asset('dist/assets/css/tharaa_banners_slider.css') }}">
+  {% endblock %}
+
+
+
+pnpm -s run development
+
+
