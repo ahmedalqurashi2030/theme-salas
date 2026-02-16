@@ -26351,7 +26351,7 @@ salla-search {
   height: 45px;
 }
 .s-search-icon-wrap {
-  background-color: var(--th-primary-color);
+  background-color: var(--th-color-primary);
   width: 36px;
   height: 36px;
   border-radius: 50%;
