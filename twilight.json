@@ -357,7 +357,7 @@
         {
             "key": "186b3f4f-25cf-4d3c-abca-cef7eed6f0ab",
             "title": {
-                "en": "Optimized Animated Images",
+                "en": "Enhances Animated Images",
                 "ar": "صور متحركة (محسنة)"
             },
             "icon": "sicon-image-carousel",
@@ -388,12 +388,14 @@
                         {
                             "slides.image": "https://cdn.salla.sa/ZrBEO/MopzhoqpTkDObcKc8Q8n77AuydanfsGXdZO7iinH.jpg",
                             "slides.title": "روِّج لمنتجاتك كصور متحركة",
-                            "slides.description": "اعرض المنتجات التي تود إبرازها لزوّار متجرك في هذه المساحة"
+                            "slides.description": "اعرض المنتجات التي تود إبرازها لزوّار متجرك في هذه المساحة",
+                            "slides.without_overlay": false
                         },
                         {
                             "slides.image": "https://cdn.salla.sa/ZrBEO/3gOhYSaIhaHxhH2IHWxJYDl9JHwxP6dGKiZFSq4K.jpg",
                             "slides.title": "شجّع زوار متجرك على الشراء عبر عروض خاصة",
-                            "slides.description": "اعرض المنتجات التي تود إبرازها لزوّار متجرك في هذه المساحة"
+                            "slides.description": "اعرض المنتجات التي تود إبرازها لزوّار متجرك في هذه المساحة",
+                            "slides.without_overlay": false
                         }
                     ],
                     "fields": [
@@ -436,6 +438,17 @@
                             "placeholder": "يمكنك إضافة تفاصيل إضافية هنا",
                             "minLength": 0,
                             "maxLength": 255
+                        },
+                        {
+                            "type": "boolean",
+                            "icon": "sicon-toggle-off",
+                            "label": "إزالة طبقة التعتم",
+                            "description": null,
+                            "id": "slides.without_overlay",
+                            "format": "switch",
+                            "required": false,
+                            "value": false,
+                            "selected": false
                         }
                     ]
                 }
@@ -444,8 +457,8 @@
         {
             "key": "2b1b130b-5b37-422a-9683-e0fd367460c0",
             "title": {
-                "ar": "روابط سريعة",
-                "en": "روابط سريعة"
+                "en": "Quick Links",
+                "ar": "روابط سريعة"
             },
             "icon": "sicon-layout-grid-rearrange",
             "path": "home.main-links",
@@ -548,8 +561,7 @@
                             "operation": "=",
                             "value": true
                         }
-                    ],
-                    "value": []
+                    ]
                 },
                 {
                     "id": "links",
@@ -598,23 +610,11 @@
                     ],
                     "fields": [
                         {
-                            "id": "links.image",
-                            "type": "string",
-                            "format": "image",
-                            "label": "الصوره او الايقونه",
-                            "description": null,
-                            "labelHTML": null,
-                            "placeholder": "e.g. https://hostname.com/image.png",
-                            "icon": "sicon-image",
-                            "value": null,
-                            "required": false
-                        },
-                        {
                             "type": "string",
                             "icon": "sicon-format-text-alt",
                             "label": "عنوان الرابط",
                             "id": "links.icon",
-                            "value": "sicon-table",
+                            "value": "sicon-store2",
                             "required": false,
                             "format": "icon",
                             "class": "form--inline",
@@ -638,7 +638,7 @@
                             "icon": "sicon-link",
                             "label": "الرابط",
                             "id": "links.url",
-                            "value": [],
+                            "value": null,
                             "description": null,
                             "required": false,
                             "format": "variable-list",
@@ -696,22 +696,6 @@
                                     "value": "custom"
                                 }
                             ]
-                        },
-                        {
-                            "id": "links.alroabt",
-                            "type": "items",
-                            "format": "dropdown-list",
-                            "label": "الروابط",
-                            "description": null,
-                            "labelHTML": null,
-                            "icon": "sicon-keyboard_arrow_down",
-                            "selected": [],
-                            "options": [],
-                            "source": "Taxes",
-                            "multichoice": true,
-                            "searchable": true,
-                            "required": false,
-                            "value": []
                         }
                     ],
                     "conditions": [
@@ -727,7 +711,7 @@
         {
             "key": "9a758d20-2ce4-4782-91fe-c04466464588",
             "title": {
-                "en": "Animated Products with Background",
+                "en": "Animated products with a background",
                 "ar": "منتجات متحركة مع خلفية"
             },
             "icon": "sicon-list-play",
@@ -869,7 +853,7 @@
         {
             "key": "b89edc4a-ce0b-468f-8323-2da48147bb32",
             "title": {
-                "en": "Optimized Square Images",
+                "en": "Enhanced square images",
                 "ar": "صور مربعة (محسنة)"
             },
             "icon": "sicon-image",
@@ -880,6 +864,12 @@
                     "format": "description",
                     "id": "with-bg",
                     "value": "<div ><img class='w-full' src='https://cdn.salla.network/images/themes/raed/preview-images/square-images.png?v=1.1'></div>"
+                },
+                {
+                    "type": "static",
+                    "format": "description",
+                    "id": "banners-note",
+                    "value": "<div style='background-color:#f5f5f5;border-radius:8px;padding:12px 16px;margin-bottom:16px;color:#333;font-size:14px;line-height:1.6;direction:inherit;text-align:inherit;'><strong style='color:#e53e3e;'>تنبيه:</strong> يتم اقتصاص الصور من الأطراف لتناسب مقاسات الشاشات، لذا يُرجى مراعاة الأجزاء المقتصّة طولاً وعرضاً عند التصميم لتظهر الصورة كاملة قدر الإمكان.</div>"
                 },
                 {
                     "id": "banners",
@@ -1086,8 +1076,8 @@
         {
             "key": "541cc423-90c7-4230-8a33-a0342cfde4ad",
             "title": {
-                "ar": "آراء عملاء مخصصة",
-                "en": "Custom Customer Reviews"
+                "en": "Custom testimonials",
+                "ar": "آراء عملاء مخصصة"
             },
             "icon": "sicon-chat-bubbles",
             "path": "home.custom-testimonials",
@@ -1100,10 +1090,11 @@
                 },
                 {
                     "id": "items",
+                    "key": "0473eb46-c7f5-44c5-bd6f-b1fe716a5e64",
                     "type": "collection",
                     "format": "collection",
                     "label": "التقييمات",
-                    "description": "ابليمتل ي",
+                    "description": null,
                     "labelHTML": null,
                     "item_label": "التقييم",
                     "icon": "sicon-list-add",
@@ -1136,6 +1127,7 @@
                     "fields": [
                         {
                             "id": "items.name",
+                            "key": "04e34d04-d1c3-4b75-b1d6-4e5b4ed22623",
                             "type": "string",
                             "format": "text",
                             "label": "اسم العميل",
@@ -1143,12 +1135,13 @@
                             "labelHTML": null,
                             "placeholder": "اسم العميل",
                             "icon": "sicon-format-text-alt",
-                            "value": "علي",
+                            "value": null,
                             "multilanguage": false,
                             "required": false
                         },
                         {
                             "id": "items.avatar",
+                            "key": "9ae4a6cc-7d20-4ae9-8bc0-33b2452502ca",
                             "type": "string",
                             "format": "image",
                             "label": "صورة العميل",
@@ -1156,7 +1149,7 @@
                             "labelHTML": null,
                             "placeholder": "e.g. https://hostname.com/image.png",
                             "icon": "sicon-image",
-                            "value": "https://cdn.assets.salla.network/prod/stores/themes/default/assets/images/avatar_female.png",
+                            "value": null,
                             "required": true
                         },
                         {
@@ -1165,6 +1158,7 @@
                             "format": "integer",
                             "label": "عدد النجوم",
                             "description": null,
+                            "key": "f0caf793-88f8-4178-b1cc-a7ace5c09ff6",
                             "labelHTML": "من 1 إلى 5",
                             "placeholder": "القيمة",
                             "icon": "sicon-pencil-ruler",
@@ -1175,6 +1169,7 @@
                         },
                         {
                             "id": "items.text",
+                            "key": "0d474cc4-39f6-4495-8e24-a8eb10d4bbab",
                             "type": "string",
                             "format": "textarea",
                             "label": "نص التقييم",
