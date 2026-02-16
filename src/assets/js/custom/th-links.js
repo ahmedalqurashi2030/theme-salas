@@ -59,6 +59,29 @@
       const autoplay = section.dataset.autoplay === 'true';
       let autoplayInterval = null;
 
+      const isRTLDocument = () => document.dir === 'rtl' || document.documentElement.dir === 'rtl';
+
+      /**
+       * Normalize horizontal scroll position across RTL browser behaviors.
+       * Returns value in range: 0 (start) -> maxScroll (end).
+       */
+      const getNormalizedScrollLeft = () => {
+        const maxScroll = Math.max(track.scrollWidth - track.clientWidth, 0);
+        const rawScrollLeft = track.scrollLeft;
+
+        if (!isRTLDocument()) {
+          return Math.min(Math.max(rawScrollLeft, 0), maxScroll);
+        }
+
+        // Firefox/WebKit often return negative values in RTL when moving away from origin.
+        if (rawScrollLeft < 0) {
+          return Math.min(Math.max(-rawScrollLeft, 0), maxScroll);
+        }
+
+        // Chromium can use "reverse" model in RTL (max at start -> 0 at end).
+        return Math.min(Math.max(maxScroll - rawScrollLeft, 0), maxScroll);
+      };
+
       /**
        * Update UI state (progress bar, navigation buttons)
        */
@@ -72,9 +95,9 @@
         }
 
         // Calculate scroll position
-        const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
-        const scrollLeft = isRTL ? Math.abs(track.scrollLeft) : track.scrollLeft;
-        const maxScroll = track.scrollWidth - track.clientWidth;
+        const isRTL = isRTLDocument();
+        const maxScroll = Math.max(track.scrollWidth - track.clientWidth, 0);
+        const scrollLeft = getNormalizedScrollLeft();
 
         // Hide UI if content fits in viewport
         if (maxScroll <= 5) {
@@ -89,14 +112,14 @@
 
         // Update progress bar
         if (progressBar) {
-          const progress = (scrollLeft / maxScroll) * 100;
-          const progressWidth = Math.min(progress * 0.7, 70); // Max 70% width
+          const thumbPercent = Math.max((track.clientWidth / track.scrollWidth) * 100, 18);
+          const clampedThumbPercent = Math.min(thumbPercent, 100);
+          const travelPercent = Math.max(100 - clampedThumbPercent, 0);
+          const ratio = maxScroll > 0 ? (scrollLeft / maxScroll) : 0;
+          const offset = isRTL ? (1 - ratio) * travelPercent : ratio * travelPercent;
 
-          if (isRTL) {
-            progressBar.style.right = `${progressWidth}%`;
-          } else {
-            progressBar.style.left = `${progressWidth}%`;
-          }
+          progressBar.style.width = `${clampedThumbPercent}%`;
+          progressBar.style.transform = `translateX(${offset}%)`;
         }
 
         // Update navigation buttons visibility
@@ -136,7 +159,7 @@
 
       if (nextBtn) {
         nextBtn.addEventListener('click', () => {
-          const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
+          const isRTL = isRTLDocument();
           const scrollAmount = getScrollAmount();
 
           track.scrollBy({
@@ -148,7 +171,7 @@
 
       if (prevBtn) {
         prevBtn.addEventListener('click', () => {
-          const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
+          const isRTL = isRTLDocument();
           const scrollAmount = getScrollAmount();
 
           track.scrollBy({
@@ -225,9 +248,9 @@
           if (section.classList.contains('mode-grid')) return;
 
           autoplayInterval = setInterval(() => {
-            const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
+            const isRTL = isRTLDocument();
             const maxScroll = track.scrollWidth - track.clientWidth;
-            const currentScroll = isRTL ? Math.abs(track.scrollLeft) : track.scrollLeft;
+            const currentScroll = getNormalizedScrollLeft();
 
             // Check if reached end
             if (currentScroll >= maxScroll - 10) {
