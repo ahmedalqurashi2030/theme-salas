@@ -2098,19 +2098,36 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "section_description",
-                    "type": "string",
-                    "format": "text",
-                    "label": "وصف مختصر (اختياري)",
+                    "id": "alignment",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "محاذاة العنوان",
                     "description": null,
                     "labelHTML": null,
-                    "placeholder": "Placeholder text ..",
-                    "icon": "sicon-format-text-alt",
-                    "value": "ظهر أعلى القسم في الصفحة",
-                    "multilanguage": false,
-                    "required": false,
-                    "minLength": 6,
-                    "maxLength": 30
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [
+                        {
+                            "label": "البداية (يمين)",
+                            "value": "start",
+                            "key": "d014052e-7a15-4394-a0f6-33030973d10b"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "البداية (يمين)",
+                            "value": "start",
+                            "key": "d014052e-7a15-4394-a0f6-33030973d10b"
+                        },
+                        {
+                            "label": "وسط",
+                            "value": "center",
+                            "key": "a4494fe9-5dfb-4414-bef6-eb2fd411be07"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": false
                 },
                 {
                     "id": "display_mode",
