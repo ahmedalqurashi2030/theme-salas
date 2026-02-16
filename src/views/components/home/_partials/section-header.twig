@@ -4,12 +4,11 @@
    -------------------------------------------------
 #}
 
-{# محاكاة المتغيرات التي ستأتي من لوحة التحكم #}
-{% set alignment = 'start' %} {# جرب تغييرها لـ 'center' للاختبار #}
-{% set title = 'مجموعة العناية الفاخرة' %}
-{% set subtitle = 'اكتشفي سر الجمال الطبيعي مع منتجاتنا المختارة بعناية' %}
-{% set btn_text = 'تسوقي المجموعة' %}
-
+{# استخدام المتغيرات الممررة من المكون الأب #}
+{% set alignment = alignment|default('start') %}
+{% set section_title = section_title|default(title|default('')) %}
+{% set section_subtitle = section_subtitle|default(subtitle|default('')) %}
+{% set btn_text = btn_text|default('') %}
 
     {# === بداية المكون === #}
     <div class="s-block__header-wrapper {{ alignment == 'center' ? 's-block--center' : '' }}">

@@ -31,27 +31,10 @@
   data-items-desktop="{{ items_desktop }}">
   
   <div class="container">
-    
-    {# 
-      Section Header 
-      Contains: Title, Description
-      SCSS: .tharaa-header
-    #}
-    <div class="tharaa-header">
-      <div class="tharaa-header__content">
-        {# Section Title - Controlled by theme.json: section_title #}
-        <h2 class="tharaa-header__title">{{ section_title }}</h2>
-        
-        {# Section Description (Optional) - Controlled by theme.json: section_description #}
-        {% if section_description %}
-          <p class="tharaa-header__subtitle">{{ section_description }}</p>
-        {% endif %}
-      </div>
-    </div>
 
     {# Track Wrapper - Contains slider and navigation #}
     <div class="tharaa-track-wrapper">
-      
+
       {# Navigation Buttons - Controlled by theme.json: show_controls #}
       {% if show_controls %}
         <button 
