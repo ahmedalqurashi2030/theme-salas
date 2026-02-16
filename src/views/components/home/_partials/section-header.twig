@@ -1,0 +1,43 @@
+{#
+  Re-usable Section Header
+  @param title
+  @param subtitle
+  @param align (start, center)
+  @param btn_text (optional)
+  @param btn_url (optional)
+#}
+<div class="s-block__header-wrapper {{ align == 'center' ? 's-block--center' : '' }}">
+    
+    {# 1. Side Bar (Only for start align) #}
+    {% if align != 'center' %}
+        <div class="s-block__side-bar"></div>
+    {% endif %}
+
+    {# 2. Titles #}
+    <div class="s-block__title">
+        <div class="s-block__title-row">
+            {% if align == 'center' %}<span class="s-block__line"></span>{% endif %}
+            
+            <h2 class="s-block__title-head">{{ section_title }}</h2>
+            
+            {% if align == 'center' %}<span class="s-block__line"></span>{% endif %}
+        </div>
+
+        {% if section_subtitle %}
+            <p class="s-block__title-sub">{{ section_subtitle }}</p>
+        {% endif %}
+    </div>
+
+    {# 3. Button #}
+    {% if btn_text %}
+        <div class="s-block__action">
+            <a href="{{ btn_url }}" class="btn btn--outline-primary btn--rounded btn--has-icon">
+                <span>{{ btn_text }}</span>
+                <i class="sicon-arrow-left"></i>
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+
+
