@@ -21,18 +21,60 @@
 
 	<section class="s-block  tharaa-links-section style-circle {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile|default('3') }}; --th-items-desktop: {{ items_desktop|default('6') }}; --th-gap: 20px;">
 
-		<div class="container">
+		<div
+			class="container">
 
 
+			{# استخدام المتغيرات الممررة من المكون الأب #}
+			{% set alignment = alignment|default('start') %}
+			{% set btn_text = btn_text|default('') %}
 
-			
-        {# استدعاء الهيدر الموحد #}
-        {% include 'views/components/home/_partials/section-header.twig' with {
-    title: section_title,
-    subtitle: section_subtitle,
-    align: 'center'  {# <-- إضافة مهمة للجمال #}
-} %}
+			{# === بداية المكون === #}
+			<div
+				class="s-block__header-wrapper {{ alignment == 'center' ? 's-block--center' : '' }}">
 
+				{# 1. Side Bar (يظهر فقط إذا كانت المحاذاة جانبية) #}
+				{% if alignment != 'center' %}
+					<div class="s-block__side-bar"></div>
+				{% endif %}
+
+				{# 2. Titles Container #}
+				<div class="s-block__title">
+					<div
+						class="s-block__title-row">
+
+						{# خط التزيين الأيمن (للوضع المتوسط) #}
+						{% if alignment == 'center' %}
+							<span class="s-block__line"></span>
+						{% endif %}
+
+						<h2 class="s-block__title-head">{{ section_title }}</h2>
+
+						{# خط التزيين الأيسر (للوضع المتوسط) #}
+						{% if alignment == 'center' %}
+							<span class="s-block__line"></span>
+						{% endif %}
+					</div>
+
+					{% if section_subtitle %}
+						<p class="s-block__title-sub">{{ section_subtitle }}</p>
+					{% endif %}
+				</div>
+
+				{# 3. Action Button #}
+				{% if btn_text %}
+					<div class="s-block__action">
+						<a href="#" class="btn-custom">
+							<span>{{ btn_text }}</span>
+							<!-- سهم SVG بسيط للاختبار -->
+							<svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;">
+								<path d="M19 12H5M12 5l-7 7 7 7"></path>
+							</svg>
+						</a>
+					</div>
+				{% endif %}
+			</div>
+			{# === نهاية المكون === #}
 
 
 			<div class="tharaa-track-wrapper">
