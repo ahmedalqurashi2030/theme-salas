@@ -1,31 +1,37 @@
 {# ==========================================================================
    Component: Tharaa Comparison Hero (Card Style)
-   Description: سكشن "قبل وبعد" بتصميم بطاقة عائمة متوافق مع ثيم ثراء وسلة
    File Name: before-after.twig
    ========================================================================== #}
 
 {# --- 1. إعداد المتغيرات (Configuration) --- #}
+{# ملاحظة: الألوان هنا ستأخذ الافتراضي لأنه لا يوجد حقول لها في JSON المرسل #}
+
+
+{# النصوص #}
 {% set title          = component.title          ?? 'كفى لحب الشباب أن يسيطر على حياتك' %}
 {% set subtitle       = component.subtitle       ?? ' ' %}
-{% set description    = component.description    ?? 'اكتشفي الفرق الحقيقي. يعمل هذا المنتج على تحسين مظهر البشرة وتقليل الشوائب بشكل ملحوظ.' %}
+{% set description    = component.description    ?? 'اكتشفي الفرق الحقيقي.' %}
 {% set btn_text       = component.button_text    ?? 'تسوقي الآن' %}
 {% set btn_link       = component.button_link    ?? '#' %}
 
-{# الصور الافتراضية (Placeholder Images) #}
-{% set img_before     = component.before_image   ?? 'https://img.freepik.com/free-photo/young-woman-with-acne-problem-face_23-2149448375.jpg' %}
-{% set img_after      = component.after_image    ?? 'https://img.freepik.com/free-photo/beautiful-face-young-woman-with-clean-fresh-skin_23-2149448386.jpg' %}
+{# الصور #}
+{% set img_before     = component.before_image   ?? 'https://placeholder.com/before.jpg' %}
+{% set img_after      = component.after_image    ?? 'https://placeholder.com/after.jpg' %}
+
+{# التسميات (تم التصحيح لتقرأ من إعدادات التاجر) #}
+{% set label_before   = component.before_label   ?? 'قبل' %}
+{% set label_after    = component.after_label    ?? 'بعد' %}
 
 
 {# --- 2. الهيكل (HTML Structure) --- #}
 <section class="th-comparison-hero s-block">
     <div class="container">
         
-        {# البطاقة العائمة (The Card) #}
-        <div class="th-comparison-hero__card">
+        <div class="th-comparison-hero__card" >
             
             <div class="th-comparison-hero__inner">
                 
-                {# === الجزء النصي (Content) === #}
+                {# === الجزء النصي === #}
                 <div class="th-comparison-hero__content">
                     {% if subtitle %}
                         <span class="th-comparison-hero__badge">{{ subtitle }}</span>
@@ -38,35 +44,32 @@
                     </div>
                     
                     {% if btn_text %}
-                        {# استخدام كلاسات سلة الرسمية للأزرار #}
                         <a href="{{ btn_link }}" class="s-button s-button--primary th-comparison-hero__btn">
                             {{ btn_text }}
                         </a>
                     {% endif %}
                 </div>
 
-                {# === الجزء البصري (Visuals) === #}
+                {# === الجزء البصري === #}
                 <div class="th-comparison-hero__visual">
                     
-                 
-
                     {# سلايدر المقارنة #}
                     <div class="th-comparison-slider js-th-comparison">
                         
-                        {# حاوية الصور (للقص) #}
                         <div class="th-comparison-images">
                               {# الطبقة الأمامية (قبل - Before) #}
                               <div class="th-comparison-slider__layer th-comparison-slider__layer--overlay">
-                                <img src="{{ img_before }}" alt="Before">
-                                <span class="th-comparison-slider__label th-comparison-slider__label--before">{{ component.before_label ?? trans('components.comparison.before') }}</span>
+                                <img src="{{ img_before }}" alt="{{ label_before }}">
+                                {# هنا التصحيح: استخدام المتغير بدلاً من دالة الترجمة #}
+                                <span class="th-comparison-slider__label th-comparison-slider__label--before">{{ label_before }}</span>
                             </div>
+                            
                             {# الطبقة الخلفية (بعد - After) #}
                             <div class="th-comparison-slider__layer th-comparison-slider__layer--base">
-                                <img src="{{ img_after }}" alt="After">
-                                <span class="th-comparison-slider__label th-comparison-slider__label--after">{{ component.after_label ?? trans('components.comparison.after') }}</span>
+                                <img src="{{ img_after }}" alt="{{ label_after }}">
+                                {# هنا التصحيح: استخدام المتغير بدلاً من دالة الترجمة #}
+                                <span class="th-comparison-slider__label th-comparison-slider__label--after">{{ label_after }}</span>
                             </div>
-
-                          
                         </div>
 
                         {# المقبض (Handle) #}
@@ -84,6 +87,9 @@
         </div>
     </div>
 </section>
+
+{# ... باقي كود CSS و JS كما هو ... #}
+{# (فقط تأكد من نسخ أكواد CSS و JS الموجودة في سؤالك وإضافتها هنا) #}
 
 
 {# --- 3. التنسيقات (CSS) --- #}
@@ -388,7 +394,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // حدود الحركة: من 0 إلى العرض الداخلي
             const maxPos = slider.clientWidth;
 
-            // التأكد من عم خروج المقبض عن الحدود الداخلية
+            // التأكد من عدم خروج المقبض عن الحدود الداخلية
             if (position < 0) position = 0;
             if (position > maxPos) position = maxPos;
 

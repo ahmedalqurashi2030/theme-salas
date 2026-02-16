@@ -71,3 +71,28 @@ salla theme preview --browser=edge
 pnpm -s run development
 
 
+
+
+
+
+
+
+
+الحل الصحيح (آمن) خطوة بخطوة
+نفّذ الأوامر التالية في جهازك (نفس المشروع):
+
+git fetch origin
+git checkout master
+git pull --rebase origin master
+git push origin master
+لو ظهر تعارض أثناء rebase
+افتح الملفات المتعارضة وعدّلها.
+
+ثم:
+
+git add .
+git rebase --continue
+بعد اكتمال الـ rebase:
+
+git push origin master
+
