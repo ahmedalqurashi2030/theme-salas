@@ -1513,6 +1513,38 @@
                     "maxLength": 30
                 },
                 {
+                    "id": "alignment",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "محاذاة العنوان",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [
+                        {
+                            "label": "البداية (يمين)",
+                            "value": "start",
+                            "key": "988f800d-913f-41d2-89e9-33e6692bc979"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "البداية (يمين)",
+                            "value": "start",
+                            "key": "988f800d-913f-41d2-89e9-33e6692bc979"
+                        },
+                        {
+                            "label": "وسط",
+                            "value": "center",
+                            "key": "59452b2d-71b9-4993-a91e-9f38d188b65b"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": false
+                },
+                {
                     "id": "section_subtitle",
                     "type": "string",
                     "format": "text",
