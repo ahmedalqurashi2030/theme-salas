@@ -117,6 +117,10 @@ salla-search {
     box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
 }
 
+
+
+
+
 /* Header Icons */
 .header-actions {
     display: flex;
@@ -187,20 +191,23 @@ salla-search {
 
 .s-search-input {
     border-radius: 8rem;
- }
+    background: #f4f6f8;
+    height: 45px;
+}
 
 
- .s-search-icon-wrap {
+.s-search-icon-wrap {
     background-color: var(--th-primary-color);
 
-width: 36px;
-height: 36px;
-border-radius: 50%;
-color: #333;
-display: flex;
-align-items: center;
-justify-content: center;
- }
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* 3. Navigation Bar */
 .th-navbar {
     background: #e6effd;
@@ -228,7 +235,7 @@ justify-content: center;
 
 
 
-.sicon-layout-grid .text-lg{
+.sicon-layout-grid .text-lg {
     background-color: var(--th-primary-color);
     width: 36px;
     height: 36px;
@@ -284,9 +291,9 @@ justify-content: center;
     width: 900px;
     max-width: calc(100vw - 40px);
     background: #fff;
- //   border: 1px solid var(--th-border-color);
- //   border-top: 3px solid var(--th-primary);
- //   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+    //   border: 1px solid var(--th-border-color);
+    //   border-top: 3px solid var(--th-primary);
+    //   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
     border-radius: 0 0 12px 12px;
     opacity: 0;
     visibility: hidden;

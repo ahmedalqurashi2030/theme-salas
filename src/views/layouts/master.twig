@@ -50,89 +50,246 @@
 | theme.settings.get(settingName, default=null)      | mixed    | get theme setting ex `theme.settings.get('my_var', 'fallback')`                                          |
 #}
 <!DOCTYPE html>
-<html lang="{{ user.language.code }}" dir="{{ user.language.dir }}" class="tharaa-theme">
-<!-- بسم الله الرحمن الرحيم -->
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{ theme.settings.set('placeholder', 'images/placeholder.png') }}
+<html
+	lang="{{ user.language.code }}" dir="{{ user.language.dir }}" class="tharaa-theme">
+	<!-- بسم الله الرحمن الرحيم -->
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{{ theme.settings.set('placeholder', 'images/placeholder.png') }}
 
-    {% include 'pages.partials.loading-screen-assets' %}
+		{% include 'pages.partials.loading-screen-assets' %}
 
-    <script defer data-cfasync="false" src="{{ 'product-card.js'|asset }}"></script>
-    <script defer src="{{ 'main-menu.js'|asset }}"></script>
+		<script defer data-cfasync="false" src="{{ 'product-card.js'|asset }}"></script>
+		<script defer src="{{ 'main-menu.js'|asset }}"></script>
 
-    {% block head_scripts %}{% endblock %}
+		{% block head_scripts %}{% endblock %}
 
 
-    <script data-cfasync="false">
-        window.header_is_sticky = "{{theme.settings.get('header_is_sticky', 'Default Value')}}"
-        window.imageZoom = "{{theme.settings.get('imageZoom')}}"
-        window.can_access_wallet = {{ user.can_access_wallet | json_encode }}
-    </script>
-    
-    {% hook 'head:start' %}
-    {% hook head %}
-    {% block styles %}{% endblock %}
-    <link rel="stylesheet" href="{{ 'app.css' | asset }}">
-    <link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
-    <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
-    
-    <style>
+		<script data-cfasync="false">
+			window.header_is_sticky = "{{ theme.settings.get('header_is_sticky', 'Default Value') }}"
+window.imageZoom = "{{ theme.settings.get('imageZoom') }}"
+window.can_access_wallet = {{ user.can_access_wallet | json_encode }}
+		</script>
 
-    
-        :root {
-            --font-main: '{{ theme.font.name }}';
-            --color-primary: {{ theme.color.primary }};
-            --color-primary-dark: {{ theme.color.darker(0.15) }};
-            --color-primary-light: {{ theme.color.lighter(0.15) }};
-            --color-primary-reverse: {{ theme.color.reverse_text }};
+		{% hook 'head:start' %}
+		{% hook head %}
+		{% block styles %}{% endblock %}
+		<link rel="stylesheet" href="{{ 'app.css' | asset }}">
+		<link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
+		<link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
 
-            /* Runtime theme settings (merchant-controlled from twilight.json settings) */
-            --th-bg-main: {{ theme.settings.get('main_bg_color', '#ffffff') }};
-            --th-bg-secondary: {{ theme.settings.get('secondary_bg_color', '#fbfbfb') }};
-            --th-text-primary: {{ theme.settings.get('primary_text_color', '#111827') }};
-            --th-text-secondary: {{ theme.settings.get('secondary_text_color', '#111827') }};
-            --th-header-bg: {{ theme.settings.get('header_bg_color', '#ffffff') }};
-            --th-header-elements: {{ theme.settings.get('header_elements_color', '#111827') }};
-            --th-promo-tag-bg: {{ theme.settings.get('promo_tag_bg', '#ffffff') }};
-            --th-on-promo-tag: {{ theme.settings.get('primary_text_color', '#111827') }};
-        }
-    </style>
-    {# tracking services, custom css feature. #}
-    {% hook 'head:end' %}
+		<style>:root
+		{
+			--font-main: '{{ theme.font.name }}';
+			--color-primary: {{theme.color.primary}}
+			;
+			--color-primary-dark: {{theme.color.darker(0.15)}}
+			;
+			--color-primary-light: {{theme.color.lighter(0.15)}}
+			;
+			--color-primary-reverse: {{theme.color.reverse_text}}
+			;
+
+			/* Runtime theme settings (merchant-controlled from twilight.json settings) */
+			--th-bg-main: {{theme.settings.get('main_bg_color', '#ffffff')}}
+			;
+			--th-bg-secondary: {{theme.settings.get('secondary_bg_color', '#fbfbfb')}}
+			;
+			--th-text-primary: {{theme.settings.get('primary_text_color', '#111827')}}
+			;
+			--th-text-secondary: {{theme.settings.get('secondary_text_color', '#111827')}}
+			;
+			--th-header-bg: {{theme.settings.get('header_bg_color', '#ffffff')}}
+			;
+			--th-header-elements: {{theme.settings.get('header_elements_color', '#111827')}}
+			;
+			--th-promo-tag-bg: {{theme.settings.get('promo_tag_bg', '#ffffff')}}
+			;
+			--th-on-promo-tag: {{theme.settings.get('primary_text_color', '#111827')}}
+			;
+			}/* متغيرات للتجربة */:root
+			{
+				--color-primary: #C5A059;
+				--color-text: #1a1a1a;
+				--color-text-light: #666;
+				--color-border: #ddd;
+			}
+
+			/* الحاوية الرئيسية */
+			.s-block__header-wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 1.5rem;
+				position: relative;
+				margin-bottom: 2rem;
+				font-family: 'Tajawal', sans-serif; /* خط للتجربة */
+			}
+
+			/* العناوين */
+			.s-block__title {
+				flex: 1;
+				margin-bottom: 0;
+				text-align: inherit;
+			}
+
+			.s-block__title-row {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+			}
+
+			.s-block__title-head {
+				font-size: 1.8rem;
+				font-weight: 800;
+				color: var(--color-text);
+				margin: 0;
+				line-height: 1.2;
+			}
+
+			.s-block__title-sub {
+				font-size: 1rem;
+				color: var(--color-text-light);
+				margin-top: 5px;
+				max-width: 600px;
+			}
+
+			/* الشريط الجانبي */
+			.s-block__side-bar {
+				width: 4px;
+				min-height: 60px;
+				height: 100%;
+				background: var(--color-primary);
+				border-radius: 4px;
+				position: relative;
+				flex-shrink: 0;
+				opacity: 0.8;
+				transition: all 0.3s ease;
+			}
+
+			.s-block__side-bar::after {
+				content: '';
+				position: absolute;
+				bottom: -5px;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: var(--color-primary);
+			}
+
+			/* الخط الأفقي */
+			.s-block__line {
+				height: 1px;
+				width: 60px;
+				background: var(--color-border);
+				display: none; /* مخفي افتراضياً */
+			}
+
+			/* الزر */
+			.btn-custom {
+				display: inline-flex;
+				align-items: center;
+				padding: 10px 25px;
+				border: 1px solid var(--color-primary);
+				color: var(--color-primary);
+				text-decoration: none;
+				border-radius: 50px;
+				font-weight: bold;
+				transition: 0.3s;
+			}
+			.btn-custom:hover {
+				background: var(--color-primary);
+				color: #fff;
+			}
+
+			/* Hover Effect */
+			.s-block__header-wrapper:hover .s-block__side-bar {
+				width: 6px;
+				opacity: 1;
+			}
+
+			/* === Center Mode === */
+			.s-block--center {
+				flex-direction: column;
+				text-align: center;
+				align-items: center;
+			}
+			.s-block--center .s-block__title-row {
+				justify-content: center;
+			}
+			.s-block--center .s-block__line {
+				display: block;
+			}
+			.s-block--center .s-block__action {
+				margin-top: 15px;
+			}
+
+			/* === Mobile Responsive === */
+			@media(max-width: 768px) {
+				.s-block__header-wrapper {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+				.s-block__title-row {
+					width: 100%;
+					justify-content: space-between;
+				}
+				.s-block__action {
+					width: 100%;
+					margin-top: 15px;
+				}
+				.btn-custom {
+					width: 100%;
+					justify-content: center;
+				}
+				.s-block__line {
+					display: none;
+				} /* إخفاء الخطوط في الجوال لضيق المساحة */
+
+				/* في السنتر مود للجوال */
+				.s-block--center {
+					align-items: center;
+				}
+				.s-block--center .s-block__title-row {
+					justify-content: center;
+				}
+			}
+	</style>
+	{# tracking services, custom css feature. #}
+	{% hook 'head:end' %}
 </head>
 <body id="app" class="overflow-x-hidden {% hook 'body:classes' %}
-  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
-  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
-  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
-  ">
-  <div class="loader-init"></div>
-<noscript>
-    To get full functionality of this site you need to enable JavaScript. Here is how
-    <a href="https://www.enable-javascript.com/" rel="noreferrer"
-       target="_blank">To enable JavaScript on webpage</a>.
-</noscript>
-<div class="app-inner flex flex-col min-h-full">
-    {% hook 'body:start' %}
-    {% component 'header.header' %}
-    {% block content %}{% endblock %}
-    {% component 'footer.footer' %}
-</div>
-{% hook 'body:end' %}
-<script defer src="{{ 'app.js' | asset }}"></script>
-{# <script defer src="{{ 'partials/thraa-product-card.js' | asset }}"></script> #}
-{# Twilight Components #}
-<salla-offer-modal></salla-offer-modal>
-<salla-search></salla-search>
+						  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
+						  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
+						  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
+						  ">
+	<div class="loader-init"></div>
+	<noscript>
+		To get full functionality of this site you need to enable JavaScript. Here is how
+		<a href="https://www.enable-javascript.com/" rel="noreferrer" target="_blank">To enable JavaScript on webpage</a>.
+	</noscript>
+	<div class="app-inner flex flex-col min-h-full">
+		{% hook 'body:start' %}
+		{% component 'header.header' %}
+		{% block content %}{% endblock %}
+		{% component 'footer.footer' %}
+	</div>
+	{% hook 'body:end' %}
+	<script defer src="{{ 'app.js' | asset }}"></script>
+	{# <script defer src="{{ 'partials/thraa-product-card.js' | asset }}"></script> #}
+	{# Twilight Components #}
+	<salla-offer-modal></salla-offer-modal>
+	<salla-search></salla-search>
 
-{% if user.type=='guest' %}
-    <salla-login-modal></salla-login-modal>
-{% endif %}
-{% block scripts %}
-<script src="{{ 'custom/th-links.js' | asset }}" defer></script>
+	{% if user.type=='guest' %}
+		<salla-login-modal></salla-login-modal>
+	{% endif %}
+	{% block scripts %}
+		<script src="{{ 'custom/th-links.js' | asset }}" defer></script>
 
-{% endblock %}
-</body>
-</html>
+	{% endblock %}
+</body></html>
