@@ -39,11 +39,8 @@
 			
         {# استدعاء الهيدر الموحد #}
         {% include 'views/components/home/_partials/section-header.twig' with {
-            title: title,
-            subtitle: description,
-            align: 'start', {# يمكنك تغييره هنا أو جلبه من الإعدادات #}
-            btn_text: 'عرض الكل',
-            btn_url: display_all_url
+            title: section_title,
+            subtitle: section_description,
         } %}
 
 

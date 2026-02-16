@@ -1,43 +1,207 @@
-{#
-  Re-usable Section Header
-  @param title
-  @param subtitle
-  @param align (start, center)
-  @param btn_text (optional)
-  @param btn_url (optional)
+{# 
+   -------------------------------------------------
+   TEST HEADER COMPONENT (All-in-One)
+   -------------------------------------------------
 #}
-<div class="s-block__header-wrapper {{ align == 'center' ? 's-block--center' : '' }}">
-    
-    {# 1. Side Bar (Only for start align) #}
-    {% if align != 'center' %}
-        <div class="s-block__side-bar"></div>
-    {% endif %}
 
-    {# 2. Titles #}
-    <div class="s-block__title">
-        <div class="s-block__title-row">
-            {% if align == 'center' %}<span class="s-block__line"></span>{% endif %}
-            
-            <h2 class="s-block__title-head">{{ section_title }}</h2>
-            
-            {% if align == 'center' %}<span class="s-block__line"></span>{% endif %}
+{# محاكاة المتغيرات التي ستأتي من لوحة التحكم #}
+{% set alignment = 'start' %} {# جرب تغييرها لـ 'center' للاختبار #}
+{% set title = 'مجموعة العناية الفاخرة' %}
+{% set subtitle = 'اكتشفي سر الجمال الطبيعي مع منتجاتنا المختارة بعناية' %}
+{% set btn_text = 'تسوقي المجموعة' %}
+
+
+    {# === بداية المكون === #}
+    <div class="s-block__header-wrapper {{ alignment == 'center' ? 's-block--center' : '' }}">
+        
+        {# 1. Side Bar (يظهر فقط إذا كانت المحاذاة جانبية) #}
+        {% if alignment != 'center' %}
+            <div class="s-block__side-bar"></div>
+        {% endif %}
+
+        {# 2. Titles Container #}
+        <div class="s-block__title">
+            <div class="s-block__title-row">
+                
+                {# خط التزيين الأيمن (للوضع المتوسط) #}
+                {% if alignment == 'center' %}
+                    <span class="s-block__line"></span>
+                {% endif %}
+                
+                <h2 class="s-block__title-head">{{ section_title }}</h2>
+                
+                {# خط التزيين الأيسر (للوضع المتوسط) #}
+                {% if alignment == 'center' %}
+                    <span class="s-block__line"></span>
+                {% endif %}
+            </div>
+
+            {% if section_subtitle %}
+                <p class="s-block__title-sub">{{ section_subtitle }}</p>
+            {% endif %}
         </div>
 
-        {% if section_subtitle %}
-            <p class="s-block__title-sub">{{ section_subtitle }}</p>
+        {# 3. Action Button #}
+        {% if btn_text %}
+            <div class="s-block__action">
+                <a href="#" class="btn-custom">
+                    <span>{{ btn_text }}</span>
+                    <!-- سهم SVG بسيط للاختبار -->
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M19 12H5M12 5l-7 7 7 7"></path></svg>
+                </a>
+            </div>
         {% endif %}
     </div>
-
-    {# 3. Button #}
-    {% if btn_text %}
-        <div class="s-block__action">
-            <a href="{{ btn_url }}" class="btn btn--outline-primary btn--rounded btn--has-icon">
-                <span>{{ btn_text }}</span>
-                <i class="sicon-arrow-left"></i>
-            </a>
-        </div>
-    {% endif %}
-</div>
+    {# === نهاية المكون === #}
 
 
+{# === ستايل CSS للاختبار (Scoped) === #}
+<style>
+    /* متغيرات للتجربة */
+    :root {
+        --color-primary: #C5A059;
+        --color-text: #1a1a1a;
+        --color-text-light: #666;
+        --color-border: #ddd;
+    }
 
+    /* الحاوية الرئيسية */
+    .s-block__header-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        position: relative;
+        margin-bottom: 2rem;
+        font-family: 'Tajawal', sans-serif; /* خط للتجربة */
+    }
+
+    /* العناوين */
+    .s-block__title {
+        flex: 1;
+        margin-bottom: 0;
+        text-align: inherit;
+    }
+
+    .s-block__title-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .s-block__title-head {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--color-text);
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .s-block__title-sub {
+        font-size: 1rem;
+        color: var(--color-text-light);
+        margin-top: 5px;
+        max-width: 600px;
+    }
+
+    /* الشريط الجانبي */
+    .s-block__side-bar {
+        width: 4px;
+        min-height: 60px;
+        height: 100%;
+        background: var(--color-primary);
+        border-radius: 4px;
+        position: relative;
+        flex-shrink: 0;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+    }
+
+    .s-block__side-bar::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-primary);
+    }
+
+    /* الخط الأفقي */
+    .s-block__line {
+        height: 1px;
+        width: 60px;
+        background: var(--color-border);
+        display: none; /* مخفي افتراضياً */
+    }
+
+    /* الزر */
+    .btn-custom {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 25px;
+        border: 1px solid var(--color-primary);
+        color: var(--color-primary);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    .btn-custom:hover {
+        background: var(--color-primary);
+        color: #fff;
+    }
+
+    /* Hover Effect */
+    .s-block__header-wrapper:hover .s-block__side-bar {
+        width: 6px;
+        opacity: 1;
+    }
+
+    /* === Center Mode === */
+    .s-block--center {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    .s-block--center .s-block__title-row {
+        justify-content: center;
+    }
+    .s-block--center .s-block__line {
+        display: block;
+    }
+    .s-block--center .s-block__action {
+        margin-top: 15px;
+    }
+
+    /* === Mobile Responsive === */
+    @media (max-width: 768px) {
+        .s-block__header-wrapper {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .s-block__title-row {
+            width: 100%;
+            justify-content: space-between;
+        }
+        .s-block__action {
+            width: 100%;
+            margin-top: 15px;
+        }
+        .btn-custom {
+            width: 100%;
+            justify-content: center;
+        }
+        .s-block__line { display: none; } /* إخفاء الخطوط في الجوال لضيق المساحة */
+        
+        /* في السنتر مود للجوال */
+        .s-block--center {
+            align-items: center;
+        }
+        .s-block--center .s-block__title-row {
+            justify-content: center;
+        }
+    }
+</style>
