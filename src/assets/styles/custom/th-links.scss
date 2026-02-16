@@ -1,70 +1,170 @@
-/* =====================================================
-   Tharaa Links (circle/square/rect)
-   Token-driven with Salla Theme Settings vars
-   ===================================================== */
+// =====================================================
+// Tharaa Theme - Links Components SCSS
+// =====================================================
+// Components: th-links-circle, th-links-square, th-links-rect
+// Architecture: BEM + Modular + Responsive + RTL Ready
+// Version: 1.0.0
+// =====================================================
 
-/* -----------------------------
-   Design tokens from :root
-   (defined in master.twig)
------------------------------- */
-:root {
-  --th-links-gap: 20px;
-  --th-links-radius-circle: 999px;
-  --th-links-radius-square: 20px;
-  --th-links-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --th-links-shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.12);
-  --th-links-transition: 0.28s ease;
-  --th-links-nav-size: 40px;
-  --th-links-progress-height: 3px;
-}
+// =====================================================
+// 1. Design Tokens (From Tharaa Design System)
+// =====================================================
 
-/* -----------------------------
-   Base Section
------------------------------- */
+// Import Tharaa base variables (assuming they exist in main theme)
+// If not, these variables should be defined:
+
+// Colors - Luxury Palette
+$tharaa-color-primary: var(--th-header-elements, var(--th-text-primary, #1a1a1a)) !default;
+$tharaa-color-secondary: var(--th-promo-tag, #d4af37) !default;
+$tharaa-color-accent: var(--th-text-secondary, #8b7355) !default;
+$tharaa-color-bg-light: var(--th-bg-secondary, #fafafa) !default;
+$tharaa-color-text: var(--th-text-primary, #2c2c2c) !default;
+$tharaa-color-text-light: var(--th-text-secondary, #6b6b6b) !default;
+
+// Typography
+$tharaa-font-body: var(--tharaa-font-body, 'Almarai', -apple-system, sans-serif) !default;
+$tharaa-font-heading: var(--tharaa-font-heading, 'Playfair Display', Georgia, serif) !default;
+
+// Spacing & Layout
+$tharaa-container-width: var(--tharaa-container, 1300px) !default;
+$tharaa-gap-base: var(--tharaa-gap, 20px) !default;
+$tharaa-gap-sm: calc(#{$tharaa-gap-base} * 0.5) !default;
+$tharaa-gap-lg: calc(#{$tharaa-gap-base} * 1.5) !default;
+
+// Border Radius
+$tharaa-radius-sm: var(--tharaa-radius-sm, 4px) !default;
+$tharaa-radius-md: var(--tharaa-radius-md, 8px) !default;
+$tharaa-radius-lg: var(--tharaa-radius-lg, 16px) !default;
+$tharaa-radius-xl: var(--tharaa-radius-xl, 24px) !default;
+$tharaa-radius-full: var(--tharaa-radius-full, 9999px) !default;
+
+// Shadows
+$tharaa-shadow-sm: var(--tharaa-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05)) !default;
+$tharaa-shadow-md: var(--tharaa-shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07)) !default;
+$tharaa-shadow-lg: var(--tharaa-shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.1)) !default;
+$tharaa-shadow-xl: var(--tharaa-shadow-xl, 0 20px 40px rgba(0, 0, 0, 0.15)) !default;
+
+// Transitions
+$tharaa-transition-fast: var(--tharaa-transition-fast, 150ms ease) !default;
+$tharaa-transition-base: var(--tharaa-transition, 300ms cubic-bezier(0.4, 0, 0.2, 1)) !default;
+$tharaa-transition-slow: var(--tharaa-transition-slow, 400ms ease) !default;
+
+// Breakpoints
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+$breakpoint-desktop: 1280px;
+
+// =====================================================
+// 2. Base Styles - Shared by All Components
+// =====================================================
+
+// Main Section Container
 .tharaa-links-section {
+  padding: 40px 0;
   position: relative;
-  padding: 16px 0;
+  overflow: hidden;
 
-  /* Inputs from twig inline custom properties */
-  --th-gap: var(--th-links-gap);
-  --th-items-mobile: 3;
-  --th-items-desktop: 6;
-
-  background: transparent;
-  color: var(--th-text-primary);
+  // Responsive padding
+  @media (max-width: $breakpoint-mobile) {
+    padding: 30px 0;
+  }
 }
 
-/* -----------------------------
-   Header
------------------------------- */
+// Container (max-width wrapper)
+.tharaa-container {
+  max-width: $tharaa-container-width;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: 0 15px;
+  }
+}
+
+// =====================================================
+// 3. Header Component (Title + Description)
+// =====================================================
+
 .tharaa-header {
-  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: calc(var(--th-gap, #{$tharaa-gap-base}) * .75);
+
+  @media (max-width: $breakpoint-mobile) {
+    margin-bottom: 20px;
+    gap: 10px;
+  }
 }
 
 .tharaa-header__content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex: 1 1 auto;
+  min-width: 200px;
 }
 
 .tharaa-header__title {
+  font-family: $tharaa-font-heading;
+  font-size: 26px;
+  font-weight: 700;
+  color: $tharaa-color-primary;
   margin: 0;
-  font-size: clamp(1.1rem, 0.95rem + 0.5vw, 1.6rem);
-  line-height: 1.35;
-  font-weight: 800;
-  color: var(--th-header-elements);
+  line-height: 1.2;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 22px;
+  }
 }
 
 .tharaa-header__subtitle {
-  margin: 0;
-  font-size: clamp(0.85rem, 0.8rem + 0.2vw, 0.98rem);
-  line-height: 1.65;
-  color: var(--th-text-secondary);
+  font-family: $tharaa-font-body;
+  font-size: 14px;
+  color: $tharaa-color-text-light;
+  margin: 5px 0 0;
+  font-weight: 400;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 13px;
+  }
 }
 
-/* -----------------------------
-   Track Wrapper + Track
------------------------------- */
+.tharaa-header__actions {
+  display: flex;
+  align-items: center;
+}
+
+.tharaa-header__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--th-bg-main);
+  color: var(--th-header-elements);
+  border: 1px solid color-mix(in srgb, var(--th-text-primary), #fff 85%);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: $tharaa-transition-base;
+
+  &:hover {
+    color: #fff;
+    background: var(--th-promo-tag);
+    border-color: var(--th-promo-tag);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--th-promo-tag);
+    outline-offset: 2px;
+  }
+}
+
+// =====================================================
+// 4. Track Wrapper & Track (Slider Container)
+// =====================================================
+
 .tharaa-track-wrapper {
   position: relative;
   width: 100%;
@@ -72,8 +172,8 @@
 
 .tharaa-track {
   display: flex;
-  gap: var(--th-gap, 20px);
-  padding: 10px 5px 30px;
+  gap: var(--th-gap, #{$tharaa-gap-base});
+  padding: 10px 5px 30px; // Space for shadows
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -81,118 +181,33 @@
   scrollbar-width: none;
   cursor: grab;
 
+  // Scroll snap for better mobile experience
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 10px;
+  scroll-padding: 20px;
 
+  // Hide scrollbar
   &::-webkit-scrollbar {
     display: none;
   }
 
+  // Dragging state
   &.is-dragging {
     cursor: grabbing;
     scroll-behavior: auto;
     scroll-snap-type: none;
   }
 
-  @media (max-width: 768px) {
-    gap: calc(var(--th-gap, 20px) * 0.75);
+  @media (max-width: $breakpoint-mobile) {
+    gap: calc(var(--th-gap, #{$tharaa-gap-base}) * .75);
     padding-bottom: 20px;
   }
 }
 
-/* -----------------------------
-   Card Base
------------------------------- */
-.tharaa-card {
-  flex: 0 0 auto;
-  width: calc((100% - (var(--th-gap, 20px) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
-  min-width: 110px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  text-decoration: none;
-  color: inherit;
-  scroll-snap-align: start;
-  transition: transform var(--th-links-transition), opacity var(--th-links-transition);
+// =====================================================
+// 5. Layout Modes (Grid / Double Row)
+// =====================================================
 
-  @media (max-width: 768px) {
-    width: calc((100% - (var(--th-gap, 20px) * (var(--th-items-mobile, 3) - 1))) / var(--th-items-mobile, 3));
-  }
-}
-
-.tharaa-card__visual {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  position: relative;
-  border-radius: var(--th-links-radius-circle);
-  background: var(--th-bg-secondary);
-  border: 1px solid color-mix(in srgb, var(--th-text-primary), #fff 86%);
-  transition: transform var(--th-links-transition), box-shadow var(--th-links-transition),
-    border-color var(--th-links-transition);
-  will-change: transform;
-}
-
-.tharaa-card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.45s ease;
-}
-
-.tharaa-card__content {
-  margin-top: 10px;
-  width: 100%;
-}
-
-.tharaa-card__title {
-  display: block;
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.45;
-  font-weight: 700;
-  color: var(--th-text-primary);
-}
-
-.tharaa-card__count,
-.tharaa-card__badge {
-  display: block;
-  margin-top: 2px;
-  font-size: 11px;
-  line-height: 1.35;
-  font-weight: 600;
-  color: var(--th-promo-tag);
-}
-
-/* Hover */
-@media (hover: hover) {
-  .tharaa-card:hover {
-    .tharaa-card__visual {
-      transform: translateY(-4px);
-      box-shadow: var(--th-links-shadow-lg);
-      border-color: var(--th-promo-tag);
-    }
-
-    .tharaa-card__img {
-      transform: scale(1.08);
-    }
-
-    .tharaa-card__title {
-      color: var(--th-header-elements);
-    }
-  }
-}
-
-/* Focus */
-.tharaa-card:focus-visible {
-  outline: 2px solid var(--th-promo-tag);
-  outline-offset: 3px;
-}
-
-/* -----------------------------
-   Mode: Grid (list)
------------------------------- */
+// Mode: Grid / Vertical (List View)
 .tharaa-links-section.mode-grid {
   .tharaa-track {
     display: flex;
@@ -203,7 +218,7 @@
     padding-bottom: 0;
     cursor: default;
 
-    @media (max-width: 768px) {
+    @media (max-width: $breakpoint-mobile) {
       justify-content: flex-start;
       gap: 10px;
       padding: 0 10px;
@@ -211,104 +226,221 @@
   }
 
   .tharaa-card {
-    width: calc((100% - (var(--th-gap, 20px) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
+    width: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
 
-    @media (max-width: 768px) {
-      width: calc((100% - (var(--th-gap, 20px) * (var(--th-items-mobile, 3) - 1))) / var(--th-items-mobile, 3));
+    @media (max-width: $breakpoint-mobile) {
+      width: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-mobile, 3) - 1))) / var(--th-items-mobile, 3));
     }
   }
 
+  // Hide navigation buttons and progress in grid mode
   .tharaa-nav-btn,
   .tharaa-progress {
     display: none !important;
   }
 }
 
-/* -----------------------------
-   Mode: Double row
------------------------------- */
+// Mode: Two Rows (Double Slider)
 .tharaa-links-section.mode-double {
   .tharaa-track {
     display: grid;
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
-    /* مهم: هذا هو الإصلاح الحقيقي لالتزام items_per_view_desktop */
-    grid-auto-columns: calc((100% - (var(--th-gap, 20px) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
-    gap: var(--th-gap, 20px);
+    grid-auto-columns: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
+    gap: var(--th-gap, #{$tharaa-gap-base});
 
-    @media (max-width: 768px) {
+    @media (max-width: $breakpoint-mobile) {
+      // Revert to single row on mobile
       display: flex;
-      gap: calc(var(--th-gap, 20px) * 0.75);
+      gap: calc(var(--th-gap, #{$tharaa-gap-base}) * .75);
     }
   }
 }
 
-/* -----------------------------
-   Style Modifiers
------------------------------- */
+// =====================================================
+// 6. Card Component (Base Styles)
+// =====================================================
+
+.tharaa-card {
+  flex: 0 0 auto;
+  width: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
+  min-width: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  scroll-snap-align: start;
+  text-decoration: none;
+  transition: $tharaa-transition-base;
+
+  @media (max-width: $breakpoint-mobile) {
+    width: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-mobile, 3) - 1))) / var(--th-items-mobile, 3));
+  }
+}
+
+// Visual Container (Image Wrapper)
+.tharaa-card__visual {
+  width: 100%;
+  aspect-ratio: 1 / 1; // Default square (overridden by modifiers)
+  background: $tharaa-color-bg-light;
+  overflow: hidden;
+  position: relative;
+  border-radius: $tharaa-radius-full; // Default circle
+  border: 2px solid transparent;
+  transition: $tharaa-transition-base;
+  will-change: transform;
+}
+
+// Image
+.tharaa-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+// Content Container (Title + Count)
+.tharaa-card__content {
+  margin-top: 12px;
+  width: 100%;
+  transition: $tharaa-transition-base;
+  z-index: 2;
+
+  @media (max-width: $breakpoint-mobile) {
+    margin-top: 10px;
+  }
+}
+
+// Title
+.tharaa-card__title {
+  font-family: $tharaa-font-body;
+  font-size: 14px;
+  font-weight: 700;
+  color: $tharaa-color-primary;
+  display: block;
+  margin-bottom: 2px;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 13px;
+  }
+}
+
+// Count / Badge
+.tharaa-card__count {
+  font-size: 11px;
+  color: $tharaa-color-secondary;
+  font-weight: 600;
+  display: block;
+}
+
+.tharaa-card__badge {
+  font-size: 11px;
+  color: $tharaa-color-secondary;
+  font-weight: 700;
+  display: block;
+  text-transform: uppercase;
+}
+
+// =====================================================
+// 7. Hover Effects (Luxury Touch)
+// =====================================================
+
+@media (hover: hover) {
+  .tharaa-card:hover {
+    .tharaa-card__visual {
+      transform: translateY(-5px);
+      box-shadow: $tharaa-shadow-lg;
+      border-color: $tharaa-color-secondary;
+    }
+
+    .tharaa-card__img {
+      transform: scale(1.1);
+    }
+
+    .tharaa-card__title {
+      color: $tharaa-color-secondary;
+    }
+  }
+}
+
+// =====================================================
+// 8. Style Modifiers (Circle / Square / rect)
+// =====================================================
+
+// Circle Style (Default)
 .tharaa-links-section.style-circle {
   .tharaa-card__visual {
-    border-radius: var(--th-links-radius-circle);
+    border-radius: $tharaa-radius-full; // Perfect circle
   }
 }
 
+// Square Style
 .tharaa-links-section.style-square {
   .tharaa-card__visual {
-    border-radius: var(--th-links-radius-square);
+    border-radius: $tharaa-radius-xl; // 24px rounded corners
   }
 }
 
+// rect Style (Overlay Text)
 .tharaa-links-section.style-rect {
   .tharaa-card__visual {
+    width: 100%;
+    height: 100%;
     border-radius: 0;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 3 / 4; // rect aspect ratio
 
+    // Gradient overlay for text readability
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(to top,
           color-mix(in srgb, var(--th-bg-main), #000 72%) 0%,
-          transparent 62%);
+          transparent 60%);
       pointer-events: none;
     }
   }
 
+  // Position content absolutely over image
   .tharaa-card__content {
     position: absolute;
-    inset-inline: 0;
-    bottom: 14px;
-    margin: 0;
+    bottom: 15px;
+    left: 0;
+    right: 0;
     padding: 0 10px;
+    margin: 0;
     z-index: 3;
   }
 
   .tharaa-card__title {
     color: #fff;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     font-size: 15px;
   }
 
   .tharaa-card__count,
   .tharaa-card__badge {
-    color: color-mix(in srgb, #fff, transparent 18%);
+    color: rgba(255, 255, 255, 0.8);
   }
 }
 
-/* -----------------------------
-   Nav Buttons
------------------------------- */
+// =====================================================
+// 9. Navigation Buttons (Prev / Next)
+// =====================================================
+
 .tharaa-nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: var(--th-links-nav-size);
-  height: var(--th-links-nav-size);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: var(--th-bg-main);
-  border: 1px solid color-mix(in srgb, var(--th-text-primary), #fff 86%);
-  color: var(--th-header-elements);
-  box-shadow: var(--th-links-shadow-sm);
+  border: 1px solid color-mix(in srgb, var(--th-text-primary), #fff 85%);
+  color: $tharaa-color-primary;
+  box-shadow: $tharaa-shadow-sm;
   cursor: pointer;
   z-index: 10;
   display: flex;
@@ -316,33 +448,36 @@
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: var(--th-links-transition);
+  transition: $tharaa-transition-base;
   font-size: 14px;
 
+  // Show on hover (desktop only)
   .tharaa-links-section:hover &.is-visible {
     opacity: 1;
     pointer-events: all;
   }
 
   &:hover {
-    background: var(--th-promo-tag);
-    border-color: var(--th-promo-tag);
+    background: $tharaa-color-secondary;
     color: #fff;
+    border-color: $tharaa-color-secondary;
   }
 
+  // Accessibility
   &:focus-visible {
-    outline: 2px solid var(--th-promo-tag);
+    outline: 2px solid $tharaa-color-secondary;
     outline-offset: 2px;
     opacity: 1;
     pointer-events: all;
   }
 
-  @media (max-width: 768px) {
+  // Hide on mobile
+  @media (max-width: $breakpoint-mobile) {
     display: none !important;
   }
 }
 
-/* RTL/LTR button positions */
+// RTL Support for navigation buttons
 [dir="rtl"] {
   .btn-prev {
     left: auto;
@@ -358,43 +493,43 @@
 [dir="ltr"] {
   .btn-prev {
     right: 10px;
-    left: auto;
   }
 
   .btn-next {
     left: 10px;
-    right: auto;
   }
 }
 
-/* -----------------------------
-   Progress Bar
------------------------------- */
+// =====================================================
+// 10. Progress Bar
+// =====================================================
+
 .tharaa-progress {
   width: 120px;
-  height: var(--th-links-progress-height);
-  background: color-mix(in srgb, var(--th-text-primary), #fff 86%);
+  height: 3px;
+  background: color-mix(in srgb, var(--th-text-primary), #fff 85%);
   margin: 10px auto 0;
-  border-radius: 999px;
+  border-radius: 10px;
   position: relative;
   overflow: hidden;
   transition: opacity 0.3s;
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-mobile) {
     width: 100px;
   }
 }
 
 .tharaa-progress__bar {
-  width: 30%;
+  width: 30%; // Initial width (updated via JS)
   height: 100%;
-  background: var(--th-promo-tag);
+  background: $tharaa-color-secondary;
   position: absolute;
   top: 0;
-  border-radius: 999px;
-  transition: left 0.1s linear, right 0.1s linear;
+  border-radius: 10px;
+  transition: right 0.1s linear;
 }
 
+// RTL Support for progress bar
 [dir="rtl"] .tharaa-progress__bar {
   right: 0;
 }
@@ -403,20 +538,29 @@
   left: 0;
 }
 
-/* -----------------------------
-   Direction
------------------------------- */
-[dir="rtl"] .tharaa-track {
-  direction: rtl;
+// Hide progress bar in grid mode (handled by layout mode styles above)
+
+// =====================================================
+// 11. RTL Support (Additional Adjustments)
+// =====================================================
+
+[dir="rtl"] {
+  .tharaa-track {
+    direction: rtl;
+  }
 }
 
-[dir="ltr"] .tharaa-track {
-  direction: ltr;
+[dir="ltr"] {
+  .tharaa-track {
+    direction: ltr;
+  }
 }
 
-/* -----------------------------
-   Reduced motion
------------------------------- */
+// =====================================================
+// 12. Accessibility Enhancements
+// =====================================================
+
+// Reduced motion support
 @media (prefers-reduced-motion: reduce) {
 
   .tharaa-card,
@@ -428,9 +572,16 @@
   }
 }
 
-/* -----------------------------
-   Print
------------------------------- */
+// Focus indicators
+.tharaa-card:focus-visible {
+  outline: 2px solid $tharaa-color-secondary;
+  outline-offset: 4px;
+}
+
+// =====================================================
+// 13. Print Styles
+// =====================================================
+
 @media print {
   .tharaa-links-section {
     page-break-inside: avoid;
@@ -445,5 +596,141 @@
     overflow: visible;
     display: flex;
     flex-wrap: wrap;
+  }
+}
+
+// =====================================================
+// END OF STYLES
+// =====================================================
+// =====================================================
+// Section Header Wrapper (Shared partial structure)
+// =====================================================
+
+.s-block__header-wrapper {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 14px;
+  row-gap: 8px;
+  margin-bottom: 24px;
+
+  &.no-action {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  &.s-block--center {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+
+    &.no-action,
+    &.has-action {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    margin-bottom: 18px;
+    grid-template-columns: 1fr;
+    justify-items: start;
+
+    &.s-block--center {
+      justify-items: center;
+    }
+  }
+}
+
+.s-block__side-bar {
+  width: 4px;
+  min-height: 48px;
+  border-radius: 999px;
+  background: var(--th-promo-tag);
+}
+
+.s-block__title {
+  min-width: 0;
+  width: 100%;
+}
+
+
+.s-block__title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  max-width: 100%;
+}
+
+
+.s-block__line {
+  width: 34px;
+  height: 1px;
+  background: color-mix(in srgb, var(--th-text-primary), #fff 70%);
+}
+
+.s-block__title-head {
+  font-family: $tharaa-font-heading;
+  font-size: 26px;
+  font-weight: 700;
+  color: $tharaa-color-primary;
+  margin: 0;
+  line-height: 1.2;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 22px;
+  }
+}
+
+.s-block__title-sub {
+  font-family: $tharaa-font-body;
+  font-size: 14px;
+  color: $tharaa-color-text-light;
+  margin: 8px 0 0;
+  font-weight: 400;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 13px;
+  }
+}
+
+.s-block__action {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+
+  @media (max-width: $breakpoint-mobile) {
+    justify-self: start;
+  }
+}
+
+
+.btn-custom {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--th-bg-main);
+  color: var(--th-header-elements);
+  border: 1px solid color-mix(in srgb, var(--th-text-primary), #fff 85%);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: $tharaa-transition-base;
+
+  &:hover {
+    color: #fff;
+    background: var(--th-promo-tag);
+    border-color: var(--th-promo-tag);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--th-promo-tag);
+    outline-offset: 2px;
+  }
+
+  svg {
+    flex-shrink: 0;
   }
 }

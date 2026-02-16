@@ -7,7 +7,8 @@
   - btn_text (string)
   - btn_url (string)
 #}
-<div class="s-block__header-wrapper {{ alignment == 'center' ? 's-block--center' : '' }}">
+{% set has_action = btn_text and btn_url %}
+<div class="s-block__header-wrapper {{ alignment == 'center' ? 's-block--center' : '' }} {{ has_action ? 'has-action' : 'no-action' }}">
 	{% if alignment != 'center' %}
 		<div class="s-block__side-bar"></div>
 	{% endif %}
@@ -30,7 +31,7 @@
 		{% endif %}
 	</div>
 
-	{% if btn_text %}
+	{% if has_action %}
 		<div class="s-block__action">
 			<a href="{{ btn_url|default('#') }}" class="btn-custom" aria-label="{{ btn_text }}">
 				<span>{{ btn_text }}</span>
