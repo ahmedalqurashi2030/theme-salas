@@ -1,6 +1,6 @@
 {# Get component data from theme.json #}
 {% set section_title = component.section_title|default('تصفح حسب الفئة') %}
-{% set section_description = component.section_subtitle|default('') %}
+{% set section_subtitle = component.section_subtitle|default('') %}
 {% set display_mode_raw = component.display_mode.selected[0].label|default(component.display_mode.selected[0].value|default('slider'))|lower %}
 {% set display_mode = (display_mode_raw in ['list','قائمة']) ? 'list' : 'slider' %}
 {% set autoplay = component.autoplay|default(false) %}
@@ -31,8 +31,8 @@
 					<h2 class="tharaa-header__title">{{ section_title }}</h2>
 
 					{# Section Description (Optional) - Controlled by theme.json: section_description #}
-					{% if section_description %}
-						<p class="tharaa-header__subtitle">{{ section_description }}</p>
+					{% if section_subtitle %}
+						<p class="tharaa-header__subtitle">{{ section_subtitle }}</p>
 					{% endif %}
 				</div>
 			</div>
@@ -40,7 +40,7 @@
         {# استدعاء الهيدر الموحد #}
         {% include 'views/components/home/_partials/section-header.twig' with {
             title: section_title,
-            subtitle: section_description,
+            subtitle: section_subtitle,
         } %}
 
 
