@@ -1,43 +1,41 @@
-{# Get component data from theme.json #}
 {% set section_title = component.section_title|default('تسوق حسب الفئة') %}
 {% set section_description = component.section_description|default(component.section_subtitle)|default('') %}
-{% set display_mode_raw = component.display_mode.selected[0].label|default(component.display_mode.selected[0].value|default('slider'))|lower %}
+{% set section_more_url = component.more_url|default(component.url)|default('') %}
+{% set header_alignment = component.alignment|default('start') %}
+{% set section_more_label = component.more_label|default(trans('common.view_all')) %}
+{% set show_more = component.show_more|default(section_more_url is not empty) %}
+
+{% set display_mode_raw = component.display_mode.selected[0].label|default(component.display_mode.selected[0].value|default(component.display_mode.value|default('slider')))|lower %}
 {% set display_mode = (display_mode_raw in ['list','قائمة']) ? 'list' : 'slider' %}
 {% set autoplay = component.autoplay|default(false) %}
 {% set show_controls = component.show_controls|default(true) %}
 {% set two_rows = component.two_rows|default(false) %}
+
 {% set items_mobile_raw = component.items_per_view_mobile.selected[0].value|default(component.items_per_view_mobile.selected[0].label|default(component.items_per_view_mobile.value|default(component.items_per_view_mobile|default('3')))) %}
 {% set items_mobile = (items_mobile_raw in ['1','2','3','4']) ? items_mobile_raw : '3' %}
 {% set items_desktop_raw = component.items_per_view_desktop.selected[0].value|default(component.items_per_view_desktop.selected[0].label|default(component.items_per_view_desktop.value|default(component.items_per_view_desktop|default('5')))) %}
 {% set items_desktop = (items_desktop_raw in ['4','5','6','7','8']) ? items_desktop_raw : '5' %}
-{% set items = component.items|default([]) %}
 
-{# Generate unique ID for this section instance #}
+{% set items = component.items|default([]) %}
 {% set section_id = 'tharaa-square-' ~ random() %}
 
-{# Only render if we have items #}
 {% if items is not empty %}
-
-	<section class="s-block  tharaa-links-section style-square {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile|default('3') }}; --th-items-desktop: {{ items_desktop|default('6') }}; --th-gap: 20px;">
-
+	<section class="s-block tharaa-links-section style-square {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile }}; --th-items-desktop: {{ items_desktop }}; --th-gap: 20px;">
 		<div class="container">
 
-			<div class="tharaa-header">
-				<div class="tharaa-header__content">
-					<h2 class="tharaa-header__title">{{ section_title }}</h2>
-					{% if section_description %}
-						<p class="tharaa-header__subtitle">{{ section_description }}</p>
-					{% endif %}
-				</div>
-			</div>
+			{% include 'components.home._partials.section-header' with {
+      section_title: section_title,
+      section_subtitle: section_description,
+      alignment: header_alignment,
+      btn_text: show_more ? section_more_label : '',
+      btn_url: section_more_url
+    } %}
 
 			<div class="tharaa-track-wrapper">
-
 				{% if show_controls %}
 					<button class="tharaa-nav-btn btn-prev" aria-label="{{ trans('common.previous') }}">
 						<i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'right' : 'left' }}"></i>
 					</button>
-
 					<button class="tharaa-nav-btn btn-next" aria-label="{{ trans('common.next') }}">
 						<i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'left' : 'right' }}"></i>
 					</button>
@@ -49,7 +47,6 @@
 							<div class="tharaa-card__visual">
 								<img class="tharaa-card__img" src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" decoding="async">
 							</div>
-
 							<div class="tharaa-card__content">
 								<span class="tharaa-card__title">{{ item.title }}</span>
 								{% if item.count is defined %}
@@ -64,8 +61,6 @@
 			<div class="tharaa-progress">
 				<div class="tharaa-progress__bar"></div>
 			</div>
-
 		</div>
 	</section>
-
 {% endif %}
