@@ -1,31 +1,64 @@
 {#
 | Variable                       | Type     | Description                                                                  |
 |--------------------------------|----------|------------------------------------------------------------------------------|
-| component                      | object   | Contains merchant settings for fields from twilight.json `component` section |
-| component.slides[].image       | string   | Image url                                                                    |
-| component.slides[].title       | ?string  |                                                                              |
-| component.slides[].description | ?string  |                                                                              |
-| component.slides               | object[] | list of slides                                                               |
-| position                       | int      | Sorting number start from zero                                               |
+| component                      | object   | Contains merchant settings from twilight.json                                |
+| component.is_fullwidth         | boolean  |                                                                              |
+| component.auto_play            | boolean  |                                                                              |
+| component.show_pagination      | boolean  |                                                                              |
+| component.show_controls        | boolean  |                                                                              |
+| component.slides               | object[] | List of slides                                                               |
 #}
 
-<section class="s-block s-block--hero-slider s-block--full-bg wide-placeholder">
-	<salla-slider id="main-slider-{{ position }}" auto-play {# ✅ تفعيل النقاط (Pagination) #} show-pagination {# ✅ تفعيل الأسهم (Navigation) #} show-controls slider-config='{
-		        "lazy": "false"
-		      }' type="fullwidth">
-		<div slot="items">
-			{% for slide in component.slides %}
-				<div class="swiper-slide w-full min-h-[300px] lg:min-h-[528px] bg-dark relative">
-					<div style="background-image: url({{ slide.image }});" class="overlay-bg bg-cover bg-center absolute inset-0"></div>
+{# تحديد الكلاس بناءً على خيار العرض الكامل #}
+{% set section_class = component.is_fullwidth ? 'w-full p-0' : 'container' %}
 
-					<div class="flex-center container pb-16 sm:pb-0 home-slider__content relative h-full">
-						<div class=" w-4/6 text-center md:w-7/12 lg:w-5/12 text-white">
-							<h2 data-swiper-parallax="-500" class="lg:text-title-size font-bold leading-tight mb-4">{{ slide.title }}</h2>
-							<p data-swiper-parallax="-300" class="line-clamp-2 description">{{ slide.description }}</p>
-						</div>
-					</div>
-				</div>
-			{% endfor %}
-		</div>
-	</salla-slider>
+<section class="s-block s-block--hero-slider s-block--full-bg {{ section_class }}">
+    
+    <salla-slider
+        id="main-slider-{{ position }}"
+        type="fullwidth"
+        
+        {# تفعيل الخيارات بناءً على اختيار التاجر #}
+        auto-play="{{ component.auto_play ? 'true' : 'false' }}"
+        show-pagination="{{ component.show_pagination ? 'true' : 'false' }}"
+        show-controls="{{ component.show_controls ? 'true' : 'false' }}"
+        
+        class="s-slider-wrapper fullwidth-slider"
+    >
+        <div slot="items">
+            {% for slide in component.slides %}
+                <div class="swiper-slide w-full min-h-[300px] lg:min-h-[528px] bg-dark relative">
+                    
+                    {# 1. الصورة الخلفية #}
+                    <div style="background-image: url({{ slide.image }});" 
+                         class="bg-cover bg-center absolute inset-0 z-0">
+                    </div>
+
+                    {# 2. طبقة التعتيم (Overlay) #}
+                    {# تظهر فقط إذا لم يقم التاجر بتفعيل خيار "إزالة الطبقة" #}
+                    {% if not slide.without_overlay %}
+                        <div class="overlay-bg absolute inset-0 z-10 bg-black/40"></div>
+                    {% endif %}
+                    
+                    {# 3. المحتوى النصي #}
+                    {# نضيف z-20 ليكون فوق الصورة والطبقة #}
+                    <div class="flex-center container pb-16 sm:pb-0 home-slider__content relative h-full z-20">
+                        <div class="w-4/6 text-center md:w-7/12 lg:w-5/12 text-white">
+                            {% if slide.title %}
+                                <h2 class="lg:text-title-size font-bold leading-tight mb-4" data-swiper-parallax="-500">
+                                    {{ slide.title }}
+                                </h2>
+                            {% endif %}
+                            
+                            {% if slide.description %}
+                                <p class="line-clamp-2 description" data-swiper-parallax="-300">
+                                    {{ slide.description }}
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </salla-slider>
 </section>
