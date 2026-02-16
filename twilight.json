@@ -376,6 +376,54 @@
                     "value": "<div >هذا العنصر غير مناسب لعرض البنرات، يمكنك استخدام عنصر <strong>صور متحركة</strong> بدلاً منه لتظهر صورة البنر بشكل كامل</div>"
                 },
                 {
+                    "id": "is_fullwidth",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "عرض السلايدر بملء الشاشة",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": true,
+                    "required": false
+                },
+                {
+                    "id": "show-pagination",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "تفعيل النقاط",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": true,
+                    "required": false
+                },
+                {
+                    "id": "auto-play",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "jفعيل التشغيل التلقائي",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": true,
+                    "required": false
+                },
+                {
+                    "id": "show-controls",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "تفعيل الأسهم الجانبية",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": true,
+                    "required": false
+                },
+                {
                     "id": "slides",
                     "type": "collection",
                     "format": "collection",
