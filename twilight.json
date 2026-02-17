@@ -132,18 +132,6 @@
             "required": false
         },
         {
-            "id": "header_elements_color",
-            "type": "string",
-            "format": "color",
-            "inputType": "color",
-            "label": "لون أيقونات وقوائم الترويسة",
-            "description": null,
-            "labelHTML": null,
-            "icon": "sicon-format-fill",
-            "value": "#ffffff",
-            "required": false
-        },
-        {
             "id": "promo_tag_bg",
             "type": "string",
             "format": "color",
