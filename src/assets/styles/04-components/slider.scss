@@ -99,10 +99,13 @@ salla-slider {
          * ومع h-auto قد تظهر الصورة كشريط صغير.
          * لذلك نثبت الأبعاد هنا لضمان عرض كل المصغرات بشكل صحيح.
          */
+        .product-thumb-item,
         .slide--one-fourth {
           height: 120px !important;
+          min-height: 84px;
           width: 100% !important;
           max-width: none !important;
+          aspect-ratio: 1 / 1;
 
           img {
             width: 100% !important;
@@ -110,6 +113,13 @@ salla-slider {
             object-fit: cover;
             display: block;
           }
+        }
+
+        .product-thumb-item__img {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover;
+          display: block;
         }
 
         // إخفاء الأسهم لأن التمرير سيكون بالماوس

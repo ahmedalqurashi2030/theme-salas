@@ -14,6 +14,7 @@ class Product extends BasePage {
         });
 
         this.initProductOptionValidations();
+        this.initProductGalleryUX();
 
         if(imageZoom){
             // call the function when the page is ready
@@ -30,29 +31,57 @@ class Product extends BasePage {
     }
 
     initImagesZooming() {
-      // skip if the screen is not desktop or if glass magnifier
-      // is already crated for the image before
-      const imageZoom = document.querySelector('.image-slider .magnify-wrapper.swiper-slide-active .img-magnifier-glass');
-      if (window.innerWidth  < 1024 || imageZoom) return;
-      setTimeout(() => {
-          // set delay after the resizing is done, start creating the glass
-          // to create the glass in the proper position
-          const image = document.querySelector('.image-slider .swiper-slide-active img');
-          zoom(image?.id, 2);
-      }, 250);
-  
+      const slider = document.querySelector('salla-slider.details-slider');
+      if (!slider) return;
 
-      document.querySelector('salla-slider.details-slider').addEventListener('slideChange', (e) => {
-          // set delay till the active class is ready
-          setTimeout(() => {
-              const imageZoom = document.querySelector('.image-slider .swiper-slide-active .img-magnifier-glass');
-    
-              // if the zoom glass is already created skip
-              if (window.innerWidth  < 1024 || imageZoom) return;
-              const image = document.querySelector('.image-slider .magnify-wrapper.swiper-slide-active img');
-              zoom(image?.id, 2);
-          }, 250)
-      })
+      const addZoomToActiveSlide = () => {
+        const zoomGlass = document.querySelector('.image-slider .magnify-wrapper.swiper-slide-active .img-magnifier-glass');
+        if (window.innerWidth < 1024 || zoomGlass) return;
+
+        const image = document.querySelector('.image-slider .magnify-wrapper.swiper-slide-active img');
+        zoom(image?.id, 2);
+      };
+
+      setTimeout(addZoomToActiveSlide, 250);
+
+      if (slider.dataset.zoomListenerAttached === 'true') return;
+      slider.dataset.zoomListenerAttached = 'true';
+
+      slider.addEventListener('slideChange', () => {
+        setTimeout(addZoomToActiveSlide, 250);
+      });
+    }
+
+    initProductGalleryUX() {
+      const slider = document.querySelector('salla-slider.details-slider');
+      const thumbsSlot = slider?.querySelector('[slot="thumbs"]');
+      if (!slider || !thumbsSlot) return;
+
+      const thumbs = Array.from(thumbsSlot.querySelectorAll('.product-thumb-item'));
+      if (!thumbs.length) return;
+
+      const imageLabel = salla.lang.get('common.image') || 'Image';
+
+      thumbs.forEach((thumb, index) => {
+        thumb.setAttribute('role', 'button');
+        thumb.setAttribute('tabindex', '0');
+        thumb.setAttribute('aria-label', `${imageLabel} ${index + 1}`);
+
+        thumb.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          thumb.click();
+        });
+      });
+
+      const keepActiveThumbVisible = () => {
+        const activeThumb = slider.querySelector('.s-slider-thumbs .swiper-slide-thumb-active, .s-slider-thumbs .swiper-slide-active');
+        if (!activeThumb) return;
+        activeThumb.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+      };
+
+      slider.addEventListener('slideChange', () => setTimeout(keepActiveThumbVisible, 60));
+      keepActiveThumbVisible();
     }
 
     registerEvents() {
