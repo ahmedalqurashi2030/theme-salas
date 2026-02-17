@@ -21,6 +21,7 @@
 {% set show_controls = show_controls_raw in [true, 1, '1', 'true'] %}
 {% set slides = component.slides|default([]) %}
 
+
 {% if slides|length %}
   <section class="s-block s-block--hero-slider {{ is_fullwidth ? 's-block--full-bg' : '' }}">
     <div class="{{ is_fullwidth ? 'w-full p-0' : 'container' }}">
