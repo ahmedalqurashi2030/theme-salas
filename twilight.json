@@ -1577,13 +1577,13 @@
                     ],
                     "options": [
                         {
-                            "label": "البداية (يمين)",
-                            "value": "start",
+                            "label": "start",
+                            "value": "البداية (يمين)",
                             "key": "988f800d-913f-41d2-89e9-33e6692bc979"
                         },
                         {
-                            "label": "وسط",
-                            "value": "center",
+                            "label": "center",
+                            "value": "وسط",
                             "key": "59452b2d-71b9-4993-a91e-9f38d188b65b"
                         }
                     ],
