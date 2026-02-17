@@ -3336,7 +3336,84 @@
             },
             "icon": "sicon-store",
             "path": "home.th-blog",
-            "fields": []
+            "fields": [
+                {
+                    "id": "section_title",
+                    "type": "string",
+                    "format": "text",
+                    "label": "العنوان الذي يظهر اعلي اقسم",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "احدث المقالات",
+                    "multilanguage": false,
+                    "required": true,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "alaanoan_alfraae",
+                    "type": "string",
+                    "format": "text",
+                    "label": "العنوان الفرعي",
+                    "description": "نص توضيحي يظهر اسف العنوان",
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": "section_title",
+                    "multilanguage": false,
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "show_controls",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "إظهار أسهم التنقل",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "autoplay",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "تحريك المقالات تلقائيًا",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "blog",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "المدونه",
+                    "description": "حدد المقالات اللي تريد ظهورها",
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [],
+                    "options": [
+                        {
+                            "label": null,
+                            "value": "Value 1",
+                            "key": "903693cf-40d3-4a24-a81e-d25096a7aeed"
+                        }
+                    ],
+                    "source": "Blog Articles",
+                    "multichoice": true,
+                    "searchable": true,
+                    "required": false,
+                    "value": []
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
