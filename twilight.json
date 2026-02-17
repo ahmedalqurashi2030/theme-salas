@@ -132,18 +132,6 @@
             "required": false
         },
         {
-            "id": "promo_tag_bg",
-            "type": "string",
-            "format": "color",
-            "inputType": "color",
-            "label": "لون وسم العروض والتخفيضات",
-            "description": null,
-            "labelHTML": null,
-            "icon": "sicon-format-fill",
-            "value": "#ffffff",
-            "required": false
-        },
-        {
             "id": "line",
             "type": "static",
             "format": "line",
