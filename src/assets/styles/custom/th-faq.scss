@@ -1,5 +1,3 @@
-$th-primary: #BFA15F;
-$th-primary-dark: #9A8146;
 $th-text: #2D2A26;
 $th-muted: #8C8A85;
 $th-border: #ECE7DE;
@@ -58,7 +56,7 @@ $th-white: #FFFFFF;
 
   &__featured-card {
     background: $th-white;
-    border: 1px solid rgba($th-primary, .4);
+    border: 1px solid rgba(var(--th-color-primary), .4);
     border-radius: 14px;
     box-shadow: 0 10px 25px rgba(45, 42, 38, .06);
     padding: 1.5rem;
@@ -83,11 +81,11 @@ $th-white: #FFFFFF;
     align-items: center;
     justify-content: center;
     color: $th-white;
-    background: linear-gradient(135deg, $th-primary, $th-primary-dark);
+    background: linear-gradient(135deg, var(--th-color-primary), var(--th-color-primary));
   }
 
   &__featured-badge {
-    color: $th-primary-dark;
+    color: var(--th-color-primary);
     font-size: .8rem;
     font-weight: 800;
   }
@@ -111,15 +109,15 @@ $th-white: #FFFFFF;
     transition: border-color .2s ease, box-shadow .2s ease;
 
     &:hover {
-      border-color: rgba($th-primary, .5);
+      border-color: rgba(var(--th-color-primary), .5);
       box-shadow: 0 8px 22px rgba(45, 42, 38, .08);
     }
 
-    details > summary {
+    details>summary {
       list-style: none;
     }
 
-    details > summary::-webkit-details-marker {
+    details>summary::-webkit-details-marker {
       display: none;
     }
 
@@ -151,7 +149,7 @@ $th-white: #FFFFFF;
     align-items: center;
     justify-content: center;
     background: #F6F2E8;
-    color: $th-primary-dark;
+    color: var(--th-color-primary);
     font-size: 1rem;
   }
 

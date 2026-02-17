@@ -9,11 +9,26 @@
 | component.slides               | object[] | List of slides
 #}
 
-{# Normalize settings keys to support both underscore and hyphen ids. #}
-{% set is_fullwidth_raw = component.is_fullwidth is defined ? component.is_fullwidth : (attribute(component, 'is_fullwidth') is defined ? attribute(component, 'is_fullwidth') : true) %}
-{% set auto_play_raw = component.auto_play is defined ? component.auto_play : (attribute(component, 'auto-play') is defined ? attribute(component, 'auto-play') : true) %}
-{% set show_pagination_raw = component.show_pagination is defined ? component.show_pagination : (attribute(component, 'show-pagination') is defined ? attribute(component, 'show-pagination') : true) %}
-{% set show_controls_raw = component.show_controls is defined ? component.show_controls : (attribute(component, 'show-controls') is defined ? attribute(component, 'show-controls') : true) %}
+{# Normalize settings keys to support both underscore and hyphen ids and boolean field objects. #}
+{% set is_fullwidth_raw = component['is_fullwidth']|default(component.is_fullwidth|default(false)) %}
+{% if is_fullwidth_raw is iterable %}
+  {% set is_fullwidth_raw = is_fullwidth_raw.selected|default(is_fullwidth_raw.value|default(false)) %}
+{% endif %}
+
+{% set auto_play_raw = component['auto-play']|default(component.auto_play|default(false)) %}
+{% if auto_play_raw is iterable %}
+  {% set auto_play_raw = auto_play_raw.selected|default(auto_play_raw.value|default(false)) %}
+{% endif %}
+
+{% set show_pagination_raw = component['show-pagination']|default(component.show_pagination|default(false)) %}
+{% if show_pagination_raw is iterable %}
+  {% set show_pagination_raw = show_pagination_raw.selected|default(show_pagination_raw.value|default(false)) %}
+{% endif %}
+
+{% set show_controls_raw = component['show-controls']|default(component.show_controls|default(false)) %}
+{% if show_controls_raw is iterable %}
+  {% set show_controls_raw = show_controls_raw.selected|default(show_controls_raw.value|default(false)) %}
+{% endif %}
 
 {% set is_fullwidth = is_fullwidth_raw in [true, 1, '1', 'true'] %}
 {% set auto_play = auto_play_raw in [true, 1, '1', 'true'] %}
@@ -29,8 +44,9 @@
         id="main-slider-{{ position }}"
         type="fullwidth"
         auto-play="{{ auto_play ? 'true' : 'false' }}"
-        show-pagination="{{ show_pagination ? 'true' : 'false' }}"
+        pagination="{{ show_pagination ? 'true' : 'false' }}"
         show-controls="{{ show_controls ? 'true' : 'false' }}"
+        {{ show_controls ? 'controls-outer' : '' }}
         class="s-slider-wrapper fullwidth-slider">
         <div slot="items">
           {% for slide in slides %}
