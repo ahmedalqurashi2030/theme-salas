@@ -1,0 +1,1 @@
+"undefined"!=typeof salla&&"function"==typeof salla.onReady&&salla.onReady(function(){});
