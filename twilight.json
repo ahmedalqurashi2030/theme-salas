@@ -3327,6 +3327,16 @@
                     "maxLength": 30
                 }
             ]
+        },
+        {
+            "key": "58971e56-6fd5-4521-81da-721f6dab48ac",
+            "title": {
+                "en": "Blog (tharaa)",
+                "ar": "المدونة (ثراء)"
+            },
+            "icon": "sicon-store",
+            "path": "home.th-blog",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
