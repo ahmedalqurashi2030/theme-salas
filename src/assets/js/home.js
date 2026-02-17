@@ -16,13 +16,11 @@ class Home extends BasePage {
         app.all('.tab-trigger', el => {
             el.addEventListener('click', ({ currentTarget: btn }) => {
                 let id = btn.dataset.componentId;
-                // btn.setAttribute('fill', 'solid');
                 app.toggleClassIf(`#${id} .tabs-wrapper>div`, 'is-active opacity-0 translate-y-3', 'inactive', tab => tab.id == btn.dataset.target)
                     .toggleClassIf(`#${id} .tab-trigger`, 'is-active', 'inactive', tabBtn => tabBtn == btn);
 
-                // fadeIn active tabe
                 setTimeout(() => app.toggleClassIf(`#${id} .tabs-wrapper>div`, 'opacity-100 translate-y-0', 'opacity-0 translate-y-3', tab => tab.id == btn.dataset.target), 100);
-            })
+            });
         });
         document.querySelectorAll('.s-block-tabs').forEach(block => block.classList.add('tabs-initialized'));
     }
@@ -44,7 +42,7 @@ class Home extends BasePage {
         const endValue = (timer.getAttribute('data-end') || '').trim();
         if (!endValue) return;
 
-        const expiredText = timer.getAttribute('data-expired-text') || 'انتهى العرض';
+        const expiredText = timer.getAttribute('data-expired-text') || 'Offer has ended';
         const expiredLabel = section.querySelector('[data-th-promo-expired]');
         const parseDate = (value) => {
             const directDate = new Date(value);
@@ -94,7 +92,13 @@ class Home extends BasePage {
         const trackBar = section.querySelector('[data-th-promo-scroll-track]');
         if (!track || !thumb || !trackBar) return;
 
-        const isRTL = () => document.dir === 'rtl' || document.documentElement.dir === 'rtl';
+        const getDirection = () => {
+            const scopedDir = section.closest('[dir]')?.getAttribute('dir');
+            const docDir = document.documentElement.getAttribute('dir') || document.dir;
+            return (scopedDir || docDir || 'ltr').toLowerCase();
+        };
+
+        const isRTL = () => getDirection() === 'rtl';
         const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
         const maxScroll = () => Math.max(track.scrollWidth - track.clientWidth, 0);
 
@@ -131,8 +135,9 @@ class Home extends BasePage {
 
             trackBar.style.display = '';
             const ratio = getLogicalScroll() / max;
+            const visualRatio = isRTL() ? 1 - ratio : ratio;
             const travel = trackBar.clientWidth - thumb.clientWidth;
-            thumb.style.transform = `translateX(${ratio * travel}px)`;
+            thumb.style.transform = `translateX(${visualRatio * travel}px)`;
         };
 
         let ticking = false;
@@ -155,7 +160,6 @@ class Home extends BasePage {
 
         updateThumb();
     }
-
 }
 
 Home.initiateWhenReady(['index']);

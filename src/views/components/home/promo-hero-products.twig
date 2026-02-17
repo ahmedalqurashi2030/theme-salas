@@ -1,9 +1,9 @@
 {#
-  Promo Hero Products (Stitch-inspired, mobile-first)
+  Promo Hero Products
   Path: home.promo-hero-products
 #}
 
-{% set title = component.title ?? 'عروض حصرية وصلت الآن' %}
+{% set title = component.title ?? 'Apple Shopping Event' %}
 {% set description = component.description ?? '' %}
 {% set hero_image = component.hero_image ?? null %}
 {% set countdown_end = component.countdown_end ?? '' %}
@@ -11,18 +11,26 @@
 {% set show_countdown = show_countdown_raw in [true, 1, '1', 'true'] %}
 {% set show_rating_raw = component.show_price ?? false %}
 {% set show_rating = show_rating_raw in [true, 1, '1', 'true'] %}
-{% set button_text = component.button_text ?? trans('common.view_all') %}
+{% set button_text = component.button_text ?? 'Go Shopping' %}
 {% set button_link = component.button_link ?? '' %}
 {% set products = component.products ?? [] %}
 {% set section_id = 'th-promo-hero-' ~ position %}
+{% set hero_image_src = hero_image ?? 'images/placeholder.png'|asset %}
 
 <section class="s-block th-promo-hero" id="{{ section_id }}" aria-labelledby="{{ section_id }}-title">
   <div class="container">
     <div class="th-promo-hero__shell">
       <header class="th-promo-hero__header">
-        <div class="th-promo-hero__content">
-          <span class="th-promo-hero__eyebrow">{{ trans('components.promo_hero.badge') }}</span>
+        <figure class="th-promo-hero__visual">
+          <img src="{{ hero_image_src }}"
+               alt="{{ title }}"
+               class="th-promo-hero__hero-image"
+               loading="lazy"
+               decoding="async">
+        </figure>
 
+        <div class="th-promo-hero__content">
+          <span class="th-promo-hero__eyebrow">Limited Offer</span>
           <h2 class="th-promo-hero__title" id="{{ section_id }}-title">{{ title }}</h2>
 
           {% if description %}
@@ -31,32 +39,32 @@
 
           {% if show_countdown and countdown_end %}
             <div class="th-promo-hero__timer-wrap">
-              <p class="th-promo-hero__timer-label">{{ trans('components.promo_hero.countdown_label') }}</p>
+              <p class="th-promo-hero__timer-label">Offer ends in</p>
               <div class="th-promo-hero__timer"
                    data-th-promo-countdown
                    data-end="{{ countdown_end|e('html_attr') }}"
-                   data-expired-text="انتهى العرض"
+                   data-expired-text="Offer has ended"
                    role="timer"
                    aria-live="polite"
                    aria-atomic="true">
                 <div class="th-promo-hero__timer-item">
                   <span class="th-promo-hero__timer-value" data-part="days">00</span>
-                  <span class="th-promo-hero__timer-unit">{{ trans('components.promo_hero.days') }}</span>
+                  <span class="th-promo-hero__timer-unit">Days</span>
                 </div>
                 <div class="th-promo-hero__timer-item">
                   <span class="th-promo-hero__timer-value" data-part="hours">00</span>
-                  <span class="th-promo-hero__timer-unit">{{ trans('components.promo_hero.hours') }}</span>
+                  <span class="th-promo-hero__timer-unit">Hr</span>
                 </div>
                 <div class="th-promo-hero__timer-item">
                   <span class="th-promo-hero__timer-value" data-part="minutes">00</span>
-                  <span class="th-promo-hero__timer-unit">{{ trans('components.promo_hero.minutes') }}</span>
+                  <span class="th-promo-hero__timer-unit">Min</span>
                 </div>
                 <div class="th-promo-hero__timer-item">
                   <span class="th-promo-hero__timer-value" data-part="seconds">00</span>
-                  <span class="th-promo-hero__timer-unit">{{ trans('components.promo_hero.seconds') }}</span>
+                  <span class="th-promo-hero__timer-unit">Sec</span>
                 </div>
               </div>
-              <p class="th-promo-hero__timer-expired" data-th-promo-expired hidden>انتهى العرض</p>
+              <p class="th-promo-hero__timer-expired" data-th-promo-expired hidden>Offer has ended</p>
             </div>
           {% endif %}
 
@@ -67,20 +75,10 @@
             </a>
           {% endif %}
         </div>
-
-        <figure class="th-promo-hero__visual">
-          {% if hero_image %}
-            <img src="{{ hero_image }}"
-                 alt="{{ title }}"
-                 class="th-promo-hero__hero-image"
-                 loading="lazy"
-                 decoding="async">
-          {% endif %}
-        </figure>
       </header>
 
-      <div class="th-promo-hero__products" aria-label="{{ trans('components.promo_hero.most_requested') }}">
-        <p class="th-promo-hero__products-heading">{{ trans('components.promo_hero.most_requested') }}</p>
+      <div class="th-promo-hero__products" aria-label="Featured products">
+        <p class="th-promo-hero__products-heading">Featured Products</p>
 
         {% if products|length %}
           <div class="th-promo-hero__products-list" data-th-promo-products-track>
@@ -106,19 +104,16 @@
 
                   <span class="th-promo-hero__product-content">
                     <span class="th-promo-hero__product-title">{{ product_name }}</span>
-                    <span class="th-promo-hero__product-meta">
-                      {% if product_price is not null %}
-                        <strong class="th-promo-hero__product-price">{{ product_price|money }}</strong>
-                      {% endif %}
-
-                      {% if show_rating %}
-                        <span class="th-promo-hero__rating" aria-label="Rating {{ product_stars }} out of 5">
-                          {% for i in 1..5 %}
-                            <i class="sicon-star2 {{ i <= product_stars ? 'is-active' : '' }}" aria-hidden="true"></i>
-                          {% endfor %}
-                        </span>
-                      {% endif %}
-                    </span>
+                    {% if show_rating %}
+                      <span class="th-promo-hero__rating" aria-label="Rating {{ product_stars }} out of 5">
+                        {% for i in 1..5 %}
+                          <i class="sicon-star2 {{ i <= product_stars ? 'is-active' : '' }}" aria-hidden="true"></i>
+                        {% endfor %}
+                      </span>
+                    {% endif %}
+                    {% if product_price is not null %}
+                      <strong class="th-promo-hero__product-price">{{ product_price|money }}</strong>
+                    {% endif %}
                   </span>
                 </a>
 
@@ -126,10 +121,11 @@
                   <salla-add-product-button
                     class="th-promo-hero__add-btn"
                     product-id="{{ product_id }}"
-                    product-status="{{ product.status }}"
-                    product-type="{{ product.type }}"
+                    product-status="{{ product.status ?? '' }}"
+                    product-type="{{ product.type ?? '' }}"
                     aria-label="{{ trans('common.add_to_cart') ~ ' ' ~ product_name }}">
-                    +
+                    <span class="sr-only">{{ trans('common.add_to_cart') }}</span>
+                    <i class="sicon-shopping-bag" aria-hidden="true"></i>
                   </salla-add-product-button>
                 {% endif %}
               </article>
@@ -140,7 +136,7 @@
             <span class="th-promo-hero__scroll-thumb" data-th-promo-scroll-thumb></span>
           </div>
         {% else %}
-          <div class="th-promo-hero__empty">لا توجد منتجات مختارة لهذا القسم بعد.</div>
+          <div class="th-promo-hero__empty">No selected products for this section yet.</div>
         {% endif %}
       </div>
     </div>
