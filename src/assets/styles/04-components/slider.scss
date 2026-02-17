@@ -90,6 +90,25 @@ salla-slider {
 
           img {
             @apply w-full h-full object-cover;
+            display: block;
+          }
+        }
+
+        /*
+         * بعض القوالب تضيف عنصر داخلي باسم slide--one-fourth داخل السلايد،
+         * ومع h-auto قد تظهر الصورة كشريط صغير.
+         * لذلك نثبت الأبعاد هنا لضمان عرض كل المصغرات بشكل صحيح.
+         */
+        .slide--one-fourth {
+          height: 120px !important;
+          width: 100% !important;
+          max-width: none !important;
+
+          img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            display: block;
           }
         }
 

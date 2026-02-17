@@ -60,26 +60,73 @@
       let autoplayInterval = null;
 
       const isRTLDocument = () => document.dir === 'rtl' || document.documentElement.dir === 'rtl';
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+      const getMaxScroll = () => Math.max(track.scrollWidth - track.clientWidth, 0);
 
       /**
-       * Normalize horizontal scroll position across RTL browser behaviors.
-       * Returns value in range: 0 (start) -> maxScroll (end).
+       * Detect RTL scroll model used by current browser:
+       * - negative: 0 at start and negative values while scrolling forward
+       * - reverse: max at start and 0 at end
+       * - default: 0 at start and positive values while scrolling forward
        */
-      const getNormalizedScrollLeft = () => {
-        const maxScroll = Math.max(track.scrollWidth - track.clientWidth, 0);
-        const rawScrollLeft = track.scrollLeft;
+      const detectRTLScrollMode = () => {
+        const previous = track.scrollLeft;
+
+        track.scrollLeft = -1;
+        if (track.scrollLeft < 0) {
+          track.scrollLeft = previous;
+          return 'negative';
+        }
+
+        track.scrollLeft = 1;
+        const mode = track.scrollLeft === 0 ? 'reverse' : 'default';
+        track.scrollLeft = previous;
+        return mode;
+      };
+
+      const rtlScrollMode = isRTLDocument() ? detectRTLScrollMode() : 'default';
+
+      /**
+       * Return a direction-agnostic logical scroll position (0..max).
+       */
+      const getLogicalScrollLeft = () => {
+        const maxScroll = getMaxScroll();
 
         if (!isRTLDocument()) {
-          return Math.min(Math.max(rawScrollLeft, 0), maxScroll);
+          return clamp(track.scrollLeft, 0, maxScroll);
         }
 
-        // Firefox/WebKit often return negative values in RTL when moving away from origin.
-        if (rawScrollLeft < 0) {
-          return Math.min(Math.max(-rawScrollLeft, 0), maxScroll);
+        if (rtlScrollMode === 'negative') {
+          return clamp(-track.scrollLeft, 0, maxScroll);
         }
 
-        // Chromium can use "reverse" model in RTL (max at start -> 0 at end).
-        return Math.min(Math.max(maxScroll - rawScrollLeft, 0), maxScroll);
+        if (rtlScrollMode === 'reverse') {
+          return clamp(maxScroll - track.scrollLeft, 0, maxScroll);
+        }
+
+        return clamp(track.scrollLeft, 0, maxScroll);
+      };
+
+      /**
+       * Set logical scroll position and convert it to browser-native raw value.
+       */
+      const setLogicalScrollLeft = (value, behavior = 'auto') => {
+        const maxScroll = getMaxScroll();
+        const logical = clamp(value, 0, maxScroll);
+
+        if (!isRTLDocument()) {
+          track.scrollTo({ left: logical, behavior });
+          return;
+        }
+
+        let rawTarget = logical;
+        if (rtlScrollMode === 'negative') {
+          rawTarget = -logical;
+        } else if (rtlScrollMode === 'reverse') {
+          rawTarget = maxScroll - logical;
+        }
+
+        track.scrollTo({ left: rawTarget, behavior });
       };
 
       /**
@@ -96,8 +143,8 @@
 
         // Calculate scroll position
         const isRTL = isRTLDocument();
-        const maxScroll = Math.max(track.scrollWidth - track.clientWidth, 0);
-        const scrollLeft = getNormalizedScrollLeft();
+        const maxScroll = getMaxScroll();
+        const scrollLeft = getLogicalScrollLeft();
 
         // Hide UI if content fits in viewport
         if (maxScroll <= 5) {
@@ -159,25 +206,17 @@
 
       if (nextBtn) {
         nextBtn.addEventListener('click', () => {
-          const isRTL = isRTLDocument();
           const scrollAmount = getScrollAmount();
-
-          track.scrollBy({
-            left: isRTL ? -scrollAmount : scrollAmount,
-            behavior: 'smooth'
-          });
+          const currentScroll = getLogicalScrollLeft();
+          setLogicalScrollLeft(currentScroll + scrollAmount, 'smooth');
         });
       }
 
       if (prevBtn) {
         prevBtn.addEventListener('click', () => {
-          const isRTL = isRTLDocument();
           const scrollAmount = getScrollAmount();
-
-          track.scrollBy({
-            left: isRTL ? scrollAmount : -scrollAmount,
-            behavior: 'smooth'
-          });
+          const currentScroll = getLogicalScrollLeft();
+          setLogicalScrollLeft(currentScroll - scrollAmount, 'smooth');
         });
       }
 
@@ -248,23 +287,16 @@
           if (section.classList.contains('mode-grid')) return;
 
           autoplayInterval = setInterval(() => {
-            const isRTL = isRTLDocument();
-            const maxScroll = track.scrollWidth - track.clientWidth;
-            const currentScroll = getNormalizedScrollLeft();
+            const maxScroll = getMaxScroll();
+            const currentScroll = getLogicalScrollLeft();
 
             // Check if reached end
             if (currentScroll >= maxScroll - 10) {
               // Reset to start
-              track.scrollTo({
-                left: 0,
-                behavior: 'smooth'
-              });
+              setLogicalScrollLeft(0, 'smooth');
             } else {
               // Scroll forward
-              track.scrollBy({
-                left: isRTL ? -200 : 200,
-                behavior: 'smooth'
-              });
+              setLogicalScrollLeft(currentScroll + 200, 'smooth');
             }
           }, 3000); // Scroll every 3 seconds
         };
@@ -311,11 +343,8 @@
             } else if (entry.isIntersecting && autoplay && !autoplayInterval && !section.classList.contains('mode-grid')) {
               // Section is in view, resume autoplay
               autoplayInterval = setInterval(() => {
-                const isRTL = document.dir === 'rtl' || document.documentElement.dir === 'rtl';
-                track.scrollBy({
-                  left: isRTL ? -200 : 200,
-                  behavior: 'smooth'
-                });
+                const currentScroll = getLogicalScrollLeft();
+                setLogicalScrollLeft(currentScroll + 200, 'smooth');
               }, 3000);
             }
           });
