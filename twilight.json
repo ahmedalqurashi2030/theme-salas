@@ -2155,21 +2155,21 @@
                     "icon": "sicon-keyboard_arrow_down",
                     "selected": [
                         {
-                            "label": "البداية (يمين)",
-                            "value": "start",
-                            "key": "d014052e-7a15-4394-a0f6-33030973d10b"
+                            "label": "start",
+                            "value": "البداية (يمين)",
+                            "key": "e85662bf-08f2-42e5-a9ae-74b42e62d02e"
                         }
                     ],
                     "options": [
                         {
-                            "label": "البداية (يمين)",
-                            "value": "start",
-                            "key": "d014052e-7a15-4394-a0f6-33030973d10b"
+                            "label": "start",
+                            "value": "البداية (يمين)",
+                            "key": "e85662bf-08f2-42e5-a9ae-74b42e62d02e"
                         },
                         {
-                            "label": "وسط",
-                            "value": "center",
-                            "key": "a4494fe9-5dfb-4414-bef6-eb2fd411be07"
+                            "label": "center",
+                            "value": "وسط",
+                            "key": "366248e0-e7a0-477b-a278-afcd6d8be6ff"
                         }
                     ],
                     "source": "Manual",
