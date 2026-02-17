@@ -1877,14 +1877,14 @@
                     ],
                     "options": [
                         {
-                            "label": "البداية (يمين)",
-                            "value": "start",
+                            "label": "start",
+                            "value": "البداية (يمين)",
                             "key": "95dedd1a-790d-4698-bca7-ae1502acf68d"
                         },
                         {
-                            "label": "وسط",
-                            "value": "center",
-                            "key": "58c2bfb9-c773-4bdc-9b31-f56e603af9d3"
+                            "label": "center",
+                            "value": "وسط",
+                            "key": "6f8a215b-96ec-47d5-8949-346f2935378e"
                         }
                     ],
                     "source": "Manual",
