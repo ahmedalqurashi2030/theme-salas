@@ -210,7 +210,7 @@ salla-search {
 
 /* 3. Navigation Bar */
 .th-navbar {
-    background: #e6effd;
+    background: var(--th-header-bg);
     height: 56px;
     position: relative;
     z-index: 990;

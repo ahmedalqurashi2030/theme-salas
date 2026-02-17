@@ -1,64 +1,73 @@
 {#
-| Variable                       | Type     | Description                                                                  |
-|--------------------------------|----------|------------------------------------------------------------------------------|
-| component                      | object   | Contains merchant settings from twilight.json                                |
-| component.is_fullwidth         | boolean  |                                                                              |
-| component.auto_play            | boolean  |                                                                              |
-| component.show_pagination      | boolean  |                                                                              |
-| component.show_controls        | boolean  |                                                                              |
-| component.slides               | object[] | List of slides                                                               |
+| Variable                       | Type     | Description
+|--------------------------------|----------|------------------------------------------------------
+| component                      | object   | Contains merchant settings from twilight.json
+| component.is_fullwidth         | boolean  | Full-width mode
+| component.auto_play            | boolean  | Slider autoplay
+| component.show_pagination      | boolean  | Slider dots
+| component.show_controls        | boolean  | Slider arrows
+| component.slides               | object[] | List of slides
 #}
 
-{# تحديد الكلاس بناءً على خيار العرض الكامل #}
-{% set section_class = component.is_fullwidth ? 'w-full p-0' : 'container' %}
+{# Normalize settings keys to support both underscore and hyphen ids. #}
+{% set is_fullwidth_raw = component.is_fullwidth is defined ? component.is_fullwidth : (attribute(component, 'is_fullwidth') is defined ? attribute(component, 'is_fullwidth') : true) %}
+{% set auto_play_raw = component.auto_play is defined ? component.auto_play : (attribute(component, 'auto-play') is defined ? attribute(component, 'auto-play') : true) %}
+{% set show_pagination_raw = component.show_pagination is defined ? component.show_pagination : (attribute(component, 'show-pagination') is defined ? attribute(component, 'show-pagination') : true) %}
+{% set show_controls_raw = component.show_controls is defined ? component.show_controls : (attribute(component, 'show-controls') is defined ? attribute(component, 'show-controls') : true) %}
 
-<section class="s-block s-block--hero-slider s-block--full-bg {{ section_class }}">
-    
-    <salla-slider
+{% set is_fullwidth = is_fullwidth_raw in [true, 1, '1', 'true'] %}
+{% set auto_play = auto_play_raw in [true, 1, '1', 'true'] %}
+{% set show_pagination = show_pagination_raw in [true, 1, '1', 'true'] %}
+{% set show_controls = show_controls_raw in [true, 1, '1', 'true'] %}
+{% set slides = component.slides|default([]) %}
+
+{% if slides|length %}
+  <section class="s-block s-block--hero-slider {{ is_fullwidth ? 's-block--full-bg' : '' }}">
+    <div class="{{ is_fullwidth ? 'w-full p-0' : 'container' }}">
+      <salla-slider
         id="main-slider-{{ position }}"
         type="fullwidth"
-        
-        {# تفعيل الخيارات بناءً على اختيار التاجر #}
-        auto-play="{{ component.auto_play ? 'true' : 'false' }}"
-        show-pagination="{{ component.show_pagination ? 'true' : 'false' }}"
-        show-controls="{{ component.show_controls ? 'true' : 'false' }}"
-        
-        class="s-slider-wrapper fullwidth-slider"
-    >
+        auto-play="{{ auto_play ? 'true' : 'false' }}"
+        show-pagination="{{ show_pagination ? 'true' : 'false' }}"
+        show-controls="{{ show_controls ? 'true' : 'false' }}"
+        class="s-slider-wrapper fullwidth-slider">
         <div slot="items">
-            {% for slide in component.slides %}
-                <div class="swiper-slide w-full min-h-[300px] lg:min-h-[528px] bg-dark relative">
-                    
-                    {# 1. الصورة الخلفية #}
-                    <div style="background-image: url({{ slide.image }});" 
-                         class="bg-cover bg-center absolute inset-0 z-0">
-                    </div>
+          {% for slide in slides %}
+            {% set slide_image = slide['slides.image'] ?? slide.image ?? null %}
+            {% set slide_title = slide['slides.title'] ?? slide.title ?? null %}
+            {% set slide_description = slide['slides.description'] ?? slide.description ?? null %}
+            {% set slide_without_overlay_raw = slide['slides.without_overlay'] ?? slide.without_overlay ?? false %}
+            {% set slide_without_overlay = slide_without_overlay_raw in [true, 1, '1', 'true'] %}
 
-                    {# 2. طبقة التعتيم (Overlay) #}
-                    {# تظهر فقط إذا لم يقم التاجر بتفعيل خيار "إزالة الطبقة" #}
-                    {% if not slide.without_overlay %}
-                        <div class="overlay-bg absolute inset-0 z-10 bg-black/40"></div>
+            {% if slide_image %}
+              <div class="swiper-slide w-full min-h-[300px] lg:min-h-[528px] bg-dark relative">
+                <div style="background-image: url('{{ slide_image|e('html_attr') }}');"
+                     class="bg-cover bg-center absolute inset-0 z-0"></div>
+
+                {% if not slide_without_overlay %}
+                  <div class="overlay-bg absolute inset-0 z-10 bg-black/40"></div>
+                {% endif %}
+
+                <div class="flex-center container pb-16 sm:pb-0 home-slider__content relative h-full z-20">
+                  <div class="w-4/6 text-center md:w-7/12 lg:w-5/12 text-white">
+                    {% if slide_title %}
+                      <h2 class="lg:text-title-size font-bold leading-tight mb-4" data-swiper-parallax="-500">
+                        {{ slide_title }}
+                      </h2>
                     {% endif %}
-                    
-                    {# 3. المحتوى النصي #}
-                    {# نضيف z-20 ليكون فوق الصورة والطبقة #}
-                    <div class="flex-center container pb-16 sm:pb-0 home-slider__content relative h-full z-20">
-                        <div class="w-4/6 text-center md:w-7/12 lg:w-5/12 text-white">
-                            {% if slide.title %}
-                                <h2 class="lg:text-title-size font-bold leading-tight mb-4" data-swiper-parallax="-500">
-                                    {{ slide.title }}
-                                </h2>
-                            {% endif %}
-                            
-                            {% if slide.description %}
-                                <p class="line-clamp-2 description" data-swiper-parallax="-300">
-                                    {{ slide.description }}
-                                </p>
-                            {% endif %}
-                        </div>
-                    </div>
+
+                    {% if slide_description %}
+                      <p class="line-clamp-2 description" data-swiper-parallax="-300">
+                        {{ slide_description }}
+                      </p>
+                    {% endif %}
+                  </div>
                 </div>
-            {% endfor %}
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
-    </salla-slider>
-</section>
+      </salla-slider>
+    </div>
+  </section>
+{% endif %}
