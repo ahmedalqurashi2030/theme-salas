@@ -379,7 +379,7 @@
                     "id": "auto-play",
                     "type": "boolean",
                     "format": "switch",
-                    "label": "jفعيل التشغيل التلقائي",
+                    "label": "تفعيل التشغيل التلقائي",
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
