@@ -13,7 +13,7 @@
 {% set default_empty_text = is_ar ? 'لا توجد آراء متاحة حالياً.' : 'No testimonials available at the moment.' %}
 
 {% set section_title = component.section_title|default(default_title) %}
-{% set section_subtitle = component.section_subtitle|default(default_subtitle) %}
+{% set section_subtitle = component.section_subtitle|default(component.section_subtitle)|default(default_subtitle) %}
 {% set customers_text = component.customers_count_text|default(default_customers_text) %}
 {% set reviews_meta_text = component.reviews_meta_text|default(default_meta_text) %}
 {% set verified_text = component.verified_text|default(default_verified) %}
@@ -203,7 +203,7 @@
 			<salla-slider id="{{ slider_id }}" class="th-home-testimonials__slider s-slider-wrapper" type="carousel" loop="{{ loop_enabled ? 'true' : 'false' }}" auto-play="{{ should_autoplay ? 'true' : 'false' }}" show-controls="{{ should_show_controls ? 'true' : 'false' }}" slider-config='{{ slider_config|json_encode|e("html_attr") }}' {% if should_show_controls %} controls-outer {% endif %} {% if should_show_pagination %} pagination {% endif %}>
 				<div slot="items">
 					{% for index, item in reviews %}
-						{% set current_stars = item.stars|default(5)|int %}
+						{% set current_stars = item.stars|default(item['items.stars'])|default(5)|int %}
 						{% if current_stars < 1 %}
 							{% set current_stars = 1 %}
 						{% endif %}
@@ -222,19 +222,19 @@
 									</div>
 								</div>
 
-								<p class="th-home-testimonial-card__text">{{ item.text|default('') }}</p>
+								<p class="th-home-testimonial-card__text">{{ item.text|default(item['items.text'])|default('') }}</p>
 
 								<footer class="th-home-testimonial-card__footer">
 									<span class="th-home-testimonial-card__verified">{{ verified_text }}</span>
 
 									<div class="th-home-testimonial-card__author-wrap">
 										<div class="th-home-testimonial-card__author">
-											<strong>{{ item.name|default(is_ar ? 'عميل' : 'Customer') }}</strong>
+											<strong>{{ item.name|default(item['items.name'])|default(is_ar ? 'عميل' : 'Customer') }}</strong>
 											<small>{{ customer_type_text }}</small>
 										</div>
 
 										<span class="th-home-testimonial-card__avatar">
-											<img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ item.avatar|default(default_avatar) }}" alt="{{ item.name|default('testimonial-' ~ index) }}" width="32" height="32" class="lazy">
+											<img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ item.avatar|default(item['items.avatar'])|default(default_avatar) }}" alt="{{ item.name|default(item['items.name'])|default('testimonial-' ~ index) }}" width="32" height="32" class="lazy">
 										</span>
 									</div>
 								</footer>
