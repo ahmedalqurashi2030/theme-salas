@@ -1131,7 +1131,7 @@
                     "id": "section_subtitle",
                     "type": "string",
                     "format": "text",
-                    "label": "وصف القسم",
+                    "label": "العنوان الفرعي",
                     "description": "نفخر بخدمة آلاف العملاء، وتقييماتهم هي دافعنا لتقديم الأفضل دائمًا.",
                     "labelHTML": null,
                     "placeholder": "Placeholder text ..",
