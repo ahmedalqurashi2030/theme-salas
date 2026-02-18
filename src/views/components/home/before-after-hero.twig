@@ -58,10 +58,16 @@
 					<div class="th-before-after-hero__compare js-before-after-hero" data-initial-position="50" style="--th-before-after-pos: 50%;">
 						<div class="th-before-after-hero__base">
 							<img class="th-before-after-hero__img" src="{{ before_image }}" alt="{{ before_alt }}">
+							{% if before_desc %}
+								<span class="th-before-after-hero__caption th-before-after-hero__caption--before">{{ before_desc }}</span>
+							{% endif %}
 						</div>
 
 						<div class="th-before-after-hero__overlay">
 							<img class="th-before-after-hero__img" src="{{ after_image }}" alt="{{ after_alt }}">
+							{% if after_desc %}
+								<span class="th-before-after-hero__caption th-before-after-hero__caption--after">{{ after_desc }}</span>
+							{% endif %}
 						</div>
 
 						<button type="button" class="th-before-after-hero__handle" aria-label="تحريك للمقارنة بين {{ before_word }} و {{ after_word }}" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
@@ -81,14 +87,6 @@
 						<span class="th-before-after-hero__badge th-before-after-hero__badge--after">
 							<span class="th-before-after-hero__badge-title">{{ after_word }}</span>
 						</span>
-
-						{% if before_desc %}
-							<span class="th-before-after-hero__caption th-before-after-hero__caption--before">{{ before_desc }}</span>
-						{% endif %}
-
-						{% if after_desc %}
-							<span class="th-before-after-hero__caption th-before-after-hero__caption--after">{{ after_desc }}</span>
-						{% endif %}
 					</div>
 				</div>
 			</div>
