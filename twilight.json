@@ -1131,16 +1131,28 @@
                     "id": "alaanoan_alfraae",
                     "type": "string",
                     "format": "text",
-                    "label": "section_subtitle",
+                    "label": "وصف القسم",
                     "description": "نفخر بخدمة آلاف العملاء، وتقييماتهم هي دافعنا لتقديم الأفضل دائمًا.",
                     "labelHTML": null,
                     "placeholder": "Placeholder text ..",
                     "icon": "sicon-format-text-alt",
-                    "value": "نفخر بخدمة آلاف العملاء...",
+                    "value": "نفخر بخدمة آلاف العملاء، وتقييماتهم هي دافعنا لتقديم الأفضل",
                     "multilanguage": false,
                     "required": false,
                     "minLength": 6,
-                    "maxLength": 30
+                    "maxLength": "60"
+                },
+                {
+                    "id": "show-stats",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "عرض الإحصائيات (النجوم وعدد العملاء",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
                 },
                 {
                     "id": "customers_count_text",
@@ -1158,10 +1170,10 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "show_controls",
+                    "id": "auto-play",
                     "type": "boolean",
                     "format": "switch",
-                    "label": "إظهار الأسهم",
+                    "label": "تفعيل التشغيل التلقائي",
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
@@ -1170,10 +1182,22 @@
                     "required": false
                 },
                 {
-                    "id": "show-stats",
+                    "id": "show-pagination",
                     "type": "boolean",
                     "format": "switch",
-                    "label": "عرض الإحصائيات (النجوم وعدد العملاء",
+                    "label": "تفعيل النقاط",
+                    "description": null,
+                    "labelHTML": null,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
+                    "required": false
+                },
+                {
+                    "id": "show_controls",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "تفعيل الأسهم الجانبية",
                     "description": null,
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
