@@ -6,6 +6,7 @@ window.fslightbox = Lightbox;
 class Home extends BasePage {
     onReady() {
         this.initFeaturedTabs();
+        this.initBeforeAfterHero();
         this.initPromoHeroProducts();
     }
 
@@ -159,6 +160,78 @@ class Home extends BasePage {
         }
 
         updateThumb();
+    }
+
+    initBeforeAfterHero() {
+        document.querySelectorAll('.js-before-after-hero').forEach(compare => {
+            if (compare.dataset.beforeAfterInitialized === 'true') return;
+            compare.dataset.beforeAfterInitialized = 'true';
+
+            const overlay = compare.querySelector('.th-before-after-hero__overlay');
+            const handle = compare.querySelector('.th-before-after-hero__handle');
+            if (!overlay || !handle) return;
+
+            const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+            const toPercent = clientX => {
+                const rect = compare.getBoundingClientRect();
+                if (!rect.width) return 50;
+                return clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
+            };
+
+            const setPosition = value => {
+                const percent = clamp(Number(value), 0, 100);
+                const percentText = `${percent}%`;
+                compare.style.setProperty('--th-before-after-pos', percentText);
+                overlay.style.width = percentText;
+                handle.style.insetInlineStart = percentText;
+                handle.setAttribute('aria-valuenow', String(Math.round(percent)));
+            };
+
+            const initialPosition = parseFloat(compare.dataset.initialPosition || '50');
+            setPosition(Number.isFinite(initialPosition) ? initialPosition : 50);
+
+            let isDragging = false;
+            let activePointerId = null;
+
+            const stopDragging = pointerId => {
+                if (!isDragging) return;
+                if (pointerId !== null && activePointerId !== null && pointerId !== activePointerId) return;
+                isDragging = false;
+                activePointerId = null;
+                compare.classList.remove('is-dragging');
+            };
+
+            compare.addEventListener('pointerdown', event => {
+                isDragging = true;
+                activePointerId = event.pointerId;
+                compare.classList.add('is-dragging');
+                compare.setPointerCapture?.(event.pointerId);
+                setPosition(toPercent(event.clientX));
+            });
+
+            compare.addEventListener('pointermove', event => {
+                if (!isDragging || event.pointerId !== activePointerId) return;
+                setPosition(toPercent(event.clientX));
+            });
+
+            compare.addEventListener('pointerup', event => stopDragging(event.pointerId));
+            compare.addEventListener('pointercancel', event => stopDragging(event.pointerId));
+            compare.addEventListener('lostpointercapture', () => stopDragging(null));
+
+            handle.addEventListener('keydown', event => {
+                const current = Number(handle.getAttribute('aria-valuenow') || 50);
+                let next = current;
+
+                if (event.key === 'ArrowLeft') next = current - 5;
+                else if (event.key === 'ArrowRight') next = current + 5;
+                else if (event.key === 'Home') next = 0;
+                else if (event.key === 'End') next = 100;
+                else return;
+
+                event.preventDefault();
+                setPosition(next);
+            });
+        });
     }
 }
 
