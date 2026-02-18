@@ -25,12 +25,8 @@
 {% set after_word = trans('components.comparison.after') %}
 {% set before_desc = component.before_label|default('')|trim %}
 {% set after_desc = component.after_label|default('')|trim %}
-{% set before_desc_text = before_desc starts with before_word ? before_desc|replace({(before_word ~ ' '): '', before_word: ''})|trim : before_desc %}
-{% set after_desc_text = after_desc starts with after_word ? after_desc|replace({(after_word ~ ' '): '', after_word: ''})|trim : after_desc %}
-{% set before_has_desc = before_desc_text %}
-{% set after_has_desc = after_desc_text %}
-{% set before_alt = before_has_desc ? before_word ~ ': ' ~ before_desc_text : before_word %}
-{% set after_alt = after_has_desc ? after_word ~ ': ' ~ after_desc_text : after_word %}
+{% set before_alt = before_desc ? before_word ~ ': ' ~ before_desc : before_word %}
+{% set after_alt = after_desc ? after_word ~ ': ' ~ after_desc : after_word %}
 
 <section class="s-block th-before-after-hero">
 	<div class="container">
@@ -80,17 +76,19 @@
 
 						<span class="th-before-after-hero__badge th-before-after-hero__badge--before">
 							<span class="th-before-after-hero__badge-title">{{ before_word }}</span>
-							{% if before_has_desc %}
-								<span class="th-before-after-hero__badge-text">{{ before_desc_text }}</span>
-							{% endif %}
 						</span>
 
 						<span class="th-before-after-hero__badge th-before-after-hero__badge--after">
 							<span class="th-before-after-hero__badge-title">{{ after_word }}</span>
-							{% if after_has_desc %}
-								<span class="th-before-after-hero__badge-text">{{ after_desc_text }}</span>
-							{% endif %}
 						</span>
+
+						{% if before_desc %}
+							<span class="th-before-after-hero__caption th-before-after-hero__caption--before">{{ before_desc }}</span>
+						{% endif %}
+
+						{% if after_desc %}
+							<span class="th-before-after-hero__caption th-before-after-hero__caption--after">{{ after_desc }}</span>
+						{% endif %}
 					</div>
 				</div>
 			</div>

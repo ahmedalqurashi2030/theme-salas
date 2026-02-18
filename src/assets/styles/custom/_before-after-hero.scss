@@ -210,20 +210,14 @@
 
 .th-before-after-hero__badge {
   position: absolute;
-  inset-block-end: 12px;
+  inset-block-start: 12px;
   z-index: 5;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  max-inline-size: min(48%, 230px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: inline-block;
   backdrop-filter: blur(8px);
   pointer-events: none;
 }
@@ -244,11 +238,31 @@
   font-weight: 800;
 }
 
-.th-before-after-hero__badge-text {
-  font-weight: 600;
-  opacity: 0.95;
+.th-before-after-hero__caption {
+  position: absolute;
+  inset-block-end: 12px;
+  z-index: 5;
+  max-inline-size: min(48%, 210px);
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  color: #111827;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.th-before-after-hero__caption--before {
+  right: 12px;
+}
+
+.th-before-after-hero__caption--after {
+  left: 12px;
 }
 
 @media (min-width: 1024px) {
@@ -283,9 +297,13 @@
 
   .th-before-after-hero__badge {
     font-size: 0.68rem;
+    padding: 5px 10px;
+  }
+
+  .th-before-after-hero__caption {
+    font-size: 0.64rem;
     padding: 5px 9px;
     max-inline-size: 46%;
-    gap: 5px;
   }
 }
 
