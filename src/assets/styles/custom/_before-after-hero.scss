@@ -102,6 +102,7 @@
   --th-before-after-pos: 50%;
 
   position: relative;
+  direction: ltr;
   width: 100%;
   aspect-ratio: 16/10;
   border-radius: var(--th-ba-radius-lg);
@@ -119,9 +120,16 @@
 .th-before-after-hero__overlay {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+}
+
+.th-before-after-hero__base {
+  z-index: 1;
 }
 
 .th-before-after-hero__overlay {
+  left: 0;
+  right: auto;
   width: var(--th-before-after-pos);
   overflow: hidden;
   z-index: 2;
@@ -143,7 +151,7 @@
 .th-before-after-hero__handle {
   position: absolute;
   inset-block: 0;
-  inset-inline-start: var(--th-before-after-pos);
+  left: var(--th-before-after-pos);
   transform: translateX(-50%);
   width: var(--th-ba-handle-size);
   border: 0;
@@ -153,11 +161,11 @@
   padding: 0;
   display: grid;
   place-items: center;
-  will-change: inset-inline-start;
+  will-change: left;
 }
 
 .th-before-after-hero__compare:not(.is-dragging) .th-before-after-hero__handle {
-  transition: inset-inline-start 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: left 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .th-before-after-hero__compare.is-dragging,
