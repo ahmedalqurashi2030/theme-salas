@@ -6,6 +6,18 @@
 | sort               | string                    |                                     |
 | hide_customer_info | bool                      | show/hide info customers            |
 #}
-<section class="s-block s-block--testimonials container overflow-hidden">
-    <salla-reviews {{ display_all_url ? "display-all-link" : "" }} limit="{{ limit }}" sort="{{ sort }}" {{ hide_customer_info ? 'hide-customer-info' : '' }} type="{{type}}"></salla-reviews>
-</section> 
+{% set testimonials_limit = limit is defined and limit is not empty ? limit : 8 %}
+{% set testimonials_type = type is defined and type is not empty ? type : 'store' %}
+{% set testimonials_sort = sort is defined and sort is not empty ? sort : 'top_rating' %}
+{% set reviews_show_all = display_all_url|default(false) %}
+{% set reviews_hide_customer_info = hide_customer_info|default(false) %}
+
+<section class="s-block s-block--testimonials th-testimonials-native container overflow-hidden">
+    <salla-reviews
+        class="th-testimonials-native__reviews"
+        {{ reviews_show_all ? 'display-all-link' : '' }}
+        limit="{{ testimonials_limit }}"
+        sort="{{ testimonials_sort }}"
+        {{ reviews_hide_customer_info ? 'hide-customer-info' : '' }}
+        type="{{ testimonials_type }}"></salla-reviews>
+</section>
