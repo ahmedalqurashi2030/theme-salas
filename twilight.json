@@ -1128,7 +1128,7 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "alaanoan_alfraae",
+                    "id": "section_subtitle",
                     "type": "string",
                     "format": "text",
                     "label": "وصف القسم",
