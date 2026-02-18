@@ -21,68 +21,79 @@
 {% set before_image = component.before_image ?? component.after_image ?? '' %}
 {% set after_image = component.after_image ?? component.before_image ?? '' %}
 
-{% set before_label = component.before_label ?? 'قبل' %}
-{% set after_label = component.after_label ?? 'بعد' %}
+{% set before_word = trans('components.comparison.before') %}
+{% set after_word = trans('components.comparison.after') %}
+{% set before_desc = component.before_label|default('')|trim %}
+{% set after_desc = component.after_label|default('')|trim %}
+{% set before_desc_text = before_desc starts with before_word ? before_desc|replace({(before_word ~ ' '): '', before_word: ''})|trim : before_desc %}
+{% set after_desc_text = after_desc starts with after_word ? after_desc|replace({(after_word ~ ' '): '', after_word: ''})|trim : after_desc %}
+{% set before_has_desc = before_desc_text %}
+{% set after_has_desc = after_desc_text %}
+{% set before_alt = before_has_desc ? before_word ~ ': ' ~ before_desc_text : before_word %}
+{% set after_alt = after_has_desc ? after_word ~ ': ' ~ after_desc_text : after_word %}
 
 <section class="s-block th-before-after-hero">
-  <div class="container">
-    <div class="th-before-after-hero__panel">
-      <div class="th-before-after-hero__inner">
-        <div class="th-before-after-hero__content">
-          {% if subtitle %}
-            <span class="th-before-after-hero__eyebrow">{{ subtitle }}</span>
-          {% endif %}
+	<div class="container">
+		<div class="th-before-after-hero__panel">
+			<div class="th-before-after-hero__inner">
+				<div class="th-before-after-hero__content">
+					{% if subtitle %}
+						<span class="th-before-after-hero__eyebrow">{{ subtitle }}</span>
+					{% endif %}
 
-          {% if title %}
-            <h2 class="th-before-after-hero__title">{{ title }}</h2>
-          {% endif %}
+					{% if title %}
+						<h2 class="th-before-after-hero__title">{{ title }}</h2>
+					{% endif %}
 
-          {% if description %}
-            <div class="th-before-after-hero__desc">
-              {{ description|raw }}
-            </div>
-          {% endif %}
+					{% if description %}
+						<div class="th-before-after-hero__desc">
+							{{ description|raw }}
+						</div>
+					{% endif %}
 
-          {% if button_text %}
-            <a href="{{ button_link ?: '#' }}" class="s-button s-button--primary th-before-after-hero__btn">
-              {{ button_text }}
-            </a>
-          {% endif %}
-        </div>
+					{% if button_text %}
+						<a href="{{ button_link ?: '#' }}" class="s-button s-button--primary th-before-after-hero__btn">
+							{{ button_text }}
+						</a>
+					{% endif %}
+				</div>
 
-        <div class="th-before-after-hero__visual">
-          <div
-            class="th-before-after-hero__compare js-before-after-hero"
-            data-initial-position="50"
-            style="--th-before-after-pos: 50%;">
-            <div class="th-before-after-hero__base">
-              <img class="th-before-after-hero__img" src="{{ before_image }}" alt="{{ before_label }}">
-            </div>
+				<div class="th-before-after-hero__visual">
+					<div class="th-before-after-hero__compare js-before-after-hero" data-initial-position="50" style="--th-before-after-pos: 50%;">
+						<div class="th-before-after-hero__base">
+							<img class="th-before-after-hero__img" src="{{ before_image }}" alt="{{ before_alt }}">
+						</div>
 
-            <div class="th-before-after-hero__overlay">
-              <img class="th-before-after-hero__img" src="{{ after_image }}" alt="{{ after_label }}">
-            </div>
+						<div class="th-before-after-hero__overlay">
+							<img class="th-before-after-hero__img" src="{{ after_image }}" alt="{{ after_alt }}">
+						</div>
 
-            <button
-              type="button"
-              class="th-before-after-hero__handle"
-              aria-label="تحريك للمقارنة بين {{ before_label }} و {{ after_label }}"
-              role="slider"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="50">
-              <span class="th-before-after-hero__handle-circle" aria-hidden="true">
-                <i class="sicon-arrow-left th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--left"></i>
-                <i class="sicon-arrow-right th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--right"></i>
-              </span>
-              <span class="sr-only">{{ before_label }} / {{ after_label }}</span>
-            </button>
+						<button type="button" class="th-before-after-hero__handle" aria-label="تحريك للمقارنة بين {{ before_word }} و {{ after_word }}" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+							<span class="th-before-after-hero__handle-circle" aria-hidden="true">
+								<i class="sicon-arrow-left th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--left"></i>
+								<i class="sicon-arrow-right th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--right"></i>
+							</span>
+							<span class="sr-only">{{ before_word }}
+								/
+								{{ after_word }}</span>
+						</button>
 
-            <span class="th-before-after-hero__badge th-before-after-hero__badge--before">{{ before_label }}</span>
-            <span class="th-before-after-hero__badge th-before-after-hero__badge--after">{{ after_label }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+						<span class="th-before-after-hero__badge th-before-after-hero__badge--before">
+							<span class="th-before-after-hero__badge-title">{{ before_word }}</span>
+							{% if before_has_desc %}
+								<span class="th-before-after-hero__badge-text">{{ before_desc_text }}</span>
+							{% endif %}
+						</span>
+
+						<span class="th-before-after-hero__badge th-before-after-hero__badge--after">
+							<span class="th-before-after-hero__badge-title">{{ after_word }}</span>
+							{% if after_has_desc %}
+								<span class="th-before-after-hero__badge-text">{{ after_desc_text }}</span>
+							{% endif %}
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>

@@ -167,9 +167,8 @@ class Home extends BasePage {
             if (compare.dataset.beforeAfterInitialized === 'true') return;
             compare.dataset.beforeAfterInitialized = 'true';
 
-            const overlay = compare.querySelector('.th-before-after-hero__overlay');
             const handle = compare.querySelector('.th-before-after-hero__handle');
-            if (!overlay || !handle) return;
+            if (!handle) return;
 
             const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
             const toPercent = clientX => {
@@ -178,40 +177,54 @@ class Home extends BasePage {
                 return clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
             };
 
-            const setPosition = value => {
-                const percent = clamp(Number(value), 0, 100);
-                const percentText = `${percent}%`;
-                compare.style.setProperty('--th-before-after-pos', percentText);
-                overlay.style.width = percentText;
-                handle.style.insetInlineStart = percentText;
-                handle.setAttribute('aria-valuenow', String(Math.round(percent)));
+            let rafId = 0;
+            let nextPercent = 50;
+            const queuePosition = value => {
+                nextPercent = clamp(Number(value), 0, 100);
+                if (rafId) return;
+                rafId = requestAnimationFrame(() => {
+                    const percentText = `${nextPercent}%`;
+                    compare.style.setProperty('--th-before-after-pos', percentText);
+                    handle.setAttribute('aria-valuenow', String(Math.round(nextPercent)));
+                    rafId = 0;
+                });
             };
 
             const initialPosition = parseFloat(compare.dataset.initialPosition || '50');
-            setPosition(Number.isFinite(initialPosition) ? initialPosition : 50);
+            const startPosition = Number.isFinite(initialPosition) ? initialPosition : 50;
+            compare.style.setProperty('--th-before-after-pos', `${clamp(startPosition, 0, 100)}%`);
+            handle.setAttribute('aria-valuenow', String(Math.round(clamp(startPosition, 0, 100))));
 
             let isDragging = false;
             let activePointerId = null;
+            let prevTouchAction = '';
+            const startDragging = event => {
+                if (event.button !== undefined && event.button !== 0) return;
+                isDragging = true;
+                activePointerId = event.pointerId;
+                prevTouchAction = compare.style.touchAction;
+                compare.style.touchAction = 'none';
+                compare.classList.add('is-dragging');
+                compare.setPointerCapture?.(event.pointerId);
+                queuePosition(toPercent(event.clientX));
+                event.preventDefault();
+            };
 
             const stopDragging = pointerId => {
                 if (!isDragging) return;
                 if (pointerId !== null && activePointerId !== null && pointerId !== activePointerId) return;
                 isDragging = false;
                 activePointerId = null;
+                compare.style.touchAction = prevTouchAction;
                 compare.classList.remove('is-dragging');
             };
 
-            compare.addEventListener('pointerdown', event => {
-                isDragging = true;
-                activePointerId = event.pointerId;
-                compare.classList.add('is-dragging');
-                compare.setPointerCapture?.(event.pointerId);
-                setPosition(toPercent(event.clientX));
-            });
+            compare.addEventListener('pointerdown', startDragging);
 
             compare.addEventListener('pointermove', event => {
                 if (!isDragging || event.pointerId !== activePointerId) return;
-                setPosition(toPercent(event.clientX));
+                queuePosition(toPercent(event.clientX));
+                event.preventDefault();
             });
 
             compare.addEventListener('pointerup', event => stopDragging(event.pointerId));
@@ -229,7 +242,7 @@ class Home extends BasePage {
                 else return;
 
                 event.preventDefault();
-                setPosition(next);
+                queuePosition(next);
             });
         });
     }
