@@ -3488,13 +3488,7 @@
                     "labelHTML": null,
                     "icon": "sicon-keyboard_arrow_down",
                     "selected": [],
-                    "options": [
-                        {
-                            "label": null,
-                            "value": "Value 1",
-                            "key": "903693cf-40d3-4a24-a81e-d25096a7aeed"
-                        }
-                    ],
+                    "options": [],
                     "source": "blog_articles",
                     "multichoice": true,
                     "searchable": true,
