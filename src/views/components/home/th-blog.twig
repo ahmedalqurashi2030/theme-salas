@@ -1,130 +1,39 @@
-{# Component: Home blog — متوافق مع twilight.json المقدم #}
+{# DEBUG TEMP - اطبع محتوى component و raw_posts و posts #}
+<div style="background:#fff7cc;padding:12px;border:1px solid #ffd54f;margin:12px 0;font-size:13px;">
+  <strong>DEBUG: component (truncated)</strong>
+  <pre>{{ component is defined ? component|json_encode(constant('JSON_PRETTY_PRINT')) : 'component undefined' }}</pre>
 
-{# normalize section title / subtitle (top-level fields) #}
-{% set section_title = component.section_title|default('') %}
-{% if section_title is iterable %}
-  {% set section_title = section_title.value|default(section_title.ar|default(section_title.en|default(''))) %}
-{% endif %}
+  <strong>DEBUG: component.blog (raw)</strong>
+  <pre>{{ (component.blog is defined ? component.blog : 'undefined')|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
 
-{% set section_subtitle = component.alaanoan_alfraae|default(component.section_subtitle|default('')) %}
-{% if section_subtitle is iterable %}
-  {% set section_subtitle = section_subtitle.value|default(section_subtitle.ar|default(section_subtitle.en|default(''))) %}
-{% endif %}
-{% if section_subtitle in ['section_title', 'section_subtitle'] %}
-  {% set section_subtitle = '' %}
-{% endif %}
+  {# حساب raw_posts بنفس منطق القالب لعرضه #}
+  {% set blog_field = component.blog|default([]) %}
+  {% if blog_field is iterable and attribute(blog_field,'selected') is defined and attribute(blog_field,'selected') is iterable %}
+    {% set raw_posts = attribute(blog_field,'selected') %}
+  {% elseif blog_field is iterable and attribute(blog_field,'value') is defined and attribute(blog_field,'value') is iterable %}
+    {% set raw_posts = attribute(blog_field,'value') %}
+  {% elseif blog_field is iterable %}
+    {% set raw_posts = blog_field %}
+  {% else %}
+    {% set raw_posts = [] %}
+  {% endif %}
+  <strong>DEBUG: raw_posts (count = {{ raw_posts|length }})</strong>
+  <pre>{{ raw_posts|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
 
-{# normalize blog field (selected / value / raw) #}
-{% set blog_field = component.blog|default([]) %}
-{% if blog_field is iterable and attribute(blog_field, 'selected') is defined and attribute(blog_field, 'selected') is iterable %}
-  {% set raw_posts = attribute(blog_field, 'selected') %}
-{% elseif blog_field is iterable and attribute(blog_field, 'value') is defined and attribute(blog_field, 'value') is iterable %}
-  {% set raw_posts = attribute(blog_field, 'value') %}
-{% elseif blog_field is iterable %}
-  {% set raw_posts = blog_field %}
-{% else %}
-  {% set raw_posts = [] %}
-{% endif %}
-
-{# choose posts: use selected objects if present, else fallback to latest via store.posts if available #}
-{% set posts = [] %}
-{% if raw_posts is iterable and raw_posts|length %}
-  {% set posts = raw_posts %}
-{% else %}
-  {% if store is defined and store.posts is defined and store.posts.latest is defined %}
+  {# محاولة fallback store.posts (قد لا تكون متاحة) #}
+  {% set posts = [] %}
+  {% if raw_posts is iterable and raw_posts|length %}
+    {% set posts = raw_posts %}
+  {% elseif store is defined and store.posts is defined and store.posts.latest is defined %}
     {% set posts = store.posts.latest().limit(5).get() %}
   {% endif %}
-{% endif %}
-
-{# normalize show_controls / autoplay from top-level component fields #}
-{% set show_controls_raw = component.show_controls|default(true) %}
-{% if show_controls_raw is iterable %}
-  {% set show_controls_raw = show_controls_raw.value|default(show_controls_raw.selected|default(show_controls_raw)) %}
-{% endif %}
-{% set autoplay_raw = component.autoplay|default(true) %}
-{% if autoplay_raw is iterable %}
-  {% set autoplay_raw = autoplay_raw.value|default(autoplay_raw.selected|default(autoplay_raw)) %}
-{% endif %}
-{% set show_controls = show_controls_raw in [true, 1, '1', 'true'] %}
-{% set autoplay = autoplay_raw in [true, 1, '1', 'true'] %}
-
-{# if no posts — لا تعرض القسم (أو اعرض رسالة للمشرف) #}
-{% if posts is not empty %}
-  {% set slides_count = posts|length %}
-  {% set slider_config = {
-    "slidesPerView": 1.2,
-    "spaceBetween": 16,
-    "autoplay": (autoplay and slides_count > 1) ? {"delay": 3500, "disableOnInteraction": false} : false,
-    "loop": slides_count > 3,
-    "breakpoints": {
-      "640": { "slidesPerView": 2, "spaceBetween": 20 },
-      "768": { "slidesPerView": 3, "spaceBetween": 30 },
-      "1024": { "slidesPerView": 4, "spaceBetween": 30 }
-    }
-  } %}
-
-  <section class="s-block container">
-    {% if section_title %}
-      <div class="s-block__title">
-        <h2>{{ section_title }}</h2>
-        {% if section_subtitle %}<p class="s-block__subtitle">{{ section_subtitle }}</p>{% endif %}
-      </div>
-    {% endif %}
-
-    <salla-slider
-      id="home-blog-slider"
-      class="home-blog-slider"
-      slider-config='{{ slider_config|json_encode|e("html_attr") }}'
-      {% if slides_count > 1 and show_controls %}show-controls{% endif %}
-      {% if slides_count > 1 and autoplay %}auto-play="true"{% endif %}
-      {% if slides_count > 1 %}pagination{% endif %}>
-      <div slot="slides">
-        {% for item in posts %}
-          {% set post = item %}
-          {# support wrapper objects like { post: {...} } #}
-          {% if item is iterable and attribute(item, 'post') is defined %}
-            {% set post = attribute(item, 'post') %}
-          {% endif %}
-
-          <div class="swiper-slide">
-            <div class="card">
-              {% if post is iterable %}
-                <a href="{{ post.url|default('#') }}" class="block relative group">
-                  {% set img = '' %}
-                  {% if post.image is defined and post.image %}
-                    {% if post.image.url is defined %}{% set img = post.image.url %}
-                    {% elseif post.image.original is defined %}{% set img = post.image.original %}
-                    {% elseif post.image is not iterable %}{% set img = post.image %}{% endif %}
-                  {% endif %}
-                  {% if not img %}{% set img = 'images/placeholder.png'|asset %}{% endif %}
-                  <salla-image src="{{ img }}" alt="{{ post.title|default('') }}" class="w-full h-48 object-cover" />
-                  {% if post.category %}<span class="badge">{{ post.category.name|default(post.category) }}</span>{% endif %}
-                </a>
-
-                <div class="p-4">
-                  <div class="meta text-sm text-gray-500 mb-2">
-                    {% if post.published_at %}<span>{{ post.published_at|date('d M, Y') }}</span>{% endif %}
-                    {% if post.author is defined and post.author.name %} • <span>{{ post.author.name }}</span>{% endif %}
-                  </div>
-
-                  <h3 class="title"><a href="{{ post.url|default('#') }}">{{ post.title|default('') }}</a></h3>
-
-                  <div class="meta-actions text-sm text-gray-500 mt-3">
-                    <span class="likes mr-3">{{ post.likes_count|default(0) }}</span>
-                    <span class="comments">{{ post.comments_count|default(0) }}</span>
-                  </div>
-                </div>
-              {% else %}
-                <div class="p-4">
-                  <h3 class="title">{{ post }}</h3>
-                </div>
-              {% endif %}
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    </salla-slider>
-  </section>
-{% else %}
-  {# لا تعرض شيئًا للعامة؛ يمكنك تفعيل سطر debug للمسؤول فقط #}
-{% endif %}
+  <strong>DEBUG: posts (count = {{ posts is iterable ? posts|length : 'n/a' }})</strong>
+  <pre>{{ posts is iterable ? posts|json_encode(constant('JSON_PRETTY_PRINT')) : 'posts not iterable or not available' }}</pre>
+</div>
+<script>
+  try {
+    console.log('DEBUG component:', {{ component is defined ? component|json_encode : '"component undefined"' }});
+    console.log('DEBUG raw_posts:', {{ raw_posts|json_encode|raw }});
+    console.log('DEBUG posts:', {{ posts is iterable ? posts|json_encode|raw : '"posts not iterable or unavailable"' }});
+  } catch(e) {}
+</script>
