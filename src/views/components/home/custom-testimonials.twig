@@ -1,191 +1,95 @@
-{#
-| Settings used from twilight.json (home.custom-testimonials):
-| - section_title
-| - section_subtitle
-| - show-stats
-| - customers_count_text
-| - auto-play
-| - show-pagination
-| - show_controls
-| - items (items.name, items.avatar, items.stars, items.text)
-#}
-
-{% set source = component|default({}) %}
-
-{# Normalize collection payload, because Twilight may return either list or object with .value #}
-{% set raw_items_source = source.items|default([]) %}
-{% if raw_items_source is iterable and raw_items_source.value is defined %}
-  {% set raw_items = raw_items_source.value|default([]) %}
-{% else %}
-  {% set raw_items = raw_items_source|default([]) %}
-{% endif %}
-
-{% set reviews = [] %}
-{% for item in raw_items %}
-  {% set normalized_stars = item.stars|default(attribute(item, 'items.stars'))|default(5)|int %}
-  {% if normalized_stars < 1 %}{% set normalized_stars = 1 %}{% endif %}
-  {% if normalized_stars > 5 %}{% set normalized_stars = 5 %}{% endif %}
-
-  {% set reviews = reviews|merge([{
-    name: item.name|default(attribute(item, 'items.name')|default('')),
-    avatar: item.avatar|default(attribute(item, 'items.avatar')|default('')),
-    stars: normalized_stars,
-    text: item.text|default(attribute(item, 'items.text')|default(''))
-  }]) %}
-{% endfor %}
-
-{% set reviews_count = reviews|length %}
-{% set slider_id = 'custom-testimonials-' ~ (section.id|default(position|default('home'))) %}
-{% set default_avatar = 'https://cdn.assets.salla.network/prod/stores/themes/default/assets/images/avatar_male.png' %}
-
-{% set locale = user.language.code|default(user.language_code|default('ar'))|lower %}
-{% set is_ar = locale|slice(0, 2) == 'ar' %}
-
-{% set default_title = is_ar ? 'تجارب عملائنا المميزة' : 'Trusted by Our Customers' %}
-{% set default_subtitle = is_ar ? 'نفخر بخدمة آلاف العملاء، وتقييماتهم هي دافعنا لتقديم الأفضل دائما.' : 'We are proud to serve thousands of customers, and their reviews keep us improving every day.' %}
-{% set default_customers_text = is_ar ? '2k+ عميل سعيد' : '2k+ happy customers' %}
-{% set default_empty_text = is_ar ? 'لا توجد آراء متاحة حاليا.' : 'No testimonials available at the moment.' %}
-{% set default_verified = is_ar ? 'موثق' : 'Verified' %}
-{% set default_customer_type = is_ar ? 'عميل موثق' : 'Verified customer' %}
-
-{% set section_title = source.section_title|default(default_title) %}
-{% set section_subtitle = source.section_subtitle|default(default_subtitle) %}
-{% set customers_text = source.customers_count_text|default(default_customers_text) %}
-
-{% set show_stats_raw = source['show-stats']|default(source.show_stats|default(true)) %}
-{% if show_stats_raw is iterable %}
-  {% set show_stats_raw = show_stats_raw.selected|default(show_stats_raw.value|default(false)) %}
-{% endif %}
-{% set show_stats = show_stats_raw in [true, 1, '1', 'true'] %}
-
-{% set show_pagination_raw = source['show-pagination']|default(source.show_pagination|default(true)) %}
-{% if show_pagination_raw is iterable %}
-  {% set show_pagination_raw = show_pagination_raw.selected|default(show_pagination_raw.value|default(false)) %}
-{% endif %}
-{% set show_pagination = show_pagination_raw in [true, 1, '1', 'true'] %}
-
-{% set show_controls_raw = source.show_controls|default(source['show-controls']|default(true)) %}
-{% if show_controls_raw is iterable %}
-  {% set show_controls_raw = show_controls_raw.selected|default(show_controls_raw.value|default(false)) %}
-{% endif %}
-{% set show_controls = show_controls_raw in [true, 1, '1', 'true'] %}
-
-{% set autoplay_raw = source['auto-play']|default(source.auto_play|default(true)) %}
-{% if autoplay_raw is iterable %}
-  {% set autoplay_raw = autoplay_raw.selected|default(autoplay_raw.value|default(false)) %}
-{% endif %}
-{% set autoplay_enabled = autoplay_raw in [true, 1, '1', 'true'] %}
-
-{# Not exposed in twilight.json for this block, keep fixed behavior #}
-{% set slides_mobile = 1 %}
-{% set slides_tablet = 2 %}
-{% set slides_desktop = 3 %}
-{% set space_between = 16 %}
-{% set autoplay_delay = 4500 %}
-
-{% set total_stars = 0 %}
-{% for review in reviews %}
-  {% set total_stars = total_stars + review.stars %}
-{% endfor %}
-
-{% set average_rating = reviews_count ? (total_stars / reviews_count) : 0 %}
-{% set average_rating_text = reviews_count ? ((average_rating * 10)|round / 10) : 0 %}
-{% set reviews_meta_text = is_ar ? ('بناء على ' ~ reviews_count ~ ' تقييم') : ('Based on ' ~ reviews_count ~ ' reviews') %}
-
-{% set has_multiple_reviews = reviews_count > 1 %}
-{% set loop_enabled = reviews_count > slides_desktop %}
-{% set should_show_controls = show_controls and has_multiple_reviews %}
-{% set should_show_pagination = show_pagination and has_multiple_reviews %}
-{% set should_autoplay = autoplay_enabled and has_multiple_reviews %}
+{% set reviews = component.items|default([]) %}
+{% set slider_id = 'custom-testimonials-' ~ (position ?? 'home') %}
 
 {% set slider_config = {
-  "slidesPerView": slides_mobile,
-  "spaceBetween": space_between,
+  "slidesPerView": 1,
+  "spaceBetween": 14,
   "watchOverflow": true,
   "centeredSlides": false,
-  "loop": loop_enabled,
-  "speed": 560,
-  "keyboard": { "enabled": true, "onlyInViewport": true },
+  "loop": reviews|length > 3,
   "breakpoints": {
-    "768": { "slidesPerView": slides_tablet, "spaceBetween": space_between },
-    "1024": { "slidesPerView": slides_desktop, "spaceBetween": space_between }
-  },
-  "autoplay": should_autoplay ? {
-    "delay": autoplay_delay,
-    "disableOnInteraction": false,
-    "pauseOnMouseEnter": true
-  } : false
+    "768": {
+      "slidesPerView": 2,
+      "spaceBetween": 16
+    },
+    "1024": {
+      "slidesPerView": 3,
+      "spaceBetween": 18
+    }
+  }
 } %}
 
-<section class="s-block th-home-testimonials" aria-label="{{ section_title }}">
+<section class="s-block th-home-testimonials">
   <div class="container">
     <header class="th-home-testimonials__header">
-      <h2 class="th-home-testimonials__title">{{ section_title }}</h2>
-      {% if section_subtitle %}
-        <p class="th-home-testimonials__subtitle">{{ section_subtitle }}</p>
-      {% endif %}
+      <h2 class="th-home-testimonials__title">تجارب عملائنا المميزة</h2>
+      <p class="th-home-testimonials__subtitle">نفخر بخدمة أكثر من 10,000 عميل سعيد، تقييمكم هو دافعنا لتقديم الأفضل دائمًا.</p>
 
-      {% if show_stats and reviews_count %}
-        <div class="th-home-testimonials__stats">
-          <div class="th-home-testimonials__stat th-home-testimonials__stat--customers">
-            <span class="th-home-testimonials__avatars" aria-hidden="true">
-              {% for item in reviews|slice(0, 4) %}
-                <img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ item.avatar|default(default_avatar) }}" alt="" width="24" height="24" class="lazy th-home-testimonials__avatar-chip">
-              {% endfor %}
-            </span>
-            <span class="th-home-testimonials__stat-text">{{ customers_text }}</span>
-          </div>
-
-          <div class="th-home-testimonials__stat th-home-testimonials__stat--rating">
-            <span class="th-home-testimonials__stars" aria-hidden="true">
-              {% for i in 1..5 %}
-                <i class="sicon-star2"></i>
-              {% endfor %}
-            </span>
-            <strong class="th-home-testimonials__score">{{ average_rating_text }}</strong>
-            <small class="th-home-testimonials__meta">{{ reviews_meta_text }}</small>
-          </div>
+      <div class="th-home-testimonials__stats">
+        <div class="th-home-testimonials__stat th-home-testimonials__stat--customers">
+          <span class="th-home-testimonials__avatars" aria-hidden="true">
+            {% for item in reviews|slice(0, 4) %}
+              <img
+                src="{{ 'images/s-empty.png' | asset }}"
+                data-src="{{ item.avatar }}"
+                alt=""
+                class="lazy th-home-testimonials__avatar-chip">
+            {% endfor %}
+          </span>
+          <span class="th-home-testimonials__stat-text">2k+ عميل سعيد</span>
         </div>
-      {% endif %}
+
+        <div class="th-home-testimonials__stat th-home-testimonials__stat--rating">
+          <span class="th-home-testimonials__stars" aria-hidden="true">
+            {% for i in 1..5 %}
+              <i class="sicon-star2"></i>
+            {% endfor %}
+          </span>
+          <strong class="th-home-testimonials__score">4.9</strong>
+          <small class="th-home-testimonials__meta">بناءً على 2,450 تقييم</small>
+        </div>
+      </div>
     </header>
 
-    {% if reviews_count %}
+    {% if reviews|length %}
       <salla-slider
         id="{{ slider_id }}"
         class="th-home-testimonials__slider s-slider-wrapper"
         type="carousel"
-        loop="{{ loop_enabled ? 'true' : 'false' }}"
-        auto-play="{{ should_autoplay ? 'true' : 'false' }}"
-        show-controls="{{ should_show_controls ? 'true' : 'false' }}"
+        show-controls="{{ reviews|length > 1 ? 'true' : 'false' }}"
         slider-config='{{ slider_config|json_encode|e("html_attr") }}'
-        {% if should_show_controls %}controls-outer{% endif %}
-        {% if should_show_pagination %}pagination{% endif %}>
+        {% if reviews|length > 1 %}controls-outer pagination{% endif %}>
         <div slot="items">
           {% for index, item in reviews %}
             <div class="swiper-slide th-home-testimonials__slide">
-              <article class="th-home-testimonial-card" aria-label="{{ is_ar ? 'تقييم عميل' : 'Customer review' }} {{ index + 1 }}">
+              <article class="th-home-testimonial-card">
                 <div class="th-home-testimonial-card__head">
-                  <span class="th-home-testimonial-card__quote" aria-hidden="true">&ldquo;</span>
-                  <div class="th-home-testimonial-card__stars" aria-label="rating {{ item.stars }} out of 5">
+                  <span class="th-home-testimonial-card__quote" aria-hidden="true">“</span>
+                  <div class="th-home-testimonial-card__stars" aria-label="rating {{ item.stars|default(5) }} out of 5">
+                    {% set current_stars = item.stars|default(5) %}
                     {% for i in 1..5 %}
-                      <i class="sicon-star2 {{ i <= item.stars ? 'is-filled' : '' }}"></i>
+                      <i class="sicon-star2 {{ i <= current_stars ? 'is-filled' : '' }}"></i>
                     {% endfor %}
                   </div>
                 </div>
 
-                <p class="th-home-testimonial-card__text">{{ item.text|default('') }}</p>
+                <p class="th-home-testimonial-card__text">{{ item.text }}</p>
 
                 <footer class="th-home-testimonial-card__footer">
-                  <span class="th-home-testimonial-card__verified">{{ default_verified }}</span>
+                  <span class="th-home-testimonial-card__verified">موثوق</span>
 
                   <div class="th-home-testimonial-card__author-wrap">
                     <div class="th-home-testimonial-card__author">
-                      <strong>{{ item.name|default(is_ar ? 'عميل' : 'Customer') }}</strong>
-                      <small>{{ default_customer_type }}</small>
+                      <strong>{{ item.name }}</strong>
+                      <small>عميل موثّق</small>
                     </div>
 
                     <span class="th-home-testimonial-card__avatar">
-                      <img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ item.avatar|default(default_avatar) }}" alt="{{ item.name|default('testimonial-' ~ index) }}" width="32" height="32" class="lazy">
+                      <img
+                        src="{{ 'images/s-empty.png' | asset }}"
+                        data-src="{{ item.avatar }}"
+                        alt="{{ item.name|trim ? item.name : 'testimonial-' ~ index }}"
+                        class="lazy">
                     </span>
                   </div>
                 </footer>
@@ -194,8 +98,6 @@
           {% endfor %}
         </div>
       </salla-slider>
-    {% else %}
-      <div class="th-home-testimonials__empty" role="status">{{ default_empty_text }}</div>
     {% endif %}
   </div>
 </section>
