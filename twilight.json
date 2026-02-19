@@ -3495,14 +3495,14 @@
                             "key": "903693cf-40d3-4a24-a81e-d25096a7aeed"
                         }
                     ],
-                    "source": "Blog Articles",
+                    "source": "blog_articles",
                     "multichoice": true,
                     "searchable": true,
                     "required": true,
                     "value": [],
                     "public": true
                 },
-                   {
+                {
                     "type": "items",
                     "icon": "sicon-link",
                     "label": "رابط عرض الكل",

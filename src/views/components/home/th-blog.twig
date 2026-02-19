@@ -15,7 +15,7 @@
 {% endif %}
 
 {# --- Normalize blog field (selected / value / raw) --- #}
-{% set blog_field = component.blog|default([]) %}
+{% set blog_field = component.posts|default([]) %}
 {% if blog_field is iterable and attribute(blog_field,'selected') is defined and attribute(blog_field,'selected') is iterable %}
   {% set raw_posts = attribute(blog_field,'selected') %}
 {% elseif blog_field is iterable and attribute(blog_field,'value') is defined and attribute(blog_field,'value') is iterable %}
