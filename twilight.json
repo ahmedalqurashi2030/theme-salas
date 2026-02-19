@@ -3480,7 +3480,7 @@
                     "required": false
                 },
                 {
-                    "id": "blog",
+                    "id": "posts",
                     "type": "items",
                     "format": "dropdown-list",
                     "label": "المدونه",
