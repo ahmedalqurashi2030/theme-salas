@@ -211,35 +211,144 @@ class Home extends BasePage {
     parseBlogSelectedIds(raw) {
         if (!raw) return [];
 
+        let parsed = raw;
         try {
-            const parsed = JSON.parse(raw);
-            if (!Array.isArray(parsed)) return [];
-
-            return [...new Set(parsed
-                .map((value) => String(value || '').trim())
-                .filter(Boolean))];
+            parsed = JSON.parse(raw);
         } catch {
-            return [];
+            parsed = raw;
         }
+
+        const ids = [];
+        const collect = (value) => {
+            if (value === null || value === undefined || value === '') return;
+
+            if (Array.isArray(value)) {
+                value.forEach(collect);
+                return;
+            }
+
+            if (typeof value === 'object') {
+                const directId = value.id || value.key || value.slug;
+                if (directId !== undefined && directId !== null && directId !== '') {
+                    collect(directId);
+                }
+
+                if (value.value !== undefined) collect(value.value);
+                if (value.selected !== undefined) collect(value.selected);
+                if (value.items !== undefined) collect(value.items);
+                if (value.data !== undefined) collect(value.data);
+                return;
+            }
+
+            const normalized = String(value).trim();
+            if (!normalized || normalized === '[object Object]') return;
+
+            if (normalized.includes(',')) {
+                normalized
+                    .split(',')
+                    .map((item) => item.trim())
+                    .filter(Boolean)
+                    .forEach((item) => ids.push(item));
+                return;
+            }
+
+            ids.push(normalized);
+        };
+
+        collect(parsed);
+        return [...new Set(ids)];
+    }
+
+    async requestBlogCandidates(endpoints) {
+        for (const endpoint of endpoints) {
+            try {
+                const response = await salla.api.request(endpoint);
+                const extracted = this.extractBlogsFromResponse(response);
+                if (extracted.length) return extracted;
+            } catch {
+                // try next endpoint shape
+            }
+        }
+
+        return [];
     }
 
     async fetchBlogsByIds(ids, limit) {
         const targetIds = ids.slice(0, limit);
         const responses = await Promise.all(targetIds.map((id) =>
-            salla.api.request(`blogs/${encodeURIComponent(id)}`)
-                .then((response) => this.extractBlogsFromResponse(response))
-                .catch(() => [])
+            this.requestBlogCandidates([
+                `blogs/${encodeURIComponent(id)}`,
+                `blog/${encodeURIComponent(id)}`,
+                `posts/${encodeURIComponent(id)}`,
+            ])
         ));
 
         return responses.flat().filter(Boolean);
     }
 
     async fetchLatestBlogs(limit) {
-        const response = await salla.api.request('blogs', {
-            params: { per_page: limit, page: 1 },
-        });
+        const apiResults = await this.requestBlogCandidates([
+            `blogs?per_page=${limit}&page=1`,
+            `blogs?limit=${limit}`,
+            `blog/articles?per_page=${limit}&page=1`,
+            `blog?per_page=${limit}&page=1`,
+            `posts?per_page=${limit}&page=1`,
+        ]);
 
-        return this.extractBlogsFromResponse(response);
+        if (apiResults.length) {
+            return apiResults;
+        }
+
+        return this.fetchLatestBlogsFromPage(limit);
+    }
+
+    async fetchLatestBlogsFromPage(limit) {
+        if (typeof window === 'undefined' || typeof DOMParser === 'undefined') return [];
+
+        const paths = ['/blog', '/blogs'];
+        for (const path of paths) {
+            try {
+                const response = await fetch(path, {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                });
+
+                if (!response.ok) continue;
+                const html = await response.text();
+                if (!html) continue;
+
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const cards = [...doc.querySelectorAll('.post-entry')].slice(0, limit);
+                if (!cards.length) continue;
+
+                const parsed = cards.map((card) => {
+                    const link = card.querySelector('a[href]');
+                    const titleLink = card.querySelector('.post-entry__title a') || link;
+                    const image = card.querySelector('img');
+                    const summary = card.querySelector('p');
+                    const author = card.querySelector('a .sicon-user')?.closest('a');
+                    const dateText = card.querySelector('.sicon-calendar-date')?.parentElement?.textContent?.trim() || '';
+
+                    return {
+                        title: titleLink?.textContent?.trim() || '',
+                        url: titleLink?.getAttribute('href') || link?.getAttribute('href') || '#',
+                        image: image?.getAttribute('src') || '',
+                        summary: summary?.textContent?.trim() || '',
+                        author_name: author?.textContent?.trim() || '',
+                        created_at: dateText,
+                    };
+                }).filter((item) => item.title);
+
+                if (parsed.length) {
+                    return parsed;
+                }
+            } catch {
+                // continue to next path
+            }
+        }
+
+        return [];
     }
 
     extractBlogsFromResponse(response) {
@@ -280,13 +389,19 @@ class Home extends BasePage {
             ? (article.thumbnail.url || article.thumbnail.original || article.thumbnail.path || '')
             : article.thumbnail;
 
+        const placeholder = (typeof salla !== 'undefined'
+            && salla.config
+            && typeof salla.config.get === 'function')
+            ? (salla.config.get('theme.settings.placeholder') || '')
+            : '';
+
         const image = thumbnailValue
             || imageObj.url
             || imageObj.original
             || article.featured_image
             || article.cover
             || (typeof article.image === 'string' ? article.image : '')
-            || salla.config.get('theme.settings.placeholder')
+            || placeholder
             || 'images/placeholder.png';
 
         const authorName = article.author?.name
