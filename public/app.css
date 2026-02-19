@@ -1053,9 +1053,6 @@ input:where([type='file']):focus{
 .mr-2{
     margin-right: 0.5rem;
 }
-.mr-3{
-    margin-right: 0.75rem;
-}
 .mr-auto{
     margin-right: auto;
 }
@@ -1178,9 +1175,6 @@ input:where([type='file']):focus{
 }
 .h-40{
     height: 10rem;
-}
-.h-48{
-    height: 12rem;
 }
 .h-5{
     height: 1.25rem;

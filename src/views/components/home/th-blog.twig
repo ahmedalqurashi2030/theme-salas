@@ -1,12 +1,11 @@
-{# DEBUG TEMP - اطبع محتوى component و raw_posts و posts #}
+{# DEBUG TEMP - ضع هذه الفقرة مؤقتًا في أعلى components/home/th-blog.twig #}
 <div style="background:#fff7cc;padding:12px;border:1px solid #ffd54f;margin:12px 0;font-size:13px;">
-  <strong>DEBUG: component (truncated)</strong>
-  <pre>{{ component is defined ? component|json_encode(constant('JSON_PRETTY_PRINT')) : 'component undefined' }}</pre>
+  <strong>DEBUG: component (short)</strong>
+  <pre>{{ component is defined ? (component|json_encode(constant('JSON_PRETTY_PRINT'))) : 'component undefined' }}</pre>
 
   <strong>DEBUG: component.blog (raw)</strong>
   <pre>{{ (component.blog is defined ? component.blog : 'undefined')|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
 
-  {# حساب raw_posts بنفس منطق القالب لعرضه #}
   {% set blog_field = component.blog|default([]) %}
   {% if blog_field is iterable and attribute(blog_field,'selected') is defined and attribute(blog_field,'selected') is iterable %}
     {% set raw_posts = attribute(blog_field,'selected') %}
@@ -20,7 +19,6 @@
   <strong>DEBUG: raw_posts (count = {{ raw_posts|length }})</strong>
   <pre>{{ raw_posts|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
 
-  {# محاولة fallback store.posts (قد لا تكون متاحة) #}
   {% set posts = [] %}
   {% if raw_posts is iterable and raw_posts|length %}
     {% set posts = raw_posts %}
@@ -28,12 +26,10 @@
     {% set posts = store.posts.latest().limit(5).get() %}
   {% endif %}
   <strong>DEBUG: posts (count = {{ posts is iterable ? posts|length : 'n/a' }})</strong>
-  <pre>{{ posts is iterable ? posts|json_encode(constant('JSON_PRETTY_PRINT')) : 'posts not iterable or not available' }}</pre>
+  <pre>{{ posts is iterable ? posts|json_encode(constant('JSON_PRETTY_PRINT')) : 'posts not iterable or unavailable' }}</pre>
 </div>
 <script>
   try {
     console.log('DEBUG component:', {{ component is defined ? component|json_encode : '"component undefined"' }});
-    console.log('DEBUG raw_posts:', {{ raw_posts|json_encode|raw }});
-    console.log('DEBUG posts:', {{ posts is iterable ? posts|json_encode|raw : '"posts not iterable or unavailable"' }});
-  } catch(e) {}
+  } catch(e){}
 </script>
