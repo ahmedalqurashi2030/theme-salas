@@ -1,35 +1,145 @@
-{# DEBUG TEMP - ضع هذه الفقرة مؤقتًا في أعلى components/home/th-blog.twig #}
-<div style="background:#fff7cc;padding:12px;border:1px solid #ffd54f;margin:12px 0;font-size:13px;">
-  <strong>DEBUG: component (short)</strong>
-  <pre>{{ component is defined ? (component|json_encode(constant('JSON_PRETTY_PRINT'))) : 'component undefined' }}</pre>
+{# Component: Home blog — حل نهائي متوافق مع twilight.json المقدم #}
 
-  <strong>DEBUG: component.blog (raw)</strong>
-  <pre>{{ (component.blog is defined ? component.blog : 'undefined')|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+{# --- Normalize top-level fields --- #}
+{% set section_title = component.section_title|default('') %}
+{% if section_title is iterable %}
+  {% set section_title = section_title.value|default(section_title.ar|default(section_title.en|default(''))) %}
+{% endif %}
 
-  {% set blog_field = component.blog|default([]) %}
-  {% if blog_field is iterable and attribute(blog_field,'selected') is defined and attribute(blog_field,'selected') is iterable %}
-    {% set raw_posts = attribute(blog_field,'selected') %}
-  {% elseif blog_field is iterable and attribute(blog_field,'value') is defined and attribute(blog_field,'value') is iterable %}
-    {% set raw_posts = attribute(blog_field,'value') %}
-  {% elseif blog_field is iterable %}
-    {% set raw_posts = blog_field %}
-  {% else %}
-    {% set raw_posts = [] %}
-  {% endif %}
-  <strong>DEBUG: raw_posts (count = {{ raw_posts|length }})</strong>
-  <pre>{{ raw_posts|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+{% set section_subtitle = component.alaanoan_alfraae|default(component.section_subtitle|default('')) %}
+{% if section_subtitle is iterable %}
+  {% set section_subtitle = section_subtitle.value|default(section_subtitle.ar|default(section_subtitle.en|default(''))) %}
+{% endif %}
+{% if section_subtitle in ['section_title','section_subtitle'] %}
+  {% set section_subtitle = '' %}
+{% endif %}
 
-  {% set posts = [] %}
-  {% if raw_posts is iterable and raw_posts|length %}
-    {% set posts = raw_posts %}
-  {% elseif store is defined and store.posts is defined and store.posts.latest is defined %}
+{# --- Normalize blog field (selected / value / raw) --- #}
+{% set blog_field = component.blog|default([]) %}
+{% if blog_field is iterable and attribute(blog_field,'selected') is defined and attribute(blog_field,'selected') is iterable %}
+  {% set raw_posts = attribute(blog_field,'selected') %}
+{% elseif blog_field is iterable and attribute(blog_field,'value') is defined and attribute(blog_field,'value') is iterable %}
+  {% set raw_posts = attribute(blog_field,'value') %}
+{% elseif blog_field is iterable %}
+  {% set raw_posts = blog_field %}
+{% else %}
+  {% set raw_posts = [] %}
+{% endif %}
+
+{# --- If no selected posts, try fallback to latest posts (if platform exposes store.posts.latest) --- #}
+{% set posts = [] %}
+{% if raw_posts is iterable and raw_posts|length %}
+  {% set posts = raw_posts %}
+{% else %}
+  {% if store is defined and store.posts is defined and store.posts.latest is defined %}
     {% set posts = store.posts.latest().limit(5).get() %}
   {% endif %}
-  <strong>DEBUG: posts (count = {{ posts is iterable ? posts|length : 'n/a' }})</strong>
-  <pre>{{ posts is iterable ? posts|json_encode(constant('JSON_PRETTY_PRINT')) : 'posts not iterable or unavailable' }}</pre>
-</div>
-<script>
-  try {
-    console.log('DEBUG component:', {{ component is defined ? component|json_encode : '"component undefined"' }});
-  } catch(e){}
-</script>
+{% endif %}
+
+{# --- Normalize controls/autoplay from top-level component fields --- #}
+{% set show_controls_raw = component.show_controls|default(true) %}
+{% if show_controls_raw is iterable %}
+  {% set show_controls_raw = show_controls_raw.value|default(show_controls_raw.selected|default(show_controls_raw)) %}
+{% endif %}
+{% set autoplay_raw = component.autoplay|default(true) %}
+{% if autoplay_raw is iterable %}
+  {% set autoplay_raw = autoplay_raw.value|default(autoplay_raw.selected|default(autoplay_raw)) %}
+{% endif %}
+{% set show_controls = show_controls_raw in [true,1,'1','true'] %}
+{% set autoplay = autoplay_raw in [true,1,'1','true'] %}
+
+{# --- If still no posts: optionally show admin hint or sample posts for testing --- #}
+{% if posts is empty %}
+  {# Uncomment one of the two options below during التطوير: #}
+  {# Option A: show sample posts so the section always appears (development only) #}
+  {% set posts = [
+    {"title":"مقال تجريبي 1","url":"#","published_at":"2026-02-01","image":{"url": asset('images/placeholder.png')},"author":{"name":"محرر"},"likes_count":0,"comments_count":0},
+    {"title":"مقال تجريبي 2","url":"#","published_at":"2026-01-28","image":{"url": asset('images/placeholder.png')},"author":{"name":"محرر"},"likes_count":0,"comments_count":0}
+  ] %}
+  {# Option B: show admin hint (uncomment to use) #}
+  {# <div class="admin-hint">لا توجد مقالات لعرضها — افتح Theme Editor وأضف مقالات للحقل "المدونه".</div> #}
+{% endif %}
+
+{# --- Build slider config --- #}
+{% set slides_count = posts is iterable ? posts|length : 0 %}
+{% set slider_config = {
+  "slidesPerView": 1.2,
+  "spaceBetween": 16,
+  "autoplay": (autoplay and slides_count > 1) ? {"delay":3500,"disableOnInteraction":false} : false,
+  "loop": slides_count > 3,
+  "breakpoints": {
+    "640": {"slidesPerView":2,"spaceBetween":20},
+    "768": {"slidesPerView":3,"spaceBetween":30},
+    "1024": {"slidesPerView":4,"spaceBetween":30}
+  }
+} %}
+
+{# --- Render section --- #}
+<section class="s-block container th-home-blog">
+  {% if section_title %}
+    <div class="s-block__title">
+      <h2>{{ section_title }}</h2>
+      {% if section_subtitle %}<p class="s-block__subtitle">{{ section_subtitle }}</p>{% endif %}
+    </div>
+  {% endif %}
+
+  {% if slides_count %}
+    <salla-slider
+      id="home-blog-slider"
+      class="home-blog-slider"
+      slider-config='{{ slider_config|json_encode|e("html_attr") }}'
+      {% if slides_count > 1 and show_controls %}show-controls{% endif %}
+      {% if slides_count > 1 and autoplay %}auto-play="true"{% endif %}
+      {% if slides_count > 1 %}pagination{% endif %}>
+
+      <div slot="slides">
+        {% for item in posts %}
+          {% set p = item %}
+          {% if item is iterable and attribute(item,'post') is defined %}
+            {% set p = attribute(item,'post') %}
+          {% endif %}
+
+          <div class="swiper-slide">
+            <article class="th-home-blog-card">
+              {% if p is iterable %}
+                {% set img = '' %}
+                {% if p.image is defined and p.image %}
+                  {% if p.image.url is defined %}{% set img = p.image.url %}
+                  {% elseif p.image.original is defined %}{% set img = p.image.original %}
+                  {% elseif p.image is not iterable %}{% set img = p.image %}{% endif %}
+                {% endif %}
+                {% if not img %}{% set img = 'images/placeholder.png'|asset %}{% endif %}
+
+                <a href="{{ p.url|default('#') }}" class="th-home-blog-card__media">
+                  <salla-image src="{{ img }}" alt="{{ p.title|default('') }}" class="th-home-blog-card__image" />
+                  {% if p.category %}<span class="th-home-blog-card__badge">{{ p.category.name|default(p.category) }}</span>{% endif %}
+                </a>
+
+                <div class="th-home-blog-card__body">
+                  <div class="meta text-sm text-gray-500 mb-2">
+                    {% if p.published_at %}<time>{{ p.published_at|date('d M, Y') }}</time>{% endif %}
+                    {% if p.author is defined and p.author.name %} • <span>{{ p.author.name }}</span>{% endif %}
+                  </div>
+
+                  <h3 class="title"><a href="{{ p.url|default('#') }}">{{ p.title|default('') }}</a></h3>
+
+                  <div class="meta-actions text-sm text-gray-500 mt-3">
+                    <span class="likes mr-3">{{ p.likes_count|default(0) }}</span>
+                    <span class="comments">{{ p.comments_count|default(0) }}</span>
+                  </div>
+                </div>
+              {% else %}
+                <div class="p-4">
+                  <h3 class="title">{{ p }}</h3>
+                </div>
+              {% endif %}
+            </article>
+          </div>
+        {% endfor %}
+      </div>
+    </salla-slider>
+  {% else %}
+    {# إذا أردت رسالة للمسؤول فقط: #}
+    <div class="admin-hint">لا توجد مقالات لعرضها — افتح Theme Editor وأضف مقالات للحقل "المدونه".</div>
+  {% endif %}
+</section>
