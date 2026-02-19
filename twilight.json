@@ -3441,7 +3441,7 @@
                     "maxLength": 30
                 },
                 {
-                    "id": "alaanoan_alfraae",
+                    "id": "section_subtitle",
                     "type": "string",
                     "format": "text",
                     "label": "العنوان الفرعي",
@@ -3453,7 +3453,7 @@
                     "multilanguage": false,
                     "required": false,
                     "minLength": 6,
-                    "maxLength": 30
+                    "maxLength": "60"
                 },
                 {
                     "id": "show_controls",
@@ -3498,8 +3498,9 @@
                     "source": "Blog Articles",
                     "multichoice": true,
                     "searchable": true,
-                    "required": false,
-                    "value": []
+                    "required": true,
+                    "value": [],
+                    "public": true
                 }
             ]
         }
