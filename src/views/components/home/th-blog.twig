@@ -33,6 +33,28 @@
   {% set raw_articles = [] %}
 {% endif %}
 
+{% set selected_article_ids = [] %}
+{% for item in raw_articles %}
+  {% set selected_id = '' %}
+  {% if item is iterable %}
+    {% if item.id is defined and item.id %}
+      {% set selected_id = item.id %}
+    {% elseif item.blog is defined and item.blog and item.blog.id is defined and item.blog.id %}
+      {% set selected_id = item.blog.id %}
+    {% elseif item.value is defined and item.value %}
+      {% set selected_id = item.value %}
+    {% elseif item.key is defined and item.key %}
+      {% set selected_id = item.key %}
+    {% endif %}
+  {% elseif item %}
+    {% set selected_id = item %}
+  {% endif %}
+
+  {% if selected_id %}
+    {% set selected_article_ids = selected_article_ids|merge([selected_id]) %}
+  {% endif %}
+{% endfor %}
+
 {% set articles = [] %}
 {% for item in raw_articles %}
   {% set article = item %}
@@ -52,7 +74,7 @@
   {% set badge_label = '' %}
 
   {% if article is iterable %}
-    {% set article_title = article.title|default(article.name|default(article.label|default(article.value|default(article.key|default(''))))) %}
+    {% set article_title = article.title|default(article.name|default(article.label|default(''))) %}
     {% set article_url = article.url|default(article.link|default(article.href|default(''))) %}
     {% if article_url is iterable %}
       {% set article_url = article_url.url|default(article_url.value|default('')) %}
@@ -103,8 +125,6 @@
         {% set badge_label = first_tag|default('') %}
       {% endif %}
     {% endif %}
-  {% elseif item %}
-    {% set article_title = item %}
   {% endif %}
 
   {% if not article_image %}
@@ -251,8 +271,14 @@
         </div>
       </salla-slider>
     {% else %}
-      <div class="text-center py-10 text-gray-500 text-sm">
-        {{ trans('pages.blog_categories.no_articles') }}
+      <div
+        class="th-home-blog__fallback js-th-blog-fallback"
+        data-limit="8"
+        data-selected-ids='{{ selected_article_ids|json_encode|e("html_attr") }}'>
+        <div class="th-home-blog__fallback-grid js-th-blog-grid"></div>
+        <div class="text-center py-10 text-gray-500 text-sm js-th-blog-empty" hidden>
+          {{ trans('pages.blog_categories.no_articles') }}
+        </div>
       </div>
     {% endif %}
   </div>

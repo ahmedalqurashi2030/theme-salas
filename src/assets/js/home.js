@@ -8,6 +8,7 @@ class Home extends BasePage {
         this.initFeaturedTabs();
         this.initBeforeAfterHero();
         this.initPromoHeroProducts();
+        this.initThBlogFallback();
     }
 
     /**
@@ -160,6 +161,244 @@ class Home extends BasePage {
         }
 
         updateThumb();
+    }
+
+    initThBlogFallback() {
+        document.querySelectorAll('.js-th-blog-fallback').forEach(async (section) => {
+            if (section.dataset.blogLoaded === 'true') return;
+            section.dataset.blogLoaded = 'true';
+
+            const grid = section.querySelector('.js-th-blog-grid');
+            const emptyState = section.querySelector('.js-th-blog-empty');
+            if (!grid) return;
+
+            const limit = Math.max(parseInt(section.dataset.limit || '8', 10) || 8, 1);
+            const selectedIds = this.parseBlogSelectedIds(section.dataset.selectedIds);
+
+            try {
+                let articles = [];
+
+                if (selectedIds.length) {
+                    articles = await this.fetchBlogsByIds(selectedIds, limit);
+                }
+
+                if (!articles.length) {
+                    articles = await this.fetchLatestBlogs(limit);
+                }
+
+                const normalized = articles
+                    .map((article) => this.normalizeBlogArticle(article))
+                    .filter(Boolean)
+                    .slice(0, limit);
+
+                if (!normalized.length) {
+                    if (emptyState) emptyState.hidden = false;
+                    return;
+                }
+
+                grid.innerHTML = normalized
+                    .map((article, index) => this.renderBlogFallbackCard(article, index))
+                    .join('');
+
+                if (emptyState) emptyState.hidden = true;
+            } catch (error) {
+                console.warn('th-blog fallback failed', error);
+                if (emptyState) emptyState.hidden = false;
+            }
+        });
+    }
+
+    parseBlogSelectedIds(raw) {
+        if (!raw) return [];
+
+        try {
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed)) return [];
+
+            return [...new Set(parsed
+                .map((value) => String(value || '').trim())
+                .filter(Boolean))];
+        } catch {
+            return [];
+        }
+    }
+
+    async fetchBlogsByIds(ids, limit) {
+        const targetIds = ids.slice(0, limit);
+        const responses = await Promise.all(targetIds.map((id) =>
+            salla.api.request(`blogs/${encodeURIComponent(id)}`)
+                .then((response) => this.extractBlogsFromResponse(response))
+                .catch(() => [])
+        ));
+
+        return responses.flat().filter(Boolean);
+    }
+
+    async fetchLatestBlogs(limit) {
+        const response = await salla.api.request('blogs', {
+            params: { per_page: limit, page: 1 },
+        });
+
+        return this.extractBlogsFromResponse(response);
+    }
+
+    extractBlogsFromResponse(response) {
+        const candidates = [
+            response?.data?.data,
+            response?.data?.blogs,
+            response?.data?.items,
+            response?.data,
+            response?.blogs,
+            response?.items,
+            response,
+        ];
+
+        for (const candidate of candidates) {
+            if (Array.isArray(candidate)) {
+                return candidate;
+            }
+
+            if (candidate && typeof candidate === 'object' && (candidate.id || candidate.key || candidate.title || candidate.name)) {
+                return [candidate];
+            }
+        }
+
+        return [];
+    }
+
+    normalizeBlogArticle(article) {
+        if (!article || typeof article !== 'object') return null;
+
+        const title = article.title || article.name || '';
+        if (!title) return null;
+
+        const rawUrl = article.url || article.link || article.href || '#';
+        const url = this.sanitizeUrl(typeof rawUrl === 'object' ? (rawUrl.url || rawUrl.value || '#') : rawUrl);
+
+        const imageObj = article.image || {};
+        const image = article.thumbnail
+            || imageObj.url
+            || imageObj.original
+            || (typeof article.image === 'string' ? article.image : '')
+            || salla.config.get('theme.settings.placeholder')
+            || 'images/placeholder.png';
+
+        const authorName = article.author?.name
+            || (typeof article.author === 'string' ? article.author : '')
+            || article.author_name
+            || '';
+
+        const authorUrl = this.sanitizeUrl(article.author?.url || article.author_url || '#');
+        const categoryName = article.category?.name
+            || (typeof article.category === 'string' ? article.category : '')
+            || article.tags?.[0]?.name
+            || '';
+
+        return {
+            title,
+            url,
+            image,
+            imageAlt: imageObj.alt || title,
+            createdAt: article.created_at || article.published_at || '',
+            commentsCount: Number(article.comments_count || 0),
+            likesCount: Number(article.likes_count || 0),
+            authorName,
+            authorUrl,
+            categoryName,
+        };
+    }
+
+    formatBlogDate(dateValue) {
+        if (!dateValue) return null;
+
+        const date = new Date(dateValue);
+        if (Number.isNaN(date.getTime())) return null;
+
+        const locale = document.documentElement.lang || 'ar';
+        return {
+            iso: date.toISOString(),
+            day: new Intl.DateTimeFormat(locale, { day: '2-digit' }).format(date),
+            month: new Intl.DateTimeFormat(locale, { month: 'short' }).format(date),
+        };
+    }
+
+    renderBlogFallbackCard(article, index) {
+        const dateInfo = this.formatBlogDate(article.createdAt);
+        const badgeClass = (index % 4) + 1;
+        const safeTitle = this.escapeHtml(article.title);
+        const safeUrl = this.escapeAttr(article.url);
+        const safeImage = this.escapeAttr(article.image);
+        const safeImageAlt = this.escapeHtml(article.imageAlt || article.title);
+        const safeBadge = this.escapeHtml(article.categoryName || '');
+        const safeAuthorName = this.escapeHtml(article.authorName || '');
+        const safeAuthorUrl = this.escapeAttr(article.authorUrl || '#');
+
+        return `
+            <article class="th-home-blog-card">
+                <a href="${safeUrl}" class="th-home-blog-card__media-link" aria-label="${safeTitle}">
+                    <div class="th-home-blog-card__media">
+                        <img src="${safeImage}" alt="${safeImageAlt}" class="th-home-blog-card__image" loading="lazy">
+                    </div>
+                    ${dateInfo ? `
+                        <time class="th-home-blog-card__date" datetime="${this.escapeAttr(dateInfo.iso)}">
+                            <span>${this.escapeHtml(dateInfo.day)}</span>
+                            <small>${this.escapeHtml(dateInfo.month)}</small>
+                        </time>
+                    ` : ''}
+                    ${safeBadge ? `
+                        <span class="th-home-blog-card__badge th-home-blog-card__badge--${badgeClass}">
+                            ${safeBadge}
+                        </span>
+                    ` : ''}
+                </a>
+                <div class="th-home-blog-card__body">
+                    <h3 class="th-home-blog-card__title">
+                        <a href="${safeUrl}">${safeTitle}</a>
+                    </h3>
+                    <footer class="th-home-blog-card__meta">
+                        <div class="th-home-blog-card__stats">
+                            <span class="th-home-blog-card__stat">
+                                <i class="sicon-chat"></i>
+                                ${article.commentsCount ? `<span>${this.escapeHtml(String(article.commentsCount))}</span>` : ''}
+                            </span>
+                            <span class="th-home-blog-card__stat">
+                                <i class="sicon-thumbs-up"></i>
+                                ${article.likesCount ? `<span>${this.escapeHtml(String(article.likesCount))}</span>` : ''}
+                            </span>
+                        </div>
+                        ${safeAuthorName ? `
+                            <div class="th-home-blog-card__author">
+                                <span class="th-home-blog-card__author-dot" aria-hidden="true"></span>
+                                ${article.authorUrl && article.authorUrl !== '#'
+                                    ? `<a href="${safeAuthorUrl}">${safeAuthorName}</a>`
+                                    : `<span>${safeAuthorName}</span>`
+                                }
+                            </div>
+                        ` : ''}
+                    </footer>
+                </div>
+            </article>
+        `;
+    }
+
+    sanitizeUrl(value) {
+        const url = String(value || '').trim();
+        if (!url) return '#';
+        if (/^javascript:/i.test(url)) return '#';
+        return url;
+    }
+
+    escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    escapeAttr(value) {
+        return this.escapeHtml(value);
     }
 
     initBeforeAfterHero() {

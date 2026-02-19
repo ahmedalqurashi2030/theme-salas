@@ -39,6 +39,12 @@
   position: relative;
 }
 
+.th-home-blog__fallback-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
 .th-home-blog__slider .swiper {
   padding: 2px 2px 42px;
 }
@@ -332,6 +338,27 @@
 
   .th-home-blog__slider .s-slider-next {
     inset-inline-end: -8px;
+  }
+}
+
+@media (min-width: 768px) {
+  .th-home-blog__fallback-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .th-home-blog__fallback-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .th-home-blog__fallback-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
   }
 }
 
