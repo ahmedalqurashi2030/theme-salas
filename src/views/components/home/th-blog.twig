@@ -28,6 +28,43 @@
 {% set show_controls = show_controls_raw in [true, 1, '1', 'true'] %}
 {% set autoplay = autoplay_raw in [true, 1, '1', 'true'] %}
 
+{% set display_all_raw = component.display_all_url|default('') %}
+{% set display_all_url = '' %}
+{% if display_all_raw is iterable %}
+	{% if display_all_raw.url is defined and display_all_raw.url %}
+		{% set display_all_url = display_all_raw.url %}
+	{% elseif display_all_raw.value is defined and display_all_raw.value %}
+		{% if display_all_raw.value is iterable %}
+			{% set display_all_url = display_all_raw.value.url|default(display_all_raw.value.link|default(display_all_raw.value.value|default(''))) %}
+		{% else %}
+			{% set display_all_url = display_all_raw.value %}
+		{% endif %}
+	{% elseif display_all_raw.selected is defined and display_all_raw.selected is iterable and display_all_raw.selected|length %}
+		{% set selected_link_item = display_all_raw.selected|first %}
+		{% if selected_link_item is iterable %}
+			{% set display_all_url = selected_link_item.url|default(selected_link_item.link|default(selected_link_item.value|default(''))) %}
+		{% else %}
+			{% set display_all_url = selected_link_item %}
+		{% endif %}
+	{% elseif display_all_raw|length %}
+		{% set first_link_item = display_all_raw|first %}
+		{% if first_link_item is iterable %}
+			{% set display_all_url = first_link_item.url|default(first_link_item.link|default(first_link_item.value|default(''))) %}
+		{% else %}
+			{% set display_all_url = first_link_item %}
+		{% endif %}
+	{% endif %}
+{% else %}
+	{% set display_all_url = display_all_raw %}
+{% endif %}
+{% if not display_all_url %}
+	{% set display_all_url = '/blog' %}
+{% endif %}
+
+{% set is_ar = user is defined and user.language is defined and user.language.code|default('ar') == 'ar' %}
+{% set more_label = is_ar ? 'مشاهدة جميع المقالات' : 'View all articles' %}
+{% set more_icon = (user is defined and user.language is defined and user.language.dir|default('rtl') == 'rtl') ? 'left' : 'right' %}
+
 {# Salla may expose dynamic source items as top-level `posts` or `component.posts` #}
 {% set posts_field = posts|default(component.posts|default([])) %}
 {% if (posts_field is empty) and (component.posts is defined) %}
@@ -274,6 +311,15 @@
 			<p class="text-center text-gray-500 js-th-blog-empty" hidden>
 				{{ trans('pages.blog_categories.no_articles')|default('No articles found') }}
 			</p>
+		</div>
+	{% endif %}
+
+	{% if display_all_url and display_all_url != '#' %}
+		<div class="th-home-blog__more-wrap">
+			<a href="{{ display_all_url }}" class="th-home-blog__more-link" aria-label="{{ more_label }}">
+				<i class="sicon-chevron-{{ more_icon }}"></i>
+				<span>{{ more_label }}</span>
+			</a>
 		</div>
 	{% endif %}
 </section>
