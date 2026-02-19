@@ -180,6 +180,18 @@
   color: inherit;
 }
 
+.th-home-blog-card__summary {
+  margin: 8px 0 0;
+  color: #667085;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  min-height: 40px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
 .th-home-blog-card__meta {
   margin-top: auto;
   padding-top: 10px;

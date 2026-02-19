@@ -272,13 +272,19 @@ class Home extends BasePage {
         const title = article.title || article.name || '';
         if (!title) return null;
 
-        const rawUrl = article.url || article.link || article.href || '#';
+        const rawUrl = article.url || article.link || article.href || (article.slug ? `/blog/${article.slug}` : '#');
         const url = this.sanitizeUrl(typeof rawUrl === 'object' ? (rawUrl.url || rawUrl.value || '#') : rawUrl);
 
         const imageObj = article.image || {};
-        const image = article.thumbnail
+        const thumbnailValue = typeof article.thumbnail === 'object'
+            ? (article.thumbnail.url || article.thumbnail.original || article.thumbnail.path || '')
+            : article.thumbnail;
+
+        const image = thumbnailValue
             || imageObj.url
             || imageObj.original
+            || article.featured_image
+            || article.cover
             || (typeof article.image === 'string' ? article.image : '')
             || salla.config.get('theme.settings.placeholder')
             || 'images/placeholder.png';
@@ -294,11 +300,18 @@ class Home extends BasePage {
             || article.tags?.[0]?.name
             || '';
 
+        const rawSummary = article.summary
+            || article.excerpt
+            || article.description
+            || article.content
+            || '';
+
         return {
             title,
             url,
             image,
             imageAlt: imageObj.alt || title,
+            summary: String(rawSummary).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
             createdAt: article.created_at || article.published_at || '',
             commentsCount: Number(article.comments_count || 0),
             likesCount: Number(article.likes_count || 0),
@@ -332,6 +345,8 @@ class Home extends BasePage {
         const safeBadge = this.escapeHtml(article.categoryName || '');
         const safeAuthorName = this.escapeHtml(article.authorName || '');
         const safeAuthorUrl = this.escapeAttr(article.authorUrl || '#');
+        const safeSummary = this.escapeHtml((article.summary || '').trim());
+        const summaryText = safeSummary.length > 140 ? `${safeSummary.slice(0, 140)}...` : safeSummary;
 
         return `
             <article class="th-home-blog-card">
@@ -355,6 +370,7 @@ class Home extends BasePage {
                     <h3 class="th-home-blog-card__title">
                         <a href="${safeUrl}">${safeTitle}</a>
                     </h3>
+                    ${summaryText ? `<p class="th-home-blog-card__summary">${summaryText}</p>` : ''}
                     <footer class="th-home-blog-card__meta">
                         <div class="th-home-blog-card__stats">
                             <span class="th-home-blog-card__stat">
