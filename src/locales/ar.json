@@ -35,6 +35,16 @@
     "comparison": {
       "before": "قبل",
       "after": "بعد"
+    },
+    "th_blog": {
+      "section_title": "أحدث المقالات التقنية",
+      "section_subtitle": "نكتب لكم أخبارًا ونصائح وتجارب مفيدة في مجال التقنية.",
+      "view_all": "مشاهدة جميع المدونات",
+      "badge_default": "مميز",
+      "unknown_author": "فريق المدونة",
+      "article_fallback": "مقالة جديدة",
+      "comments": "التعليقات",
+      "likes": "الإعجابات"
     }
   },
   "pages": {
