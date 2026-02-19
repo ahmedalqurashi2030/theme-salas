@@ -22,32 +22,46 @@
   {% set section_subtitle = '' %}
 {% endif %}
 
-{% set articles = component.blog|default([]) %}
-{% if articles is iterable and attribute(articles, 'selected') is defined %}
-  {% set articles = attribute(articles, 'selected')|default([]) %}
-{% elseif articles is iterable and attribute(articles, 'value') is defined %}
-  {% set articles = attribute(articles, 'value')|default([]) %}
+{% set raw_articles = component.blog|default(component.blog_articles|default(component.articles|default([]))) %}
+{% if raw_articles is iterable and raw_articles|length %}
+  {% set selected_articles = attribute(raw_articles, 'selected')|default([]) %}
+  {% set value_articles = attribute(raw_articles, 'value')|default([]) %}
+
+  {% if selected_articles is iterable and selected_articles|length %}
+    {% set articles = selected_articles %}
+  {% elseif value_articles is iterable and value_articles|length %}
+    {% set articles = value_articles %}
+  {% else %}
+    {% set articles = raw_articles %}
+  {% endif %}
+{% else %}
+  {% set articles = [] %}
 {% endif %}
+
 {% if articles is not iterable %}
   {% set articles = [] %}
 {% endif %}
 
-{% set show_controls_raw = component.show_controls|default(true) %}
-{% if show_controls_raw is iterable %}
-  {% if attribute(show_controls_raw, 'selected') is defined %}
-    {% set show_controls_raw = attribute(show_controls_raw, 'selected') %}
-  {% else %}
-    {% set show_controls_raw = attribute(show_controls_raw, 'value')|default(show_controls_raw) %}
+{% set normalized_articles = [] %}
+{% for entry in articles %}
+  {% set normalized_entry = entry %}
+  {% if entry is iterable and attribute(entry, 'blog') is defined and attribute(entry, 'blog') %}
+    {% set normalized_entry = attribute(entry, 'blog') %}
+  {% elseif entry is iterable and attribute(entry, 'value') is defined and attribute(entry, 'value') is iterable %}
+    {% set normalized_entry = attribute(entry, 'value') %}
   {% endif %}
+  {% set normalized_articles = normalized_articles|merge([normalized_entry]) %}
+{% endfor %}
+{% set articles = normalized_articles %}
+
+{% set show_controls_raw = component.show_controls|default(component['show-controls']|default(true)) %}
+{% if show_controls_raw is iterable %}
+  {% set show_controls_raw = show_controls_raw.value|default(show_controls_raw.selected|default(show_controls_raw)) %}
 {% endif %}
 
-{% set autoplay_raw = component.autoplay|default(true) %}
+{% set autoplay_raw = component.autoplay|default(component['auto-play']|default(true)) %}
 {% if autoplay_raw is iterable %}
-  {% if attribute(autoplay_raw, 'selected') is defined %}
-    {% set autoplay_raw = attribute(autoplay_raw, 'selected') %}
-  {% else %}
-    {% set autoplay_raw = attribute(autoplay_raw, 'value')|default(autoplay_raw) %}
-  {% endif %}
+  {% set autoplay_raw = autoplay_raw.value|default(autoplay_raw.selected|default(autoplay_raw)) %}
 {% endif %}
 
 {% set show_controls = show_controls_raw in [true, 1, '1', 'true'] %}
@@ -95,8 +109,8 @@
         {% if has_multiple %}pagination{% endif %}>
         <div slot="items">
           {% for article in articles %}
-            {% set article_title = article.title|default(article.name|default(attribute(article, 'blog.title')|default(''))) %}
-            {% set article_url = article.url|default(attribute(article, 'blog.url')|default(blog_index_url)) %}
+            {% set article_title = article.title|default(article.name|default(article.label|default(attribute(article, 'blog.title')|default('')))) %}
+            {% set article_url = article.url|default(article.link|default(attribute(article, 'blog.url')|default(blog_index_url))) %}
             {% set article_date = article.created_at|default(attribute(article, 'published_at')|default('')) %}
             {% set article_comments = article.comments_count|default(0) %}
             {% set article_likes = article.likes_count|default(0) %}
