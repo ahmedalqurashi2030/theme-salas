@@ -8,7 +8,12 @@
 #}
 
 {# --- Data Normalization Start --- #}
-{% set raw_items = component.items|default([]) %}
+{% set raw_items_source = component.items|default([]) %}
+{% if raw_items_source is iterable and raw_items_source.value is defined %}
+    {% set raw_items = raw_items_source.value|default([]) %}
+{% else %}
+    {% set raw_items = raw_items_source|default([]) %}
+{% endif %}
 {% set normalized_reviews = [] %}
 
 {% for item in raw_items %}
@@ -26,11 +31,11 @@
 {% set reviews_count = reviews|length %}
 {% set slider_id = 'custom-testimonials-' ~ (position ?? 'home') %}
 
-{% set locale = user.language_code|default('ar') %}
-{% set is_ar = locale starts with 'ar' %}
+{% set locale = user.language.code|default(user.language_code|default('ar')) %}
+{% set is_ar = locale|lower|slice(0, 2) == 'ar' %}
 
 {# Fallback for subtitle mismatch (section_subtitle vs alaanoan_alfraae) #}
-{% set raw_subtitle = component.section_subtitle|default(component.alaanoan_alfraae) %}
+{% set raw_subtitle = component.section_subtitle|default(component.section_sub|default(component.alaanoan_alfraae)) %}
 
 {% set default_title = is_ar ? 'تجارب عملائنا المميزة' : 'Trusted by Our Customers' %}
 {% set default_subtitle = is_ar ? 'نفخر بخدمة آلاف العملاء، وتقييماتهم هي دافعنا لتقديم الأفضل دائمًا.' : 'We are proud to serve thousands of customers, and their reviews keep us improving every day.' %}
@@ -248,11 +253,4 @@
 			<div class="th-home-testimonials__empty" role="status">{{ default_empty_text }}</div>
 		{% endif %}
 	</div>
-    <script>
-        console.group('Custom Testimonials Debug');
-        console.log('Component Data:', {{ component|json_encode|raw }});
-        console.log('Reviews Count:', {{ reviews_count }});
-        console.log('Section Title:', "{{ section_title }}");
-        console.groupEnd();
-    </script>
 </section>

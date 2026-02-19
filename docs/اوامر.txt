@@ -1,1 +1,5 @@
-npx update-browserslist-db@latest
+Salla Developer Docs: docs.salla.dev
+Salla Components: docs.salla.dev/components
+Twilight Engine: docs.salla.dev/twilight
+Salla Partners Portal: partners.salla.sa
+Salla CLI: npm @salla.sa/cli
