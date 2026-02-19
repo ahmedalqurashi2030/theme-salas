@@ -1,13 +1,6 @@
-{#
-| Variable                       | Type      | Description
-|--------------------------------|-----------|------------------------------------------------------
-| component                      | object    | Contains merchant settings from twilight.json
-| component.section_title        | string    | Section heading
-| component.alaanoan_alfraae     | string    | Section subtitle
-| component.show_controls        | boolean   | Slider arrows toggle
-| component.autoplay             | boolean   | Slider autoplay toggle
-| component.blog                 | Article[] | Selected blog articles
-#}
+{# Component: Home blog slider - robust data normalization #}
+
+{# Expected input: component (object) - comes from twilight.json/component editor #}
 
 {% set section_title = component.section_title|default('') %}
 {% if section_title is iterable %}
@@ -22,6 +15,7 @@
   {% set section_subtitle = '' %}
 {% endif %}
 
+{# normalize blog field (accepts selected, value, raw array) #}
 {% set blog_field = component.blog|default([]) %}
 {% if blog_field is iterable and attribute(blog_field, 'selected') is defined and attribute(blog_field, 'selected') is iterable %}
   {% set raw_articles = attribute(blog_field, 'selected') %}
@@ -33,35 +27,15 @@
   {% set raw_articles = [] %}
 {% endif %}
 
-{% set selected_article_ids = [] %}
-{% for item in raw_articles %}
-  {% set selected_id = '' %}
-  {% if item is iterable %}
-    {% if item.id is defined and item.id %}
-      {% set selected_id = item.id %}
-    {% elseif item.blog is defined and item.blog and item.blog.id is defined and item.blog.id %}
-      {% set selected_id = item.blog.id %}
-    {% elseif item.value is defined and item.value %}
-      {% set selected_id = item.value %}
-    {% elseif item.key is defined and item.key %}
-      {% set selected_id = item.key %}
-    {% endif %}
-  {% elseif item %}
-    {% set selected_id = item %}
-  {% endif %}
-
-  {% if selected_id %}
-    {% set selected_article_ids = selected_article_ids|merge([selected_id]) %}
-  {% endif %}
-{% endfor %}
-
 {% set articles = [] %}
 {% for item in raw_articles %}
   {% set article = item %}
+  {# support wrapper objects that contain a 'blog' key #}
   {% if item is iterable and attribute(item, 'blog') is defined and attribute(item, 'blog') %}
     {% set article = attribute(item, 'blog') %}
   {% endif %}
 
+  {# defaults #}
   {% set article_title = '' %}
   {% set article_url = '' %}
   {% set article_date = '' %}
@@ -74,17 +48,17 @@
   {% set badge_label = '' %}
 
   {% if article is iterable %}
-    {% set article_title = article.title|default(article.name|default(article.label|default(''))) %}
+    {% set article_title = article.title|default(article.name|default(article.label|default(article.value|default(article.key|default(''))))) %}
     {% set article_url = article.url|default(article.link|default(article.href|default(''))) %}
     {% if article_url is iterable %}
       {% set article_url = article_url.url|default(article_url.value|default('')) %}
     {% endif %}
-
     {% set article_date = article.created_at|default(article.published_at|default('')) %}
     {% set article_comments = article.comments_count|default(0) %}
     {% set article_likes = article.likes_count|default(0) %}
-
     {% set article_image = article.thumbnail|default('') %}
+
+    {# support various image shapes #}
     {% if article.image is defined and article.image %}
       {% if article.image.url is defined %}
         {% set article_image = article.image.url %}
@@ -98,6 +72,7 @@
       {% endif %}
     {% endif %}
 
+    {# author #}
     {% if article.author is defined and article.author %}
       {% if article.author.name is defined %}
         {% set author_name = article.author.name|default('') %}
@@ -111,6 +86,7 @@
       {% set author_name = article.author_name %}
     {% endif %}
 
+    {# category / tags for badge #}
     {% if article.category is defined and article.category %}
       {% if article.category.name is defined %}
         {% set badge_label = article.category.name|default('') %}
@@ -125,8 +101,12 @@
         {% set badge_label = first_tag|default('') %}
       {% endif %}
     {% endif %}
+  {% elseif item %}
+    {# if item is plain string/ID #}
+    {% set article_title = item %}
   {% endif %}
 
+  {# fallbacks #}
   {% if not article_image %}
     {% set article_image = 'images/placeholder.png' | asset %}
   {% endif %}
@@ -153,22 +133,19 @@
   {% endif %}
 {% endfor %}
 
+{# controls/autoplay normalization #}
 {% set show_controls_raw = component.show_controls|default(true) %}
 {% if show_controls_raw is iterable %}
   {% set show_controls_raw = show_controls_raw.value|default(show_controls_raw.selected|default(show_controls_raw)) %}
 {% endif %}
-
 {% set autoplay_raw = component.autoplay|default(true) %}
 {% if autoplay_raw is iterable %}
   {% set autoplay_raw = autoplay_raw.value|default(autoplay_raw.selected|default(autoplay_raw)) %}
 {% endif %}
-
 {% set show_controls = show_controls_raw in [true, 1, '1', 'true'] %}
 {% set autoplay = autoplay_raw in [true, 1, '1', 'true'] %}
 {% set has_multiple = articles|length > 1 %}
-
 {% set slider_id = 'th-blog-' ~ (position ?? component.key|default('home')) %}
-
 {% set slider_config = {
   "slidesPerView": 1.08,
   "spaceBetween": 12,
@@ -184,102 +161,71 @@
   }
 } %}
 
-<section class="s-block th-home-blog">
-  <div class="container">
-    <header class="th-home-blog__header">
-      {% if section_title %}
-        <h2 class="th-home-blog__title">{{ section_title }}</h2>
-      {% endif %}
-      {% if section_subtitle %}
-        <p class="th-home-blog__subtitle">{{ section_subtitle }}</p>
-      {% endif %}
-    </header>
+<div class="th-home-blog">
+  {% if section_title %}
+    <h2 class="th-home-blog__title">{{ section_title }}</h2>
+  {% endif %}
+  {% if section_subtitle %}
+    <p class="th-home-blog__subtitle">{{ section_subtitle }}</p>
+  {% endif %}
 
-    {% if articles|length %}
-      <salla-slider
-        id="{{ slider_id }}"
-        class="th-home-blog__slider s-slider-wrapper"
-        type="carousel"
-        show-controls="{{ (show_controls and has_multiple) ? 'true' : 'false' }}"
-        auto-play="{{ (autoplay and has_multiple) ? 'true' : 'false' }}"
-        slider-config='{{ slider_config|json_encode|e("html_attr") }}'
-        {% if show_controls and has_multiple %}controls-outer{% endif %}
-        {% if has_multiple %}pagination{% endif %}>
-        <div slot="items">
-          {% for article in articles %}
-            <div class="swiper-slide th-home-blog__slide">
-              <article class="th-home-blog-card">
-                <a href="{{ article.url|e('html_attr') }}" class="th-home-blog-card__media-link" aria-label="{{ article.title|e('html_attr') }}">
-                  <div class="th-home-blog-card__media">
-                    <img
-                      src="{{ 'images/s-empty.png' | asset }}"
-                      data-src="{{ article.image|e('html_attr') }}"
-                      alt="{{ article.image_alt|e('html_attr') }}"
-                      class="lazy th-home-blog-card__image">
-                  </div>
+  {% if articles|length %}
+    <salla-slider
+      id="{{ slider_id }}"
+      class="th-home-blog__slider s-slider-wrapper"
+      type="carousel"
+      show-controls="{{ (show_controls and has_multiple) ? 'true' : 'false' }}"
+      auto-play="{{ (autoplay and has_multiple) ? 'true' : 'false' }}"
+      slider-config='{{ slider_config|json_encode|e("html_attr") }}'
+      {% if show_controls and has_multiple %}controls-outer{% endif %}
+      {% if has_multiple %}pagination{% endif %}>
 
-                  {% if article.date %}
-                    <time class="th-home-blog-card__date" datetime="{{ article.date|date('c') }}">
-                      <span>{{ article.date|date('d') }}</span>
-                      <small>{{ article.date|date('M') }}</small>
-                    </time>
-                  {% endif %}
-
-                  {% if article.badge %}
-                    <span class="th-home-blog-card__badge th-home-blog-card__badge--{{ (loop.index0 % 4) + 1 }}">
-                      {{ article.badge }}
-                    </span>
-                  {% endif %}
-                </a>
-
-                <div class="th-home-blog-card__body">
-                  <h3 class="th-home-blog-card__title">
-                    <a href="{{ article.url|e('html_attr') }}">{{ article.title }}</a>
-                  </h3>
-
-                  <footer class="th-home-blog-card__meta">
-                    <div class="th-home-blog-card__stats">
-                      <span class="th-home-blog-card__stat">
-                        <i class="sicon-chat"></i>
-                        {% if article.comments_count %}
-                          <span>{{ article.comments_count }}</span>
-                        {% endif %}
-                      </span>
-                      <span class="th-home-blog-card__stat">
-                        <i class="sicon-thumbs-up"></i>
-                        {% if article.likes_count %}
-                          <span>{{ article.likes_count }}</span>
-                        {% endif %}
-                      </span>
-                    </div>
-
-                    {% if article.author_name %}
-                      <div class="th-home-blog-card__author">
-                        <span class="th-home-blog-card__author-dot" aria-hidden="true"></span>
-                        {% if article.author_url %}
-                          <a href="{{ article.author_url|e('html_attr') }}">{{ article.author_name }}</a>
-                        {% else %}
-                          <span>{{ article.author_name }}</span>
-                        {% endif %}
-                      </div>
-                    {% endif %}
-                  </footer>
-                </div>
-              </article>
+      {% for article in articles %}
+        <article class="th-home-blog-card s-slider-slide">
+          <a class="th-home-blog-card__link" href="{{ article.url|e('html_attr') }}">
+            <div class="th-home-blog-card__media">
+              <img
+                src="{{ 'images/s-empty.png' | asset }}"
+                data-src="{{ article.image|e('html_attr') }}"
+                alt="{{ article.image_alt|e('html_attr') }}"
+                class="lazy th-home-blog-card__image">
+              {% if article.date %}
+                <time class="th-home-blog-card__date">
+                  <span class="day">{{ article.date|date('d') }}</span>
+                  <span class="month">{{ article.date|date('M') }}</span>
+                </time>
+              {% endif %}
+              {% if article.badge %}
+                <span class="th-home-blog-card__badge">{{ article.badge }}</span>
+              {% endif %}
             </div>
-          {% endfor %}
-        </div>
-      </salla-slider>
-    {% else %}
-      <div
-        class="th-home-blog__fallback js-th-blog-fallback"
-        data-limit="8"
-        data-selected-ids='{{ selected_article_ids|json_encode|e("html_attr") }}'>
-        <div class="th-home-blog__fallback-grid js-th-blog-grid"></div>
-        <div class="text-center py-10 text-gray-500 text-sm js-th-blog-empty" hidden>
-          {{ trans('pages.blog_categories.no_articles') }}
-        </div>
-      </div>
-    {% endif %}
-  </div>
-</section>
+
+            <div class="th-home-blog-card__body">
+              <h3 class="th-home-blog-card__title">{{ article.title }}</h3>
+
+              <div class="th-home-blog-card__meta">
+                {% if article.comments_count %}
+                  <span class="meta-comments">{{ article.comments_count }}</span>
+                {% endif %}
+                {% if article.likes_count %}
+                  <span class="meta-likes">{{ article.likes_count }}</span>
+                {% endif %}
+                {% if article.author_name %}
+                  <span class="meta-author">
+                    {% if article.author_url %}
+                      <a href="{{ article.author_url|e('html_attr') }}">{{ article.author_name }}</a>
+                    {% else %}
+                      {{ article.author_name }}
+                    {% endif %}
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </salla-slider>
+  {% else %}
+    <p class="th-home-blog__empty">{{ trans('pages.blog_categories.no_articles') }}</p>
+  {% endif %}
+</div>
