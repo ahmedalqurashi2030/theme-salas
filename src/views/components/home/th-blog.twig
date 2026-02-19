@@ -1,4 +1,4 @@
-{# Component: Home blog — حل نهائي متوافق مع twilight.json المقدم #}
+{# Component: Home blog — متوافق مع twilight.json (field id = posts) #}
 
 {# --- Normalize top-level fields --- #}
 {% set section_title = component.section_title|default('') %}
@@ -6,7 +6,7 @@
   {% set section_title = section_title.value|default(section_title.ar|default(section_title.en|default(''))) %}
 {% endif %}
 
-{% set section_subtitle = component.alaanoan_alfraae|default(component.section_subtitle|default('')) %}
+{% set section_subtitle = component.section_subtitle|default(component.alaanoan_alfraae|default('')) %}
 {% if section_subtitle is iterable %}
   {% set section_subtitle = section_subtitle.value|default(section_subtitle.ar|default(section_subtitle.en|default(''))) %}
 {% endif %}
@@ -14,19 +14,19 @@
   {% set section_subtitle = '' %}
 {% endif %}
 
-{# --- Normalize blog field (selected / value / raw) --- #}
-{% set blog_field = component.posts|default([]) %}
-{% if blog_field is iterable and attribute(blog_field,'selected') is defined and attribute(blog_field,'selected') is iterable %}
-  {% set raw_posts = attribute(blog_field,'selected') %}
-{% elseif blog_field is iterable and attribute(blog_field,'value') is defined and attribute(blog_field,'value') is iterable %}
-  {% set raw_posts = attribute(blog_field,'value') %}
-{% elseif blog_field is iterable %}
-  {% set raw_posts = blog_field %}
+{# --- Normalize posts field (selected / value / raw) --- #}
+{% set posts_field = component.posts|default([]) %}
+{% if posts_field is iterable and attribute(posts_field,'selected') is defined and attribute(posts_field,'selected') is iterable %}
+  {% set raw_posts = attribute(posts_field,'selected') %}
+{% elseif posts_field is iterable and attribute(posts_field,'value') is defined and attribute(posts_field,'value') is iterable %}
+  {% set raw_posts = attribute(posts_field,'value') %}
+{% elseif posts_field is iterable %}
+  {% set raw_posts = posts_field %}
 {% else %}
   {% set raw_posts = [] %}
 {% endif %}
 
-{# --- If no selected posts, try fallback to latest posts (if platform exposes store.posts.latest) --- #}
+{# --- Fallback to latest if none selected and store API available --- #}
 {% set posts = [] %}
 {% if raw_posts is iterable and raw_posts|length %}
   {% set posts = raw_posts %}
@@ -36,7 +36,7 @@
   {% endif %}
 {% endif %}
 
-{# --- Normalize controls/autoplay from top-level component fields --- #}
+{# --- Normalize controls/autoplay --- #}
 {% set show_controls_raw = component.show_controls|default(true) %}
 {% if show_controls_raw is iterable %}
   {% set show_controls_raw = show_controls_raw.value|default(show_controls_raw.selected|default(show_controls_raw)) %}
@@ -48,19 +48,15 @@
 {% set show_controls = show_controls_raw in [true,1,'1','true'] %}
 {% set autoplay = autoplay_raw in [true,1,'1','true'] %}
 
-{# --- If still no posts: optionally show admin hint or sample posts for testing --- #}
+{# --- If still empty: set sample posts for dev (remove in production) --- #}
 {% if posts is empty %}
-  {# Uncomment one of the two options below during التطوير: #}
-  {# Option A: show sample posts so the section always appears (development only) #}
   {% set posts = [
     {"title":"مقال تجريبي 1","url":"#","published_at":"2026-02-01","image":{"url": asset('images/placeholder.png')},"author":{"name":"محرر"},"likes_count":0,"comments_count":0},
     {"title":"مقال تجريبي 2","url":"#","published_at":"2026-01-28","image":{"url": asset('images/placeholder.png')},"author":{"name":"محرر"},"likes_count":0,"comments_count":0}
   ] %}
-  {# Option B: show admin hint (uncomment to use) #}
-  {# <div class="admin-hint">لا توجد مقالات لعرضها — افتح Theme Editor وأضف مقالات للحقل "المدونه".</div> #}
 {% endif %}
 
-{# --- Build slider config --- #}
+{# --- Slider config --- #}
 {% set slides_count = posts is iterable ? posts|length : 0 %}
 {% set slider_config = {
   "slidesPerView": 1.2,
@@ -74,7 +70,6 @@
   }
 } %}
 
-{# --- Render section --- #}
 <section class="s-block container th-home-blog">
   {% if section_title %}
     <div class="s-block__title">
@@ -99,19 +94,46 @@
             {% set p = attribute(item,'post') %}
           {% endif %}
 
+          {# Determine image URL robustly #}
+          {% set img = '' %}
+          {% if p is iterable %}
+            {# common fields: thumbnail, image, cover, featured_image, poster ... try many #}
+            {% if p.thumbnail is defined and p.thumbnail %}{% set img = p.thumbnail %}{% endif %}
+            {% if not img and p.featured_image is defined and p.featured_image %}{% set img = p.featured_image %}{% endif %}
+            {% if not img and p.cover is defined and p.cover %}{% set img = p.cover %}{% endif %}
+            {% if not img and p.image is defined and p.image %}
+              {% if p.image.url is defined and p.image.url %}{% set img = p.image.url %}
+              {% elseif p.image.original is defined and p.image.original %}{% set img = p.image.original %}
+              {% elseif p.image.path is defined and p.image.path %}{% set img = p.image.path %}
+              {% elseif p.image is not iterable and p.image %}{% set img = p.image %}{% endif %}
+            {% endif %}
+            {# sometimes thumbnail is object #}
+            {% if img is iterable and img.url is defined %}{% set img = img.url %}{% endif %}
+          {% endif %}
+
+          {# final fallback to placeholder #}
+          {% if not img %}{% set img = 'images/placeholder.png'|asset %}{% endif %}
+
+          {# if img is relative (not http) convert to asset(), else keep absolute URL #}
+          {% if img is defined and img and (img[:4] != 'http') %}
+            {# avoid double asset() if already absolute path starting with '/' we still need asset() #}
+            {% if img[:1] == '/' %}
+              {% set img = asset(img|slice(1)) %}
+            {% else %}
+              {% set img = asset(img) %}
+            {% endif %}
+          {% endif %}
+
           <div class="swiper-slide">
             <article class="th-home-blog-card">
               {% if p is iterable %}
-                {% set img = '' %}
-                {% if p.image is defined and p.image %}
-                  {% if p.image.url is defined %}{% set img = p.image.url %}
-                  {% elseif p.image.original is defined %}{% set img = p.image.original %}
-                  {% elseif p.image is not iterable %}{% set img = p.image %}{% endif %}
-                {% endif %}
-                {% if not img %}{% set img = 'images/placeholder.png'|asset %}{% endif %}
-
                 <a href="{{ p.url|default('#') }}" class="th-home-blog-card__media">
-                  <salla-image src="{{ img }}" alt="{{ p.title|default('') }}" class="th-home-blog-card__image" />
+                  {# prefer salla-image when available, else fallback to img #}
+                  {% if "salla-image" is defined %}
+                    <salla-image src="{{ img }}" alt="{{ p.title|default('') }}" class="th-home-blog-card__image" />
+                  {% else %}
+                    <img src="{{ img }}" alt="{{ p.title|default('') }}" class="th-home-blog-card__image" />
+                  {% endif %}
                   {% if p.category %}<span class="th-home-blog-card__badge">{{ p.category.name|default(p.category) }}</span>{% endif %}
                 </a>
 
@@ -128,6 +150,7 @@
                     <span class="comments">{{ p.comments_count|default(0) }}</span>
                   </div>
                 </div>
+
               {% else %}
                 <div class="p-4">
                   <h3 class="title">{{ p }}</h3>
@@ -139,7 +162,6 @@
       </div>
     </salla-slider>
   {% else %}
-    {# إذا أردت رسالة للمسؤول فقط: #}
-    <div class="admin-hint">لا توجد مقالات لعرضها — افتح Theme Editor وأضف مقالات للحقل "المدونه".</div>
+    <div class="admin-hint">لا توجد مقالات لعرضها.</div>
   {% endif %}
 </section>
