@@ -9,10 +9,17 @@
 | component.blog                 | Article[] | Selected blog articles
 #}
 
-{% set section_title = component.section_title|default(trans('components.th_blog.section_title')) %}
-{% set section_subtitle = component.alaanoan_alfraae|default(component.section_subtitle|default(trans('components.th_blog.section_subtitle'))) %}
+{% set section_title = component.section_title|default('') %}
+{% if section_title is iterable %}
+  {% set section_title = section_title.value|default(section_title.ar|default(section_title.en|default(''))) %}
+{% endif %}
+
+{% set section_subtitle = component.alaanoan_alfraae|default(component.section_subtitle|default('')) %}
+{% if section_subtitle is iterable %}
+  {% set section_subtitle = section_subtitle.value|default(section_subtitle.ar|default(section_subtitle.en|default(''))) %}
+{% endif %}
 {% if section_subtitle in ['section_title', 'section_subtitle'] %}
-  {% set section_subtitle = trans('components.th_blog.section_subtitle') %}
+  {% set section_subtitle = '' %}
 {% endif %}
 
 {% set articles = component.blog|default([]) %}
@@ -83,7 +90,7 @@
         {% if has_multiple %}pagination{% endif %}>
         <div slot="items">
           {% for article in articles %}
-            {% set article_title = article.title|default(article.name|default(attribute(article, 'blog.title')|default(trans('components.th_blog.article_fallback')))) %}
+            {% set article_title = article.title|default(article.name|default(attribute(article, 'blog.title')|default(''))) %}
             {% set article_url = article.url|default(attribute(article, 'blog.url')|default(blog_index_url)) %}
             {% set article_date = article.created_at|default(attribute(article, 'published_at')|default('')) %}
             {% set article_comments = article.comments_count|default(0) %}
@@ -118,7 +125,7 @@
               {% set article_image_alt = article.image.alt %}
             {% endif %}
 
-            {% set author_name = trans('components.th_blog.unknown_author') %}
+            {% set author_name = '' %}
             {% set author_url = '' %}
             {% if article.author is defined and article.author %}
               {% if article.author.name is defined %}
@@ -133,7 +140,7 @@
               {% set author_name = article.author_name %}
             {% endif %}
 
-            {% set badge_label = trans('components.th_blog.badge_default') %}
+            {% set badge_label = '' %}
             {% if article.category is defined and article.category %}
               {% if article.category.name is defined %}
                 {% set badge_label = article.category.name|default(badge_label) %}
@@ -149,7 +156,7 @@
               {% endif %}
             {% endif %}
             {% if badge_label is iterable %}
-              {% set badge_label = trans('components.th_blog.badge_default') %}
+              {% set badge_label = '' %}
             {% endif %}
 
             <div class="swiper-slide th-home-blog__slide">
@@ -170,9 +177,11 @@
                     </time>
                   {% endif %}
 
-                  <span class="th-home-blog-card__badge th-home-blog-card__badge--{{ (loop.index0 % 4) + 1 }}">
-                    {{ badge_label }}
-                  </span>
+                  {% if badge_label %}
+                    <span class="th-home-blog-card__badge th-home-blog-card__badge--{{ (loop.index0 % 4) + 1 }}">
+                      {{ badge_label }}
+                    </span>
+                  {% endif %}
                 </a>
 
                 <div class="th-home-blog-card__body">
@@ -182,13 +191,13 @@
 
                   <footer class="th-home-blog-card__meta">
                     <div class="th-home-blog-card__stats">
-                      <span class="th-home-blog-card__stat" aria-label="{{ trans('components.th_blog.comments')|e('html_attr') }}">
+                      <span class="th-home-blog-card__stat">
                         <i class="sicon-chat"></i>
                         {% if article_comments %}
                           <span>{{ article_comments }}</span>
                         {% endif %}
                       </span>
-                      <span class="th-home-blog-card__stat" aria-label="{{ trans('components.th_blog.likes')|e('html_attr') }}">
+                      <span class="th-home-blog-card__stat">
                         <i class="sicon-thumbs-up"></i>
                         {% if article_likes %}
                           <span>{{ article_likes }}</span>
@@ -196,14 +205,16 @@
                       </span>
                     </div>
 
-                    <div class="th-home-blog-card__author">
-                      <span class="th-home-blog-card__author-dot" aria-hidden="true"></span>
-                      {% if author_url %}
-                        <a href="{{ author_url|e('html_attr') }}">{{ author_name }}</a>
-                      {% else %}
-                        <span>{{ author_name }}</span>
-                      {% endif %}
-                    </div>
+                    {% if author_name %}
+                      <div class="th-home-blog-card__author">
+                        <span class="th-home-blog-card__author-dot" aria-hidden="true"></span>
+                        {% if author_url %}
+                          <a href="{{ author_url|e('html_attr') }}">{{ author_name }}</a>
+                        {% else %}
+                          <span>{{ author_name }}</span>
+                        {% endif %}
+                      </div>
+                    {% endif %}
                   </footer>
                 </div>
               </article>

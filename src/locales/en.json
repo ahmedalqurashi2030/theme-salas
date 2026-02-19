@@ -37,14 +37,7 @@
       "after": "After"
     },
     "th_blog": {
-      "section_title": "Latest Blog Articles",
-      "section_subtitle": "Browse our latest updates, tips, and recommendations.",
-      "view_all": "Browse All Blogs",
-      "badge_default": "Featured",
-      "unknown_author": "Blog Team",
-      "article_fallback": "Blog Article",
-      "comments": "Comments",
-      "likes": "Likes"
+      "view_all": "Browse All Blogs"
     }
   },
   "pages": {
