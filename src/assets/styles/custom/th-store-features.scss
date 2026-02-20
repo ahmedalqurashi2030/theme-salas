@@ -12,43 +12,14 @@
   position: relative;
   overflow: hidden;
   padding: 5rem 0 4rem;
-  background:
-    radial-gradient(circle at 85% 0%, rgba(212, 175, 55, .1), transparent 34%),
-    radial-gradient(circle at 8% 100%, rgba(212, 175, 55, .08), transparent 28%),
-    linear-gradient(180deg, var(--th-cream), #fff 64%);
+
 
   @media (max-width: 767px) {
     padding: 3.25rem 0;
   }
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset-inline-start: -120px;
-    top: -120px;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(212, 175, 55, .16), rgba(212, 175, 55, 0));
-    pointer-events: none;
-  }
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset-inline-end: -90px;
-    bottom: -100px;
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(212, 175, 55, .12), rgba(212, 175, 55, 0));
-    pointer-events: none;
-  }
 
-  .container {
-    position: relative;
-    z-index: 2;
-  }
 
   &__header {
     text-align: center;
@@ -147,7 +118,7 @@
         0 16px 28px rgba(20, 20, 20, .08);
     }
 
-   
+
 
     @media (max-width: 767px) {
       border-radius: 1.35rem;
@@ -226,7 +197,7 @@
     }
   }
 
- 
+
   &__card-title {
     margin: 0 0 .9rem;
     font-size: clamp(1.25rem, 1.7vw, 1.9rem);
@@ -362,10 +333,12 @@
 }
 
 @keyframes th-store-feature-star-pulse {
+
   0%,
   100% {
     box-shadow: 0 0 0 0 rgba(212, 175, 55, .45), 0 8px 18px rgba(200, 155, 34, .5);
   }
+
   50% {
     box-shadow: 0 0 0 10px rgba(212, 175, 55, 0), 0 8px 18px rgba(200, 155, 34, .5);
   }

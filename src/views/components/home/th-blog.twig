@@ -304,7 +304,7 @@
         slider-config='{{ fallback_slider_config|json_encode|e("html_attr") }}'
         {% if show_controls %}controls-outer{% endif %}
         pagination>
-        <div slot="items" class="js-th-blog-items"></div>
+        <div slot="items" class="js-th-blog-items js-th-blog-grid"></div>
       </salla-slider>
       <p class="text-center text-gray-500 js-th-blog-empty" hidden>
         {{ trans('pages.blog_categories.no_articles')|default('No articles found') }}

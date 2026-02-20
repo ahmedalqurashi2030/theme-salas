@@ -3208,10 +3208,6 @@ textarea.s-input{
     padding-right: 10px;
   }
 }
-.th-store-features .s-advertisement-content {
-  position: relative;
-  z-index: 2;
-}
 .s-advertisement-content-main{
     flex: 1 1 0%;
     text-align: center;
@@ -24289,10 +24285,6 @@ input[type=radio].sr-only:checked ~ div.product-entry--special .product-rating {
     padding-right: 10px;
   }
 }
-.th-store-features .s-comments-product .s-comments-container {
-  position: relative;
-  z-index: 2;
-}
 .share-btns-list{
     position: absolute;
     top: 3rem;
@@ -27975,10 +27967,6 @@ body.drawer-open {
     padding-right: 10px;
   }
 }
-.th-store-features .th-banners__container:not(.th-banners__container--full) {
-  position: relative;
-  z-index: 2;
-}
 .th-banners__grid {
   display: grid;
   grid-gap: var(--th-gap);
@@ -28540,39 +28528,11 @@ body.drawer-open {
   position: relative;
   overflow: hidden;
   padding: 5rem 0 4rem;
-  background: radial-gradient(circle at 85% 0%, rgba(212, 175, 55, 0.1), transparent 34%), radial-gradient(circle at 8% 100%, rgba(212, 175, 55, 0.08), transparent 28%), linear-gradient(180deg, #faf8f3, #fff 64%);
-  background: radial-gradient(circle at 85% 0%, rgba(212, 175, 55, 0.1), transparent 34%), radial-gradient(circle at 8% 100%, rgba(212, 175, 55, 0.08), transparent 28%), linear-gradient(180deg, var(--th-cream), #fff 64%);
 }
 @media (max-width: 767px) {
   .th-store-features {
     padding: 3.25rem 0;
   }
-}
-.th-store-features::before {
-  content: "";
-  position: absolute;
-  left: -120px;
-  top: -120px;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.16), rgba(212, 175, 55, 0));
-  pointer-events: none;
-}
-.th-store-features::after {
-  content: "";
-  position: absolute;
-  right: -90px;
-  bottom: -100px;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0));
-  pointer-events: none;
-}
-.th-store-features .container {
-  position: relative;
-  z-index: 2;
 }
 .th-store-features__header {
   text-align: center;
