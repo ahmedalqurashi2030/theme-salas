@@ -13,26 +13,12 @@
 
 .th-before-after-hero__panel {
   position: relative;
-  border-radius: var(--th-ba-radius-xl);
   padding: clamp(16px, 2.6vw, 32px);
   overflow: hidden;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  background:
-    radial-gradient(90% 120% at 100% 0%, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0) 60%),
-    linear-gradient(115deg, #f4f6fb 0%, #eef2f9 38%, #f8f3ec 100%);
-  box-shadow: var(--th-ba-shadow-soft);
+
 }
 
-.th-before-after-hero__panel::before {
-  content: '';
-  position: absolute;
-  width: clamp(180px, 28vw, 360px);
-  aspect-ratio: 1/1;
-  inset-block-start: -25%;
-  inset-inline-end: -10%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 72%);
-  pointer-events: none;
-}
+
 
 .th-before-after-hero__inner {
   position: relative;

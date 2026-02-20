@@ -412,6 +412,8 @@ class Home extends BasePage {
         const authorUrl = this.sanitizeUrl(article.author?.url || article.author_url || '#');
         const categoryName = article.category?.name
             || (typeof article.category === 'string' ? article.category : '')
+            || article.category_name
+            || article.blog_category?.name
             || article.tags?.[0]?.name
             || '';
 
@@ -427,7 +429,12 @@ class Home extends BasePage {
             image,
             imageAlt: imageObj.alt || title,
             summary: String(rawSummary).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
-            createdAt: article.created_at || article.published_at || '',
+            createdAt: article.created_at
+                || article.published_at
+                || article.date
+                || article.createdAt
+                || article.publishedAt
+                || '',
             commentsCount: Number(article.comments_count || 0),
             likesCount: Number(article.likes_count || 0),
             authorName,
@@ -440,7 +447,17 @@ class Home extends BasePage {
         if (!dateValue) return null;
 
         const date = new Date(dateValue);
-        if (Number.isNaN(date.getTime())) return null;
+        if (Number.isNaN(date.getTime())) {
+            const raw = String(dateValue).trim();
+            const manualMatch = raw.match(/(\d{1,2})\s*([^\d\s]{2,})?/u);
+            if (!manualMatch) return null;
+
+            return {
+                iso: '',
+                day: String(manualMatch[1]).padStart(2, '0'),
+                month: manualMatch[2] || '',
+            };
+        }
 
         const locale = document.documentElement.lang || 'ar';
         return {
@@ -453,11 +470,12 @@ class Home extends BasePage {
     renderBlogFallbackCard(article, index) {
         const dateInfo = this.formatBlogDate(article.createdAt);
         const badgeClass = (index % 4) + 1;
+        const fallbackCategory = (document.documentElement.lang || 'ar').startsWith('ar') ? 'تقنية' : 'Tech';
         const safeTitle = this.escapeHtml(article.title);
         const safeUrl = this.escapeAttr(article.url);
         const safeImage = this.escapeAttr(article.image);
         const safeImageAlt = this.escapeHtml(article.imageAlt || article.title);
-        const safeBadge = this.escapeHtml(article.categoryName || '');
+        const safeBadge = this.escapeHtml(article.categoryName || fallbackCategory);
         const safeAuthorName = this.escapeHtml(article.authorName || '');
         const safeAuthorUrl = this.escapeAttr(article.authorUrl || '#');
         const safeSummary = this.escapeHtml((article.summary || '').trim());
@@ -470,7 +488,7 @@ class Home extends BasePage {
                         <img src="${safeImage}" alt="${safeImageAlt}" class="th-home-blog-card__image" loading="lazy">
                     </div>
                     ${dateInfo ? `
-                        <time class="th-home-blog-card__date" datetime="${this.escapeAttr(dateInfo.iso)}">
+                        <time class="th-home-blog-card__date" ${dateInfo.iso ? `datetime="${this.escapeAttr(dateInfo.iso)}"` : ''}>
                             <span>${this.escapeHtml(dateInfo.day)}</span>
                             <small>${this.escapeHtml(dateInfo.month)}</small>
                         </time>

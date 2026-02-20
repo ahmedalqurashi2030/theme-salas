@@ -64,6 +64,10 @@
 {% set is_ar = user is defined and user.language is defined and user.language.code|default('ar') == 'ar' %}
 {% set more_label = is_ar ? 'مشاهدة جميع المقالات' : 'View all articles' %}
 {% set more_icon = (user is defined and user.language is defined and user.language.dir|default('rtl') == 'rtl') ? 'left' : 'right' %}
+{% if not section_subtitle %}
+	{% set section_subtitle = is_ar ? 'استكشف أحدث الأخبار والمراجعات والمحتوى التقني' : 'Discover the latest news, reviews, and tech stories' %}
+{% endif %}
+{% set generic_category = is_ar ? 'تقنية' : 'Tech' %}
 
 {# Salla may expose dynamic source items as top-level `posts` or `component.posts` #}
 {% set posts_field = posts|default(component.posts|default([])) %}
@@ -126,15 +130,16 @@
 
 {% set limit = 8 %}
 {% set slides_count = articles|length %}
+{% set slider_compact = slides_count < 4 %}
 {% set slider_config = {
-  "slidesPerView": 1.2,
+  "slidesPerView": "auto",
   "spaceBetween": 14,
-  "loop": slides_count > 3,
+  "watchOverflow": false,
+  "loop": slides_count > 4,
   "autoplay": (autoplay and slides_count > 1) ? {"delay": 3500, "disableOnInteraction": false} : false,
   "breakpoints": {
-    "640": {"slidesPerView": 2, "spaceBetween": 16},
-    "1024": {"slidesPerView": 3, "spaceBetween": 18},
-    "1280": {"slidesPerView": 4, "spaceBetween": 20}
+    "768": {"spaceBetween": 16},
+    "1280": {"spaceBetween": 18}
   }
 } %}
 
@@ -151,7 +156,7 @@
 	{% endif %}
 
 	{% if slides_count > 0 %}
-		<div class="th-home-blog__slider">
+		<div class="th-home-blog__slider{{ slider_compact ? ' th-home-blog__slider--compact' : '' }}">
 			<salla-slider id="th-home-blog-slider" type="carousel" class="th-home-blog-slider s-slider-wrapper" auto-play="{{ (autoplay and slides_count > 1) ? 'true' : 'false' }}" show-controls="{{ (show_controls and slides_count > 1) ? 'true' : 'false' }}" slider-config='{{ slider_config|json_encode|e("html_attr") }}' {% if show_controls and slides_count > 1 %} controls-outer {% endif %} {% if slides_count > 1 %} pagination {% endif %}>
 				<div slot="items">
 					{% for post in articles|slice(0, limit) %}
@@ -169,11 +174,14 @@
 							{% set post_url = post_url_raw %}
 						{% endif %}
 
-						{% set post_date_raw = post.created_at|default(post.published_at|default('')) %}
+						{% set post_date_raw = post.created_at|default(post.published_at|default(post.date|default(post.createdAt|default(post.publishedAt|default(''))))) %}
 						{% if post_date_raw is iterable %}
-							{% set post_date = post_date_raw.value|default('') %}
+							{% set post_date = post_date_raw.value|default(post_date_raw.iso|default(post_date_raw.date|default(''))) %}
 						{% else %}
 							{% set post_date = post_date_raw %}
+						{% endif %}
+						{% if not post_date %}
+							{% set post_date = "now"|date('Y-m-d') %}
 						{% endif %}
 						{% set post_comments = post.comments_count|default(0) %}
 						{% set post_likes = post.likes_count|default(0) %}
@@ -193,6 +201,9 @@
 								{% set category_name = first_tag %}
 							{% endif %}
 						{% endif %}
+						{% if not category_name %}
+							{% set category_name = generic_category %}
+						{% endif %}
 
 						{% set author_name = '' %}
 						{% if post.author is defined and post.author %}
@@ -203,6 +214,9 @@
 							{% endif %}
 						{% elseif post.author_name is defined and post.author_name %}
 							{% set author_name = post.author_name %}
+						{% endif %}
+						{% if not author_name and store is defined and store.name is defined %}
+							{% set author_name = store.name %}
 						{% endif %}
 
 						{% set post_summary_raw = post.summary|default(post.excerpt|default(post.description|default(post.content|default('')))) %}
