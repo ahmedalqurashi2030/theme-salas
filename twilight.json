@@ -2380,7 +2380,7 @@
                             "multilanguage": false,
                             "required": false,
                             "minLength": 6,
-                            "maxLength": 30
+                            "maxLength": "60"
                         },
                         {
                             "id": "items.subtitle",
