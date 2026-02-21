@@ -412,32 +412,74 @@
     @apply items-stretch;
   }
 
-  .th-featured-products-style3__featured {
-    .product-entry {
-      @apply h-full min-h-[360px] sm:min-h-[430px] rounded-xl overflow-hidden;
+  .th-featured-products-style3__featured-card {
+    @apply block h-full;
 
-      &__image {
-        @apply h-full min-h-[240px] bg-gray-100;
+    .s-product-card-entry,
+    &.s-product-card-entry {
+      @apply relative h-full min-h-[420px] sm:min-h-[520px] rounded-xl overflow-hidden bg-black;
+    }
 
-        img {
-          @apply w-full h-full object-cover opacity-100;
-        }
+    .s-product-card-image {
+      @apply absolute inset-0 h-full;
+
+      a,
+      img {
+        @apply block h-full w-full;
       }
 
-      &__content {
-        @apply mt-auto;
+      img,
+      .s-product-card-image-cover {
+        @apply object-cover opacity-100;
+      }
+
+      &:before {
+        content: '';
+        @apply absolute inset-0 bg-black/35 z-[1];
+      }
+    }
+
+    .s-product-card-content {
+      @apply absolute inset-x-0 bottom-0 z-[2] p-4 sm:p-5 text-white bg-gradient-to-t from-black/70 via-black/35 to-transparent;
+    }
+
+    .s-product-card-content-title a {
+      @apply text-white text-sm sm:text-base font-bold line-clamp-2;
+    }
+
+    .s-product-card-content-sub,
+    .s-product-card-sale-price,
+    .s-product-card-regular-price,
+    .s-product-card-content-footer .s-product-card-quantity,
+    .s-product-card-content-footer .s-product-card-price {
+      @apply hidden;
+    }
+
+    .s-product-card-content-footer {
+      @apply mt-3;
+
+      salla-add-product-button,
+      .s-button-wrap,
+      .s-button-element {
+        @apply w-full;
       }
     }
   }
 
   .th-featured-products-style3__list {
-    .product-entry {
-      @apply min-h-[132px] rounded-lg;
+    .th-featured-products-style3__side-card {
+      @apply block;
 
-      &__image {
+      .s-product-card-entry,
+      &.s-product-card-entry {
+        @apply min-h-[132px] rounded-lg;
+      }
+
+      .s-product-card-image {
         @apply w-24 sm:w-28 lg:w-32;
 
-        img {
+        img,
+        .s-product-card-image-cover {
           @apply w-full h-full object-cover opacity-100;
         }
       }
@@ -451,12 +493,11 @@
   }
 
   @media (max-width: 1279px) {
-    .th-featured-products-style3__featured {
-      @apply order-1;
-    }
-
-    .th-featured-products-style3__list {
-      @apply order-2;
+    .th-featured-products-style3__featured-card {
+      .s-product-card-entry,
+      &.s-product-card-entry {
+        @apply min-h-[360px];
+      }
     }
   }
 }

@@ -27,12 +27,14 @@
           <div class="th-featured-products-style3__featured order-1">
             {% if section.featured_product %}
               <salla-product-card
+                class="th-featured-products-style3__featured-card"
                 product="{{ section.featured_product }}"
                 fullImage
                 shadow-on-hover>
               </salla-product-card>
             {% elseif section.products|length %}
               <salla-product-card
+                class="th-featured-products-style3__featured-card"
                 product="{{ section.products|first }}"
                 fullImage
                 shadow-on-hover>
@@ -43,6 +45,7 @@
           <div class="th-featured-products-style3__list grid gap-3 sm:gap-4 order-2">
             {% for product in side_products %}
               <salla-product-card
+                class="th-featured-products-style3__side-card"
                 product="{{ product }}"
                 minimal
                 shadow-on-hover>
