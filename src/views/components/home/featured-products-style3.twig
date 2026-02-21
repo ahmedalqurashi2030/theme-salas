@@ -8,7 +8,7 @@
 | position                      | int       | Sorting number starts from zero                                     |
 #}
 
-<section class="s-block s-block--features-products container {% if items|length > 1 %}two-cols{% endif %}">
+<section class="s-block s-block--features-products th-featured-products-style3 container {% if items|length > 1 %}two-cols{% endif %}">
   <div class="inner">
     {% for section in items %}
       {% set side_products = section.products|slice(0, 3) %}
@@ -23,18 +23,8 @@
           </div>
         </header>
 
-        <div class="grid gap-4 lg:gap-6 xl:grid-cols-[minmax(210px,1fr)_minmax(250px,1.1fr)] items-stretch">
-          <div class="grid gap-3 sm:gap-4 order-2 xl:order-1">
-            {% for product in side_products %}
-              <salla-product-card
-                product="{{ product }}"
-                minimal
-                shadow-on-hover>
-              </salla-product-card>
-            {% endfor %}
-          </div>
-
-          <div class="order-1 xl:order-2">
+        <div class="th-featured-products-style3__grid grid gap-4 lg:gap-6 xl:grid-cols-[minmax(260px,1.15fr)_minmax(220px,1fr)] items-stretch">
+          <div class="th-featured-products-style3__featured order-1">
             {% if section.featured_product %}
               <salla-product-card
                 product="{{ section.featured_product }}"
@@ -48,6 +38,16 @@
                 shadow-on-hover>
               </salla-product-card>
             {% endif %}
+          </div>
+
+          <div class="th-featured-products-style3__list grid gap-3 sm:gap-4 order-2">
+            {% for product in side_products %}
+              <salla-product-card
+                product="{{ product }}"
+                minimal
+                shadow-on-hover>
+              </salla-product-card>
+            {% endfor %}
           </div>
         </div>
       </section>
