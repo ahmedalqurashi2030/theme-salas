@@ -30708,14 +30708,11 @@ body.drawer-open {
     .lg\:hidden{
         display: none;
     }
-    .lg\:min-h-\[520px\]{
-        min-height: 520px;
+    .lg\:min-h-\[380px\]{
+        min-height: 380px;
     }
     .lg\:min-h-\[528px\]{
         min-height: 528px;
-    }
-    .lg\:min-h-\[380px\]{
-        min-height: 380px;
     }
     .lg\:w-10\/12{
         width: 83.333333%;
