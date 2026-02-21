@@ -195,7 +195,9 @@
 
   .tab-trigger{
     &.is-active button{
-      @apply bg-primary text-primary-reverse border-primary;
+      @apply bg-primary  border-primary;
+       /* padding الجديد */
+      padding: .3rem .7rem;
     }
   }
 }

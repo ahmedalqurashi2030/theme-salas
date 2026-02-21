@@ -21,5 +21,7 @@
   },
   "liveServer.settings.CustomBrowser": "chrome",
   "liveServer.settings.file": "",
-  "liveServer.settings.AdvanceCustomBrowserCmdLine": ""
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+  "search.useGlobalIgnoreFiles": true,
+  "search.useParentIgnoreFiles": true
 }

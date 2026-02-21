@@ -22258,8 +22258,8 @@ input[type=radio].sr-only:checked ~ div.has-overlay:after {
     --tw-bg-opacity: 1;
     background-color: rgba(197, 160, 89, 1);
     background-color: rgba(197, 160, 89, var(--tw-bg-opacity, 1));
-    color: #ff6767;
-    color: var(--color-primary-reverse);
+  /* padding الجديد */
+  padding: 0.3rem 0.7rem;
 }
 .s-block--special-products .tabs{
     margin-bottom: 1rem;

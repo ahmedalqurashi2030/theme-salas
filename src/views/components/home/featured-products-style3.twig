@@ -9,29 +9,29 @@
                 <div class="flex-1 grid lg:grid-cols-2 gap-4 sm:gap-8">
                     {% if section.featured_product %}
                         {# ⭐ منتج مميز بصورة كاملة #}
-                        <thraa-product-card 
+                        <salla-product-card 
                             product="{{section.featured_product}}" 
                             fullImage 
                             shadow-on-hover>
-                        </thraa-product-card>
+                        </salla-product-card>
                         
                         <div class="grid gap-4 sm:gap-8">
                             {% for product in section.products|slice(0,3) %}
                                 {# 📦 منتجات مصغرة #}
-                                <thraa-product-card 
+                                <salla-product-card 
                                     product="{{product}}" 
                                     minimal 
                                     shadow-on-hover>
-                                </thraa-product-card>
+                                </salla-product-card>
                             {% endfor %}
                         </div>
                     {% else %}
                         {% for product in section.products %}
-                            <thraa-product-card 
+                            <salla-product-card 
                                 product="{{product}}" 
                                 minimal 
                                 shadow-on-hover>
-                            </thraa-product-card>
+                            </salla-product-card>
                         {% endfor %}
                     {% endif %}
                 </div>
