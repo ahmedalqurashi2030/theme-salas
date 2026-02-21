@@ -30467,17 +30467,9 @@ body.drawer-open {
     .sm\:pt-20{
         padding-top: 5rem;
     }
-    .sm\:text-3xl{
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
     .sm\:text-4xl{
         font-size: 2.25rem;
         line-height: 2.5rem;
-    }
-    .sm\:text-base{
-        font-size: 1rem;
-        line-height: 1.5rem;
     }
     .sm\:text-lg{
         font-size: 1.125rem;
