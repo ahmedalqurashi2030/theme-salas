@@ -391,6 +391,7 @@ $breakpoint-desktop: 1280px;
     height: 100%;
     border-radius: 0;
     aspect-ratio: 3 / 4; // rect aspect ratio
+    border-radius: 11px;
 
     // Gradient overlay for text readability
     &::after {

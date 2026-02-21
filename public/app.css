@@ -27403,6 +27403,7 @@ body.drawer-open {
   height: 100%;
   border-radius: 0;
   aspect-ratio: 3/4;
+  border-radius: 11px;
 }
 .tharaa-links-section.style-rect .tharaa-card__visual::after {
   content: "";
