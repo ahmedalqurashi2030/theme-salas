@@ -3561,6 +3561,16 @@
                     ]
                 }
             ]
+        },
+        {
+            "key": "27070e5f-ec49-468f-a384-cca14b13efbc",
+            "title": {
+                "en": "Placeholder text",
+                "ar": "عرض مميز مع منتجات"
+            },
+            "icon": "sicon-store",
+            "path": "home.featured-products-banner",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
