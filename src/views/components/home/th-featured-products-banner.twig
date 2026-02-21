@@ -44,20 +44,10 @@
 {% if product_ids|length %}
 <section class="s-block th-featured-products-banner py-8 sm:py-10" id="th-featured-products-banner-{{ position }}">
   <div class="container">
-    {% if section_title %}
-      <div class="th-featured-products-banner__head mb-4 sm:mb-6 flex items-center justify-between gap-3">
-        <h2 class="text-2xl sm:text-3xl font-bold text-primary">{{ section_title }}</h2>
-
-        {% if display_all and display_all != '#' %}
-          <a href="{{ display_all }}" class="text-sm sm:text-base font-bold hover:underline">
-            {{ trans('components.th_featured_products_banner.shop_all') }}
-          </a>
-        {% endif %}
-      </div>
-    {% endif %}
+    
 
     <div class="th-featured-products-banner__layout grid gap-4 lg:gap-6 lg:grid-cols-[minmax(280px,32%)_1fr]">
-      <article class="th-featured-products-banner__promo relative overflow-hidden rounded-2xl min-h-[320px] sm:min-h-[380px] lg:min-h-[520px] order-1 lg:order-2">
+      <article class="th-featured-products-banner__promo relative overflow-hidden rounded-2xl min-h-[320px] sm:min-h-[380px] lg:min-h-[380px] order-2 lg:order-1">
         {% if banner_image %}
           <img src="{{ banner_image }}" alt="{{ banner_title ?: section_title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
         {% endif %}
@@ -87,7 +77,18 @@
         </div>
       </article>
 
-      <div class="th-featured-products-banner__products order-2 lg:order-1 overflow-hidden">
+      <div class="th-featured-products-banner__products order-1 lg:order-2 overflow-hidden">
+        {% if section_title %}
+      <div class="th-featured-products-banner__head mb-4 sm:mb-6 flex items-center justify-between gap-3">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary">{{ section_title }}</h2>
+
+        {% if display_all and display_all != '#' %}
+          <a href="{{ display_all }}" class="text-sm sm:text-base font-bold hover:underline">
+            {{ trans('components.th_featured_products_banner.shop_all') }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
         <salla-products-slider
           class="th-products-slider"
           source="selected"
