@@ -24650,7 +24650,9 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 176px;
+  /*
+   min-height: 176px;
+   */
   border-radius: 14px;
   background-color: #ffffff;
 }
@@ -24677,8 +24679,8 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   width: 28px;
   height: 28px;
   border-radius: 999px;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  background-color: #f4ebeb;
+  border: 1px solid #edf3ff;
   box-shadow: 0 8px 14px rgba(15, 23, 42, 0.08);
   z-index: 5;
 }
@@ -24720,6 +24722,9 @@ input[type=radio].sr-only:checked ~ div.model-viewer__poster {
   justify-content: flex-start;
   gap: 6px;
   margin-bottom: 0;
+}
+.tharaa-theme .s-product-card-content-sub {
+  margin-bottom: 0rem;
 }
 .tharaa-theme .s-product-card-rating {
   display: flex;
