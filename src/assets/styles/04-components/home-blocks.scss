@@ -388,15 +388,12 @@
 .s-block--features + .s-block--features,
 .s-block--fixed-banner + .s-block--fixed-banner,
 .s-block--banners + .s-block--banners {
-  margin-top: 2em;
+  margin-top: 0em;
 }
 
 .s-block--tabs-produtcs + .s-block--tabs-produtcs {
-  padding-top: 2em;
+  padding-top: 1em;
 }
-
-
-
 
 
 
@@ -417,12 +414,19 @@
 
     .s-product-card-entry,
     &.s-product-card-entry {
-      @apply relative h-full min-h-[420px] sm:min-h-[520px] rounded-xl overflow-hidden bg-black;
+      @apply relative block h-full min-h-[420px] sm:min-h-[520px] rounded-xl overflow-hidden bg-black;
     }
 
-    .s-product-card-image {
-      @apply absolute inset-0;
+    .s-product-card-image,
+    .s-product-card-image-full {
+      @apply absolute inset-0 block;
       height: 100% !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      flex: 0 0 100% !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
 
       a,
       img,
@@ -435,6 +439,8 @@
         @apply object-cover opacity-100;
         height: 100% !important;
         width: 100% !important;
+        max-height: none !important;
+        max-width: none !important;
       }
 
       &:before {
@@ -451,13 +457,11 @@
       @apply text-white text-sm sm:text-base font-bold line-clamp-2;
     }
 
-    .s-product-card-content-sub,
-    .s-product-card-sale-price,
-    .s-product-card-regular-price,
-    .s-product-card-content-footer .s-product-card-quantity,
-    .s-product-card-content-footer .s-product-card-price {
-      @apply hidden;
+    .s-product-card-content-sub {
+      @apply block mt-2 text-white/95;
     }
+
+  
 
     .s-product-card-content-footer {
       @apply mt-3;

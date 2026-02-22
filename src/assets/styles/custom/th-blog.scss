@@ -190,7 +190,14 @@
 }
 
 .th-home-blog-card__summary {
-  display: none;
+  margin: 0.45rem 0 0;
+  color: var(--th-blog-muted);
+  font-size: 0.72rem;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .th-home-blog-card__meta {
@@ -409,9 +416,15 @@
     min-height: 42px;
     font-size: 0.82rem;
   }
+
+  .th-home-blog-card__summary {
+    font-size: 0.7rem;
+    -webkit-line-clamp: 2;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .th-home-blog-card,
   .th-home-blog-card__image,
   .th-home-blog__slider .s-slider--nav-arrow,
@@ -420,4 +433,3 @@
     transition: none !important;
   }
 }
-

@@ -175,18 +175,20 @@
                 <footer class="th-home-testimonial-card__footer">
                   
                   <div class="th-home-testimonial-card__author-wrap">
-                    <div class="th-home-testimonial-card__author">
-                      <strong>{{ reviewer_name }}</strong>
-                      <small>عميل موثّق</small>
-                    </div>
 
-                    <span class="th-home-testimonial-card__avatar">
+                      <span class="th-home-testimonial-card__avatar">
                       <img
                         src="{{ 'images/s-empty.png' | asset }}"
                         data-src="{{ reviewer_avatar }}"
                         alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}"
                         class="lazy">
                     </span>
+                    <div class="th-home-testimonial-card__author">
+                      <strong>{{ reviewer_name }}</strong>
+                      <small>عميل موثّق</small>
+                    </div>
+
+                  
                   </div>
                 </footer>
               </article>

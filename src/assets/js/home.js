@@ -200,6 +200,21 @@ class Home extends BasePage {
                     .map((article, index) => this.renderBlogFallbackCard(article, index))
                     .join('');
 
+                section.classList.toggle('th-home-blog__slider--compact', normalized.length <= 4);
+
+                const slider = section.querySelector('salla-slider');
+                if (slider) {
+                    requestAnimationFrame(() => {
+                        if (typeof slider.refresh === 'function') {
+                            slider.refresh();
+                        } else if (slider.swiper && typeof slider.swiper.update === 'function') {
+                            slider.swiper.update();
+                        } else if (typeof slider.renderSlides === 'function') {
+                            slider.renderSlides();
+                        }
+                    });
+                }
+
                 if (emptyState) emptyState.hidden = true;
             } catch (error) {
                 console.warn('th-blog fallback failed', error);
@@ -389,13 +404,19 @@ class Home extends BasePage {
             ? (article.thumbnail.url || article.thumbnail.original || article.thumbnail.path || '')
             : article.thumbnail;
 
-        const placeholder = (typeof salla !== 'undefined'
+        const placeholderSetting = (typeof salla !== 'undefined'
             && salla.config
             && typeof salla.config.get === 'function')
             ? (salla.config.get('theme.settings.placeholder') || '')
             : '';
 
-        const image = thumbnailValue
+        const placeholder = (typeof salla !== 'undefined'
+            && salla.url
+            && typeof salla.url.asset === 'function')
+            ? salla.url.asset(placeholderSetting || 'images/placeholder.png')
+            : (placeholderSetting || 'images/placeholder.png');
+
+        let image = thumbnailValue
             || imageObj.url
             || imageObj.original
             || article.featured_image
@@ -403,6 +424,10 @@ class Home extends BasePage {
             || (typeof article.image === 'string' ? article.image : '')
             || placeholder
             || 'images/placeholder.png';
+
+        if (image === placeholderSetting || image === 'images/placeholder.png') {
+            image = placeholder || image;
+        }
 
         const authorName = article.author?.name
             || (typeof article.author === 'string' ? article.author : '')
@@ -482,51 +507,53 @@ class Home extends BasePage {
         const summaryText = safeSummary.length > 140 ? `${safeSummary.slice(0, 140)}...` : safeSummary;
 
         return `
-            <article class="th-home-blog-card">
-                <a href="${safeUrl}" class="th-home-blog-card__media-link" aria-label="${safeTitle}">
-                    <div class="th-home-blog-card__media">
-                        <img src="${safeImage}" alt="${safeImageAlt}" class="th-home-blog-card__image" loading="lazy">
-                    </div>
-                    ${dateInfo ? `
-                        <time class="th-home-blog-card__date" ${dateInfo.iso ? `datetime="${this.escapeAttr(dateInfo.iso)}"` : ''}>
-                            <span>${this.escapeHtml(dateInfo.day)}</span>
-                            <small>${this.escapeHtml(dateInfo.month)}</small>
-                        </time>
-                    ` : ''}
-                    ${safeBadge ? `
-                        <span class="th-home-blog-card__badge th-home-blog-card__badge--${badgeClass}">
-                            ${safeBadge}
-                        </span>
-                    ` : ''}
-                </a>
-                <div class="th-home-blog-card__body">
-                    <h3 class="th-home-blog-card__title">
-                        <a href="${safeUrl}">${safeTitle}</a>
-                    </h3>
-                    ${summaryText ? `<p class="th-home-blog-card__summary">${summaryText}</p>` : ''}
-                    <footer class="th-home-blog-card__meta">
-                        <div class="th-home-blog-card__stats">
-                            <span class="th-home-blog-card__stat">
-                                <i class="sicon-chat"></i>
-                                ${article.commentsCount ? `<span>${this.escapeHtml(String(article.commentsCount))}</span>` : ''}
-                            </span>
-                            <span class="th-home-blog-card__stat">
-                                <i class="sicon-thumbs-up"></i>
-                                ${article.likesCount ? `<span>${this.escapeHtml(String(article.likesCount))}</span>` : ''}
-                            </span>
+            <div class="swiper-slide th-home-blog__slide">
+                <article class="th-home-blog-card">
+                    <a href="${safeUrl}" class="th-home-blog-card__media-link" aria-label="${safeTitle}">
+                        <div class="th-home-blog-card__media">
+                            <img src="${safeImage}" alt="${safeImageAlt}" class="th-home-blog-card__image" loading="lazy">
                         </div>
-                        ${safeAuthorName ? `
-                            <div class="th-home-blog-card__author">
-                                <span class="th-home-blog-card__author-dot" aria-hidden="true"></span>
-                                ${article.authorUrl && article.authorUrl !== '#'
-                                    ? `<a href="${safeAuthorUrl}">${safeAuthorName}</a>`
-                                    : `<span>${safeAuthorName}</span>`
-                                }
-                            </div>
+                        ${dateInfo ? `
+                            <time class="th-home-blog-card__date" ${dateInfo.iso ? `datetime="${this.escapeAttr(dateInfo.iso)}"` : ''}>
+                                <span>${this.escapeHtml(dateInfo.day)}</span>
+                                <small>${this.escapeHtml(dateInfo.month)}</small>
+                            </time>
                         ` : ''}
-                    </footer>
-                </div>
-            </article>
+                        ${safeBadge ? `
+                            <span class="th-home-blog-card__badge th-home-blog-card__badge--${badgeClass}">
+                                ${safeBadge}
+                            </span>
+                        ` : ''}
+                    </a>
+                    <div class="th-home-blog-card__body">
+                        <h3 class="th-home-blog-card__title">
+                            <a href="${safeUrl}">${safeTitle}</a>
+                        </h3>
+                        ${summaryText ? `<p class="th-home-blog-card__summary">${summaryText}</p>` : ''}
+                        <footer class="th-home-blog-card__meta">
+                            <div class="th-home-blog-card__stats">
+                                <span class="th-home-blog-card__stat">
+                                    <i class="sicon-chat"></i>
+                                    ${article.commentsCount ? `<span>${this.escapeHtml(String(article.commentsCount))}</span>` : ''}
+                                </span>
+                                <span class="th-home-blog-card__stat">
+                                    <i class="sicon-thumbs-up"></i>
+                                    ${article.likesCount ? `<span>${this.escapeHtml(String(article.likesCount))}</span>` : ''}
+                                </span>
+                            </div>
+                            ${safeAuthorName ? `
+                                <div class="th-home-blog-card__author">
+                                    <span class="th-home-blog-card__author-dot" aria-hidden="true"></span>
+                                    ${article.authorUrl && article.authorUrl !== '#'
+                                        ? `<a href="${safeAuthorUrl}">${safeAuthorName}</a>`
+                                        : `<span>${safeAuthorName}</span>`
+                                    }
+                                </div>
+                            ` : ''}
+                        </footer>
+                    </div>
+                </article>
+            </div>
         `;
     }
 
