@@ -40,6 +40,10 @@
       "view_all": "Browse All Blogs"
     },
     "product_tabs": {
+      "description": "Description",
+      "reviews": "Reviews",
+      "read_more": "Read more",
+      "read_less": "Read less",
       "reviews_summary_label": "Customer feedback and ratings",
       "reviews_empty_title": "No reviews yet",
       "reviews_empty_hint": "Be the first customer to share your experience with this product."

@@ -447,7 +447,7 @@
                             aria-controls="product-panel-description"
                             aria-selected="true"
                             data-target="description">
-                        <span class="product-details-tabs__btn-label">{{ trans('pages.product_tabs.description') }}</span>
+                        <span class="product-details-tabs__btn-label">{{ trans('components.product_tabs.description') }}</span>
                     </button>
 
                     {% if reviews_enabled %}
@@ -458,7 +458,7 @@
                                 aria-controls="product-panel-reviews"
                                 aria-selected="false"
                                 data-target="reviews">
-                            <span class="product-details-tabs__btn-label">{{ trans('pages.product_tabs.reviews') }}</span>
+                            <span class="product-details-tabs__btn-label">{{ trans('components.product_tabs.reviews') }}</span>
                             <span class="product-details-tabs__count {{ has_reviews ? 'is-populated' : 'is-empty' }}">{{ reviews_count }}</span>
                         </button>
                     {% endif %}
@@ -498,9 +498,9 @@
                                 class="product-details-tabs__readmore inline-flex items-center gap-2 mt-2 cursor-pointer"
                                 role="button"
                                 aria-expanded="false"
-                                data-label-more="{{ trans('pages.products.read_more') }}"
-                                data-label-less="{{ trans('pages.product_tabs.read_less') }}">
-                                    <span>{{ trans('pages.products.read_more') }}</span>
+                                data-label-more="{{ trans('components.product_tabs.read_more') }}"
+                                data-label-less="{{ trans('components.product_tabs.read_less') }}">
+                                    <span>{{ trans('components.product_tabs.read_more') }}</span>
                                     <i class="sicon-keyboard_arrow_down text-xs"></i>
                                 </a>
                             {% else %}

@@ -137,8 +137,8 @@ class Product extends BasePage {
 
         const label = trigger.querySelector('span');
         if (label) {
-          const readMoreLabel = trigger.dataset.labelMore || salla.lang.get('pages.products.read_more');
-          const readLessLabel = trigger.dataset.labelLess || salla.lang.get('pages.product_tabs.read_less') || 'Read less';
+          const readMoreLabel = trigger.dataset.labelMore || salla.lang.get('components.product_tabs.read_more') || 'Read more';
+          const readLessLabel = trigger.dataset.labelLess || salla.lang.get('components.product_tabs.read_less') || 'Read less';
           label.textContent = expanded ? readLessLabel : readMoreLabel;
         }
 
