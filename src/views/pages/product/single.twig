@@ -430,10 +430,13 @@
     </div>
 
     <div class="container">
-        {% set reviews_enabled = store.settings.rating.show_on_product %}
+        {% set reviews_enabled = true %}
         {% set reviews_count = product.rating.count|default(0) %}
         {% set rating_stars = product.rating.stars|default(0) %}
         {% set has_reviews = reviews_count > 0 %}
+        {% set product_desc = product.description|default('')|replace({"&nbsp;":"\n"}) %}
+        {% set product_desc_plain = product_desc|striptags|trim %}
+        {% set show_read_more_toggle = product_desc_plain|length > 0 %}
 
         <section class="product-details-tabs mb-4 {{ has_reviews ? 'has-reviews' : 'no-reviews' }}"
                  id="product-details-tabs"
@@ -451,16 +454,16 @@
                     </button>
 
                     {% if reviews_enabled %}
-                        <button class="product-details-tabs__btn"
-                                type="button"
-                                role="tab"
-                                id="product-tab-reviews"
-                                aria-controls="product-panel-reviews"
-                                aria-selected="false"
-                                data-target="reviews">
-                            <span class="product-details-tabs__btn-label">{{ trans('components.product_tabs.reviews') }}</span>
-                            <span class="product-details-tabs__count {{ has_reviews ? 'is-populated' : 'is-empty' }}">{{ reviews_count }}</span>
-                        </button>
+                    <button class="product-details-tabs__btn"
+                            type="button"
+                            role="tab"
+                            id="product-tab-reviews"
+                            aria-controls="product-panel-reviews"
+                            aria-selected="false"
+                            data-target="reviews">
+                        <span class="product-details-tabs__btn-label">{{ trans('components.product_tabs.reviews') }}</span>
+                        <span class="product-details-tabs__count {{ has_reviews ? 'is-populated' : 'is-empty' }}">{{ reviews_count }}</span>
+                    </button>
                     {% endif %}
                     </div>
 
@@ -487,8 +490,7 @@
                             data-panel="description"
                             aria-labelledby="product-tab-description">
                         <div class="product__description">
-                            {% set product_desc = product.description|replace({"&nbsp;":"\n"}) %}
-                            {% if product.has_read_more %}
+                            {% if show_read_more_toggle %}
                                 <article class="article article--main relative leading-8 overflow-hidden transition-all max-h-0 duration-300 py-4"
                                         id="more-content" style="max-height:5.25rem">
                                     {{ product_desc|raw }}
