@@ -108,18 +108,6 @@
   }
 } %}
 
-{% set fallback_slider_config = {
-  "slidesPerView": "auto",
-  "spaceBetween": 14,
-  "watchOverflow": false,
-  "loop": false,
-  "breakpoints": {
-    "768": {"spaceBetween": 16},
-    "1280": {"spaceBetween": 18}
-  }
-} %}
-
-{% set fallback_slider_id = 'th-home-blog-fallback-' ~ (component.key|default(position|default('home'))) %}
 {% set slider_id = 'th-home-blog-slider-' ~ (component.key|default(position|default('home'))) %}
 
 <section class="s-block container th-home-blog">
@@ -301,10 +289,8 @@
 		</div>
 	{% else %}
 		<div class="th-home-blog__slider js-th-blog-fallback" data-selected-ids='{{ selected_article_ids|json_encode|e("html_attr") }}' data-limit="{{ limit }}">
-			<salla-slider id="{{ fallback_slider_id }}" type="carousel" class="th-home-blog-slider s-slider-wrapper" auto-play="{{ autoplay ? 'true' : 'false' }}" show-controls="{{ show_controls ? 'true' : 'false' }}" slider-config='{{ fallback_slider_config|json_encode|e("html_attr") }}' {% if show_controls %} controls-outer {% endif %} pagination>
-				<div slot="items" class="js-th-blog-items js-th-blog-grid"></div>
-			</salla-slider>
-			<p class="text-center text-gray-500 js-th-blog-empty">
+			<div class="th-home-blog__fallback-grid js-th-blog-grid"></div>
+			<p class="text-center text-gray-500 js-th-blog-empty" hidden>
 				{{ trans('pages.blog_categories.no_articles')|default('No articles found') }}
 			</p>
 		</div>
