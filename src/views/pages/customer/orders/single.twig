@@ -189,7 +189,7 @@
                             {% endif %}
                             {% if package.shipping_company.number %}
                                 <span>{{ trans('pages.orders.shipment_no') }}:
-                                            <span class="font-bold">{{ package.shipping_company.number|raw }}</span>
+                                            <span class="font-bold">{{ package.shipping_company.number }}</span>
                                         </span>
                             {% endif %}
                             {% if package.is_delivered %}
@@ -201,7 +201,7 @@
                                 </span>
                             {% elseif package.shipping_company.tracing_link %}
                                 <a class="font-bold text-primary hover:opacity-80 flex items-center"
-                                   href="{{ package.shipping_company.tracing_link|raw }}"
+                                   href="{{ package.shipping_company.tracing_link|e('html_attr') }}"
                                    target="_blank"
                                 >
                                     <span class="sicon-shipping rtl:ml-1 ltr:mr-1"></span>
@@ -315,7 +315,7 @@
                             {% if item.rating %}
                                 <section class="flex justify-between items-start border-t mt-10 pt-8">
                                     <div>
-                                        <p>{{ item.rating.content|raw }}</p>
+                                        <p>{{ item.rating.content|e|nl2br }}</p>
                                         {% if item.rating.is_pending %}
                                             <span>{{ trans('pages.rating.pending') }}</span>
                                         {% endif %}
@@ -463,7 +463,7 @@
 
             {# Reorder Modal #}
             {% if user.type == 'user' and order.can_reorder %}
-                <salla-modal width="sm" sub-title="{{ trans('pages.orders.reorder_confirmation')|raw }}"
+                <salla-modal width="sm" sub-title="{{ trans('pages.orders.reorder_confirmation')|e('html_attr') }}"
                              icon="sicon-rotate" id="reorder-modal" icon-style="success"
                              modal-title="{{ trans('pages.orders.reorder') }}">
                     <div slot="footer" class="grid grid-cols-2 gap-3">
@@ -501,7 +501,7 @@
             <section class="flex justify-between items-start bg-white p-5 rounded-md">
                 <div>
                     <h2 class="text-lg font-bold mb-5">{{ trans('pages.rating.rate_the_store') }}</h2>
-                    <p class="mb-2">{{ order.rating.store.content|raw }}</p>
+                    <p class="mb-2">{{ order.rating.store.content|e|nl2br }}</p>
                     <salla-rating-stars with-label value="{{order.rating.store.stars}}"></salla-rating-stars>
                 </div>
                 <div class="rating-actions">
@@ -556,7 +556,7 @@
             <section class="flex justify-between items-start bg-white p-5 rounded-md">
                 <div>
                     <h2 class="text-lg font-bold mb-5">{{ trans('pages.rating.rate_shipping') }}</h2>
-                    <p class="mb-2">{{ order.rating.shipping.content|raw }}</p>
+                    <p class="mb-2">{{ order.rating.shipping.content|e|nl2br }}</p>
                     <salla-rating-stars with-label value="{{order.rating.shipping.stars}}"></salla-rating-stars>
                 </div>
                 <div class="rating-actions">

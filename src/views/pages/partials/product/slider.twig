@@ -15,7 +15,7 @@
 <section class="s-block s-block--products-slider s-block--products-slider-{{ position }}">
 	<div class="container">
 		{% if products|length %}
-			<salla-products-slider class="th-products-slider" source="selected" limit="{{ limit }}" {{ autoplay ? 'autoplay' : '' }} source-value="[{{ products|map((product) => product.id)|join(',') }}]" display-all-url="{{display_all_url}}" block-title="{{ title }}" block-subtitle="{{ sub_title|raw }}" slider-id="slider-with-bg-{{ position }}"></salla-products-slider>
+			<salla-products-slider class="th-products-slider" source="selected" limit="{{ limit }}" {{ autoplay ? 'autoplay' : '' }} source-value="[{{ products|map((product) => product.id)|join(',') }}]" display-all-url="{{display_all_url}}" block-title="{{ title }}" block-subtitle="{{ sub_title|striptags|e('html_attr') }}" slider-id="slider-with-bg-{{ position }}"></salla-products-slider>
 		{% endif %}
 
 

@@ -19,7 +19,7 @@
             source-value="{{ products.source_value|json_encode }}"
             display-all-url="{{display_all_url}}"
             block-title="{{ title }}"
-            block-subTitle="{{ sub_title|raw }}"
+            block-subTitle="{{ sub_title|striptags|e('html_attr') }}"
             slider-id="slider-with-bg-{{ position }}"
     ></salla-products-slider>
   {% endif %}

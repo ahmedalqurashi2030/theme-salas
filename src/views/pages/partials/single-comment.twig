@@ -38,7 +38,7 @@
             </div>
 
             <div class="prose prose-sm max-w-none text-gray-500">
-                <p>{{ comment.content|raw }}</p>
+                <p>{{ comment.content|e|nl2br }}</p>
                 {% if comment.is_pending %}
                     <span class="pending-comment pending-comment bg-gray-200 rounded-full px-2.5 py-0.5 inline-block mt-2">{{ trans('blocks.comments.waiting_approval') }}</span>
                 {% endif %}

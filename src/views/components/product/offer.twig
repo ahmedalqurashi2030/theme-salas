@@ -22,7 +22,7 @@
     <salla-slider 
       type="carousel"
       block-title="{{ offer.name }}"
-      block-subTitle="{{ offer.description|raw }}"
+      block-subTitle="{{ offer.description|striptags|e('html_attr') }}"
       id="offer-slider">
         <div slot="items">
             {% if offer.categories|length %}

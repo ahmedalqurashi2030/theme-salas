@@ -4,6 +4,16 @@ import Anime from './partials/anime';
 import initTootTip from './partials/tooltip';
 import AppHelpers from "./app-helpers";
 
+const appRoot = document.getElementById('app');
+const parseBooleanSetting = (value) => {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') return value === 1;
+  if (typeof value !== 'string') return false;
+  const normalizedValue = value.trim().toLowerCase();
+  return ['true', '1', 'yes', 'on'].includes(normalizedValue);
+};
+const headerIsSticky = parseBooleanSetting(appRoot?.dataset.headerIsSticky);
+
 
 class App extends AppHelpers {
   constructor() {
@@ -15,7 +25,7 @@ class App extends AppHelpers {
     this.commonThings();
     this.initiateNotifier();
     this.initiateMobileMenu();
-    if (header_is_sticky) {
+    if (headerIsSticky) {
       this.initiateStickyMenu();
     }
     this.initAddToCart();
@@ -32,7 +42,7 @@ class App extends AppHelpers {
 
     this.status = 'ready';
     document.dispatchEvent(new CustomEvent('theme::ready'));
-    this.log('Theme Loaded 🎉');
+    this.log('Theme Loaded');
   }
 
   log(message) {
@@ -125,19 +135,25 @@ class App extends AppHelpers {
 
   };
 
-  copyToClipboard(event) {
+  async copyToClipboard(event) {
     event.preventDefault();
-    let aux = document.createElement("input"),
-      btn = event.currentTarget;
-    aux.setAttribute("value", btn.dataset.content);
-    document.body.appendChild(aux);
-    aux.select();
-    document.execCommand("copy");
-    document.body.removeChild(aux);
-    this.toggleElementClassIf(btn, 'copied', 'code-to-copy', () => true);
-    setTimeout(() => {
-      this.toggleElementClassIf(btn, 'code-to-copy', 'copied', () => true)
-    }, 1000);
+    const btn = event.currentTarget;
+    const textToCopy = btn?.dataset?.content ?? '';
+
+    if (!navigator.clipboard?.writeText) {
+      this.log('Clipboard API is unavailable');
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      this.toggleElementClassIf(btn, 'copied', 'code-to-copy', () => true);
+      setTimeout(() => {
+        this.toggleElementClassIf(btn, 'code-to-copy', 'copied', () => true)
+      }, 1000);
+    } catch (error) {
+      this.log('Copy to clipboard failed');
+    }
   }
 
   initiateNotifier() {
@@ -233,16 +249,46 @@ class App extends AppHelpers {
   }
 
   initiateDropdowns() {
-    this.onClick('.dropdown__trigger', ({ target: btn }) => {
-      btn.parentElement.classList.toggle('is-opened');
-      document.body.classList.toggle('dropdown--is-opened');
-      // Click Outside || Click on close btn
-      window.addEventListener('click', ({ target: element }) => {
-        if (!element.closest('.dropdown__menu') && element !== btn || element.classList.contains('dropdown__close')) {
-          btn.parentElement.classList.remove('is-opened');
-          document.body.classList.remove('dropdown--is-opened');
-        }
-      });
+    let activeTrigger = null;
+
+    const closeActiveDropdown = () => {
+      if (!activeTrigger) return;
+      activeTrigger.parentElement?.classList.remove('is-opened');
+      document.body.classList.remove('dropdown--is-opened');
+      activeTrigger = null;
+    };
+
+    this.onClick('.dropdown__trigger', ({ currentTarget: btn, target }) => {
+      const clickedElement = target instanceof Element ? target : btn;
+      const trigger = clickedElement.closest('.dropdown__trigger') || btn;
+      const parent = trigger.parentElement;
+      const shouldOpen = !parent.classList.contains('is-opened');
+
+      closeActiveDropdown();
+
+      if (shouldOpen) {
+        parent.classList.add('is-opened');
+        document.body.classList.add('dropdown--is-opened');
+        activeTrigger = trigger;
+      }
+    });
+
+    window.addEventListener('click', ({ target: element }) => {
+      if (!activeTrigger) return;
+
+      const clickedElement = element instanceof Element ? element : null;
+      if (!clickedElement) {
+        closeActiveDropdown();
+        return;
+      }
+
+      const isTrigger = !!clickedElement.closest('.dropdown__trigger');
+      const isInsideMenu = !!clickedElement.closest('.dropdown__menu');
+      const isCloseButton = clickedElement.classList?.contains('dropdown__close');
+
+      if (isCloseButton || (!isTrigger && !isInsideMenu)) {
+        closeActiveDropdown();
+      }
     });
   }
 
@@ -334,76 +380,3 @@ class App extends AppHelpers {
 }
 
 salla.onReady(() => (new App).loadTheApp());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window.tharaa = window.tharaa || {};
-
-// 1. فتح وإغلاق القائمة الجانبية للأقسام
-window.tharaa.toggleCategorySidebar = function () {
-  const sidebar = document.getElementById('th-category-sidebar');
-  const overlay = document.querySelector('.th-cat-sidebar-overlay');
-  const body = document.body;
-
-  sidebar.classList.toggle('is-open');
-  overlay.classList.toggle('is-open');
-
-  // منع السكرول في الخلفية
-  if (sidebar.classList.contains('is-open')) {
-    body.style.overflow = 'hidden';
-  } else {
-    body.style.overflow = '';
-  }
-};
-
-// 2. الأكورديون للقوائم الفرعية (عند الضغط على السهم)
-window.tharaa.toggleSubMenu = function (btn) {
-  // الزر موجود داخل div، نحتاج القائمة التي تليه في الهيكل
-  // الهيكل: li -> (row > button) + ul
-  const submenu = btn.closest('li').querySelector('.th-cat-submenu');
-
-  if (submenu) {
-    // تبديل العرض
-    if (submenu.style.display === 'none' || submenu.style.display === '') {
-      // فتح
-      submenu.style.display = 'block';
-      btn.classList.add('is-expanded');
-      // أنيميشن بسيط يمكن إضافته هنا أو عبر CSS max-height
-    } else {
-      // إغلاق
-      submenu.style.display = 'none';
-      btn.classList.remove('is-expanded');
-    }
-  }
-};

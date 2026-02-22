@@ -4,6 +4,16 @@ import Fslightbox from 'fslightbox';
 window.fslightbox = Fslightbox;
 import { zoom } from './partials/image-zoom';
 
+const appRoot = document.getElementById('app');
+const parseBooleanSetting = (value) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'number') return value === 1;
+    if (typeof value !== 'string') return false;
+    const normalizedValue = value.trim().toLowerCase();
+    return ['true', '1', 'yes', 'on'].includes(normalizedValue);
+};
+const imageZoomEnabled = parseBooleanSetting(appRoot?.dataset.imageZoom);
+
 class Product extends BasePage {
     onReady() {
         app.watchElements({
@@ -16,7 +26,7 @@ class Product extends BasePage {
         this.initProductOptionValidations();
         this.initProductGalleryUX();
 
-        if(imageZoom){
+        if (imageZoomEnabled) {
             // call the function when the page is ready
             this.initImagesZooming();
             // listen to screen resizing
