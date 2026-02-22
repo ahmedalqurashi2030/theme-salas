@@ -170,6 +170,7 @@ class Home extends BasePage {
 
             const grid = section.querySelector('.js-th-blog-grid');
             const emptyState = section.querySelector('.js-th-blog-empty');
+            const slider = section.querySelector('salla-slider');
             if (!grid) return;
 
             const limit = Math.max(parseInt(section.dataset.limit || '8', 10) || 8, 1);
@@ -192,6 +193,7 @@ class Home extends BasePage {
                     .slice(0, limit);
 
                 if (!normalized.length) {
+                    if (slider) slider.setAttribute('hidden', '');
                     if (emptyState) emptyState.hidden = false;
                     return;
                 }
@@ -202,8 +204,8 @@ class Home extends BasePage {
 
                 section.classList.toggle('th-home-blog__slider--compact', normalized.length <= 4);
 
-                const slider = section.querySelector('salla-slider');
                 if (slider) {
+                    slider.removeAttribute('hidden');
                     requestAnimationFrame(() => {
                         if (typeof slider.refresh === 'function') {
                             slider.refresh();
@@ -218,6 +220,7 @@ class Home extends BasePage {
                 if (emptyState) emptyState.hidden = true;
             } catch (error) {
                 console.warn('th-blog fallback failed', error);
+                if (slider) slider.setAttribute('hidden', '');
                 if (emptyState) emptyState.hidden = false;
             }
         });
@@ -274,96 +277,29 @@ class Home extends BasePage {
         return [...new Set(ids)];
     }
 
-    async requestBlogCandidates(endpoints) {
-        for (const endpoint of endpoints) {
-            try {
-                const response = await salla.api.request(endpoint);
-                const extracted = this.extractBlogsFromResponse(response);
-                if (extracted.length) return extracted;
-            } catch {
-                // try next endpoint shape
-            }
-        }
-
-        return [];
-    }
-
     async fetchBlogsByIds(ids, limit) {
         const targetIds = ids.slice(0, limit);
-        const responses = await Promise.all(targetIds.map((id) =>
-            this.requestBlogCandidates([
-                `blogs/${encodeURIComponent(id)}`,
-                `blog/${encodeURIComponent(id)}`,
-                `posts/${encodeURIComponent(id)}`,
-            ])
-        ));
+        const responses = await Promise.all(targetIds.map(async (id) => {
+            try {
+                const response = await salla.api.request(`blogs/${encodeURIComponent(id)}`);
+                return this.extractBlogsFromResponse(response);
+            } catch {
+                return [];
+            }
+        }));
 
         return responses.flat().filter(Boolean);
     }
 
     async fetchLatestBlogs(limit) {
-        const apiResults = await this.requestBlogCandidates([
-            `blogs?per_page=${limit}&page=1`,
-            `blogs?limit=${limit}`,
-            `blog/articles?per_page=${limit}&page=1`,
-            `blog?per_page=${limit}&page=1`,
-            `posts?per_page=${limit}&page=1`,
-        ]);
-
-        if (apiResults.length) {
-            return apiResults;
+        try {
+            const response = await salla.api.request('blogs', {
+                params: { per_page: limit, page: 1 },
+            });
+            return this.extractBlogsFromResponse(response);
+        } catch {
+            return [];
         }
-
-        return this.fetchLatestBlogsFromPage(limit);
-    }
-
-    async fetchLatestBlogsFromPage(limit) {
-        if (typeof window === 'undefined' || typeof DOMParser === 'undefined') return [];
-
-        const paths = ['/blog', '/blogs'];
-        for (const path of paths) {
-            try {
-                const response = await fetch(path, {
-                    method: 'GET',
-                    credentials: 'same-origin',
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                });
-
-                if (!response.ok) continue;
-                const html = await response.text();
-                if (!html) continue;
-
-                const doc = new DOMParser().parseFromString(html, 'text/html');
-                const cards = [...doc.querySelectorAll('.post-entry')].slice(0, limit);
-                if (!cards.length) continue;
-
-                const parsed = cards.map((card) => {
-                    const link = card.querySelector('a[href]');
-                    const titleLink = card.querySelector('.post-entry__title a') || link;
-                    const image = card.querySelector('img');
-                    const summary = card.querySelector('p');
-                    const author = card.querySelector('a .sicon-user')?.closest('a');
-                    const dateText = card.querySelector('.sicon-calendar-date')?.parentElement?.textContent?.trim() || '';
-
-                    return {
-                        title: titleLink?.textContent?.trim() || '',
-                        url: titleLink?.getAttribute('href') || link?.getAttribute('href') || '#',
-                        image: image?.getAttribute('src') || '',
-                        summary: summary?.textContent?.trim() || '',
-                        author_name: author?.textContent?.trim() || '',
-                        created_at: dateText,
-                    };
-                }).filter((item) => item.title);
-
-                if (parsed.length) {
-                    return parsed;
-                }
-            } catch {
-                // continue to next path
-            }
-        }
-
-        return [];
     }
 
     extractBlogsFromResponse(response) {

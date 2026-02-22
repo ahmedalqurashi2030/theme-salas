@@ -304,7 +304,7 @@
 			<salla-slider id="{{ fallback_slider_id }}" type="carousel" class="th-home-blog-slider s-slider-wrapper" auto-play="{{ autoplay ? 'true' : 'false' }}" show-controls="{{ show_controls ? 'true' : 'false' }}" slider-config='{{ fallback_slider_config|json_encode|e("html_attr") }}' {% if show_controls %} controls-outer {% endif %} pagination>
 				<div slot="items" class="js-th-blog-items js-th-blog-grid"></div>
 			</salla-slider>
-			<p class="text-center text-gray-500 js-th-blog-empty" hidden>
+			<p class="text-center text-gray-500 js-th-blog-empty">
 				{{ trans('pages.blog_categories.no_articles')|default('No articles found') }}
 			</p>
 		</div>
