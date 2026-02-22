@@ -26,6 +26,8 @@ class Product extends BasePage {
         this.initProductOptionValidations();
         this.initProductGalleryUX();
         this.initProductTabs();
+        this.initDescriptionReadMore();
+        this.initProductReviewsPanelUX();
 
         if (imageZoomEnabled) {
             // call the function when the page is ready
@@ -95,6 +97,125 @@ class Product extends BasePage {
       keepActiveThumbVisible();
     }
 
+    initDescriptionReadMore() {
+      const trigger = document.getElementById('btn-show-more');
+      const content = document.getElementById('more-content');
+      if (!trigger || !content) return;
+
+      const collapsedHeight = Number.parseInt(content.dataset.collapsedHeight || '84', 10) || 84;
+      let resizeTimer = null;
+
+      const updateReadMoreVisibility = () => {
+        const isExpanded = trigger.classList.contains('is-expanded');
+        const hasOverflow = content.scrollHeight > collapsedHeight + 6;
+
+        trigger.classList.toggle('hidden', !hasOverflow);
+        trigger.setAttribute('aria-hidden', hasOverflow ? 'false' : 'true');
+
+        if (!hasOverflow) {
+          trigger.classList.remove('is-expanded');
+          trigger.setAttribute('aria-expanded', 'false');
+          content.style.maxHeight = 'none';
+          return;
+        }
+
+        content.style.maxHeight = isExpanded ? `${content.scrollHeight}px` : `${collapsedHeight}px`;
+      };
+
+      updateReadMoreVisibility();
+
+      window.addEventListener('resize', () => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(updateReadMoreVisibility, 120);
+      });
+    }
+
+    initProductReviewsPanelUX() {
+      const tabsRoot = document.getElementById('product-details-tabs');
+      const reviewsPanel = document.getElementById('product-panel-reviews');
+      const reviewsWrapper = reviewsPanel?.querySelector('.product-details-tabs__reviews');
+      const commentsElement = reviewsPanel?.querySelector('salla-comments');
+      if (!tabsRoot || !reviewsPanel || !reviewsWrapper || !commentsElement) return;
+
+      if (commentsElement.dataset.emptyStateReady === 'true') return;
+      commentsElement.dataset.emptyStateReady = 'true';
+
+      const reviewsCount = Number.parseInt(tabsRoot.dataset.reviewsCount || '0', 10) || 0;
+      const emptyTitle = reviewsPanel.dataset.emptyTitle || salla.lang.get('components.product_tabs.reviews_empty_title') || 'No reviews yet';
+      const emptyHint = reviewsPanel.dataset.emptyHint || salla.lang.get('components.product_tabs.reviews_empty_hint') || 'Be the first to review this product.';
+      const emptyCta = reviewsPanel.dataset.emptyCta || salla.lang.get('components.product_tabs.write_review') || 'Write review';
+
+      const createEmptyState = () => {
+        const block = document.createElement('div');
+        block.className = 'product-details-tabs__reviews-empty';
+        const icon = document.createElement('i');
+        icon.className = 'sicon-commenting-o';
+        icon.setAttribute('aria-hidden', 'true');
+
+        const title = document.createElement('h3');
+        title.textContent = emptyTitle;
+
+        const hint = document.createElement('p');
+        hint.textContent = emptyHint;
+
+        const ctaButton = document.createElement('button');
+        ctaButton.type = 'button';
+        ctaButton.className = 'btn btn--primary btn--small';
+        ctaButton.textContent = emptyCta;
+
+        block.append(icon, title, hint, ctaButton);
+
+        ctaButton.addEventListener('click', () => {
+          salla.event.dispatch('rating::open');
+        });
+
+        return block;
+      };
+
+      const hasRenderedReviews = () => {
+        const selectors = [
+          '.s-comments-item',
+          '.s-comments-list-item',
+          '[data-comment-id]',
+          '[data-review-id]',
+          '.s-comments-review-item',
+        ];
+
+        return selectors.some((selector) => commentsElement.querySelector(selector));
+      };
+
+      const hasNativeEmpty = () => {
+        const selectors = [
+          '.s-comments-empty',
+          '.s-comments-empty-state',
+          '.s-comments-no-results',
+          '.s-comments-placeholder',
+        ];
+
+        return selectors.some((selector) => commentsElement.querySelector(selector));
+      };
+
+      const syncEmptyState = () => {
+        const currentEmptyState = reviewsWrapper.querySelector('.product-details-tabs__reviews-empty');
+        const shouldUseCustomEmpty = !hasNativeEmpty() && !hasRenderedReviews() && reviewsCount === 0;
+
+        reviewsWrapper.classList.toggle('is-custom-empty', shouldUseCustomEmpty);
+
+        if (!shouldUseCustomEmpty) {
+          currentEmptyState?.remove();
+          return;
+        }
+
+        if (!currentEmptyState) {
+          reviewsWrapper.prepend(createEmptyState());
+        }
+      };
+
+      window.setTimeout(syncEmptyState, 450);
+      const observer = new MutationObserver(() => syncEmptyState());
+      observer.observe(commentsElement, { childList: true, subtree: true });
+    }
+
     registerEvents() {
       salla.event.on('product::price.updated.failed',()=>{
         const priceWrapper = app.element('.price-wrapper');
@@ -142,7 +263,8 @@ class Product extends BasePage {
           label.textContent = expanded ? readLessLabel : readMoreLabel;
         }
 
-        content.style.maxHeight = expanded ? `${content.scrollHeight}px` : '5.25rem';
+        const collapsedHeight = Number.parseInt(content.dataset.collapsedHeight || '84', 10) || 84;
+        content.style.maxHeight = expanded ? `${content.scrollHeight}px` : `${collapsedHeight}px`;
       });
     }
 

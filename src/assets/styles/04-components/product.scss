@@ -381,7 +381,7 @@
   }
 
   &__head {
-    @apply flex items-center gap-2 overflow-x-auto;
+    @apply flex items-center gap-2 flex-wrap;
     scrollbar-width: thin;
   }
 
@@ -492,21 +492,29 @@
   &__reviews {
     @apply py-1;
 
+    &.is-custom-empty .product-reviews-comments {
+      display: none;
+    }
+
     &-empty {
-      @apply mb-4 p-4 rounded-xl border border-dashed border-gray-300 bg-white;
+      @apply p-6 rounded-2xl border border-dashed border-gray-300 bg-white text-center;
 
       i {
-        @apply inline-flex items-center justify-center text-base rounded-full w-8 h-8 mb-2;
+        @apply inline-flex items-center justify-center text-lg rounded-full w-12 h-12 mb-3;
         background: #fff4d9;
         color: #f59e0b;
       }
 
       h3 {
-        @apply text-base font-extrabold text-gray-900 mb-1;
+        @apply text-lg font-extrabold text-gray-900 mb-1;
       }
 
       p {
-        @apply text-sm text-gray-500 leading-6;
+        @apply text-sm text-gray-500 leading-6 mb-4;
+      }
+
+      button {
+        @apply inline-flex items-center justify-center px-5 h-10 rounded-xl text-sm font-bold;
       }
     }
 
@@ -515,8 +523,37 @@
     }
 
     .s-comments-container {
+      @apply w-full;
       max-width: 100%;
       padding: 0;
+    }
+
+    .s-comments-container > * {
+      @apply bg-white border border-gray-200 rounded-2xl;
+    }
+
+    .s-comments-container > * + * {
+      margin-top: .85rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    &__reviews {
+      .s-comments-container {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 320px);
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .s-comments-container > * + * {
+        margin-top: 0;
+      }
+
+      .s-comments-container > :nth-child(2) {
+        position: sticky;
+        top: 1rem;
+      }
     }
   }
 
@@ -548,6 +585,10 @@
 
     &__head-wrap {
       @apply gap-2.5;
+    }
+
+    &__head {
+      @apply flex-nowrap overflow-x-auto;
     }
 
     &__btn {

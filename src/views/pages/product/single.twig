@@ -430,9 +430,8 @@
     </div>
 
     <div class="container">
-        {% set reviews_enabled = true %}
-        {% set reviews_count = product.rating.count|default(0) %}
-        {% set rating_stars = product.rating.stars|default(0) %}
+        {% set reviews_count = product.rating and product.rating.count ? product.rating.count : 0 %}
+        {% set rating_stars = product.rating and product.rating.stars ? product.rating.stars : 0 %}
         {% set has_reviews = reviews_count > 0 %}
         {% set product_desc = product.description|default('')|replace({"&nbsp;":"\n"}) %}
         {% set product_desc_plain = product_desc|striptags|trim %}
@@ -453,7 +452,6 @@
                         <span class="product-details-tabs__btn-label">{{ trans('components.product_tabs.description') }}</span>
                     </button>
 
-                    {% if reviews_enabled %}
                     <button class="product-details-tabs__btn"
                             type="button"
                             role="tab"
@@ -464,23 +462,20 @@
                         <span class="product-details-tabs__btn-label">{{ trans('components.product_tabs.reviews') }}</span>
                         <span class="product-details-tabs__count {{ has_reviews ? 'is-populated' : 'is-empty' }}">{{ reviews_count }}</span>
                     </button>
-                    {% endif %}
                     </div>
 
-                    {% if reviews_enabled %}
-                        <div class="product-details-tabs__meta {{ has_reviews ? 'has-reviews' : 'no-reviews' }}" aria-live="polite">
-                            {% if has_reviews %}
-                                <div class="product-details-tabs__score" aria-label="Rating {{ rating_stars }} out of 5">
-                                    <i class="sicon-star2" aria-hidden="true"></i>
-                                    <b>{{ rating_stars }}</b>
-                                    <span>/5</span>
-                                </div>
-                                <p class="product-details-tabs__meta-text">{{ trans('components.product_tabs.reviews_summary_label') }}</p>
-                            {% else %}
-                                <p class="product-details-tabs__meta-text">{{ trans('components.product_tabs.reviews_empty_hint') }}</p>
-                            {% endif %}
-                        </div>
-                    {% endif %}
+                    <div class="product-details-tabs__meta {{ has_reviews ? 'has-reviews' : 'no-reviews' }}" aria-live="polite">
+                        {% if has_reviews %}
+                            <div class="product-details-tabs__score" aria-label="Rating {{ rating_stars }} out of 5">
+                                <i class="sicon-star2" aria-hidden="true"></i>
+                                <b>{{ rating_stars }}</b>
+                                <span>/5</span>
+                            </div>
+                            <p class="product-details-tabs__meta-text">{{ trans('components.product_tabs.reviews_summary_label') }}</p>
+                        {% else %}
+                            <p class="product-details-tabs__meta-text">{{ trans('components.product_tabs.reviews_empty_hint') }}</p>
+                        {% endif %}
+                    </div>
                 </div>
 
                 <div class="product-details-tabs__body">
@@ -492,7 +487,9 @@
                         <div class="product__description">
                             {% if show_read_more_toggle %}
                                 <article class="article article--main relative leading-8 overflow-hidden transition-all max-h-0 duration-300 py-4"
-                                        id="more-content" style="max-height:5.25rem">
+                                        id="more-content"
+                                        data-collapsed-height="84"
+                                        style="max-height:84px">
                                     {{ product_desc|raw }}
                                 </article>
 
@@ -513,25 +510,19 @@
                         </div>
                     </section>
 
-                    {% if reviews_enabled %}
-                        <section class="product-details-tabs__panel"
-                                 id="product-panel-reviews"
-                                 role="tabpanel"
-                                 data-panel="reviews"
-                                 aria-labelledby="product-tab-reviews"
-                                 hidden>
-                            <div class="product-details-tabs__reviews {{ has_reviews ? 'has-content' : 'is-empty' }}">
-                                {% if not has_reviews %}
-                                    <div class="product-details-tabs__reviews-empty" role="status">
-                                        <i class="sicon-star2" aria-hidden="true"></i>
-                                        <h3>{{ trans('components.product_tabs.reviews_empty_title') }}</h3>
-                                        <p>{{ trans('components.product_tabs.reviews_empty_hint') }}</p>
-                                    </div>
-                                {% endif %}
-                                <salla-comments item-id="{{product.id}}" type="product"></salla-comments>
-                            </div>
-                        </section>
-                    {% endif %}
+                    <section class="product-details-tabs__panel"
+                             id="product-panel-reviews"
+                             role="tabpanel"
+                             data-panel="reviews"
+                             data-empty-title="{{ trans('components.product_tabs.reviews_empty_title') }}"
+                             data-empty-hint="{{ trans('components.product_tabs.reviews_empty_hint') }}"
+                             data-empty-cta="{{ trans('components.product_tabs.write_review') }}"
+                             aria-labelledby="product-tab-reviews"
+                             hidden>
+                        <div class="product-details-tabs__reviews {{ has_reviews ? 'has-content' : 'is-empty' }}">
+                            <salla-comments class="product-reviews-comments" item-id="{{ product.id }}" type="product"></salla-comments>
+                        </div>
+                    </section>
                 </div>
         </section>
     </div>
