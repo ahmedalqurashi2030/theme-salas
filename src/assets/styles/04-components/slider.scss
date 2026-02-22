@@ -574,6 +574,42 @@ salla-slider.photos-slider {
   opacity: 0.5;
 }
 
+/*
+ * Section title divider:
+ * keeps the heading text at the start and draws a subtle line toward controls.
+ */
+.s-slider-block__title-right {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.s-slider-block__title h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+
+  &::after {
+    content: '';
+    flex: 1 1 auto;
+    min-width: clamp(4.5rem, 18vw, 22rem);
+    height: 1px;
+    background-color: #e5e7eb;
+  }
+}
+
+@media (max-width: 767px) {
+  .s-slider-block__title h2::after {
+    display: none;
+  }
+}
+
+.sicon-layout-grid .s-slider-block__title h2::after,
+.offer-slider .s-slider-block__title h2::after,
+.s-block--testimonials .s-slider-block__title h2::after,
+.s-block--testimonials.th-testimonials-native .s-slider-block__title h2::after {
+  content: none;
+}
+
 // bullet pagination -------
 salla-slider {
   .swiper-pagination-bullet {

@@ -1,6 +1,6 @@
-/*!*******************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/postcss-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/assets/styles/app.scss ***!
-  \*******************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@6.11.0_webpack@5.105.2/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/.pnpm/postcss-loader@8.2.1_postcss@8.5.6_webpack@5.105.2/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@16.0.7_sass@1.97.3_webpack@5.105.2/node_modules/sass-loader/dist/cjs.js!./src/assets/styles/app.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
 /*
  * IMPORTANT NOTE: Theme based on Tailwindcss but for the purpose of simplifing the DOM we use
@@ -23967,6 +23967,37 @@ input[type=radio].sr-only:checked ~ div.testimonials-slider .testimonial__icon {
 }
 .swiper-button-disabled {
   opacity: 0.5;
+}
+/*
+ * Section title divider:
+ * keeps the heading text at the start and draws a subtle line toward controls.
+ */
+.s-slider-block__title-right {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.s-slider-block__title h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.s-slider-block__title h2::after {
+  content: "";
+  flex: 1 1 auto;
+  min-width: max(4.5rem, min(18vw, 22rem));
+  height: 1px;
+  background-color: #e5e7eb;
+}
+@media (max-width: 767px) {
+  .s-slider-block__title h2::after {
+    display: none;
+  }
+}
+.sicon-layout-grid .s-slider-block__title h2::after,
+.offer-slider .s-slider-block__title h2::after,
+.s-block--testimonials .s-slider-block__title h2::after,
+.s-block--testimonials.th-testimonials-native .s-slider-block__title h2::after {
+  content: none;
 }
 salla-slider .swiper-pagination-bullet {
   width: 20px;
