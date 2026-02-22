@@ -38,6 +38,11 @@
     },
     "th_blog": {
       "view_all": "مشاهدة جميع المدونات"
+    },
+    "product_tabs": {
+      "reviews_summary_label": "آراء العملاء وتقييماتهم",
+      "reviews_empty_title": "لا توجد تقييمات حتى الآن",
+      "reviews_empty_hint": "كن أول من يشارك تجربته مع هذا المنتج."
     }
   },
   "pages": {

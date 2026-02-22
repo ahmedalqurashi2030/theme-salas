@@ -366,43 +366,149 @@
 
 
 .product-details-tabs {
-  @apply bg-white border border-gray-200 rounded-2xl overflow-hidden mb-5;
+  --tabs-border: #e5e7eb;
+  --tabs-soft: #f8fafc;
+  --tabs-chip-bg: #f1f5f9;
+  --tabs-chip-text: #334155;
+
+  @apply rounded-2xl overflow-hidden mb-5 border;
+  border-color: var(--tabs-border);
+  background: linear-gradient(180deg, #ffffff 0%, var(--tabs-soft) 100%);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.05);
+
+  &__head-wrap {
+    @apply px-4 sm:px-5 pt-4 pb-3 border-b border-gray-100 flex flex-col gap-3;
+  }
 
   &__head {
-    @apply flex items-center gap-6 px-5 pt-4 border-b border-gray-100 overflow-x-auto;
+    @apply flex items-center gap-2 overflow-x-auto;
+    scrollbar-width: thin;
   }
 
   &__btn {
-    @apply pb-3 text-sm font-bold text-gray-500 border-b-2 border-transparent transition whitespace-nowrap;
+    @apply inline-flex items-center gap-2 px-3 py-2.5 text-sm font-bold rounded-xl transition whitespace-nowrap border border-transparent;
+    color: #475569;
 
     &:hover {
       @apply text-gray-900;
+      background: rgba(148, 163, 184, 0.14);
     }
 
     &.is-active {
-      @apply text-gray-900 border-gray-900;
+      color: var(--color-primary);
+      background: #fff;
+      border-color: #dbe3ea;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
     }
 
     &:focus-visible {
-      @apply outline-none ring-2 ring-primary/40 rounded-t;
+      @apply outline-none ring-2 ring-primary/40;
     }
+  }
 
+  &__btn-label {
+    @apply leading-none;
   }
 
   &__count {
-    @apply text-gray-400 font-semibold;
+    @apply inline-flex items-center justify-center min-w-[1.65rem] h-6 px-2 text-xs font-bold rounded-full border;
+    border-color: #dbe3ea;
+    color: var(--tabs-chip-text);
+    background: var(--tabs-chip-bg);
+
+    &.is-populated {
+      border-color: #f8c772;
+      color: #8a5a00;
+      background: #fff7e8;
+    }
+  }
+
+  &__meta {
+    @apply inline-flex items-center gap-2 text-sm flex-wrap;
+  }
+
+  &__score {
+    @apply inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full font-bold;
+    color: #8a5a00;
+    background: #fff4d9;
+    border: 1px solid #f8d08a;
+
+    i {
+      @apply text-sm;
+      color: #f59e0b;
+    }
+
+    b {
+      @apply leading-none;
+    }
+
+    span {
+      @apply text-xs font-semibold;
+      color: #a16207;
+    }
+  }
+
+  &__meta-text {
+    @apply text-sm text-gray-600;
   }
 
   &__body {
-    @apply px-5 py-3;
+    @apply px-4 sm:px-5 py-4;
   }
 
   &__panel[hidden] {
     display: none;
   }
 
+  .product__description {
+    @apply text-gray-700 leading-8 text-[0.95rem];
+
+    p + p {
+      margin-top: .8rem;
+    }
+
+    h1, h2, h3, h4 {
+      @apply text-gray-900 font-bold mt-3 mb-2;
+      line-height: 1.45;
+    }
+
+    ul, ol {
+      @apply my-3;
+      padding-inline-start: 1.1rem;
+    }
+
+    li + li {
+      margin-top: .35rem;
+    }
+
+    blockquote {
+      @apply my-4 px-4 py-3 rounded-xl;
+      border-inline-start: 3px solid var(--color-primary);
+      background: #f8fbff;
+      color: #334155;
+    }
+  }
+
   &__reviews {
-    @apply py-2;
+    @apply py-1;
+
+    &-empty {
+      @apply mb-4 p-4 rounded-xl border border-dashed border-gray-300 bg-white;
+
+      i {
+        @apply inline-flex items-center justify-center text-base rounded-full w-8 h-8 mb-2;
+        background: #fff4d9;
+        color: #f59e0b;
+      }
+
+      h3 {
+        @apply text-base font-extrabold text-gray-900 mb-1;
+      }
+
+      p {
+        @apply text-sm text-gray-500 leading-6;
+      }
+    }
 
     .s-comments-product {
       @apply bg-transparent py-0 mb-0;
@@ -413,11 +519,19 @@
       padding: 0;
     }
   }
+
+  &.is-reviews-active .product-details-tabs__meta.no-reviews {
+    opacity: .9;
+  }
 }
 
 .product-details-tabs__readmore {
-  color: #7c3aed;
-  font-weight: 700;
+  @apply font-bold transition-colors;
+  color: var(--color-primary);
+
+  &:hover {
+    color: var(--color-primary-dark, var(--color-primary));
+  }
 
   &.is-expanded i {
     transform: rotate(180deg);
@@ -425,5 +539,31 @@
 
   i {
     transition: transform .25s ease;
+  }
+}
+
+@media (max-width: 640px) {
+  .product-details-tabs {
+    border-radius: 16px;
+
+    &__head-wrap {
+      @apply gap-2.5;
+    }
+
+    &__btn {
+      @apply px-2.5 py-2 text-xs;
+    }
+
+    &__count {
+      @apply h-5 text-[11px];
+    }
+
+    &__body {
+      @apply px-3.5 py-3.5;
+    }
+
+    .product__description {
+      @apply text-[0.9rem] leading-7;
+    }
   }
 }

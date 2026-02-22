@@ -153,27 +153,38 @@ class Product extends BasePage {
       const buttons = Array.from(tabsRoot.querySelectorAll('.product-details-tabs__btn'));
       const panels = Array.from(tabsRoot.querySelectorAll('.product-details-tabs__panel'));
       if (!buttons.length || !panels.length) return;
+      const hasReviewsTab = buttons.some((button) => button.dataset.target === 'reviews');
+      const isRtl = document.documentElement.dir === 'rtl';
+      const getSafeTarget = (targetName) => {
+        if (targetName === 'reviews' && !hasReviewsTab) return 'description';
+        return targetName === 'reviews' ? 'reviews' : 'description';
+      };
 
       const activate = (targetName, { updateHash = true } = {}) => {
+        const safeTarget = getSafeTarget(targetName);
+
         buttons.forEach((button) => {
-          const isActive = button.dataset.target === targetName;
+          const isActive = button.dataset.target === safeTarget;
           button.classList.toggle('is-active', isActive);
           button.setAttribute('aria-selected', isActive ? 'true' : 'false');
           button.setAttribute('tabindex', isActive ? '0' : '-1');
         });
 
         panels.forEach((panel) => {
-          panel.hidden = !panel.id.endsWith(targetName);
+          panel.hidden = panel.dataset.panel !== safeTarget;
         });
 
+        tabsRoot.dataset.activeTab = safeTarget;
+        tabsRoot.classList.toggle('is-reviews-active', safeTarget === 'reviews');
+
         if (updateHash) {
-          const targetHash = targetName === 'reviews' ? '#reviews' : '#description';
+          const targetHash = safeTarget === 'reviews' ? '#reviews' : '#description';
           window.history.replaceState(null, '', targetHash);
         }
       };
 
       buttons.forEach((button, index) => {
-        button.addEventListener('click', () => activate(button.dataset.target));
+        button.addEventListener('click', () => activate(button.dataset.target || 'description'));
         button.addEventListener('keydown', (event) => {
           if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
           event.preventDefault();
@@ -181,8 +192,12 @@ class Product extends BasePage {
           let nextIndex = index;
           if (event.key === 'Home') nextIndex = 0;
           if (event.key === 'End') nextIndex = buttons.length - 1;
-          if (event.key === 'ArrowRight') nextIndex = (index + 1) % buttons.length;
-          if (event.key === 'ArrowLeft') nextIndex = (index - 1 + buttons.length) % buttons.length;
+          if (event.key === 'ArrowRight') nextIndex = isRtl
+            ? (index - 1 + buttons.length) % buttons.length
+            : (index + 1) % buttons.length;
+          if (event.key === 'ArrowLeft') nextIndex = isRtl
+            ? (index + 1) % buttons.length
+            : (index - 1 + buttons.length) % buttons.length;
 
           const nextButton = buttons[nextIndex];
           nextButton?.focus();
@@ -191,7 +206,7 @@ class Product extends BasePage {
       });
 
       const hashTarget = window.location.hash.replace('#', '');
-      if (hashTarget === 'reviews' && buttons.some((button) => button.dataset.target === 'reviews')) {
+      if (hashTarget === 'reviews' && hasReviewsTab) {
         activate('reviews', { updateHash: false });
       } else {
         activate('description', { updateHash: false });
