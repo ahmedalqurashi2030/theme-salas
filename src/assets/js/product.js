@@ -25,6 +25,7 @@ class Product extends BasePage {
 
         this.initProductOptionValidations();
         this.initProductGalleryUX();
+        this.initProductTabs();
 
         if (imageZoomEnabled) {
             // call the function when the page is ready
@@ -120,10 +121,75 @@ class Product extends BasePage {
         app.anime('.total-price, .product-weight', { scale: [0.88, 1] });
       });
 
-      app.onClick('#btn-show-more', e => app.all('#more-content', div => {
-        e.target.classList.add('is-expanded');
-        div.style = `max-height:${div.scrollHeight}px`;
-      }) || e.target.remove());
+      app.onClick('#btn-show-more', e => {
+        const trigger = e.currentTarget;
+        const content = document.querySelector('#more-content');
+        if (!trigger || !content) return;
+
+        const expanded = trigger.classList.toggle('is-expanded');
+        trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+
+        const label = trigger.querySelector('span');
+        if (label) {
+          const readMoreLabel = trigger.dataset.labelMore || salla.lang.get('pages.products.read_more');
+          const readLessLabel = trigger.dataset.labelLess || 'إظهار أقل';
+          label.textContent = expanded ? readLessLabel : readMoreLabel;
+        }
+
+        content.style.maxHeight = expanded ? `${content.scrollHeight}px` : '5.25rem';
+      });
+    }
+
+    initProductTabs() {
+      const tabsRoot = document.getElementById('product-details-tabs');
+      if (!tabsRoot) return;
+
+      const buttons = Array.from(tabsRoot.querySelectorAll('.product-details-tabs__btn'));
+      const panels = Array.from(tabsRoot.querySelectorAll('.product-details-tabs__panel'));
+      if (!buttons.length || !panels.length) return;
+
+      const activate = (targetName, { updateHash = true } = {}) => {
+        buttons.forEach((button) => {
+          const isActive = button.dataset.target === targetName;
+          button.classList.toggle('is-active', isActive);
+          button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          button.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+
+        panels.forEach((panel) => {
+          panel.hidden = !panel.id.endsWith(targetName);
+        });
+
+        if (updateHash) {
+          const targetHash = targetName === 'reviews' ? '#reviews' : '#description';
+          window.history.replaceState(null, '', targetHash);
+        }
+      };
+
+      buttons.forEach((button, index) => {
+        button.addEventListener('click', () => activate(button.dataset.target));
+        button.addEventListener('keydown', (event) => {
+          if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+
+          let nextIndex = index;
+          if (event.key === 'Home') nextIndex = 0;
+          if (event.key === 'End') nextIndex = buttons.length - 1;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % buttons.length;
+          if (event.key === 'ArrowLeft') nextIndex = (index - 1 + buttons.length) % buttons.length;
+
+          const nextButton = buttons[nextIndex];
+          nextButton?.focus();
+          if (nextButton?.dataset.target) activate(nextButton.dataset.target);
+        });
+      });
+
+      const hashTarget = window.location.hash.replace('#', '');
+      if (hashTarget === 'reviews' && buttons.some((button) => button.dataset.target === 'reviews')) {
+        activate('reviews', { updateHash: false });
+      } else {
+        activate('description', { updateHash: false });
+      }
     }
 }
 
