@@ -246,72 +246,7 @@
                   </div>
                 </div>
 
-               <section class="product-details-tabs mb-4" id="product-details-tabs">
-    <div class="product-details-tabs__head" role="tablist" aria-label="{{ trans('common.product_details') }}">
-        <button class="product-details-tabs__btn is-active"
-                type="button"
-                role="tab"
-                id="product-tab-description"
-                aria-controls="product-panel-description"
-                aria-selected="true"
-                data-target="description">
-            {{ trans('pages.product_tabs.description') }}
-        </button>
-
-        {% if store.settings.rating.show_on_product %}
-            <button class="product-details-tabs__btn"
-                    type="button"
-                    role="tab"
-                    id="product-tab-reviews"
-                    aria-controls="product-panel-reviews"
-                    aria-selected="false"
-                    data-target="reviews">
-                {{ trans('pages.product_tabs.reviews') }}
-                <span class="product-details-tabs__count">({{ product.rating.count|default(0) }})</span>
-            </button>
-        {% endif %}
-    </div>
-
-    <div class="product-details-tabs__body">
-        <section class="product-details-tabs__panel"
-                 id="product-panel-description"
-                 role="tabpanel"
-                 aria-labelledby="product-tab-description">
-            <div class="product__description p-2 px-5 sm:p-1 leading-7 mb-1">
-                {% set product_desc = product.description|replace({"&nbsp;":"\n"}) %}
-                {% if product.has_read_more %}
-                    <article class="article article--main relative leading-8 overflow-hidden transition-all max-h-0 duration-300 py-4"
-                             id="more-content" style="max-height:5.25rem">
-                        {{ product_desc|raw }}
-                    </article>
-
-                    <a id="btn-show-more"
-                       class="product-details-tabs__readmore inline-flex items-center gap-2 mt-2 cursor-pointer"
-                       role="button"
-                       aria-expanded="false"
-                       data-label-more="{{ trans('pages.products.read_more') }}"
-                       data-label-less="{{ trans('pages.product_tabs.read_less') }}">
-                        <span>{{ trans('pages.products.read_more') }}</span>
-                        <i class="sicon-keyboard_arrow_down text-xs"></i>
-                    </a>
-                {% else %}
-                    <article class="article--main pb-1">
-                        {{ product_desc|raw }}
-                    </article>
-                {% endif %}
-            </div>
-        </section>
-
-        {% if store.settings.rating.show_on_product %}
-            <section class="product-details-tabs__panel" id="product-panel-reviews" role="tabpanel" aria-labelledby="product-tab-reviews" hidden>
-                <div class="product-details-tabs__reviews">
-                    <salla-comments item-id="{{product.id}}" type="product"></salla-comments>
-                </div>
-            </section>
-        {% endif %}
-    </div>
-</section>
-
+               
 
                 {% if product.tags|length and theme.settings.get('show_tags', true) %}
                     <div class="mb-3">
@@ -490,6 +425,74 @@
         <salla-comments item-id="{{product.id}}" type="product"></salla-comments>
     {% endif %}
     
+
+    <div class="container">
+        <section class="product-details-tabs mb-4" id="product-details-tabs">
+                <div class="product-details-tabs__head" role="tablist" aria-label="{{ trans('common.product_details') }}">
+                    <button class="product-details-tabs__btn is-active"
+                            type="button"
+                            role="tab"
+                            id="product-tab-description"
+                            aria-controls="product-panel-description"
+                            aria-selected="true"
+                            data-target="description">
+                        {{ trans('pages.product_tabs.description') }}
+                    </button>
+
+                    {% if store.settings.rating.show_on_product %}
+                        <button class="product-details-tabs__btn"
+                                type="button"
+                                role="tab"
+                                id="product-tab-reviews"
+                                aria-controls="product-panel-reviews"
+                                aria-selected="false"
+                                data-target="reviews">
+                            {{ trans('pages.product_tabs.reviews') }}
+                            <span class="product-details-tabs__count">({{ product.rating.count|default(0) }})</span>
+                        </button>
+                    {% endif %}
+                </div>
+
+                <div class="product-details-tabs__body">
+                    <section class="product-details-tabs__panel"
+                            id="product-panel-description"
+                            role="tabpanel"
+                            aria-labelledby="product-tab-description">
+                        <div class="product__description p-2 px-5 sm:p-1 leading-7 mb-1">
+                            {% set product_desc = product.description|replace({"&nbsp;":"\n"}) %}
+                            {% if product.has_read_more %}
+                                <article class="article article--main relative leading-8 overflow-hidden transition-all max-h-0 duration-300 py-4"
+                                        id="more-content" style="max-height:5.25rem">
+                                    {{ product_desc|raw }}
+                                </article>
+
+                                <a id="btn-show-more"
+                                class="product-details-tabs__readmore inline-flex items-center gap-2 mt-2 cursor-pointer"
+                                role="button"
+                                aria-expanded="false"
+                                data-label-more="{{ trans('pages.products.read_more') }}"
+                                data-label-less="{{ trans('pages.product_tabs.read_less') }}">
+                                    <span>{{ trans('pages.products.read_more') }}</span>
+                                    <i class="sicon-keyboard_arrow_down text-xs"></i>
+                                </a>
+                            {% else %}
+                                <article class="article--main pb-1">
+                                    {{ product_desc|raw }}
+                                </article>
+                            {% endif %}
+                        </div>
+                    </section>
+
+                    {% if store.settings.rating.show_on_product %}
+                        <section class="product-details-tabs__panel" id="product-panel-reviews" role="tabpanel" aria-labelledby="product-tab-reviews" hidden>
+                            <div class="product-details-tabs__reviews">
+                                <salla-comments item-id="{{product.id}}" type="product"></salla-comments>
+                            </div>
+                        </section>
+                    {% endif %}
+                </div>
+        </section>
+    </div>
     {# Similar Products Area #}
     <div class="container">
         <salla-products-slider source="related" source-value="{{product.id}}" block-title="{{trans('pages.products.similar_products')}}" display-all-url></salla-products-slider>
