@@ -92,7 +92,7 @@
             <div class="sidebar md:sticky top-24 w-full md:!w-2/4 rtl:ml-8 ltr:mr-8 pb-8 md:pb-16 overflow-hidden shrink-0">
                 {% set gallery_images = [] %}
                 {% set gallery_keys = [] %}
-                {% for image in product.images %}
+                {% for image in product.images|default([]) %}
                     {% set image_video_url = (image.video_url is iterable ? image.video_url|first : image.video_url)|default('') %}
                     {% set image_key = (image.url|default('')) ~ '|' ~ image_video_url ~ '|' ~ (image.three_d_image_url|default('')) %}
                     {% if image_key not in gallery_keys %}
@@ -156,7 +156,7 @@
                                    data-type="{{ image_video_url ? 'youtube' : 'image' }}"
                                    href="{{ image_video_url|default(image.url) }}"
                                    aria-label="{{ product.name }}"
-                                   class="swiper-slide magnify-wrapper homeslider__slide {{ image_video_url ? 'video-entry' : '' }}">
+                                   class="swiper-slide magnify-wrapper home-slider__slide {{ image_video_url ? 'video-entry' : '' }}">
                                     {% if loop.first %}
                                         <img id="{{ image_id }}" fetchpriority="high" loading="eager" src="{{ image.url }}"
                                              alt="{{ image_alt }}"
@@ -205,14 +205,23 @@
 
                 {% hook 'product:single.description.start' %}
 
-                {% if product.brand.name %}
+                {% if product.brand and product.brand.name and product.brand.logo %}
                     <div class="product-brand mb-5 w-12">
-                        <a class="brand-logo" href="{{ product.brand.url }}" title="{{ product.brand.name }}">
-                            <img width="100%" height="100%" class="max-h-full object-contain"
-                                 src="{{ product.brand.logo }}"
-                                 title="{{ product.brand.name }}"
-                                 alt="{{ product.brand.name }}">
-                        </a>
+                        {% if product.brand.url %}
+                            <a class="brand-logo" href="{{ product.brand.url }}" title="{{ product.brand.name }}">
+                                <img width="100%" height="100%" class="max-h-full object-contain"
+                                     src="{{ product.brand.logo }}"
+                                     title="{{ product.brand.name }}"
+                                     alt="{{ product.brand.name }}">
+                            </a>
+                        {% else %}
+                            <span class="brand-logo block" title="{{ product.brand.name }}">
+                                <img width="100%" height="100%" class="max-h-full object-contain"
+                                     src="{{ product.brand.logo }}"
+                                     title="{{ product.brand.name }}"
+                                     alt="{{ product.brand.name }}">
+                            </span>
+                        {% endif %}
                     </div>
                 {% endif %}
 
@@ -409,7 +418,7 @@
                         </salla-add-product-button>
                     </section>
                     {% if product.is_giftable %}
-                        <salla-gifting class="mt-5" widget-subtitle="{{ gifting_intro }}" product-id="{{ product.id }}" {{ product.is_require_shipping ? 'physical-products' : ''  }}></salla-gifting>
+                        <salla-gifting class="mt-5" product-id="{{ product.id }}" {{ product.is_require_shipping ? 'physical-products' : ''  }}></salla-gifting>
                     {% endif %}
                 </form>
 
@@ -419,12 +428,6 @@
         </div>
         <salla-offer></salla-offer>
     </div>
-
-    {# Comments Area #}
-    {% if store.settings.rating.show_on_product %}
-        <salla-comments item-id="{{product.id}}" type="product"></salla-comments>
-    {% endif %}
-    
 
     <div class="container">
         <section class="product-details-tabs mb-4" id="product-details-tabs">

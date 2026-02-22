@@ -97,14 +97,20 @@ class Product extends BasePage {
 
     registerEvents() {
       salla.event.on('product::price.updated.failed',()=>{
-        app.element('.price-wrapper').classList.add('hidden');
-        app.element('.out-of-stock').classList.remove('hidden')
+        const priceWrapper = app.element('.price-wrapper');
+        const outOfStock = app.element('.out-of-stock');
+
+        priceWrapper?.classList.add('hidden');
+        outOfStock?.classList.remove('hidden');
         app.anime('.out-of-stock', { scale: [0.88, 1] });
       })
       salla.product.event.onPriceUpdated((res) => {
 
-        app.element('.out-of-stock').classList.add('hidden')
-        app.element('.price-wrapper').classList.remove('hidden')
+        const priceWrapper = app.element('.price-wrapper');
+        const outOfStock = app.element('.out-of-stock');
+
+        outOfStock?.classList.add('hidden');
+        priceWrapper?.classList.remove('hidden');
 
         let data = res.data,
             is_on_sale = data.has_sale_price && data.regular_price > data.price;
@@ -115,8 +121,8 @@ class Product extends BasePage {
         app.totalPrice.forEach((el) => {el.innerHTML = salla.money(data.price)});
         app.beforePrice.forEach((el) => {el.innerHTML = salla.money(data.regular_price)});
 
-        app.toggleClassIf('.price_is_on_sale','showed','hidden', ()=> is_on_sale)
-        app.toggleClassIf('.starting-or-normal-price','hidden','showed', ()=> is_on_sale)
+        app.toggleClassIf('.price_is_on_sale', 'block', 'hidden', () => is_on_sale);
+        app.toggleClassIf('.starting-or-normal-price', 'flex', 'hidden', () => !is_on_sale);
 
         app.anime('.total-price, .product-weight', { scale: [0.88, 1] });
       });
@@ -132,7 +138,7 @@ class Product extends BasePage {
         const label = trigger.querySelector('span');
         if (label) {
           const readMoreLabel = trigger.dataset.labelMore || salla.lang.get('pages.products.read_more');
-          const readLessLabel = trigger.dataset.labelLess || 'إظهار أقل';
+          const readLessLabel = trigger.dataset.labelLess || salla.lang.get('pages.product_tabs.read_less') || 'Read less';
           label.textContent = expanded ? readLessLabel : readMoreLabel;
         }
 
