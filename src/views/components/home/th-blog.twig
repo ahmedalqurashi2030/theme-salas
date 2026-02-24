@@ -34,61 +34,20 @@
 {% set show_controls = show_controls_raw in [true, 1, '1', 'true'] %}
 {% set autoplay = autoplay_raw in [true, 1, '1', 'true'] %}
 
-{# Salla can expose posts as top-level `posts` or `component.posts` #}
-{% set posts_field = posts|default(component.posts|default([])) %}
-{% if (posts_field is empty) and (component.posts is defined) %}
-	{% set posts_field = component.posts %}
-{% endif %}
-{% if posts_field is iterable and posts_field.items is defined and posts_field.items is iterable and posts_field.items|length %}
-	{% set raw_posts = posts_field.items %}
-{% elseif posts_field is iterable and posts_field.data is defined and posts_field.data is iterable and posts_field.data|length %}
-	{% set raw_posts = posts_field.data %}
-{% elseif posts_field is iterable and posts_field.selected is defined and posts_field.selected is iterable and posts_field.selected|length %}
-	{% set raw_posts = posts_field.selected %}
-{% elseif posts_field is iterable and posts_field.value is defined and posts_field.value is iterable and posts_field.value|length %}
-	{% set raw_posts = posts_field.value %}
-{% elseif posts_field is iterable %}
-	{% set raw_posts = posts_field %}
-{% else %}
-	{% set raw_posts = [] %}
-{% endif %}
+{# Salla exposes selected articles via component.posts #}
+{% set raw_posts = component.posts|default(posts|default([])) %}
 
-{% set selected_article_ids = [] %}
 {% set articles = [] %}
 {% for item in raw_posts %}
 	{% set post = item %}
-	{% if item is iterable and item.post is defined %}
-		{% set post = item.post %}
-	{% elseif item is iterable and item.article is defined %}
+	{% if item.article is defined %}
 		{% set post = item.article %}
-	{% elseif item is iterable and item.data is defined %}
-		{% set post = item.data %}
+	{% elseif item.post is defined %}
+		{% set post = item.post %}
 	{% endif %}
 
-	{% set candidate_id = '' %}
-	{% if item is iterable %}
-		{% if item.id is defined and item.id %}
-			{% set candidate_id = item.id %}
-		{% elseif item.value is defined and item.value %}
-			{% if item.value is iterable %}
-				{% set candidate_id = item.value.id|default(item.value.key|default(item.value.value|default(item.value.slug|default('')))) %}
-			{% else %}
-				{% set candidate_id = item.value %}
-			{% endif %}
-		{% elseif item.key is defined and item.key %}
-			{% set candidate_id = item.key %}
-		{% elseif item.slug is defined and item.slug %}
-			{% set candidate_id = item.slug %}
-		{% endif %}
-	{% elseif item %}
-		{% set candidate_id = item %}
-	{% endif %}
-
-	{% if candidate_id %}
-		{% set selected_article_ids = selected_article_ids|merge([candidate_id]) %}
-	{% endif %}
-
-	{% if post is iterable and (post.title is defined or post.name is defined or post.summary is defined or post.excerpt is defined) %}
+	{# Ensure it's a valid article object with a title before adding #}
+	{% if post.title is defined or post.name is defined %}
 		{% set articles = articles|merge([post]) %}
 	{% endif %}
 {% endfor %}
