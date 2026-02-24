@@ -11,12 +11,8 @@
 
   position: relative;
   overflow: hidden;
-  padding: 5rem 0 4rem;
 
 
-  @media (max-width: 767px) {
-    padding: 3.25rem 0;
-  }
 
 
 
@@ -24,10 +20,9 @@
   &__header {
     text-align: center;
     max-width: 51rem;
-    margin: 0 auto 3.25rem;
+    margin: 0 auto;
 
     @media (max-width: 767px) {
-      margin-bottom: 2rem;
       padding: 0 1rem;
     }
   }
@@ -38,7 +33,6 @@
     line-height: 1.16;
     color: var(--th-charcoal);
     letter-spacing: -.02em;
-    margin-bottom: .95rem;
     text-wrap: balance;
   }
 
@@ -101,22 +95,13 @@
       linear-gradient(135deg, rgba(212, 175, 55, .03), transparent 70%);
     padding: 3.2rem 1.2rem 2rem;
     border: 1px solid var(--th-card-border);
-    box-shadow:
-      0 12px 30px rgba(20, 20, 20, .06),
-      inset 0 1px 0 rgba(255, 255, 255, .95);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     transition: transform .45s cubic-bezier(.2, .8, .2, 1), box-shadow .45s ease, border-color .3s ease;
 
-    &:hover {
-      transform: translateY(-12px);
-      border-color: rgba(212, 175, 55, .35);
-      box-shadow:
-        0 30px 60px -22px rgba(212, 175, 55, .34),
-        0 16px 28px rgba(20, 20, 20, .08);
-    }
+
 
 
 
@@ -136,7 +121,6 @@
     border-radius: 1.15rem;
     background: linear-gradient(180deg, #fff, #fdfaf1);
     border: 1px solid rgba(212, 175, 55, .2);
-    box-shadow: 0 14px 28px -14px rgba(212, 175, 55, .55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -145,7 +129,6 @@
 
     .th-store-features__card-inner:hover & {
       transform: translateX(-50%) translateY(-2px) scale(1.08);
-      box-shadow: 0 22px 34px -18px rgba(212, 175, 55, .72);
     }
 
     @media (min-width: 768px) {

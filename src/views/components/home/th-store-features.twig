@@ -15,188 +15,187 @@
 {% set mobile_nav_style = 'dots' %}
 
 {% if component.mobile_nav_style is iterable and component.mobile_nav_style|length %}
-    {% set first_style = component.mobile_nav_style|first %}
-    {% if first_style.label is defined and first_style.label in ['dots', 'thumbnails'] %}
-        {% set mobile_nav_style = first_style.label %}
-    {% elseif first_style.value is defined and first_style.value in ['dots', 'thumbnails'] %}
-        {% set mobile_nav_style = first_style.value %}
-    {% endif %}
+	{% set first_style = component.mobile_nav_style|first %}
+	{% if first_style.label is defined and first_style.label in ['dots', 'thumbnails'] %}
+		{% set mobile_nav_style = first_style.label %}
+	{% elseif first_style.value is defined and first_style.value in ['dots', 'thumbnails'] %}
+		{% set mobile_nav_style = first_style.value %}
+	{% endif %}
 {% elseif component.mobile_nav_style in ['dots', 'thumbnails'] %}
-    {% set mobile_nav_style = component.mobile_nav_style %}
+	{% set mobile_nav_style = component.mobile_nav_style %}
 {% endif %}
 
 {% if features|length >= 1 %}
-<section class="th-store-features s-block" data-th-store-features data-nav-style="{{ mobile_nav_style }}">
-    <div class="container">
-        <div class="th-store-features__header">
-            {% if component.section_title %}
-                <h2 class="th-store-features__title">{{ component.section_title }}</h2>
-            {% endif %}
-            {% if component.section_subtitle %}
-                <p class="th-store-features__subtitle">{{ component.section_subtitle }}</p>
-            {% endif %}
-        </div>
+	<section class="th-store-features s-block" data-th-store-features data-nav-style="{{ mobile_nav_style }}">
+		<div class="container">
+			<div class="th-store-features__header">
+				{% if component.section_title %}
+					<h2 class="th-store-features__title">{{ component.section_title }}</h2>
+				{% endif %}
+				{% if component.section_subtitle %}
+					<p class="th-store-features__subtitle">{{ component.section_subtitle }}</p>
+				{% endif %}
+			</div>
 
-        <div class="th-store-features__slider" data-th-store-features-track>
-            {% for feature in features %}
-                <article class="th-store-features__card" data-feature-index="{{ loop.index0 }}">
-                    <div class="th-store-features__card-inner {{ loop.first ? 'is-featured' : '' }}">
-                        <div class="th-store-features__icon-wrap">
-                            <i class="{{ feature.icon|default('sicon-store') }} th-store-features__icon"></i>
-                            {% if loop.first %}
-                                <span class="th-store-features__featured-star" aria-hidden="true">
-                                    <i class="sicon-star2"></i>
-                                </span>
-                            {% endif %}
-                        </div>
+			<div class="th-store-features__slider" data-th-store-features-track>
+				{% for feature in features %}
+					<article class="th-store-features__card" data-feature-index="{{ loop.index0 }}">
+						<div class="th-store-features__card-inner {{ loop.first ? 'is-featured' : '' }}">
+							<div class="th-store-features__icon-wrap">
+								<i class="{{ feature.icon|default('sicon-store') }} th-store-features__icon"></i>
+							</div>
 
-                   
 
-                        {% if feature.title %}
-                            <h3 class="th-store-features__card-title">{{ feature.title }}</h3>
-                        {% endif %}
+							{% if feature.title %}
+								<h3 class="th-store-features__card-title">{{ feature.title }}</h3>
+							{% endif %}
 
-                        {% if feature.description %}
-                            <div class="th-store-features__card-description">{{ feature.description|raw }}</div>
-                        {% endif %}
-                    </div>
-                </article>
-            {% endfor %}
-        </div>
+							{% if feature.description %}
+								<div class="th-store-features__card-description">{{ feature.description|raw }}</div>
+							{% endif %}
+						</div>
+					</article>
+				{% endfor %}
+			</div>
 
-        <div class="th-store-features__mobile-nav" data-th-store-features-nav="dots">
-            <div class="th-store-features__dots">
-                {% for feature in features %}
-                    <button
-                        type="button"
-                        class="th-store-features__dot {{ loop.first ? 'is-active' : '' }}"
-                        data-go-to="{{ loop.index0 }}"
-                        aria-label="{{ 'انتقل للبطاقة' }} {{ loop.index }}"></button>
-                {% endfor %}
-            </div>
+			<div class="th-store-features__mobile-nav" data-th-store-features-nav="dots">
+				<div class="th-store-features__dots">
+					{% for feature in features %}
+						<button type="button" class="th-store-features__dot {{ loop.first ? 'is-active' : '' }}" data-go-to="{{ loop.index0 }}" aria-label="{{ 'انتقل للبطاقة' }} {{ loop.index }}"></button>
+					{% endfor %}
+				</div>
 
-            <div class="th-store-features__counter">
-                <span data-th-store-features-current>1</span>
-                <span>/</span>
-                <span>{{ features|length }}</span>
-            </div>
-        </div>
+				<div class="th-store-features__counter">
+					<span data-th-store-features-current>1</span>
+					<span>/</span>
+					<span>{{ features|length }}</span>
+				</div>
+			</div>
 
-        <div class="th-store-features__mobile-nav th-store-features__mobile-nav--hidden" data-th-store-features-nav="thumbnails">
-            <div class="th-store-features__thumbs">
-                {% for feature in features %}
-                    <button
-                        type="button"
-                        class="th-store-features__thumb {{ loop.first ? 'is-active' : '' }}"
-                        data-go-to="{{ loop.index0 }}"
-                        aria-label="{{ feature.title|default('ميزة') }}">
-                        <i class="{{ feature.icon|default('sicon-store') }}"></i>
-                    </button>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</section>
+			<div class="th-store-features__mobile-nav th-store-features__mobile-nav--hidden" data-th-store-features-nav="thumbnails">
+				<div class="th-store-features__thumbs">
+					{% for feature in features %}
+						<button type="button" class="th-store-features__thumb {{ loop.first ? 'is-active' : '' }}" data-go-to="{{ loop.index0 }}" aria-label="{{ feature.title|default('ميزة') }}">
+							<i class="{{ feature.icon|default('sicon-store') }}"></i>
+						</button>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
 
-<script>
-(() => {
-    const sections = document.querySelectorAll('[data-th-store-features]');
-    if (!sections.length) return;
+	<script>
+		(() => {
+const sections = document.querySelectorAll('[data-th-store-features]');
+if (! sections.length) 
+return;
 
-    const debounce = (fn, wait = 120) => {
-        let timeout;
-        return (...args) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => fn(...args), wait);
-        };
-    };
 
-    sections.forEach((section) => {
-        const track = section.querySelector('[data-th-store-features-track]');
-        if (!track) return;
+const debounce = (fn, wait = 120) => {
+let timeout;
+return(...args) => {
+clearTimeout(timeout);
+timeout = setTimeout(() => fn(...args), wait);
+};
+};
 
-        const cards = section.querySelectorAll('.th-store-features__card');
-        const dots = section.querySelectorAll('.th-store-features__dot');
-        const thumbs = section.querySelectorAll('.th-store-features__thumb');
-        const counter = section.querySelector('[data-th-store-features-current]');
-        const mobileNavs = section.querySelectorAll('[data-th-store-features-nav]');
-        const total = cards.length;
-        if (!total) return;
+sections.forEach((section) => {
+const track = section.querySelector('[data-th-store-features-track]');
+if (! track) 
+return;
 
-        let activeIndex = 0;
-        let isMobile = window.innerWidth < 1024;
-        const defaultStyle = section.dataset.navStyle === 'thumbnails' ? 'thumbnails' : 'dots';
 
-        const setActive = (index) => {
-            activeIndex = Math.max(0, Math.min(index, total - 1));
-            dots.forEach((dot, i) => dot.classList.toggle('is-active', i === activeIndex));
-            thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === activeIndex));
-            if (counter) counter.textContent = String(activeIndex + 1);
-        };
+const cards = section.querySelectorAll('.th-store-features__card');
+const dots = section.querySelectorAll('.th-store-features__dot');
+const thumbs = section.querySelectorAll('.th-store-features__thumb');
+const counter = section.querySelector('[data-th-store-features-current]');
+const mobileNavs = section.querySelectorAll('[data-th-store-features-nav]');
+const total = cards.length;
+if (! total) 
+return;
 
-        const scrollToCard = (index) => {
-            const card = cards[index];
-            if (!card) return;
 
-            // Robust centering for both LTR/RTL (works better than offset/scrollLeft math)
-            const trackRect = track.getBoundingClientRect();
-            const cardRect = card.getBoundingClientRect();
-            const deltaX = (cardRect.left + cardRect.width / 2) - (trackRect.left + trackRect.width / 2);
+let activeIndex = 0;
+let isMobile = window.innerWidth < 1024;
+const defaultStyle = section.dataset.navStyle === 'thumbnails' ? 'thumbnails' : 'dots';
 
-            track.scrollBy({
-                left: deltaX,
-                behavior: 'smooth'
-            });
+const setActive = (index) => {
+activeIndex = Math.max(0, Math.min(index, total - 1));
+dots.forEach((dot, i) => dot.classList.toggle('is-active', i === activeIndex));
+thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === activeIndex));
+if (counter) 
+counter.textContent = String(activeIndex + 1);
 
-            setActive(index);
-        };
+};
 
-        const updateVisibleNav = () => {
-            mobileNavs.forEach((nav) => nav.classList.add('th-store-features__mobile-nav--hidden'));
-            if (!isMobile) return;
+const scrollToCard = (index) => {
+const card = cards[index];
+if (! card) 
+return;
 
-            const activeNav = section.querySelector(`[data-th-store-features-nav="${defaultStyle}"]`);
-            if (activeNav) activeNav.classList.remove('th-store-features__mobile-nav--hidden');
-        };
 
-        const updateFromScroll = debounce(() => {
-            if (!isMobile) return;
+// Robust centering for both LTR/RTL (works better than offset/scrollLeft math)
+const trackRect = track.getBoundingClientRect();
+const cardRect = card.getBoundingClientRect();
+const deltaX = (cardRect.left + cardRect.width / 2) - (trackRect.left + trackRect.width / 2);
 
-            const center = track.getBoundingClientRect().left + track.clientWidth / 2;
-            let nextIndex = 0;
-            let minDistance = Infinity;
+track.scrollBy({left: deltaX, behavior: 'smooth'});
 
-            cards.forEach((card, index) => {
-                const cardRect = card.getBoundingClientRect();
-                const cardCenter = cardRect.left + cardRect.width / 2;
-                const distance = Math.abs(cardCenter - center);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    nextIndex = index;
-                }
-            });
+setActive(index);
+};
 
-            setActive(nextIndex);
-        }, 120);
+const updateVisibleNav = () => {
+mobileNavs.forEach((nav) => nav.classList.add('th-store-features__mobile-nav--hidden'));
+if (! isMobile) 
+return;
 
-        track.addEventListener('scroll', updateFromScroll);
 
-        section.querySelectorAll('[data-go-to]').forEach((button) => {
-            button.addEventListener('click', (event) => {
-                event.preventDefault();
-                const index = Number(button.dataset.goTo || 0);
-                scrollToCard(index);
-            });
-        });
+const activeNav = section.querySelector(`[data-th-store-features-nav="${defaultStyle}"]`);
+if (activeNav) 
+activeNav.classList.remove('th-store-features__mobile-nav--hidden');
 
-        window.addEventListener('resize', debounce(() => {
-            isMobile = window.innerWidth < 1024;
-            updateVisibleNav();
-        }, 200));
+};
 
-        updateVisibleNav();
-        setActive(0);
-    });
+const updateFromScroll = debounce(() => {
+if (! isMobile) 
+return;
+
+
+const center = track.getBoundingClientRect().left + track.clientWidth / 2;
+let nextIndex = 0;
+let minDistance = Infinity;
+
+cards.forEach((card, index) => {
+const cardRect = card.getBoundingClientRect();
+const cardCenter = cardRect.left + cardRect.width / 2;
+const distance = Math.abs(cardCenter - center);
+if (distance < minDistance) {
+minDistance = distance;
+nextIndex = index;
+}
+});
+
+setActive(nextIndex);
+}, 120);
+
+track.addEventListener('scroll', updateFromScroll);
+
+section.querySelectorAll('[data-go-to]').forEach((button) => {
+button.addEventListener('click', (event) => {
+event.preventDefault();
+const index = Number(button.dataset.goTo || 0);
+scrollToCard(index);
+});
+});
+
+window.addEventListener('resize', debounce(() => {
+isMobile = window.innerWidth < 1024;
+updateVisibleNav();
+}, 200));
+
+updateVisibleNav();
+setActive(0);
+});
 })();
-</script>
+	</script>
 {% endif %}

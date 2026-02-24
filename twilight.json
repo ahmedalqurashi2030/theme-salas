@@ -33,31 +33,40 @@
             "label": "إعدادات المظهر المتقدمة (ثراء)",
             "value": null,
             "variant": "h1",
-            "icon": "sicon-format-text"
+            "icon": "sicon-format-text",
+            "tab": "appearance",
+            "group": "intro",
+            "info": "Section title for advanced appearance settings."
         },
         {
             "id": "enable_dark_mode",
             "type": "boolean",
             "format": "switch",
             "label": "تفعيل نمط التصفح الليلي",
-            "description": "يسمح للعملاء بالتبديل بين الوضع الفاتح والداكن لراحة العين.",
+            "description": "Enable switching between light and dark modes for visitors.",
             "labelHTML": null,
             "icon": "sicon-toggle-off",
             "value": true,
             "selected": false,
-            "required": false
+            "required": false,
+            "tab": "appearance",
+            "group": "theme-mode",
+            "info": "Recommended when your text colors have enough contrast in both modes."
         },
         {
             "id": "force_dark_mode",
             "type": "boolean",
             "format": "switch",
             "label": "اعتماد الوضع الداكن كافتراضي",
-            "description": "عند التفعيل، سيظهر المتجر باللون الأسود الفاخر لجميع الزوار.",
+            "description": "Force dark mode as the default storefront appearance.",
             "labelHTML": null,
             "icon": "sicon-toggle-off",
             "value": true,
             "selected": false,
-            "required": false
+            "required": false,
+            "tab": "appearance",
+            "group": "theme-mode",
+            "info": "Best for brands that rely on a dark visual identity."
         },
         {
             "id": "main_bg_color",
@@ -65,12 +74,15 @@
             "format": "color",
             "inputType": "color",
             "label": "لون الخلفية العامة للمتجر",
-            "description": "Controls the global page background color used across the storefront.",
+            "description": "Global background color for storefront pages.",
             "placeholder": "#FFFFFF",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#ffffff",
-            "required": false
+            "required": false,
+            "tab": "appearance",
+            "group": "colors",
+            "info": "Choose a comfortable tone that keeps content readable."
         },
         {
             "id": "secondary_bg_color",
@@ -78,12 +90,15 @@
             "format": "color",
             "inputType": "color",
             "label": "لون خلفية الأقسام والكتل",
-            "description": "Used as the background color for cards, sections, and content blocks.",
+            "description": "Secondary background color for cards and sections.",
             "placeholder": "#FBFBFB",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#fbfbfb",
-            "required": false
+            "required": false,
+            "tab": "appearance",
+            "group": "colors",
+            "info": "Use a subtle contrast against the main background."
         },
         {
             "id": "primary_brand_color",
@@ -91,12 +106,15 @@
             "format": "color",
             "inputType": "color",
             "label": "لون المتجر الأساسي",
-            "description": "سيتم استخدام هذا اللون في الأزرار والروابط والعناصر التفاعلية الرئيسية",
+            "description": "Primary brand color used for buttons, links, and key actions.",
             "placeholder": "#FED700",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#fed700",
-            "required": false
+            "required": false,
+            "tab": "appearance",
+            "group": "colors",
+            "info": "This color is heavily used in interactive elements."
         },
         {
             "id": "primary_text_color",
@@ -104,12 +122,15 @@
             "format": "color",
             "inputType": "color",
             "label": "لون العناوين والخطوط العريضة",
-            "description": "Primary text color for headings and high-emphasis textual content.",
+            "description": "Primary text color for headings and emphasized text.",
             "placeholder": "#111827",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#111827",
-            "required": false
+            "required": false,
+            "tab": "appearance",
+            "group": "colors",
+            "info": "Ensure strong contrast with the background color."
         },
         {
             "id": "secondary_text_color",
@@ -117,12 +138,15 @@
             "format": "color",
             "inputType": "color",
             "label": "لون نصوص الوصف والتفاصيل",
-            "description": "Secondary text color for descriptions, metadata, and helper text.",
+            "description": "Secondary text color for descriptions and helper text.",
             "placeholder": "#111827",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#111827",
-            "required": false
+            "required": false,
+            "tab": "appearance",
+            "group": "colors",
+            "info": "Keep it slightly softer than the primary text color."
         },
         {
             "id": "header_bg_color",
@@ -130,26 +154,32 @@
             "format": "color",
             "inputType": "color",
             "label": "لون خلفية الترويسة (Header)",
-            "description": "Controls the background color of the main header area.",
+            "description": "Header background color (top area).",
             "placeholder": "#FFFFFF",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#ffffff",
-            "required": false
+            "required": false,
+            "tab": "appearance",
+            "group": "colors",
+            "info": "Use a color consistent with your brand style."
         },
         {
             "id": "line",
             "type": "static",
             "format": "line",
             "label": "Divider",
-            "icon": "sicon-minus"
+            "icon": "sicon-minus",
+            "tab": "appearance",
+            "group": "divider",
+            "info": "Visual divider between settings groups."
         },
         {
             "id": "squar_photo_bg_image_size",
             "type": "items",
             "format": "dropdown-list",
             "label": "طريقة عرض الصور في قسم قائمة عناصر",
-            "description": "Choose how images should fit inside homepage square links.",
+            "description": "How images fit inside homepage square links.",
             "labelHTML": null,
             "icon": "sicon-list",
             "selected": [
@@ -172,37 +202,52 @@
                 }
             ],
             "source": "Manual",
-            "required": true
+            "required": true,
+            "tab": "homepage",
+            "group": "layout",
+            "info": "Use Contain to preserve full image, or Cover to fill available space."
         },
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "وضع عمودي للمنتجات في مربع المنتجات الثابتة في الصفحة الرئيسية",
-            "description": "Displays fixed products in a vertical card layout on homepage blocks.",
+            "description": "Display fixed products using a vertical layout on homepage.",
             "id": "vertical_fixed_products",
             "format": "switch",
             "required": false,
             "value": false,
-            "selected": false
+            "selected": false,
+            "tab": "homepage",
+            "group": "layout",
+            "info": "Useful when showcasing more products in vertical sections."
         },
         {
             "type": "boolean",
             "id": "is_more_button_enabled",
             "label": "عرض (زر الكل) في الصفحة الرئيسية",
             "format": "switch",
-            "description": "Shows a View All button for supported homepage sections."
+            "description": "Show a \"View All\" button in supported homepage sections.",
+            "tab": "homepage",
+            "group": "layout",
+            "info": "Helps users navigate quickly to full listings."
         },
         {
             "type": "static",
             "id": "static-line1",
-            "format": "line"
+            "format": "line",
+            "tab": "header",
+            "group": "divider",
+            "info": "Divider for header settings."
         },
         {
             "type": "static",
             "format": "title",
             "id": "static-label2",
             "value": "خيارات أعلى الصفحة",
-            "variant": "h6"
+            "variant": "h6",
+            "tab": "header",
+            "group": "heading",
+            "info": "Header settings group title."
         },
         {
             "id": "header_is_sticky",
@@ -213,18 +258,24 @@
             "format": "switch",
             "required": false,
             "value": true,
-            "selected": true
+            "selected": true,
+            "tab": "header",
+            "group": "behavior",
+            "info": "Keep header visible while scrolling."
         },
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "شريط علوي داكن",
-            "description": "Applies dark style to the top navigation strip.",
+            "description": "Apply dark style to the top navigation strip.",
             "id": "topnav_is_dark",
             "format": "switch",
             "required": false,
             "value": true,
-            "selected": false
+            "selected": false,
+            "tab": "header",
+            "group": "style",
+            "info": "Use when your brand style fits a dark top bar."
         },
         {
             "type": "boolean",
@@ -235,71 +286,95 @@
             "format": "switch",
             "required": false,
             "value": true,
-            "selected": true
+            "selected": true,
+            "tab": "header",
+            "group": "behavior",
+            "info": "Show important page links in the top strip."
         },
         {
             "type": "static",
             "id": "static-line3",
-            "format": "line"
+            "format": "line",
+            "tab": "footer",
+            "group": "divider",
+            "info": "Divider for footer settings."
         },
         {
             "type": "static",
             "format": "title",
             "id": "static-label4",
             "value": "خيارات أسفل الصفحة",
-            "variant": "h6"
+            "variant": "h6",
+            "tab": "footer",
+            "group": "heading",
+            "info": "Footer settings group title."
         },
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "الوضع الداكن",
-            "description": "Applies a dark appearance to the footer area.",
+            "description": "Apply dark style to the footer.",
             "id": "footer_is_dark",
             "format": "switch",
             "required": false,
             "value": true,
-            "selected": false
+            "selected": false,
+            "tab": "footer",
+            "group": "style",
+            "info": "Useful when footer needs stronger visual contrast."
         },
         {
             "type": "static",
             "id": "static-line5",
-            "format": "line"
+            "format": "line",
+            "tab": "product",
+            "group": "divider",
+            "info": "Divider for product page settings."
         },
         {
             "type": "static",
             "format": "title",
             "id": "static-label6",
             "value": "خيارات صفحة المنتج",
-            "variant": "h6"
+            "variant": "h6",
+            "tab": "product",
+            "group": "heading",
+            "info": "Product page settings group title."
         },
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "تثبيت زر الإضافة والكمية أسفل شاشة الجوال",
-            "description": "Keeps add-to-cart controls fixed at the bottom on mobile product pages.",
+            "description": "Keep Add-to-Cart controls fixed at bottom on mobile product pages.",
             "id": "sticky_add_to_cart",
             "format": "switch",
             "required": false,
             "value": true,
-            "selected": true
+            "selected": true,
+            "tab": "product",
+            "group": "behavior",
+            "info": "Can improve mobile add-to-cart conversion."
         },
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "اظهار الوسوم",
-            "description": "Shows product tags where supported in the storefront UI.",
+            "description": "Display product tags where supported.",
             "id": "show_tags",
             "format": "switch",
             "required": false,
             "value": true,
-            "selected": true
+            "selected": true,
+            "tab": "product",
+            "group": "display",
+            "info": "Helps visitors identify product context quickly."
         },
         {
             "id": "slider_background_size",
             "type": "items",
             "format": "dropdown-list",
             "label": "طريقة عرض الصور في سليدر صور المنتج",
-            "description": "Choose how product gallery images should fit inside the slider frame.",
+            "description": "How product images fit inside product slider.",
             "labelHTML": null,
             "icon": "sicon-list",
             "selected": [
@@ -322,7 +397,10 @@
                 }
             ],
             "source": "Manual",
-            "required": true
+            "required": true,
+            "tab": "product",
+            "group": "gallery",
+            "info": "Use Cover for full area fill, or Contain to preserve full image."
         },
         {
             "type": "boolean",
@@ -333,7 +411,10 @@
             "format": "switch",
             "required": false,
             "value": false,
-            "selected": false
+            "selected": false,
+            "tab": "product",
+            "group": "gallery",
+            "info": "Enable zoom interaction in product image slider."
         }
     ],
     "components": [
@@ -363,12 +444,15 @@
                     "type": "boolean",
                     "format": "switch",
                     "label": "عرض السلايدر بملء الشاشة",
-                    "description": "Displays the slider in full-width mode.",
+                    "description": "Display the slider in full-width mode.",
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
                     "value": true,
                     "selected": true,
-                    "required": false
+                    "required": false,
+                    "info": "Useful for wide hero banners.",
+                    "tab": "homepage",
+                    "group": "hero-slider"
                 },
                 {
                     "id": "show-pagination",
@@ -649,8 +733,11 @@
                             "required": false,
                             "format": "icon",
                             "class": "form--inline",
-                            "description": "Use a Salla icon class (sicon-*) for each quick link.",
-                            "placeholder": "e.g. sicon-store2"
+                            "description": "Select a Salla icon class (sicon-*) for the quick link.",
+                            "placeholder": "e.g. sicon-store2",
+                            "info": "Example: sicon-store2 or sicon-packed-box",
+                            "tab": "homepage",
+                            "group": "quick-links"
                         },
                         {
                             "type": "string",
@@ -3012,12 +3099,15 @@
                             "type": "string",
                             "format": "icon",
                             "label": "الأيقونة",
-                            "description": "Use a Salla icon class to represent the feature visually.",
+                            "description": "Icon class (sicon-*) to represent the feature visually.",
                             "placeholder": "e.g. sicon-store",
                             "labelHTML": null,
                             "icon": "sicon-user-circle",
                             "value": "sicon-store",
-                            "required": false
+                            "required": false,
+                            "info": "Pick a clear icon that matches the feature meaning.",
+                            "tab": "homepage",
+                            "group": "store-features"
                         }
                     ],
                     "value": [],
@@ -3077,7 +3167,10 @@
                     "labelHTML": null,
                     "icon": "sicon-format-fill",
                     "value": "#000000",
-                    "required": false
+                    "required": false,
+                    "info": "Use enough contrast with text color for readability.",
+                    "tab": "homepage",
+                    "group": "announcement-bar"
                 },
                 {
                     "id": "text_color",
@@ -3085,12 +3178,15 @@
                     "format": "color",
                     "inputType": "color",
                     "label": "لون النص",
-                    "description": "Text color used inside the moving announcement bar.",
+                    "description": "Text color for the moving announcement bar.",
                     "placeholder": "#FFFFFF",
                     "labelHTML": null,
                     "icon": "sicon-format-fill",
                     "value": "#ffffff",
-                    "required": false
+                    "required": false,
+                    "info": "Ensure text remains readable on selected background.",
+                    "tab": "homepage",
+                    "group": "announcement-bar"
                 },
                 {
                     "id": "custom_class",
@@ -3254,7 +3350,11 @@
                             "labelHTML": null,
                             "icon": "sicon-user-circle",
                             "value": "sicon-store",
-                            "required": false
+                            "required": false,
+                            "info": "You can use an icon such as sicon-help-circle.",
+                            "placeholder": "e.g. sicon-help-circle",
+                            "tab": "homepage",
+                            "group": "faq"
                         }
                     ],
                     "value": [],
@@ -3367,71 +3467,70 @@
                             "minLength": 6,
                             "maxLength": 30
                         },
-
-                {
-                    "type": "items",
-                    "icon": "sicon-link",
-                    "label": "رابط عرض الكل",
-                    "id": "display_all_url",
-                    "value": [],
-                    "description": "عند إختيار رابط فارغ سيتم إخفاء زر 'عرض الكل'",
-                    "required": false,
-                    "format": "variable-list",
-                    "searchable": true,
-                    "source": "custom",
-                    "sources": [
                         {
-                            "label": "منتج",
-                            "key": "products",
-                            "value": "products"
+                            "type": "items",
+                            "icon": "sicon-link",
+                            "label": "رابط عرض الكل",
+                            "id": "display_all_url",
+                            "value": [],
+                            "description": "عند إختيار رابط فارغ سيتم إخفاء زر 'عرض الكل'",
+                            "required": false,
+                            "format": "variable-list",
+                            "searchable": true,
+                            "source": "custom",
+                            "sources": [
+                                {
+                                    "label": "منتج",
+                                    "key": "products",
+                                    "value": "products"
+                                },
+                                {
+                                    "label": "تصنيف",
+                                    "key": "categories",
+                                    "value": "categories"
+                                },
+                                {
+                                    "label": "ماركة تجارية",
+                                    "key": "brands",
+                                    "value": "brands"
+                                },
+                                {
+                                    "label": "صفحة تعريفية",
+                                    "key": "pages",
+                                    "value": "pages"
+                                },
+                                {
+                                    "label": "مقالة",
+                                    "key": "blog_articles",
+                                    "value": "blog_articles"
+                                },
+                                {
+                                    "label": "تصنيف ضمن المدونة",
+                                    "key": "blog_categories",
+                                    "value": "blog_categories"
+                                },
+                                {
+                                    "label": "التخفيضات",
+                                    "key": "offers_link",
+                                    "value": "offers_link"
+                                },
+                                {
+                                    "label": "الماركات التجارية",
+                                    "key": "brands_link",
+                                    "value": "brands_link"
+                                },
+                                {
+                                    "label": "المدونة",
+                                    "key": "blog_link",
+                                    "value": "blog_link"
+                                },
+                                {
+                                    "label": "رابط خارجي",
+                                    "key": "custom",
+                                    "value": "custom"
+                                }
+                            ]
                         },
-                        {
-                            "label": "تصنيف",
-                            "key": "categories",
-                            "value": "categories"
-                        },
-                        {
-                            "label": "ماركة تجارية",
-                            "key": "brands",
-                            "value": "brands"
-                        },
-                        {
-                            "label": "صفحة تعريفية",
-                            "key": "pages",
-                            "value": "pages"
-                        },
-                        {
-                            "label": "مقالة",
-                            "key": "blog_articles",
-                            "value": "blog_articles"
-                        },
-                        {
-                            "label": "تصنيف ضمن المدونة",
-                            "key": "blog_categories",
-                            "value": "blog_categories"
-                        },
-                        {
-                            "label": "التخفيضات",
-                            "key": "offers_link",
-                            "value": "offers_link"
-                        },
-                        {
-                            "label": "الماركات التجارية",
-                            "key": "brands_link",
-                            "value": "brands_link"
-                        },
-                        {
-                            "label": "المدونة",
-                            "key": "blog_link",
-                            "value": "blog_link"
-                        },
-                        {
-                            "label": "رابط خارجي",
-                            "key": "custom",
-                            "value": "custom"
-                        }
-                    ]
-                },
                         {
                             "id": "banners.alt_txt",
                             "type": "string",
@@ -3489,8 +3588,7 @@
                     "required": false,
                     "minLength": 6,
                     "maxLength": 30
-                }
-                ,
+                },
                 {
                     "type": "items",
                     "icon": "sicon-link",
