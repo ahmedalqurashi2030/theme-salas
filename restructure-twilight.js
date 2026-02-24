@@ -1,162 +1,306 @@
-/**
- * restructure-twilight.js
- * ========================
- * يقرأ ملف twilight.json الحالي ويعيد بناءه باستخدام هيكلية الـ tabs و groups
- * المتوافقة مع معايير سوق سلة المتقدمة.
- *
- * الاستخدام: node restructure-twilight.js
- * سيتم إنشاء ملف twilight.json.backup للحماية أولاً.
- */
+﻿'use strict';
 
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, 'twilight.json');
-const backupPath = path.join(__dirname, 'twilight.json.backup');
+const args = new Set(process.argv.slice(2));
+const force = args.has('--force');
+const dryRun = args.has('--dry-run');
+const fileArg = process.argv.slice(2).find(arg => arg.startsWith('--file='));
 
-// ─── 1. قراءة وحفظ نسخة احتياطية ────────────────────────────────────────────
-const raw = fs.readFileSync(filePath, 'utf8');
-fs.writeFileSync(backupPath, raw, 'utf8');
-console.log('✅ تم حفظ نسخة احتياطية: twilight.json.backup');
+const defaultFile = path.join(__dirname, 'twilight.json');
+const targetFile = path.resolve(fileArg ? fileArg.slice('--file='.length) : defaultFile);
 
-const twilight = JSON.parse(raw);
-const allSettings = twilight.settings || [];
+const SETTINGS_METADATA = {
+    enable_dark_mode: {
+        tab: 'appearance',
+        group: 'theme-mode',
+        info: 'Recommended when your text colors have enough contrast in both modes.'
+    },
+    force_dark_mode: {
+        tab: 'appearance',
+        group: 'theme-mode',
+        info: 'Best for brands that rely on a dark visual identity.'
+    },
+    main_bg_color: {
+        tab: 'appearance',
+        group: 'colors',
+        info: 'Choose a comfortable tone that keeps content readable.'
+    },
+    secondary_bg_color: {
+        tab: 'appearance',
+        group: 'colors',
+        info: 'Use a subtle contrast against the main background.'
+    },
+    primary_brand_color: {
+        tab: 'appearance',
+        group: 'colors',
+        info: 'This color is heavily used in interactive elements.'
+    },
+    primary_text_color: {
+        tab: 'appearance',
+        group: 'colors',
+        info: 'Ensure strong contrast with the background color.'
+    },
+    secondary_text_color: {
+        tab: 'appearance',
+        group: 'colors',
+        info: 'Keep it slightly softer than the primary text color.'
+    },
+    header_bg_color: {
+        tab: 'appearance',
+        group: 'colors',
+        info: 'Use a color consistent with your brand style.'
+    },
+    squar_photo_bg_image_size: {
+        tab: 'homepage',
+        group: 'layout',
+        info: 'Use Contain to preserve full image, or Cover to fill available space.'
+    },
+    vertical_fixed_products: {
+        tab: 'homepage',
+        group: 'layout',
+        info: 'Useful when showcasing more products in vertical sections.'
+    },
+    is_more_button_enabled: {
+        tab: 'homepage',
+        group: 'layout',
+        info: 'Helps users navigate quickly to full listings.'
+    },
+    header_is_sticky: {
+        tab: 'header',
+        group: 'behavior',
+        info: 'Keep header visible while scrolling.'
+    },
+    topnav_is_dark: {
+        tab: 'header',
+        group: 'style',
+        info: 'Use when your brand style fits a dark top bar.'
+    },
+    important_links: {
+        tab: 'header',
+        group: 'behavior',
+        info: 'Show important page links in the top strip.'
+    },
+    footer_is_dark: {
+        tab: 'footer',
+        group: 'style',
+        info: 'Useful when footer needs stronger visual contrast.'
+    },
+    sticky_add_to_cart: {
+        tab: 'product',
+        group: 'behavior',
+        info: 'Can improve mobile add-to-cart conversion.'
+    },
+    show_tags: {
+        tab: 'product',
+        group: 'display',
+        info: 'Helps visitors identify product context quickly.'
+    },
+    slider_background_size: {
+        tab: 'product',
+        group: 'gallery',
+        info: 'Use Cover for full area fill, or Contain to preserve full image.'
+    },
+    imageZoom: {
+        tab: 'product',
+        group: 'gallery',
+        info: 'Enable zoom interaction in product image slider.'
+    }
+};
 
-// ─── 2. تصفية الإعدادات بإزالة العناصر الثابتة الزخرفية (عناوين وفواصل) ──────
-function isRealField(s) {
-    if (s.type === 'static') return false;
-    return true;
+const COMPONENT_METADATA = {
+    'home.enhanced-slider|is_fullwidth': {
+        tab: 'homepage',
+        group: 'hero-slider',
+        info: 'Useful for wide hero banners.'
+    },
+    'home.main-links|links.icon': {
+        tab: 'homepage',
+        group: 'quick-links',
+        info: 'Example: sicon-store2 or sicon-packed-box'
+    },
+    'home.th-store-features|features.icon': {
+        tab: 'homepage',
+        group: 'store-features',
+        info: 'Pick a clear icon that matches the feature meaning.'
+    },
+    'home.th-moving-announcement-bar|bg_color': {
+        tab: 'homepage',
+        group: 'announcement-bar',
+        info: 'Use enough contrast with text color for readability.'
+    },
+    'home.th-moving-announcement-bar|text_color': {
+        tab: 'homepage',
+        group: 'announcement-bar',
+        info: 'Ensure text remains readable on selected background.'
+    },
+    'home.th-faq|faq_items.Icon': {
+        tab: 'homepage',
+        group: 'faq',
+        info: 'You can use an icon such as sicon-help-circle.'
+    }
+};
+
+function hasText(value) {
+    return typeof value === 'string' && value.trim().length > 0;
 }
 
-// ─── 3. بناء هيكل الـ settings الجديد بتقسيم منطقي إلى groups ────────────────
-// نحافظ على الـ flat settings لكن نزيل static lines و static titles
-// ونضيف عناوين groups ترشيدية (Salla يدعم هذا النمط المنظم)
+function applyMetadata(target, metadata, useForce) {
+    let changed = false;
 
-const colorsAndThemeFields = allSettings.filter(s => isRealField(s) && [
-    'enable_dark_mode', 'force_dark_mode',
-    'main_bg_color', 'secondary_bg_color',
-    'primary_brand_color', 'primary_text_color',
-    'secondary_text_color', 'header_bg_color',
-].includes(s.id));
+    for (const key of ['tab', 'group', 'info']) {
+        const nextValue = metadata[key];
+        if (!hasText(nextValue)) {
+            continue;
+        }
 
-const headerFields = allSettings.filter(s => isRealField(s) && [
-    'header_is_sticky', 'topnav_is_dark', 'important_links',
-].includes(s.id));
+        const currentValue = target[key];
+        const shouldWrite = useForce || !hasText(currentValue);
 
-const homePageFields = allSettings.filter(s => isRealField(s) && [
-    'squar_photo_bg_image_size', 'vertical_fixed_products', 'is_more_button_enabled',
-].includes(s.id));
+        if (shouldWrite && currentValue !== nextValue) {
+            target[key] = nextValue;
+            changed = true;
+        }
+    }
 
-const footerFields = allSettings.filter(s => isRealField(s) && [
-    'footer_is_dark',
-].includes(s.id));
-
-const productPageFields = allSettings.filter(s => isRealField(s) && [
-    'sticky_add_to_cart', 'show_tags', 'slider_background_size', 'imageZoom',
-].includes(s.id));
-
-// جميع الإعدادات المتبقية غير المصنفة
-const knownIds = new Set([
-    ...colorsAndThemeFields,
-    ...headerFields,
-    ...homePageFields,
-    ...footerFields,
-    ...productPageFields,
-].map(s => s.id));
-
-const otherFields = allSettings.filter(s => isRealField(s) && !knownIds.has(s.id));
-
-// ─── 4. بناء الهيكل الجديد بنمط الـ groups ───────────────────────────────────
-// سلة تدعم static "title" و "line" لتقسيم الإعدادات في "settings"
-// سنبني نفس الـ flat settings لكن بترتيب منطقي ومجموعات واضحة
-
-function makeTitle(id, label, icon = 'sicon-format-text') {
-    return { id, type: 'static', format: 'title', value: label, variant: 'h6', icon };
+    return changed;
 }
 
-function makeLine(id) {
-    return { id, type: 'static', format: 'line', label: 'Line', icon: 'sicon-minus' };
+function applySettingsMetadata(settings, useForce) {
+    const result = {
+        totalFields: 0,
+        mappedFields: 0,
+        changedFields: 0
+    };
+
+    if (!Array.isArray(settings)) {
+        return result;
+    }
+
+    for (const setting of settings) {
+        if (!setting || typeof setting !== 'object') {
+            continue;
+        }
+
+        if (setting.type === 'static') {
+            continue;
+        }
+
+        result.totalFields += 1;
+
+        const metadata = SETTINGS_METADATA[setting.id];
+        if (!metadata) {
+            continue;
+        }
+
+        result.mappedFields += 1;
+        if (applyMetadata(setting, metadata, useForce)) {
+            result.changedFields += 1;
+        }
+    }
+
+    return result;
 }
 
-function addDescriptionTo(field, desc) {
-    return { ...field, description: desc };
+function applyComponentsMetadata(components, useForce) {
+    const result = {
+        totalFields: 0,
+        mappedFields: 0,
+        changedFields: 0
+    };
+
+    function walk(node, currentComponentPath) {
+        if (!node) {
+            return;
+        }
+
+        if (Array.isArray(node)) {
+            for (const item of node) {
+                walk(item, currentComponentPath);
+            }
+            return;
+        }
+
+        if (typeof node !== 'object') {
+            return;
+        }
+
+        let componentPath = currentComponentPath;
+        if (hasText(node.path)) {
+            componentPath = node.path;
+        }
+
+        const isField = hasText(node.id) && hasText(node.type);
+        if (isField) {
+            result.totalFields += 1;
+            const key = `${componentPath || ''}|${node.id}`;
+            const metadata = COMPONENT_METADATA[key];
+
+            if (metadata) {
+                result.mappedFields += 1;
+                if (applyMetadata(node, metadata, useForce)) {
+                    result.changedFields += 1;
+                }
+            }
+        }
+
+        for (const value of Object.values(node)) {
+            walk(value, componentPath);
+        }
+    }
+
+    walk(components, '');
+    return result;
 }
 
-// إضافة وصف إرشادي للحقول التي تفتقر إليه
-const enhancedColors = colorsAndThemeFields.map(f => {
-    if (f.id === 'main_bg_color') return addDescriptionTo(f, 'لون خلفية الصفحة الرئيسية وجميع صفحات المتجر');
-    if (f.id === 'secondary_bg_color') return addDescriptionTo(f, 'لون خلفية الأقسام والبطاقات المميزة');
-    if (f.id === 'primary_text_color') return addDescriptionTo(f, 'يُطبق على جميع العناوين الكبيرة والنصوص العريضة');
-    if (f.id === 'secondary_text_color') return addDescriptionTo(f, 'يُطبق على النصوص الوصفية والتفاصيل الثانوية');
-    if (f.id === 'header_bg_color') return addDescriptionTo(f, 'لون خلفية الشريط التنقلي العلوي (الهيدر)');
-    return f;
-});
+function createBackup(filePath, source) {
+    const stamp = new Date().toISOString().replace(/[:]/g, '-').replace(/\..+/, 'Z');
+    const backupPath = `${filePath}.${stamp}.backup`;
+    fs.writeFileSync(backupPath, source, 'utf8');
+    return backupPath;
+}
 
-const enhancedProduct = productPageFields.map(f => {
-    if (f.id === 'slider_background_size') return addDescriptionTo(f, 'اختر كيف تُعرض صور المنتج في المعرض الجانبي');
-    if (f.id === 'sticky_add_to_cart') return addDescriptionTo(f, 'يُثبت زر الإضافة للسلة أسفل الشاشة في الجوال لتسهيل الشراء');
-    if (f.id === 'show_tags') return addDescriptionTo(f, 'إظهار وسوم المنتج (Tags) أسفل اسم المنتج في صفحة التفاصيل');
-    return f;
-});
+function main() {
+    const source = fs.readFileSync(targetFile, 'utf8');
+    const twilight = JSON.parse(source);
 
-// ─── 5. تجميع الـ settings النهائية بترتيب منطقي محسّن ──────────────────────
-const newSettings = [
-    // ─── قسم: الألوان والمظهر ─────────────────────────────────────────────────
-    makeTitle('group-colors-title', '🎨  الألوان والمظهر العام', 'sicon-format-fill'),
-    ...enhancedColors,
-    makeLine('group-colors-line'),
+    const settingsResult = applySettingsMetadata(twilight.settings, force);
+    const componentsResult = applyComponentsMetadata(twilight.components, force);
 
-    // ─── قسم: الشريط العلوي (Header) ─────────────────────────────────────────
-    makeTitle('group-header-title', '🔝  إعدادات الشريط العلوي', 'sicon-format-text'),
-    ...headerFields,
-    makeLine('group-header-line'),
+    const totalChanged = settingsResult.changedFields + componentsResult.changedFields;
 
-    // ─── قسم: الصفحة الرئيسية ────────────────────────────────────────────────
-    makeTitle('group-home-title', '🏠  إعدادات الصفحة الرئيسية', 'sicon-home'),
-    ...homePageFields,
-    makeLine('group-home-line'),
+    console.log('Twilight metadata normalization report');
+    console.log(`- file: ${targetFile}`);
+    console.log(`- mode: ${dryRun ? 'dry-run' : 'write'}`);
+    console.log(`- force: ${force ? 'true' : 'false'}`);
+    console.log(`- settings: mapped ${settingsResult.mappedFields}/${settingsResult.totalFields}, changed ${settingsResult.changedFields}`);
+    console.log(`- components: mapped ${componentsResult.mappedFields}/${componentsResult.totalFields}, changed ${componentsResult.changedFields}`);
 
-    // ─── قسم: صفحة المنتج ───────────────────────────────────────────────────
-    makeTitle('group-product-title', '🛍️  إعدادات صفحة المنتج', 'sicon-shopping-cart'),
-    ...enhancedProduct,
-    makeLine('group-product-line'),
+    if (totalChanged === 0) {
+        console.log('- status: no changes needed');
+        return;
+    }
 
-    // ─── قسم: الذيل (Footer) ─────────────────────────────────────────────────
-    makeTitle('group-footer-title', '🔻  إعدادات أسفل الصفحة (الفوتر)', 'sicon-layout-bottom'),
-    ...footerFields,
-
-    // ─── قسم: إعدادات أخرى غير مصنفة ────────────────────────────────────────
-    ...(otherFields.length ? [
-        makeLine('group-other-line'),
-        makeTitle('group-other-title', '⚙️  إعدادات إضافية', 'sicon-settings'),
-        ...otherFields
-    ] : []),
-];
-
-// ─── 6. كتابة الملف المحدّث ──────────────────────────────────────────────────
-twilight.settings = newSettings;
-const output = JSON.stringify(twilight, null, 4);
-
-// التحقق من صحة الـ JSON قبل الكتابة
-try {
+    const output = JSON.stringify(twilight, null, 4);
     JSON.parse(output);
-} catch (e) {
-    console.error('❌ خطأ: الناتج ليس JSON صحيحاً! لم يتم تعديل الملف.', e.message);
+
+    if (dryRun) {
+        console.log('- status: dry-run completed (no file written)');
+        return;
+    }
+
+    const backupPath = createBackup(targetFile, source);
+    fs.writeFileSync(targetFile, output, 'utf8');
+
+    console.log(`- backup: ${backupPath}`);
+    console.log('- status: file updated successfully');
+}
+
+try {
+    main();
+} catch (error) {
+    console.error('Failed to normalize twilight metadata.');
+    console.error(error && error.message ? error.message : error);
     process.exit(1);
 }
-
-fs.writeFileSync(filePath, output, 'utf8');
-console.log('');
-console.log('✅ تم إعادة هيكلة twilight.json بنجاح!');
-console.log('');
-console.log('📋 ملخص التقسيم الجديد:');
-console.log(`   🎨 الألوان والمظهر: ${enhancedColors.length} إعداد`);
-console.log(`   🔝 الشريط العلوي:  ${headerFields.length} إعدادات`);
-console.log(`   🏠 الصفحة الرئيسية: ${homePageFields.length} إعدادات`);
-console.log(`   🛍️ صفحة المنتج:    ${enhancedProduct.length} إعدادات`);
-console.log(`   🔻 الفوتر:          ${footerFields.length} إعداد`);
-console.log(`   ⚙️ أخرى:            ${otherFields.length} إعداد`);
-console.log('');
-console.log('💾 النسخة القديمة محفوظة في: twilight.json.backup');
-console.log('');
-console.log('⚠️  تذكر: احذف هذا الملف (restructure-twilight.js) بعد الانتهاء!');
