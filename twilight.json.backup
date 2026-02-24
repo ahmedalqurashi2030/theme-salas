@@ -27,12 +27,16 @@
     ],
     "settings": [
         {
-            "id": "g-colors-title",
+            "id": "salla-icon-swatch",
             "type": "static",
             "format": "title",
-            "value": "🎨  الألوان والمظهر العام",
-            "variant": "h6",
-            "icon": "sicon-format-fill"
+            "label": "إعدادات المظهر المتقدمة (ثراء)",
+            "value": null,
+            "variant": "h1",
+            "icon": "sicon-format-text",
+            "tab": "appearance",
+            "group": "intro",
+            "info": "Section title for advanced appearance settings."
         },
         {
             "id": "enable_dark_mode",
@@ -161,76 +165,14 @@
             "info": "Use a color consistent with your brand style."
         },
         {
-            "id": "g-colors-line",
+            "id": "line",
             "type": "static",
             "format": "line",
-            "label": "Line",
-            "icon": "sicon-minus"
-        },
-        {
-            "id": "g-header-title",
-            "type": "static",
-            "format": "title",
-            "value": "🔝  إعدادات الشريط العلوي",
-            "variant": "h6",
-            "icon": "sicon-grid-4"
-        },
-        {
-            "id": "header_is_sticky",
-            "label": "تثبت القائمة الرئيسية أعلى الصفحة عند التمرير لأسفل",
-            "description": "يُنصح بالغاء تفعيلها في حالة وجود عناصر كثيرة في القائمة المنسدلة",
-            "type": "boolean",
-            "icon": "sicon-toggle-off",
-            "format": "switch",
-            "required": false,
-            "value": true,
-            "selected": true,
-            "tab": "header",
-            "group": "behavior",
-            "info": "Keep header visible while scrolling."
-        },
-        {
-            "type": "boolean",
-            "icon": "sicon-toggle-off",
-            "label": "شريط علوي داكن",
-            "description": "Apply dark style to the top navigation strip.",
-            "id": "topnav_is_dark",
-            "format": "switch",
-            "required": false,
-            "value": true,
-            "selected": false,
-            "tab": "header",
-            "group": "style",
-            "info": "Use when your brand style fits a dark top bar."
-        },
-        {
-            "type": "boolean",
-            "icon": "sicon-toggle-off",
-            "label": "عرض روابط الصفحات الهامة في الشريط العلوي",
-            "description": "مثل صفحة الهبوط ، المدونة ،الصفحات التعريفية",
-            "id": "important_links",
-            "format": "switch",
-            "required": false,
-            "value": true,
-            "selected": true,
-            "tab": "header",
-            "group": "behavior",
-            "info": "Show important page links in the top strip."
-        },
-        {
-            "id": "g-header-line",
-            "type": "static",
-            "format": "line",
-            "label": "Line",
-            "icon": "sicon-minus"
-        },
-        {
-            "id": "g-home-title",
-            "type": "static",
-            "format": "title",
-            "value": "🏠  إعدادات الصفحة الرئيسية",
-            "variant": "h6",
-            "icon": "sicon-home"
+            "label": "Divider",
+            "icon": "sicon-minus",
+            "tab": "appearance",
+            "group": "divider",
+            "info": "Visual divider between settings groups."
         },
         {
             "id": "squar_photo_bg_image_size",
@@ -290,19 +232,114 @@
             "info": "Helps users navigate quickly to full listings."
         },
         {
-            "id": "g-home-line",
             "type": "static",
+            "id": "static-line1",
             "format": "line",
-            "label": "Line",
-            "icon": "sicon-minus"
+            "tab": "header",
+            "group": "divider",
+            "info": "Divider for header settings."
         },
         {
-            "id": "g-product-title",
             "type": "static",
             "format": "title",
-            "value": "🛍️  إعدادات صفحة المنتج",
+            "id": "static-label2",
+            "value": "خيارات أعلى الصفحة",
             "variant": "h6",
-            "icon": "sicon-shopping-cart"
+            "tab": "header",
+            "group": "heading",
+            "info": "Header settings group title."
+        },
+        {
+            "id": "header_is_sticky",
+            "label": "تثبت القائمة الرئيسية أعلى الصفحة عند التمرير لأسفل",
+            "description": "يُنصح بالغاء تفعيلها في حالة وجود عناصر كثيرة في القائمة المنسدلة",
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": true,
+            "tab": "header",
+            "group": "behavior",
+            "info": "Keep header visible while scrolling."
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "شريط علوي داكن",
+            "description": "Apply dark style to the top navigation strip.",
+            "id": "topnav_is_dark",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": false,
+            "tab": "header",
+            "group": "style",
+            "info": "Use when your brand style fits a dark top bar."
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "عرض روابط الصفحات الهامة في الشريط العلوي",
+            "description": "مثل صفحة الهبوط ، المدونة ،الصفحات التعريفية",
+            "id": "important_links",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": true,
+            "tab": "header",
+            "group": "behavior",
+            "info": "Show important page links in the top strip."
+        },
+        {
+            "type": "static",
+            "id": "static-line3",
+            "format": "line",
+            "tab": "footer",
+            "group": "divider",
+            "info": "Divider for footer settings."
+        },
+        {
+            "type": "static",
+            "format": "title",
+            "id": "static-label4",
+            "value": "خيارات أسفل الصفحة",
+            "variant": "h6",
+            "tab": "footer",
+            "group": "heading",
+            "info": "Footer settings group title."
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "الوضع الداكن",
+            "description": "Apply dark style to the footer.",
+            "id": "footer_is_dark",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": false,
+            "tab": "footer",
+            "group": "style",
+            "info": "Useful when footer needs stronger visual contrast."
+        },
+        {
+            "type": "static",
+            "id": "static-line5",
+            "format": "line",
+            "tab": "product",
+            "group": "divider",
+            "info": "Divider for product page settings."
+        },
+        {
+            "type": "static",
+            "format": "title",
+            "id": "static-label6",
+            "value": "خيارات صفحة المنتج",
+            "variant": "h6",
+            "tab": "product",
+            "group": "heading",
+            "info": "Product page settings group title."
         },
         {
             "type": "boolean",
@@ -378,35 +415,6 @@
             "tab": "product",
             "group": "gallery",
             "info": "Enable zoom interaction in product image slider."
-        },
-        {
-            "id": "g-product-line",
-            "type": "static",
-            "format": "line",
-            "label": "Line",
-            "icon": "sicon-minus"
-        },
-        {
-            "id": "g-footer-title",
-            "type": "static",
-            "format": "title",
-            "value": "🔻  إعدادات أسفل الصفحة (الفوتر)",
-            "variant": "h6",
-            "icon": "sicon-layout-1"
-        },
-        {
-            "type": "boolean",
-            "icon": "sicon-toggle-off",
-            "label": "الوضع الداكن",
-            "description": "Apply dark style to the footer.",
-            "id": "footer_is_dark",
-            "format": "switch",
-            "required": false,
-            "value": true,
-            "selected": false,
-            "tab": "footer",
-            "group": "style",
-            "info": "Useful when footer needs stronger visual contrast."
         }
     ],
     "components": [
