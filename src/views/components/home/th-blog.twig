@@ -288,10 +288,11 @@
 			</salla-slider>
 		</div>
 	{% else %}
-		<div class="th-home-blog__slider js-th-blog-fallback" data-selected-ids='{{ selected_article_ids|json_encode|e("html_attr") }}' data-limit="{{ limit }}">
-			<div class="th-home-blog__fallback-grid js-th-blog-grid"></div>
-			<p class="text-center text-gray-500 js-th-blog-empty" hidden>
-				{{ trans('pages.blog_categories.no_articles')|default('No articles found') }}
+		<div class="th-home-blog__empty-state text-center p-8 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+			<i class="sicon-newspaper text-4xl text-gray-400 mb-4 block"></i>
+			<h3 class="text-lg font-bold text-gray-700 mb-2">{{ trans('pages.blog_categories.no_articles')|default('لا توجد مقالات لعرضها') }}</h3>
+			<p class="text-sm text-gray-500">
+				يرجى إضافة مقالات أو تحديدها من إعدادات المكون (المدونة) في لوحة التحكم لتظهر هنا.
 			</p>
 		</div>
 	{% endif %}

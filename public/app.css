@@ -1726,6 +1726,9 @@ input:where([type='file']):focus{
 .border-t{
     border-top-width: 1px;
 }
+.border-dashed{
+    border-style: dashed;
+}
 .border-blue-200{
     --tw-border-opacity: 1;
     border-color: rgba(191, 219, 254, 1);
@@ -1758,6 +1761,11 @@ input:where([type='file']):focus{
     --tw-border-opacity: 1;
     border-color: rgba(197, 160, 89, 1);
     border-color: rgba(197, 160, 89, var(--tw-border-opacity, 1));
+}
+.border-gray-300{
+    --tw-border-opacity: 1;
+    border-color: rgba(209, 213, 219, 1);
+    border-color: rgba(209, 213, 219, var(--tw-border-opacity, 1));
 }
 .bg-amber-400{
     --tw-bg-opacity: 1;
@@ -2111,6 +2119,10 @@ input:where([type='file']):focus{
 .text-xs{
     font-size: 0.75rem;
     line-height: 1rem;
+}
+.text-4xl{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
 }
 .font-bold{
     font-weight: 700;
