@@ -32,10 +32,7 @@
             "format": "title",
             "value": "ألوان المتجر",
             "variant": "h6",
-            "icon": "sicon-pencil-paintbrush",
-            "tab": "appearance",
-            "group": "intro",
-            "label": "ألوان المتجر"
+            "icon": "sicon-pencil-paintbrush"
         },
         {
             "id": "enable_dark_mode",
@@ -178,10 +175,7 @@
             "format": "title",
             "value": "إعدادات الشريط العلوي",
             "variant": "h6",
-            "icon": "sicon-grid-4",
-            "tab": "header",
-            "group": "heading",
-            "label": "إعدادات الشريط العلوي"
+            "icon": "sicon-grid-4"
         },
         {
             "id": "header_is_sticky",
@@ -240,10 +234,7 @@
             "format": "title",
             "value": "إعدادات الصفحة الرئيسية",
             "variant": "h6",
-            "icon": "sicon-home",
-            "tab": "homepage",
-            "group": "heading",
-            "label": "إعدادات الصفحة الرئيسية"
+            "icon": "sicon-home"
         },
         {
             "id": "squar_photo_bg_image_size",
@@ -317,10 +308,7 @@
             "format": "title",
             "value": "إعدادات صفحة المنتج",
             "variant": "h6",
-            "icon": "sicon-shopping-cart",
-            "tab": "product",
-            "group": "heading",
-            "label": "إعدادات صفحة المنتج"
+            "icon": "sicon-shopping-cart"
         },
         {
             "type": "boolean",
@@ -412,10 +400,7 @@
             "format": "title",
             "value": "إعدادات الفوتر",
             "variant": "h6",
-            "icon": "sicon-layout-1",
-            "tab": "footer",
-            "group": "heading",
-            "label": "إعدادات الفوتر"
+            "icon": "sicon-layout-1"
         },
         {
             "type": "boolean",
