@@ -30,11 +30,12 @@
             "id": "g-colors-title",
             "type": "static",
             "format": "title",
-            "value": "🎨  الألوان والمظهر العام",
+            "value": "ألوان المتجر",
             "variant": "h6",
-            "icon": "sicon-format-fill",
+            "icon": "sicon-pencil-paintbrush",
             "tab": "appearance",
-            "group": "intro"
+            "group": "intro",
+            "label": "ألوان المتجر"
         },
         {
             "id": "enable_dark_mode",
@@ -175,11 +176,12 @@
             "id": "g-header-title",
             "type": "static",
             "format": "title",
-            "value": "🔝  إعدادات الشريط العلوي",
+            "value": "إعدادات الشريط العلوي",
             "variant": "h6",
             "icon": "sicon-grid-4",
             "tab": "header",
-            "group": "heading"
+            "group": "heading",
+            "label": "إعدادات الشريط العلوي"
         },
         {
             "id": "header_is_sticky",
@@ -236,11 +238,12 @@
             "id": "g-home-title",
             "type": "static",
             "format": "title",
-            "value": "🏠  إعدادات الصفحة الرئيسية",
+            "value": "إعدادات الصفحة الرئيسية",
             "variant": "h6",
             "icon": "sicon-home",
             "tab": "homepage",
-            "group": "heading"
+            "group": "heading",
+            "label": "إعدادات الصفحة الرئيسية"
         },
         {
             "id": "squar_photo_bg_image_size",
@@ -312,11 +315,12 @@
             "id": "g-product-title",
             "type": "static",
             "format": "title",
-            "value": "🛍️  إعدادات صفحة المنتج",
+            "value": "إعدادات صفحة المنتج",
             "variant": "h6",
             "icon": "sicon-shopping-cart",
             "tab": "product",
-            "group": "heading"
+            "group": "heading",
+            "label": "إعدادات صفحة المنتج"
         },
         {
             "type": "boolean",
@@ -406,11 +410,12 @@
             "id": "g-footer-title",
             "type": "static",
             "format": "title",
-            "value": "🔻  إعدادات أسفل الصفحة (الفوتر)",
+            "value": "إعدادات الفوتر",
             "variant": "h6",
             "icon": "sicon-layout-1",
             "tab": "footer",
-            "group": "heading"
+            "group": "heading",
+            "label": "إعدادات الفوتر"
         },
         {
             "type": "boolean",
