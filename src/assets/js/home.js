@@ -89,6 +89,8 @@ class Home extends BasePage {
     }
 
     initPromoProductsScroll(section) {
+        // ... (will restore the original if I didn't mean to delete it wait! I shouldn't replace lines 91-164! Let me use multi replace or just insert after initPromoProductsScroll)
+
         const track = section.querySelector('[data-th-promo-products-track]');
         const thumb = section.querySelector('[data-th-promo-scroll-thumb]');
         const trackBar = section.querySelector('[data-th-promo-scroll-track]');
@@ -163,6 +165,349 @@ class Home extends BasePage {
         updateThumb();
     }
 
+    initThBlogFallback() {
+        document.querySelectorAll('.js-th-blog-fallback').forEach(async (section) => {
+            if (section.dataset.blogLoaded === 'true') return;
+            section.dataset.blogLoaded = 'true';
+
+            const grid = section.querySelector('.js-th-blog-grid');
+            const emptyState = section.querySelector('.js-th-blog-empty');
+            if (!grid) return;
+
+            const limit = Math.max(parseInt(section.dataset.limit || '8', 10) || 8, 1);
+            const selectedIds = this.parseBlogSelectedIds(section.dataset.selectedIds);
+
+            try {
+                let articles = [];
+
+                if (selectedIds.length) {
+                    articles = await this.fetchBlogsByIds(selectedIds, limit);
+                }
+
+                if (!articles.length) {
+                    articles = await this.fetchLatestBlogs(limit);
+                }
+
+                const normalized = articles
+                    .map((article) => this.normalizeBlogArticle(article))
+                    .filter(Boolean)
+                    .slice(0, limit);
+
+                if (!normalized.length) {
+                    if (emptyState) emptyState.hidden = false;
+                    return;
+                }
+
+                grid.innerHTML = normalized
+                    .map((article, index) => this.renderBlogFallbackCard(article, index))
+                    .join('');
+
+                if (emptyState) emptyState.hidden = true;
+            } catch (error) {
+                console.warn('th-blog fallback failed', error);
+                if (emptyState) emptyState.hidden = false;
+            }
+        });
+    }
+
+    parseBlogSelectedIds(raw) {
+        if (!raw) return [];
+
+        let parsed = raw;
+        try {
+            parsed = JSON.parse(raw);
+        } catch {
+            parsed = raw;
+        }
+
+        const ids = [];
+        const collect = (value) => {
+            if (value === null || value === undefined || value === '') return;
+
+            if (Array.isArray(value)) {
+                value.forEach(collect);
+                return;
+            }
+
+            if (typeof value === 'object') {
+                const directId = value.id || value.key || value.slug;
+                if (directId !== undefined && directId !== null && directId !== '') {
+                    collect(directId);
+                }
+
+                if (value.value !== undefined) collect(value.value);
+                if (value.selected !== undefined) collect(value.selected);
+                if (value.items !== undefined) collect(value.items);
+                if (value.data !== undefined) collect(value.data);
+                return;
+            }
+
+            const normalized = String(value).trim();
+            if (!normalized || normalized === '[object Object]') return;
+
+            if (normalized.includes(',')) {
+                normalized
+                    .split(',')
+                    .map((item) => item.trim())
+                    .filter(Boolean)
+                    .forEach((item) => ids.push(item));
+                return;
+            }
+
+            ids.push(normalized);
+        };
+
+        collect(parsed);
+        return [...new Set(ids)];
+    }
+
+    async requestBlogCandidates(endpoints) {
+        for (const endpoint of endpoints) {
+            try {
+                const response = await salla.api.request(endpoint);
+                const extracted = this.extractBlogsFromResponse(response);
+                if (extracted.length) return extracted;
+            } catch {
+                // try next endpoint
+            }
+        }
+
+        return [];
+    }
+
+    async fetchBlogsByIds(ids, limit) {
+        const targetIds = ids.slice(0, limit);
+        const responses = await Promise.all(targetIds.map((id) => {
+            const encoded = encodeURIComponent(id);
+            return this.requestBlogCandidates([
+                `blogs/${encoded}`,
+                `blog/articles/${encoded}`,
+                `blog/${encoded}`,
+                `posts/${encoded}`,
+            ]);
+        }));
+
+        return responses.flat().filter(Boolean);
+    }
+
+    async fetchLatestBlogs(limit) {
+        return this.requestBlogCandidates([
+            `blogs?per_page=${limit}&page=1`,
+            `blogs?limit=${limit}`,
+            `blog/articles?per_page=${limit}&page=1`,
+            `blog?per_page=${limit}&page=1`,
+            `posts?per_page=${limit}&page=1`,
+        ]);
+    }
+
+    extractBlogsFromResponse(response) {
+        const candidates = [
+            response?.data?.data,
+            response?.data?.blogs,
+            response?.data?.items,
+            response?.data,
+            response?.blogs,
+            response?.items,
+            response,
+        ];
+
+        for (const candidate of candidates) {
+            if (Array.isArray(candidate)) {
+                return candidate;
+            }
+
+            if (candidate && typeof candidate === 'object' && (candidate.id || candidate.key || candidate.title || candidate.name)) {
+                return [candidate];
+            }
+        }
+
+        return [];
+    }
+
+    normalizeBlogArticle(article) {
+        if (!article || typeof article !== 'object') return null;
+
+        const title = article.title || article.name || '';
+        if (!title) return null;
+
+        const rawUrl = article.url || article.link || article.href || (article.slug ? `/blog/${article.slug}` : '#');
+        const url = this.sanitizeUrl(typeof rawUrl === 'object' ? (rawUrl.url || rawUrl.value || '#') : rawUrl);
+
+        const imageObj = article.image || {};
+        const thumbnailValue = typeof article.thumbnail === 'object'
+            ? (article.thumbnail.url || article.thumbnail.original || article.thumbnail.path || '')
+            : article.thumbnail;
+
+        const placeholderSetting = (typeof salla !== 'undefined'
+            && salla.config
+            && typeof salla.config.get === 'function')
+            ? (salla.config.get('theme.settings.placeholder') || '')
+            : '';
+
+        const placeholder = (typeof salla !== 'undefined'
+            && salla.url
+            && typeof salla.url.asset === 'function')
+            ? salla.url.asset(placeholderSetting || 'images/placeholder.png')
+            : (placeholderSetting || 'images/placeholder.png');
+
+        let image = thumbnailValue
+            || imageObj.url
+            || imageObj.original
+            || article.featured_image
+            || article.cover
+            || (typeof article.image === 'string' ? article.image : '')
+            || placeholder
+            || 'images/placeholder.png';
+
+        if (image === placeholderSetting || image === 'images/placeholder.png') {
+            image = placeholder || image;
+        }
+
+        const authorName = article.author?.name
+            || (typeof article.author === 'string' ? article.author : '')
+            || article.author_name
+            || '';
+
+        const authorUrl = this.sanitizeUrl(article.author?.url || article.author_url || '#');
+        const categoryName = article.category?.name
+            || (typeof article.category === 'string' ? article.category : '')
+            || article.category_name
+            || article.blog_category?.name
+            || article.tags?.[0]?.name
+            || '';
+
+        const rawSummary = article.summary
+            || article.excerpt
+            || article.description
+            || article.content
+            || '';
+
+        return {
+            title,
+            url,
+            image,
+            imageAlt: imageObj.alt || title,
+            summary: String(rawSummary).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+            createdAt: article.created_at
+                || article.published_at
+                || article.date
+                || article.createdAt
+                || article.publishedAt
+                || '',
+            commentsCount: Number(article.comments_count || 0),
+            likesCount: Number(article.likes_count || 0),
+            authorName,
+            authorUrl,
+            categoryName,
+        };
+    }
+
+    formatBlogDate(dateValue) {
+        if (!dateValue) return null;
+
+        const date = new Date(dateValue);
+        if (Number.isNaN(date.getTime())) {
+            const raw = String(dateValue).trim();
+            const manualMatch = raw.match(/(\d{1,2})\s*([^\d\s]{2,})?/u);
+            if (!manualMatch) return null;
+
+            return {
+                iso: '',
+                day: String(manualMatch[1]).padStart(2, '0'),
+                month: manualMatch[2] || '',
+            };
+        }
+
+        const locale = document.documentElement.lang || 'ar';
+        return {
+            iso: date.toISOString(),
+            day: new Intl.DateTimeFormat(locale, { day: '2-digit' }).format(date),
+            month: new Intl.DateTimeFormat(locale, { month: 'short' }).format(date),
+        };
+    }
+
+    renderBlogFallbackCard(article, index) {
+        const dateInfo = this.formatBlogDate(article.createdAt);
+        const badgeClass = (index % 4) + 1;
+        const fallbackCategory = (document.documentElement.lang || 'ar').startsWith('ar') ? 'تقنية' : 'Tech';
+        const safeTitle = this.escapeHtml(article.title);
+        const safeUrl = this.escapeAttr(article.url);
+        const safeImage = this.escapeAttr(article.image);
+        const safeImageAlt = this.escapeHtml(article.imageAlt || article.title);
+        const safeBadge = this.escapeHtml(article.categoryName || fallbackCategory);
+        const safeAuthorName = this.escapeHtml(article.authorName || '');
+        const safeAuthorUrl = this.escapeAttr(article.authorUrl || '#');
+        const safeSummary = this.escapeHtml((article.summary || '').trim());
+        const summaryText = safeSummary.length > 140 ? `${safeSummary.slice(0, 140)}...` : safeSummary;
+
+        return `
+            <article class="th-home-blog-card">
+                <a href="${safeUrl}" class="th-home-blog-card__media-link" aria-label="${safeTitle}">
+                    <div class="th-home-blog-card__media">
+                        <img src="${safeImage}" alt="${safeImageAlt}" class="th-home-blog-card__image" loading="lazy">
+                    </div>
+                    ${dateInfo ? `
+                        <time class="th-home-blog-card__date" ${dateInfo.iso ? `datetime="${this.escapeAttr(dateInfo.iso)}"` : ''}>
+                            <span>${this.escapeHtml(dateInfo.day)}</span>
+                            <small>${this.escapeHtml(dateInfo.month)}</small>
+                        </time>
+                    ` : ''}
+                    ${safeBadge ? `
+                        <span class="th-home-blog-card__badge th-home-blog-card__badge--${badgeClass}">
+                            ${safeBadge}
+                        </span>
+                    ` : ''}
+                </a>
+                <div class="th-home-blog-card__body">
+                    <h3 class="th-home-blog-card__title">
+                        <a href="${safeUrl}">${safeTitle}</a>
+                    </h3>
+                    ${summaryText ? `<p class="th-home-blog-card__summary">${summaryText}</p>` : ''}
+                    <footer class="th-home-blog-card__meta">
+                        <div class="th-home-blog-card__stats">
+                            <span class="th-home-blog-card__stat">
+                                <i class="sicon-chat"></i>
+                                ${article.commentsCount ? `<span>${this.escapeHtml(String(article.commentsCount))}</span>` : ''}
+                            </span>
+                            <span class="th-home-blog-card__stat">
+                                <i class="sicon-thumbs-up"></i>
+                                ${article.likesCount ? `<span>${this.escapeHtml(String(article.likesCount))}</span>` : ''}
+                            </span>
+                        </div>
+                        ${safeAuthorName ? `
+                            <div class="th-home-blog-card__author">
+                                <span class="th-home-blog-card__author-dot" aria-hidden="true"></span>
+                                ${article.authorUrl && article.authorUrl !== '#'
+                    ? `<a href="${safeAuthorUrl}">${safeAuthorName}</a>`
+                    : `<span>${safeAuthorName}</span>`
+                }
+                            </div>
+                        ` : ''}
+                    </footer>
+                </div>
+            </article>
+        `;
+    }
+
+    sanitizeUrl(value) {
+        const url = String(value || '').trim();
+        if (!url) return '#';
+        if (/^javascript:/i.test(url)) return '#';
+        return url;
+    }
+
+    escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    escapeAttr(value) {
+        return this.escapeHtml(value);
+    }
 
     initBeforeAfterHero() {
         document.querySelectorAll('.js-before-after-hero').forEach(compare => {

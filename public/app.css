@@ -1137,6 +1137,9 @@ input:where([type='file']):focus{
 .grid{
     display: grid;
 }
+.\!grid{
+    display: grid !important;
+}
 .\!hidden{
     display: none !important;
 }
