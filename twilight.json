@@ -65,7 +65,8 @@
             "format": "color",
             "inputType": "color",
             "label": "لون الخلفية العامة للمتجر",
-            "description": null,
+            "description": "Controls the global page background color used across the storefront.",
+            "placeholder": "#FFFFFF",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#ffffff",
@@ -77,7 +78,8 @@
             "format": "color",
             "inputType": "color",
             "label": "لون خلفية الأقسام والكتل",
-            "description": null,
+            "description": "Used as the background color for cards, sections, and content blocks.",
+            "placeholder": "#FBFBFB",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#fbfbfb",
@@ -90,6 +92,7 @@
             "inputType": "color",
             "label": "لون المتجر الأساسي",
             "description": "سيتم استخدام هذا اللون في الأزرار والروابط والعناصر التفاعلية الرئيسية",
+            "placeholder": "#FED700",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#fed700",
@@ -101,7 +104,8 @@
             "format": "color",
             "inputType": "color",
             "label": "لون العناوين والخطوط العريضة",
-            "description": null,
+            "description": "Primary text color for headings and high-emphasis textual content.",
+            "placeholder": "#111827",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#111827",
@@ -113,7 +117,8 @@
             "format": "color",
             "inputType": "color",
             "label": "لون نصوص الوصف والتفاصيل",
-            "description": null,
+            "description": "Secondary text color for descriptions, metadata, and helper text.",
+            "placeholder": "#111827",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#111827",
@@ -125,7 +130,8 @@
             "format": "color",
             "inputType": "color",
             "label": "لون خلفية الترويسة (Header)",
-            "description": null,
+            "description": "Controls the background color of the main header area.",
+            "placeholder": "#FFFFFF",
             "labelHTML": null,
             "icon": "sicon-format-fill",
             "value": "#ffffff",
@@ -135,7 +141,7 @@
             "id": "line",
             "type": "static",
             "format": "line",
-            "label": "Line",
+            "label": "Divider",
             "icon": "sicon-minus"
         },
         {
@@ -143,7 +149,7 @@
             "type": "items",
             "format": "dropdown-list",
             "label": "طريقة عرض الصور في قسم قائمة عناصر",
-            "description": null,
+            "description": "Choose how images should fit inside homepage square links.",
             "labelHTML": null,
             "icon": "sicon-list",
             "selected": [
@@ -172,7 +178,7 @@
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "وضع عمودي للمنتجات في مربع المنتجات الثابتة في الصفحة الرئيسية",
-            "description": null,
+            "description": "Displays fixed products in a vertical card layout on homepage blocks.",
             "id": "vertical_fixed_products",
             "format": "switch",
             "required": false,
@@ -183,7 +189,8 @@
             "type": "boolean",
             "id": "is_more_button_enabled",
             "label": "عرض (زر الكل) في الصفحة الرئيسية",
-            "format": "switch"
+            "format": "switch",
+            "description": "Shows a View All button for supported homepage sections."
         },
         {
             "type": "static",
@@ -212,7 +219,7 @@
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "شريط علوي داكن",
-            "description": null,
+            "description": "Applies dark style to the top navigation strip.",
             "id": "topnav_is_dark",
             "format": "switch",
             "required": false,
@@ -246,7 +253,7 @@
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "الوضع الداكن",
-            "description": null,
+            "description": "Applies a dark appearance to the footer area.",
             "id": "footer_is_dark",
             "format": "switch",
             "required": false,
@@ -269,7 +276,7 @@
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "تثبيت زر الإضافة والكمية أسفل شاشة الجوال",
-            "description": null,
+            "description": "Keeps add-to-cart controls fixed at the bottom on mobile product pages.",
             "id": "sticky_add_to_cart",
             "format": "switch",
             "required": false,
@@ -280,7 +287,7 @@
             "type": "boolean",
             "icon": "sicon-toggle-off",
             "label": "اظهار الوسوم",
-            "description": null,
+            "description": "Shows product tags where supported in the storefront UI.",
             "id": "show_tags",
             "format": "switch",
             "required": false,
@@ -292,7 +299,7 @@
             "type": "items",
             "format": "dropdown-list",
             "label": "طريقة عرض الصور في سليدر صور المنتج",
-            "description": null,
+            "description": "Choose how product gallery images should fit inside the slider frame.",
             "labelHTML": null,
             "icon": "sicon-list",
             "selected": [
@@ -356,7 +363,7 @@
                     "type": "boolean",
                     "format": "switch",
                     "label": "عرض السلايدر بملء الشاشة",
-                    "description": null,
+                    "description": "Displays the slider in full-width mode.",
                     "labelHTML": null,
                     "icon": "sicon-toggle-off",
                     "value": true,
@@ -642,7 +649,8 @@
                             "required": false,
                             "format": "icon",
                             "class": "form--inline",
-                            "description": null
+                            "description": "Use a Salla icon class (sicon-*) for each quick link.",
+                            "placeholder": "e.g. sicon-store2"
                         },
                         {
                             "type": "string",
@@ -775,7 +783,7 @@
                     "placeholder": "يمكنك إضافة العنوان الرئيسي هنا...",
                     "hide": false,
                     "minLength": 0,
-                    "maxLength": "80"
+                    "maxLength": 80
                 },
                 {
                     "type": "string",
@@ -789,7 +797,7 @@
                     "required": false,
                     "placeholder": "يمكنك إضافة وصف لهذا القسم هنا...",
                     "minLength": 0,
-                    "maxLength": "256"
+                    "maxLength": 256
                 },
                 {
                     "type": "items",
@@ -1140,7 +1148,7 @@
                     "multilanguage": false,
                     "required": false,
                     "minLength": 6,
-                    "maxLength": "60"
+                    "maxLength": 60
                 },
                 {
                     "id": "show-stats",
@@ -1322,7 +1330,7 @@
                     "multilanguage": true,
                     "required": true,
                     "minLength": 6,
-                    "maxLength": "60"
+                    "maxLength": 60
                 },
                 {
                     "id": "title",
@@ -1337,7 +1345,7 @@
                     "multilanguage": true,
                     "required": true,
                     "minLength": 6,
-                    "maxLength": "60"
+                    "maxLength": 60
                 },
                 {
                     "id": "description",
@@ -1856,7 +1864,7 @@
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": "20"
+                    "maxLength": 20
                 }
             ]
         },
@@ -2094,7 +2102,7 @@
                             "multilanguage": false,
                             "required": false,
                             "minLength": 6,
-                            "maxLength": "60"
+                            "maxLength": 60
                         },
                         {
                             "id": "items.subtitle",
@@ -2380,7 +2388,7 @@
                             "multilanguage": false,
                             "required": false,
                             "minLength": 6,
-                            "maxLength": "60"
+                            "maxLength": 60
                         },
                         {
                             "id": "items.subtitle",
@@ -2427,7 +2435,7 @@
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": "20"
+                    "maxLength": 20
                 }
             ]
         },
@@ -2559,13 +2567,13 @@
                             "icon": "sicon-link",
                             "value": null,
                             "required": true,
-                            "minLength": "4",
-                            "maxLength": "200"
+                            "minLength": 4,
+                            "maxLength": 200
                         }
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": "6"
+                    "maxLength": 6
                 },
                 {
                     "id": "custom_class",
@@ -2655,8 +2663,8 @@
                     "value": 16,
                     "required": false,
                     "step": 0.1,
-                    "minimum": "0",
-                    "maximum": "50"
+                    "minimum": 0,
+                    "maximum": 50
                 },
                 {
                     "id": "mobile_vertical",
@@ -2857,7 +2865,7 @@
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": "20"
+                    "maxLength": 20
                 }
             ]
         },
@@ -2925,7 +2933,7 @@
                     "multilanguage": false,
                     "required": false,
                     "minLength": 6,
-                    "maxLength": "60"
+                    "maxLength": 60
                 },
                 {
                     "id": "mobile_nav_style",
@@ -3004,7 +3012,8 @@
                             "type": "string",
                             "format": "icon",
                             "label": "الأيقونة",
-                            "description": null,
+                            "description": "Use a Salla icon class to represent the feature visually.",
+                            "placeholder": "e.g. sicon-store",
                             "labelHTML": null,
                             "icon": "sicon-user-circle",
                             "value": "sicon-store",
@@ -3012,8 +3021,8 @@
                         }
                     ],
                     "value": [],
-                    "minLength": "3",
-                    "maxLength": "6"
+                    "minLength": 3,
+                    "maxLength": 6
                 }
             ]
         },
@@ -3063,7 +3072,8 @@
                     "format": "color",
                     "inputType": "color",
                     "label": "لون الخلفية",
-                    "description": null,
+                    "description": "Background color for the moving announcement bar.",
+                    "placeholder": "#000000",
                     "labelHTML": null,
                     "icon": "sicon-format-fill",
                     "value": "#000000",
@@ -3075,7 +3085,8 @@
                     "format": "color",
                     "inputType": "color",
                     "label": "لون النص",
-                    "description": null,
+                    "description": "Text color used inside the moving announcement bar.",
+                    "placeholder": "#FFFFFF",
                     "labelHTML": null,
                     "icon": "sicon-format-fill",
                     "value": "#ffffff",
@@ -3248,7 +3259,7 @@
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": "10"
+                    "maxLength": 10
                 }
             ]
         },
@@ -3316,8 +3327,8 @@
                     "value": 16,
                     "required": false,
                     "step": 0.1,
-                    "minimum": "0",
-                    "maximum": "50"
+                    "minimum": 0,
+                    "maximum": 50
                 },
                 {
                     "id": "banners",
@@ -3438,8 +3449,8 @@
                         }
                     ],
                     "value": [],
-                    "minLength": "4",
-                    "maxLength": "4"
+                    "minLength": 4,
+                    "maxLength": 4
                 }
             ]
         },
@@ -3583,7 +3594,7 @@
                     "multilanguage": false,
                     "required": false,
                     "minLength": 6,
-                    "maxLength": "60"
+                    "maxLength": 60
                 },
                 {
                     "id": "show_controls",
@@ -3741,7 +3752,7 @@
                     "multilanguage": false,
                     "required": false,
                     "minLength": 6,
-                    "maxLength": "20"
+                    "maxLength": 20
                 },
                 {
                     "id": "banner_title",
