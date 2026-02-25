@@ -1,5 +1,6 @@
 <header id="mainnav" class="store-header th-header">
-	<div class="inner">
+	<div
+		class="inner">
 		{# 1. الشريط العلوي #}
 		<div class="th-topbar hidden md:block">
 			<div class="container flex justify-between items-center">
@@ -54,7 +55,12 @@
 						</a>
 					{% endif %}
 
-					<salla-cart-summary class="th-icon-btn" aria-label="{{ trans('blocks.header.cart') }}">
+					<salla-cart-summary class="th-icon-btn flex items-center gap-2" aria-label="{{ trans('blocks.header.cart') }}">
+						{% if theme.settings.show_cart_quantity_and_currency %}
+							<div class="cart-total-text font-bold text-sm hidden md:block" data-cart-total>
+								{{ cart.total|money }}
+							</div>
+						{% endif %}
 						<div slot="icon" class="relative">
 							<i class="sicon-shopping-bag"></i>
 						</div>
