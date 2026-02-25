@@ -5,80 +5,67 @@
 |--------------------------------------------------------------------------
 #}
 
-{% set brands = component.brands %}
-{% set title = component.section_title %}
-{% set is_large = component.larger_size %}
-{% set has_two_rows = component.two_rows %}
+{% set brands = component.brands|default([]) %}
+{% set title = component.section_title|default('') %}
+{% set is_large = component.larger_size|default(false) %}
+{% set has_two_rows = component.two_rows|default(false) %}
+{% set brands_count = brands|length %}
+{% set repeat_count = brands_count >= 10 ? 2 : 4 %}
+{% set section_id = 'brand-carousel-' ~ component.key %}
 
-{% if brands|length > 0 %}
-<section class="s-brand-carousel {{ is_large ? 'is-large' : '' }} {{ has_two_rows ? 'has-two-rows' : '' }}"
-         id="brand-carousel-{{ component.key }}">
-    
-    <div class="container">
-        {% if title %}
-            <div class="s-brand-carousel__header">
-                <h2 class="s-brand-carousel__title">{{ title }}</h2>
-            </div>
-        {% endif %}
+{% if brands_count > 0 %}
+	<section class="s-brand-carousel {{ is_large ? 'is-large' : '' }} {{ has_two_rows ? 'has-two-rows' : '' }}" id="{{ section_id }}" data-repeat-count="{{ repeat_count }}">
+		<div class="container">
+			{% if title %}
+				<div class="s-block__title s-brand-carousel__header">
+					<div class="right-side">
+						<h2 class="s-brand-carousel__title">{{ title }}</h2>
+					</div>
+				</div>
+			{% endif %}
 
-        <div class="s-brand-carousel__wrapper">
-            
-            {# الصف الأول #}
-            <div class="s-brand-carousel__row dir-normal">
-                <div class="s-brand-carousel__track">
-                    {# تكرار 4 مرات لضمان الامتلاء والحركة السلسة #}
-                    {% for i in 1..4 %}
-                        {{ _self.render_brand_items(brands, (i > 1)) }}
-                    {% endfor %}
-                </div>
-            </div>
+			<div class="s-brand-carousel__wrapper">
+				<div class="s-brand-carousel__row dir-normal">
+					<div class="s-brand-carousel__track">
+						{% for i in 1..repeat_count %}
+							{{ _self.render_brand_items(brands, (i > 1)) }}
+						{% endfor %}
+					</div>
+				</div>
 
-            {# الصف الثاني #}
-            {% if has_two_rows %}
-            <div class="s-brand-carousel__row dir-reverse">
-                <div class="s-brand-carousel__track">
-                    {% for i in 1..4 %}
-                        {{ _self.render_brand_items(brands, (i > 1)) }}
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
-        </div>
-    </div>
-</section>
+				{% if has_two_rows and brands_count > 1 %}
+					<div class="s-brand-carousel__row dir-reverse">
+						<div class="s-brand-carousel__track">
+							{% for i in 1..repeat_count %}
+								{{ _self.render_brand_items(brands, (i > 1)) }}
+							{% endfor %}
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</section>
 {% endif %}
 
-{# 
-   Macro: Render Items
-   Added: tabindex="0" to allow focus/click detection on non-links
-#}
 {% macro render_brand_items(brands, is_hidden) %}
-    {% for brand in brands %}
-        {# 
-           نضيف tabindex="0" لجعل العنصر قابلاً للتركيز عند الضغط عليه 
-           حتى لو لم يكن رابطاً، مما يسمح بإيقاف الحركة
-        #}
-        <div class="s-brand-carousel__item" 
-             {{ is_hidden ? 'aria-hidden="true"' : 'tabindex="0"' }}>
-            
-            {% if brand.url %}
-                <a href="{{ brand.url }}" 
-                   class="s-brand-carousel__link" 
-                   aria-label="{{ brand.title|default('Brand') }}"
-                   {{ is_hidden ? 'tabindex="-1"' : '' }}>
-            {% endif %}
-            
-            <img src="{{ brand.image|cdn }}" 
-                 alt="{{ brand.title|default('Brand Logo') }}" 
-                 loading="lazy"
-                 width="120"
-                 height="80"
-                 class="s-brand-carousel__img">
+	{% for brand in brands %}
+		{% set brand_label = brand.title|default(brand.name)|default('Brand') %}
+		{% set has_link = brand.url is not empty %}
 
-            {% if brand.url %}
-                </a>
-            {% endif %}
-        </div>
-    {% endfor %}
+		<div class="s-brand-carousel__item" {{ is_hidden ? 'aria-hidden="true"' : '' }}>
+			{% if has_link %}
+				<a href="{{ brand.url }}" class="s-brand-carousel__link" aria-label="{{ brand_label }}" {{ is_hidden ? 'tabindex="-1"' : '' }}>
+			{% else %}
+				<span class="s-brand-carousel__link" role="img" aria-label="{{ brand_label }}">
+			{% endif %}
+
+			<img src="{{ brand.image|cdn }}" alt="{{ is_hidden ? '' : brand_label }}" loading="lazy" decoding="async" width="120" height="80" draggable="false" class="s-brand-carousel__img">
+
+			{% if has_link %}
+				</a>
+			{% else %}
+				</span>
+			{% endif %}
+		</div>
+	{% endfor %}
 {% endmacro %}
