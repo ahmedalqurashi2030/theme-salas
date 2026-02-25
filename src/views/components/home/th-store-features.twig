@@ -15,27 +15,28 @@
 {% set features = component.features|default([]) %}
 {% set mobile_nav_style = 'dots' %}
 {% set card_layout = 'stacked' %}
-
-{% if component.mobile_nav_style is iterable and component.mobile_nav_style|length %}
-	{% set first_style = component.mobile_nav_style|first %}
-	{% if first_style.label is defined and first_style.label in ['dots', 'thumbnails'] %}
-		{% set mobile_nav_style = first_style.label %}
-	{% elseif first_style.value is defined and first_style.value in ['dots', 'thumbnails'] %}
-		{% set mobile_nav_style = first_style.value %}
-	{% endif %}
-{% elseif component.mobile_nav_style in ['dots', 'thumbnails'] %}
-	{% set mobile_nav_style = component.mobile_nav_style %}
+{% set mobile_nav_raw = component.mobile_nav_style.selected[0].label
+	|default(component.mobile_nav_style.selected[0].value
+	|default(component.mobile_nav_style[0].label
+	|default(component.mobile_nav_style[0].value
+	|default(component.mobile_nav_style.value
+	|default(component.mobile_nav_style|default('dots'))))))|lower %}
+{% if mobile_nav_raw in ['dots', 'thumbnails'] %}
+	{% set mobile_nav_style = mobile_nav_raw %}
 {% endif %}
 
-{% if component.card_layout is iterable and component.card_layout|length %}
-	{% set first_layout = component.card_layout|first %}
-	{% if first_layout.label is defined and first_layout.label in ['stacked', 'inline-right'] %}
-		{% set card_layout = first_layout.label %}
-	{% elseif first_layout.value is defined and first_layout.value in ['stacked', 'inline-right'] %}
-		{% set card_layout = first_layout.value %}
-	{% endif %}
-{% elseif component.card_layout in ['stacked', 'inline-right'] %}
-	{% set card_layout = component.card_layout %}
+{% set card_layout_raw = component.card_layout.selected[0].label
+	|default(component.card_layout.selected[0].value
+	|default(component.card_layout[0].label
+	|default(component.card_layout[0].value
+	|default(component.card_layout.value
+	|default(component.card_layout|default('stacked'))))))|lower %}
+{% if card_layout_raw in ['stacked', 'inline-right'] %}
+	{% set card_layout = card_layout_raw %}
+{% elseif 'اليمين' in card_layout_raw %}
+	{% set card_layout = 'inline-right' %}
+{% elseif 'أعلى' in card_layout_raw or 'اعلى' in card_layout_raw %}
+	{% set card_layout = 'stacked' %}
 {% endif %}
 
 {% set is_inline_layout = card_layout == 'inline-right' %}
