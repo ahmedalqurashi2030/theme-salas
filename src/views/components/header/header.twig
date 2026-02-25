@@ -55,16 +55,18 @@
 						</a>
 					{% endif %}
 
-					<salla-cart-summary class="th-icon-btn flex items-center gap-2" aria-label="{{ trans('blocks.header.cart') }}">
+					<div class="th-cart-wrapper flex items-center gap-2{{ theme.settings.show_cart_quantity_and_currency ? ' show-cart-total' : '' }}">
 						{% if theme.settings.show_cart_quantity_and_currency %}
-							<div class="cart-total-text font-bold text-sm hidden md:block" data-cart-total>
-								{{ cart.total|money }}
+							<div class="th-cart-total hidden md:flex flex-col items-end leading-tight" data-cart-total>
+								<span class="font-bold text-sm">{{ cart.total|money }}</span>
 							</div>
 						{% endif %}
-						<div slot="icon" class="relative">
-							<i class="sicon-shopping-bag"></i>
-						</div>
-					</salla-cart-summary>
+						<salla-cart-summary class="th-icon-btn" aria-label="{{ trans('blocks.header.cart') }}">
+							<div slot="icon" class="relative">
+								<i class="sicon-shopping-bag"></i>
+							</div>
+						</salla-cart-summary>
+					</div>
 				</div>
 			</div>
 		</div>

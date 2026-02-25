@@ -182,31 +182,31 @@ class App extends AppHelpers {
 
 
   initiateMobileMenu() {
-  let menuElement = this.element("#mobile-menu");
+    let menuElement = this.element("#mobile-menu");
 
-  // custom-main-menu renders #mobile-menu asynchronously after fetching API menus
-  if (!menuElement) {
-    customElements.whenDefined('custom-main-menu').then(() => {
-      setTimeout(() => this.initiateMobileMenu(), 150);
+    // custom-main-menu renders #mobile-menu asynchronously after fetching API menus
+    if (!menuElement) {
+      customElements.whenDefined('custom-main-menu').then(() => {
+        setTimeout(() => this.initiateMobileMenu(), 150);
+      });
+      return;
+    }
+
+    // prevent duplicate initialization
+    if (menuElement.dataset.mmInitialized === 'true') {
+      return;
+    }
+    menuElement.dataset.mmInitialized = 'true';
+
+    const menu = new MobileMenu(menuElement, "(max-width: 1024px)", "( slidingSubmenus: false)");
+    salla.lang.onLoaded(() => {
+      menu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
     });
-    return;
+    const drawer = menu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
+
+    this.onClick("a[href='#mobile-menu']", event => event.preventDefault() || drawer.close() || drawer.open());
+    this.onClick(".close-mobile-menu", event => event.preventDefault() || drawer.close());
   }
-
-  // prevent duplicate initialization
-  if (menuElement.dataset.mmInitialized === 'true') {
-    return;
-  }
-  menuElement.dataset.mmInitialized = 'true';
-
-  const menu = new MobileMenu(menuElement, "(max-width: 1024px)", "( slidingSubmenus: false)");
-  salla.lang.onLoaded(() => {
-    menu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
-  });
-  const drawer = menu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
-
-  this.onClick("a[href='#mobile-menu']", event => event.preventDefault() || drawer.close() || drawer.open());
-  this.onClick(".close-mobile-menu", event => event.preventDefault() || drawer.close());
-}
 
   initAttachWishlistListeners() {
     let isListenerAttached = false;
@@ -369,7 +369,10 @@ class App extends AppHelpers {
    */
   initAddToCart() {
     salla.cart.event.onUpdated(summary => {
-      document.querySelectorAll('[data-cart-total]').forEach(el => el.innerHTML = salla.money(summary.total));
+      document.querySelectorAll('[data-cart-total]').forEach(el => {
+        const span = el.querySelector('span') || el;
+        span.innerHTML = salla.money(summary.total);
+      });
       document.querySelectorAll('[data-cart-count]').forEach(el => el.innerText = salla.helpers.number(summary.count));
     });
 
