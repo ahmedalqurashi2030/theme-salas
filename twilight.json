@@ -219,6 +219,20 @@
             "group": "behavior",
             "info": "مثل صفحة الهبوط ، المدونة ،الصفحات التعريفية"
         },
+
+            {
+            "id": "show_cart_quantity_and_currency",
+            "type": "boolean",
+            "format": "switch",
+            "label": "إظهار كمية المنتجات والعملة في السلة",
+            "description": "عند التفعيل، ستظهر كمية كل منتج وكلمة 'ريال' بجانب السعر داخل السلة",
+            "labelHTML": null,
+            "icon": "sicon-cart",
+            "value": true,
+            "selected": false,
+            "required": false
+        },
+
         {
             "id": "g-header-line",
             "type": "static",
@@ -511,6 +525,108 @@
             "tab": "product",
             "group": "gallery",
             "info": "تكبير الصور في سليدر صور المنتج"
+        },
+      
+        {
+            "id": "card_primary_icons",
+            "type": "boolean",
+            "format": "switch",
+            "label": "تلوين الأزرار الدائرية (كالإضافة للسلة ) باللون الأساسي للمتجر",
+            "icon": "sicon-palette",
+            "value": true,
+            "selected": false,
+            "required": false,
+            "tab": "product",
+            "group": "card_design"
+        },
+        {
+            "id": "card_rounded_corners",
+            "type": "boolean",
+            "format": "switch",
+            "label": "تفعيل الحواف الدائرية لبطاقات المنتجات",
+            "icon": "sicon-border-radius",
+            "value": true,
+            "selected": false,
+            "required": false,
+            "tab": "product",
+            "group": "card_design"
+        },
+        {
+            "id": "card_show_discount_badge",
+            "type": "boolean",
+            "format": "switch",
+            "label": "عرض نسبة الخصم على المنتجات الخاضعة للتخفيض",
+            "icon": "sicon-discount",
+            "value": true,
+            "selected": false,
+            "required": false,
+            "tab": "product",
+            "group": "card_design"
+        },
+        {
+            "id": "card_show_rating",
+            "type": "boolean",
+            "format": "switch",
+            "label": "عرض التقييم على بطاقات المنتجات الثابتة والمتحركة",
+            "icon": "sicon-star",
+            "value": true,
+            "selected": false,
+            "required": false,
+            "tab": "product",
+            "group": "card_design"
+        },
+        {
+            "id": "add_to_cart_style",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "نمط عرض زر إضافة للسلة",
+            "description": "شكل الزر داخل بطاقة المنتج",
+            "icon": "sicon-shopping-cart",
+            "selected": [
+                {
+                    "label": "أيقونة السلة المفرغة (الشكل الافتراضي البسيط)",
+                    "value": "icon_only"
+                }
+            ],
+            "options": [
+                {
+                    "label": "أيقونة السلة المفرغة (الشكل الافتراضي البسيط)",
+                    "value": "icon_only"
+                },
+                {
+                    "label": "أيقونة مع نص (إضافة للسلة) مدمج",
+                    "value": "icon_text"
+                }
+            ],
+            "source": "Manual",
+            "required": true,
+            "tab": "product",
+            "group": "card_design"
+        },
+        {
+            "id": "desktop_products_per_row",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "عدد المنتجات في الصف الواحد (للكمبيوتر فقط)",
+            "description": "يتم تطبيقه على قسم المنتجات الثابتة وصفحات التصنيفات",
+            "icon": "sicon-grid-4",
+            "selected": [
+                {
+                    "label": "4 منتجات",
+                    "value": "4"
+                }
+            ],
+            "options": [
+                { "label": "4 منتجات", "value": "4" },
+                { "label": "5 منتجات", "value": "5" },
+                { "label": "6 منتجات (الافتراضي)", "value": "6" },
+                { "label": "7 منتجات", "value": "7" },
+                { "label": "8 منتجات", "value": "8" }
+            ],
+            "source": "Manual",
+            "required": true,
+            "tab": "product",
+            "group": "card_design"
         },
         {
             "id": "g-product-line",
