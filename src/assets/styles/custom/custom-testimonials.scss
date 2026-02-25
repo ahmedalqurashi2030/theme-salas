@@ -1,16 +1,14 @@
 .th-home-testimonials {
   --th-space-1: 8px;
-  --th-space-2: 16px;
-  --th-space-3: 24px;
   --th-space-4: 32px;
-  --th-space-5: 40px;
-  --th-radius-card: 20px;
-  --th-radius-section: 24px;
-  --th-border-color: #e5ecf5;
-  --th-bg-start: #f8faff;
-  --th-bg-end: #f3f6fb;
-
   --th-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.th-home-testimonials__header .right-side {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 0;
+  text-align: center;
 }
 
 .th-home-testimonials__title {
@@ -32,23 +30,6 @@
   font-weight: 700;
 }
 
-.th-home-testimonials__stars {
-  color: #f5b01b;
-  font-size: 0.82rem;
-}
-
-.th-home-testimonials__score {
-  color: var(--color-text);
-  font-size: 1.9rem;
-  line-height: 1;
-  font-weight: 800;
-}
-
-.th-home-testimonials__meta {
-  color: var(--color-gray-text);
-  font-size: 0.75rem;
-}
-
 .th-home-testimonials__slider {
   position: relative;
 }
@@ -63,10 +44,6 @@
 
 .th-home-testimonial-card {
   min-height: 264px;
-  border: 1px solid var(--th-border-color);
-  border-radius: var(--th-radius-card);
-  background: #fff;
-  box-shadow: var(--th-card-shadow);
   transition:
     transform 260ms var(--th-ease),
     box-shadow 260ms var(--th-ease),
@@ -97,24 +74,7 @@
 }
 
 .th-home-testimonial-card__footer {
-  border-top: 1px solid #ecf1f8;
-}
-
-.th-home-testimonial-card__verified {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #149748;
-  font-size: 0.76rem;
-  font-weight: 700;
-}
-
-.th-home-testimonial-card__verified::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-radius: 9999px;
-  background: #22c55e;
+  border-color: #ecf1f8;
 }
 
 .th-home-testimonial-card__author strong {
@@ -126,20 +86,6 @@
 .th-home-testimonial-card__author small {
   color: var(--color-gray-text);
   font-size: 0.72rem;
-}
-
-.th-home-testimonial-card__avatar {
-  border: 1px solid #dbe4f0;
-  background: #f8fafd;
-}
-
-.th-home-testimonials__empty {
-  border: 1px dashed var(--th-border-color);
-  border-radius: 16px;
-  background: #fff;
-  color: var(--color-gray-text);
-  text-align: center;
-  padding: var(--th-space-3);
 }
 
 .th-home-testimonials__slider .s-slider--nav-arrow {
@@ -213,10 +159,6 @@
 }
 
 @media (max-width: 767px) {
-  .th-home-testimonials__score {
-    font-size: 1.55rem;
-  }
-
   .th-home-testimonial-card {
     min-height: 244px;
   }

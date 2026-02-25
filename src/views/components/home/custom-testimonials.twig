@@ -106,27 +106,27 @@
 
 <section class="s-block th-home-testimonials py-8 lg:py-10">
 	<div class="container">
-		<header class="th-home-testimonials__header max-w-[840px] mx-auto mb-6 md:mb-8 text-center">
-			<h2 class="th-home-testimonials__title">{{ section_title }}</h2>
-			<p class="th-home-testimonials__subtitle mt-4 mx-auto max-w-[95%] md:max-w-[68ch]">{{ section_subtitle }}</p>
+		<header class="s-block__title th-home-testimonials__header justify-center mb-6 md:mb-8">
+			<div class="right-side th-home-testimonials__header-inner">
+				<h2 class="th-home-testimonials__title">{{ section_title }}</h2>
+				<p class="th-home-testimonials__subtitle mt-4 mx-auto max-w-[95%] md:max-w-[68ch] !line-clamp-none">{{ section_subtitle }}</p>
 
-			{% if show_stats %}
-				<div class="th-home-testimonials__stats mt-4 inline-flex flex-wrap items-center justify-center gap-y-2.5 gap-x-4 md:gap-x-6 md:gap-y-4">
-					<div class="th-home-testimonials__stat th-home-testimonials__stat--customers inline-flex items-center gap-2">
-						<span class="th-home-testimonials__avatars inline-flex items-center" aria-hidden="true">
-							{% for item in reviews|slice(0, 4) %}
-								{% set stat_avatar = item.avatar|default(attribute(item, 'items.avatar')|default('')) %}
-								{% if stat_avatar %}
-									<img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ stat_avatar }}" alt="" class="lazy th-home-testimonials__avatar-chip w-6 h-6 object-cover rounded-full border-2 border-white -ms-2 first:ms-0">
-								{% endif %}
-							{% endfor %}
-						</span>
-						<span class="th-home-testimonials__stat-text">{{ customers_count_text }}</span>
+				{% if show_stats %}
+					<div class="th-home-testimonials__stats mt-4 inline-flex flex-wrap items-center justify-center gap-y-2.5 gap-x-4 md:gap-x-6 md:gap-y-4">
+						<div class="th-home-testimonials__stat th-home-testimonials__stat--customers inline-flex items-center gap-2">
+							<span class="th-home-testimonials__avatars inline-flex items-center" aria-hidden="true">
+								{% for item in reviews|slice(0, 4) %}
+									{% set stat_avatar = item.avatar|default(attribute(item, 'items.avatar')|default('')) %}
+									{% if stat_avatar %}
+										<img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ stat_avatar }}" alt="" class="lazy th-home-testimonials__avatar-chip w-6 h-6 object-cover rounded-full border-2 border-white -ms-2 first:ms-0">
+									{% endif %}
+								{% endfor %}
+							</span>
+							<span class="th-home-testimonials__stat-text">{{ customers_count_text }}</span>
+						</div>
 					</div>
-
-
-				</div>
-			{% endif %}
+				{% endif %}
+			</div>
 		</header>
 
 		{% if reviews|length %}
@@ -140,7 +140,7 @@
 						{% set reviewer_stars = reviewer_stars < 1 ? 1 : (reviewer_stars > 5 ? 5 : reviewer_stars) %}
 
 						<div class="swiper-slide th-home-testimonials__slide">
-							<article class="th-home-testimonial-card relative h-full flex flex-col">
+							<article class="th-home-testimonial-card relative h-full flex flex-col rounded-[20px] border border-gray-100 bg-white shadow-default">
 								<div class="th-home-testimonial-card__head p-4 pb-2 flex items-center justify-between gap-2">
 									<span class="th-home-testimonial-card__quote" aria-hidden="true">&ldquo;</span>
 									<div class="th-home-testimonial-card__stars inline-flex gap-0.5" aria-label="rating {{ reviewer_stars }} out of 5">
@@ -152,12 +152,12 @@
 
 								<p class="th-home-testimonial-card__text px-4 pb-4 m-0 text-start">{{ reviewer_text }}</p>
 
-								<footer class="th-home-testimonial-card__footer mt-auto px-3.5 py-3 flex items-center justify-between gap-2">
+								<footer class="th-home-testimonial-card__footer mt-auto px-3.5 py-3 flex items-center justify-between gap-2 border-t border-gray-100">
 
 									<div class="th-home-testimonial-card__author-wrap inline-flex items-center gap-2 min-w-0">
 
-										<span class="th-home-testimonial-card__avatar w-8 h-8 rounded-full overflow-hidden shrink-0">
-											<img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ reviewer_avatar }}" alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}" class="lazy w-full h-full object-cover">
+										<span class="th-home-testimonial-card__avatar w-8 h-8 rounded-full overflow-hidden shrink-0 border border-[#dbe4f0] bg-[#f8fafd]">
+											<img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ reviewer_avatar }}" alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}" decoding="async" class="lazy w-full h-full object-cover">
 										</span>
 										<div class="th-home-testimonial-card__author min-w-0">
 											<strong class="block text-start truncate">{{ reviewer_name }}</strong>
