@@ -70,98 +70,6 @@ $breakpoint-desktop: 1280px;
   }
 }
 
-// Container (max-width wrapper)
-.tharaa-container {
-  max-width: $tharaa-container-width;
-  margin: 0 auto;
-  padding: 0 20px;
-
-  @media (max-width: $breakpoint-mobile) {
-    padding: 0 15px;
-  }
-}
-
-// =====================================================
-// 3. Header Component (Title + Description)
-// =====================================================
-
-.tharaa-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: calc(var(--th-gap, #{$tharaa-gap-base}) * .75);
-
-  @media (max-width: $breakpoint-mobile) {
-    margin-bottom: 20px;
-    gap: 10px;
-  }
-}
-
-.tharaa-header__content {
-  flex: 1 1 auto;
-  min-width: 200px;
-}
-
-.tharaa-header__title {
-  font-family: $tharaa-font-heading;
-  font-size: 26px;
-  font-weight: 700;
-  color: $tharaa-color-primary;
-  margin: 0;
-  line-height: 1.2;
-
-  @media (max-width: $breakpoint-mobile) {
-    font-size: 22px;
-  }
-}
-
-.tharaa-header__subtitle {
-  font-family: $tharaa-font-body;
-  font-size: 14px;
-  color: $tharaa-color-text-light;
-  margin: 5px 0 0;
-  font-weight: 400;
-
-  @media (max-width: $breakpoint-mobile) {
-    font-size: 13px;
-  }
-}
-
-
-.tharaa-header__actions {
-  display: flex;
-  align-items: center;
-}
-
-.tharaa-header__more {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--th-bg-main);
-  color: var(--th-header-elements);
-  border: 1px solid color-mix(in srgb, var(--th-text-primary), #fff 85%);
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: $tharaa-transition-base;
-
-  &:hover {
-    color: #fff;
-    background: var(--th-promo-tag);
-    border-color: var(--th-promo-tag);
-    transform: translateY(-1px);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--th-promo-tag);
-    outline-offset: 2px;
-  }
-}
-
 // =====================================================
 // 4. Track Wrapper & Track (Slider Container)
 // =====================================================
@@ -607,70 +515,62 @@ $breakpoint-desktop: 1280px;
 // END OF STYLES
 // =====================================================
 // =====================================================
-// Section Header Wrapper (Shared partial structure)
+// Section Header (Hybrid: Salla structure + custom look)
 // =====================================================
 
-.th-block__header-wrapper {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  column-gap: 14px;
-  row-gap: 8px;
+.th-links-header {
   margin-bottom: 24px;
+  align-items: center;
+  gap: 14px;
 
-  &.no-action {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-
-  &.th-block--center {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
-
-    &.no-action,
-    &.has-action {
-      grid-template-columns: 1fr;
-    }
+  > .right-side {
+    padding-inline: 0;
+    min-width: 0;
+    flex: 1 1 auto;
   }
 
   @media (max-width: $breakpoint-mobile) {
     margin-bottom: 18px;
-    grid-template-columns: 1fr;
-    justify-items: start;
-
-    &.th-block--center {
-      justify-items: center;
-    }
+    gap: 10px;
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
-.th-block__side-bar {
+.th-links-header__main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+}
+
+.th-links-header__side-bar {
   width: 4px;
   min-height: 48px;
   border-radius: 999px;
   background: var(--th-promo-tag);
 }
 
-.th-block__title {
+.th-links-header__content {
   min-width: 0;
   width: 100%;
 }
 
-.th-block__title-row {
+.th-links-header__title-row {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  width: max-content;
   max-width: 100%;
 }
 
-.th-block__line {
+.th-links-header__line {
   width: 34px;
   height: 1px;
   background: color-mix(in srgb, var(--th-text-primary), #fff 70%);
 }
 
-.th-block__title-head {
+.th-links-header__title-head {
   font-family: $tharaa-font-heading;
   font-size: 26px;
   font-weight: 700;
@@ -683,7 +583,7 @@ $breakpoint-desktop: 1280px;
   }
 }
 
-.th-block__title-sub {
+.th-links-header__title-sub {
   font-family: $tharaa-font-body;
   font-size: 14px;
   color: $tharaa-color-text-light;
@@ -695,17 +595,7 @@ $breakpoint-desktop: 1280px;
   }
 }
 
-.th-block__action {
-  display: flex;
-  align-items: center;
-  justify-self: end;
-
-  @media (max-width: $breakpoint-mobile) {
-    justify-self: start;
-  }
-}
-
-.th-btn-custom {
+.th-links-header__action.s-block__display-all {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -731,7 +621,40 @@ $breakpoint-desktop: 1280px;
     outline-offset: 2px;
   }
 
-  svg {
+  i {
     flex-shrink: 0;
+  }
+}
+
+.th-links-header--center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  > .right-side {
+    justify-content: center;
+  }
+
+  .th-links-header__main {
+    justify-content: center;
+  }
+
+  .th-links-header__content {
+    text-align: center;
+  }
+
+  .th-links-header__title-row {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .th-links-header__action {
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .th-links-header:not(.th-links-header--center) .th-links-header__action {
+    align-self: flex-start;
   }
 }

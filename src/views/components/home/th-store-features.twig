@@ -28,7 +28,7 @@
 {% if features|length >= 1 %}
 	<section class="th-store-features s-block" data-th-store-features data-nav-style="{{ mobile_nav_style }}">
 		<div class="container">
-			<div class="th-store-features__header">
+			<div class="th-store-features__header text-center mb-8 md:mb-14 px-4 md:px-0">
 				{% if component.section_title %}
 					<h2 class="th-store-features__title">{{ component.section_title }}</h2>
 				{% endif %}
@@ -37,17 +37,17 @@
 				{% endif %}
 			</div>
 
-			<div class="th-store-features__slider" data-th-store-features-track>
+			<div class="th-store-features__slider flex gap-4 overflow-x-auto pt-14 pb-7 px-4 md:px-0 md:pt-15 md:grid md:grid-cols-4 md:gap-6" data-th-store-features-track>
 				{% for feature in features %}
 					<article class="th-store-features__card" data-feature-index="{{ loop.index0 }}">
-						<div class="th-store-features__card-inner {{ loop.first ? 'is-featured' : '' }}">
-							<div class="th-store-features__icon-wrap">
+						<div class="th-store-features__card-inner flex flex-col items-center text-center px-5 pt-12 pb-8 md:px-5 md:pt-14 md:pb-8 {{ loop.first ? 'is-featured' : '' }}">
+							<div class="th-store-features__icon-wrap flex items-center justify-center">
 								<i class="{{ feature.icon|default('sicon-store') }} th-store-features__icon"></i>
 							</div>
 
 
 							{% if feature.title %}
-								<h3 class="th-store-features__card-title">{{ feature.title }}</h3>
+								<h3 class="th-store-features__card-title mb-4">{{ feature.title }}</h3>
 							{% endif %}
 
 							{% if feature.description %}
@@ -91,6 +91,7 @@ if (! sections.length)
 return;
 
 
+
 const debounce = (fn, wait = 120) => {
 let timeout;
 return(...args) => {
@@ -105,6 +106,7 @@ if (! track)
 return;
 
 
+
 const cards = section.querySelectorAll('.th-store-features__card');
 const dots = section.querySelectorAll('.th-store-features__dot');
 const thumbs = section.querySelectorAll('.th-store-features__thumb');
@@ -113,6 +115,7 @@ const mobileNavs = section.querySelectorAll('[data-th-store-features-nav]');
 const total = cards.length;
 if (! total) 
 return;
+
 
 
 let activeIndex = 0;
@@ -126,12 +129,14 @@ thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === activeInd
 if (counter) 
 counter.textContent = String(activeIndex + 1);
 
+
 };
 
 const scrollToCard = (index) => {
 const card = cards[index];
 if (! card) 
 return;
+
 
 
 // Robust centering for both LTR/RTL (works better than offset/scrollLeft math)
@@ -150,15 +155,18 @@ if (! isMobile)
 return;
 
 
+
 const activeNav = section.querySelector(`[data-th-store-features-nav="${defaultStyle}"]`);
 if (activeNav) 
 activeNav.classList.remove('th-store-features__mobile-nav--hidden');
+
 
 };
 
 const updateFromScroll = debounce(() => {
 if (! isMobile) 
 return;
+
 
 
 const center = track.getBoundingClientRect().left + track.clientWidth / 2;

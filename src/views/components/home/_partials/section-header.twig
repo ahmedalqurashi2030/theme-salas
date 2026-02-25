@@ -8,38 +8,37 @@
   - btn_url (string)
 #}
 {% set has_action = btn_text and btn_url %}
+{% set is_center = alignment == 'center' %}
 
-<div class="th-block__header-wrapper {{ alignment == 'center' ? 'th-block--center' : '' }} {{ has_action ? 'has-action' : 'no-action' }}">
-	{% if alignment != 'center' %}
-		<div class="th-block__side-bar"></div>
-	{% endif %}
+<div class="s-block__title th-links-header {{ is_center ? 'th-links-header--center' : '' }}">
+	<div class="right-side th-links-header__main">
+		{% if not is_center %}
+			<span class="th-links-header__side-bar" aria-hidden="true"></span>
+		{% endif %}
 
-	<div class="th-block__title">
-		<div class="th-block__title-row">
-			{% if alignment == 'center' %}
-				<span class="th-block__line" aria-hidden="true"></span>
-			{% endif %}
+		<div class="th-links-header__content">
+			<div class="th-links-header__title-row">
+				{% if is_center %}
+					<span class="th-links-header__line" aria-hidden="true"></span>
+				{% endif %}
 
-			<h2 class="th-block__title-head">{{ section_title }}</h2>
+				<h2 class="th-links-header__title-head">{{ section_title }}</h2>
 
-			{% if alignment == 'center' %}
-				<span class="th-block__line" aria-hidden="true"></span>
+				{% if is_center %}
+					<span class="th-links-header__line" aria-hidden="true"></span>
+				{% endif %}
+			</div>
+
+			{% if section_subtitle %}
+				<p class="th-links-header__title-sub">{{ section_subtitle }}</p>
 			{% endif %}
 		</div>
-
-		{% if section_subtitle %}
-			<p class="th-block__title-sub">{{ section_subtitle }}</p>
-		{% endif %}
 	</div>
 
 	{% if has_action %}
-		<div class="th-block__action">
-			<a href="{{ btn_url }}" class="th-btn-custom" aria-label="{{ btn_text }}">
-				<span>{{ btn_text }}</span>
-				<svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-					<path d="M19 12H5M12 5l-7 7 7 7"></path>
-				</svg>
-			</a>
-		</div>
+		<a href="{{ btn_url }}" class="s-block__display-all th-links-header__action" aria-label="{{ btn_text }}">
+			<span>{{ btn_text }}</span>
+			<i class="sicon-arrow-left" aria-hidden="true"></i>
+		</a>
 	{% endif %}
 </div>
