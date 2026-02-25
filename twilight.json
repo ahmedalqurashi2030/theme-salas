@@ -3299,6 +3299,38 @@
                     "required": false
                 },
                 {
+                    "id": "card_layout",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "تخطيط محتوى البطاقة",
+                    "description": "اختر شكل توزيع الأيقونة مع النص داخل بطاقة الميزة",
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [
+                        {
+                            "label": "stacked",
+                            "value": "الأيقونة أعلى والمحتوى أسفل",
+                            "key": "4f0d44d3-3c5d-4a8e-9d57-2f4e7f2b9b4c"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "stacked",
+                            "value": "الأيقونة أعلى والمحتوى أسفل",
+                            "key": "4f0d44d3-3c5d-4a8e-9d57-2f4e7f2b9b4c"
+                        },
+                        {
+                            "label": "inline-right",
+                            "value": "الأيقونة على اليمين والمحتوى بجانبها",
+                            "key": "be7ac4e0-5f6e-4bd6-9c16-41015f5fc4f2"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": false,
+                    "searchable": false,
+                    "required": false
+                },
+                {
                     "id": "features",
                     "type": "collection",
                     "format": "collection",

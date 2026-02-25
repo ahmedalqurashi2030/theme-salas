@@ -1312,6 +1312,9 @@ input:where([type='file']):focus{
 .w-12{
     width: 3rem;
 }
+.w-14{
+    width: 3.5rem;
+}
 .w-16{
     width: 4rem;
 }
@@ -2069,6 +2072,10 @@ input:where([type='file']):focus{
 .py-5{
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
+}
+.py-6{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 .py-8{
     padding-top: 2rem;
@@ -29163,6 +29170,9 @@ body[data-show-cart-total=true] .th-cart-total span {
 .th-store-features__icon {
   color: var(--th-gold);
 }
+.th-store-features__content {
+  width: 100%;
+}
 .th-store-features__card-title {
   font-size: max(1.25rem, min(1.7vw, 1.9rem));
   font-weight: 900;
@@ -29199,6 +29209,34 @@ body[data-show-cart-total=true] .th-cart-total span {
 @media (min-width: 1024px) {
   .th-store-features__card-description {
     font-size: 1.06rem;
+  }
+}
+.th-store-features--inline .th-store-features__card-inner {
+  min-height: 210px;
+}
+.th-store-features--inline .th-store-features__icon-wrap {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  flex-shrink: 0;
+  border-radius: 0.9rem;
+}
+.th-store-features--inline .th-store-features__card-inner:hover .th-store-features__icon-wrap {
+  transform: translateY(-2px) scale(1.05);
+}
+.th-store-features--inline .th-store-features__card-title {
+  line-height: 1.35;
+}
+.th-store-features--inline .th-store-features__card-title::after {
+  margin: 0.62rem 0 0;
+}
+.th-store-features--inline .th-store-features__card-description {
+  text-align: left;
+}
+@media (min-width: 1024px) {
+  .th-store-features--inline .th-store-features__card-inner {
+    min-height: 226px;
   }
 }
 .th-store-features__mobile-nav {
@@ -30812,6 +30850,9 @@ body[data-show-cart-total=true] .th-cart-total span {
     .md\:h-12{
         height: 3rem;
     }
+    .md\:h-16{
+        height: 4rem;
+    }
     .md\:h-20{
         height: 5rem;
     }
@@ -30826,6 +30867,9 @@ body[data-show-cart-total=true] .th-cart-total span {
     }
     .md\:\!w-2\/4{
         width: 50% !important;
+    }
+    .md\:w-16{
+        width: 4rem;
     }
     .md\:w-2\/4{
         width: 50%;
@@ -30954,6 +30998,10 @@ body[data-show-cart-total=true] .th-cart-total span {
     .md\:py-4{
         padding-top: 1rem;
         padding-bottom: 1rem;
+    }
+    .md\:py-7{
+        padding-top: 1.75rem;
+        padding-bottom: 1.75rem;
     }
     .md\:pb-16{
         padding-bottom: 4rem;
