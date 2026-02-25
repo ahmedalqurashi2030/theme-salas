@@ -1,0 +1,198 @@
+﻿{#
+  Global Announcement Bar
+  Controlled by theme.settings (twilight.json -> settings)
+#}
+
+{% set enabled = theme.settings.get('global_announcement_enabled', false) %}
+{% set announcement_text = theme.settings.get('global_announcement_text', '')|trim %}
+
+{% if enabled and announcement_text %}
+  {% set announcement_link = theme.settings.get('global_announcement_link', '')|trim %}
+  {% set bg_color = theme.settings.get('global_announcement_bg_color', '#000000') %}
+  {% set text_color = theme.settings.get('global_announcement_text_color', '#ffffff') %}
+  {% set sticky_on_scroll = theme.settings.get('global_announcement_sticky', false) %}
+  {% set dismissible = theme.settings.get('global_announcement_dismissible', false) %}
+  {% set section_id = 'th-global-announcement-bar' %}
+
+  <section
+    id="{{ section_id }}"
+    class="th-global-announcement-bar {{ sticky_on_scroll ? 'is-sticky' : '' }}"
+    data-dismissible="{{ dismissible ? '1' : '0' }}"
+    aria-label="Global promotional announcement"
+    style="--th-global-announcement-bg: {{ bg_color }}; --th-global-announcement-color: {{ text_color }};">
+
+    <div class="th-global-announcement-bar__viewport" aria-live="polite">
+      <div class="th-global-announcement-bar__track" role="presentation">
+        {% for i in 1..8 %}
+          {% if announcement_link %}
+            <a href="{{ announcement_link }}" class="th-global-announcement-bar__item" aria-label="{{ announcement_text }}">
+              <i class="sicon-megaphone th-global-announcement-bar__icon" aria-hidden="true"></i>
+              <span>{{ announcement_text }}</span>
+            </a>
+          {% else %}
+            <span class="th-global-announcement-bar__item">
+              <i class="sicon-megaphone th-global-announcement-bar__icon" aria-hidden="true"></i>
+              <span>{{ announcement_text }}</span>
+            </span>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if dismissible %}
+        <button type="button" class="th-global-announcement-bar__close" data-th-global-announcement-close aria-label="Close announcement">
+          <span aria-hidden="true">×</span>
+        </button>
+      {% endif %}
+    </div>
+
+    <style>
+      #{{ section_id }} {
+        background: var(--th-global-announcement-bg);
+        color: var(--th-global-announcement-color);
+        border-bottom: 1px solid rgba(255, 255, 255, .2);
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+      }
+
+      #{{ section_id }}.is-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 65;
+      }
+
+      #{{ section_id }} .th-global-announcement-bar__viewport {
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        position: relative;
+      }
+
+      #{{ section_id }} .th-global-announcement-bar__track {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        white-space: nowrap;
+        min-width: max-content;
+        margin-inline: auto;
+        padding-inline: 1rem;
+        animation: th-global-announcement-keyframes 26s linear infinite;
+        will-change: transform;
+      }
+
+      #{{ section_id }}:hover .th-global-announcement-bar__track {
+        animation-play-state: paused;
+      }
+
+      #{{ section_id }} .th-global-announcement-bar__item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        color: inherit;
+        font-size: .9rem;
+        font-weight: 600;
+        line-height: 1.4;
+        min-height: 42px;
+        text-decoration: none;
+      }
+
+      #{{ section_id }} .th-global-announcement-bar__item:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+      }
+
+      #{{ section_id }} .th-global-announcement-bar__icon {
+        font-size: .9rem;
+        opacity: .9;
+      }
+
+      #{{ section_id }} .th-global-announcement-bar__close {
+        position: absolute;
+        inset-inline-end: .35rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .14);
+        color: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      #{{ section_id }} .th-global-announcement-bar__close:hover {
+        background: rgba(255, 255, 255, .22);
+      }
+
+      #{{ section_id }} .th-global-announcement-bar__close:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+      }
+
+      @keyframes th-global-announcement-keyframes {
+        from { transform: translateX(0); }
+        to { transform: translateX(50%); }
+      }
+
+      [dir="ltr"] #{{ section_id }} .th-global-announcement-bar__track {
+        animation-name: th-global-announcement-keyframes-ltr;
+      }
+
+      @keyframes th-global-announcement-keyframes-ltr {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #{{ section_id }} .th-global-announcement-bar__track {
+          animation: none;
+          justify-content: center;
+          flex-wrap: wrap;
+          row-gap: .6rem;
+          padding-block: .6rem;
+          white-space: normal;
+        }
+      }
+    </style>
+
+    {% if dismissible %}
+      <script>
+        (function () {
+          var root = document.getElementById('{{ section_id }}');
+          if (!root) return;
+
+          var key = 'th-global-announcement-dismissed';
+
+          try {
+            if (window.localStorage && localStorage.getItem(key) === '1') {
+              root.remove();
+              return;
+            }
+          } catch (e) {}
+
+          var closeButton = root.querySelector('[data-th-global-announcement-close]');
+          if (!closeButton) return;
+
+          closeButton.addEventListener('click', function () {
+            root.remove();
+            try {
+              if (window.localStorage) {
+                localStorage.setItem(key, '1');
+              }
+            } catch (e) {}
+          });
+        })();
+      </script>
+    {% endif %}
+  </section>
+{% endif %}

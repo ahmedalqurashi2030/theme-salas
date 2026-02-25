@@ -1,11 +1,13 @@
-{#
-| Variable                 | Type    | Description
-|--------------------------|---------|-------------------------------------------
-| component.announcement_text | string | Moving announcement text
-| component.announcement_link | string | Optional link for the announcement
-| component.bg_color          | string | Background color
-| component.text_color        | string | Text color
-| component.custom_class      | string | Extra custom class from theme settings
+﻿{#
+| Variable                    | Type    | Description
+|-----------------------------|---------|-------------------------------------------
+| component.announcement_text | string  | Moving announcement text
+| component.announcement_link | string  | Optional link for the announcement
+| component.bg_color          | string  | Background color
+| component.text_color        | string  | Text color
+| component.sticky_on_scroll  | boolean | Keep the bar sticky while scrolling
+| component.dismissible       | boolean | Allow customer to dismiss announcement
+| component.custom_class      | string  | Extra custom class from theme settings
 #}
 
 {% set source = component|default(section.settings|default({})) %}
@@ -13,13 +15,16 @@
 {% set announcement_link = source.announcement_link|default('')|trim %}
 {% set bg_color = source.bg_color|default('#000000') %}
 {% set text_color = source.text_color|default('#ffffff') %}
+{% set sticky_on_scroll = source.sticky_on_scroll|default(false) %}
+{% set dismissible = source.dismissible|default(false) %}
 {% set custom_class = source.custom_class|default('')|trim %}
 {% set section_id = 'th-moving-announcement-bar-' ~ section.id %}
 
 {% if announcement_text %}
   <section
     id="{{ section_id }}"
-    class="th-moving-announcement-bar s-block {{ custom_class }}"
+    class="th-moving-announcement-bar s-block {{ sticky_on_scroll ? 'is-sticky' : '' }} {{ custom_class }}"
+    data-dismissible="{{ dismissible ? '1' : '0' }}"
     aria-label="شريط إعلاني متحرك"
     style="--th-announcement-bg: {{ bg_color }}; --th-announcement-color: {{ text_color }};">
 
@@ -39,6 +44,12 @@
           {% endif %}
         {% endfor %}
       </div>
+
+      {% if dismissible %}
+        <button type="button" class="th-moving-announcement-bar__close" data-th-announcement-close aria-label="إغلاق الإعلان">
+          <span aria-hidden="true">×</span>
+        </button>
+      {% endif %}
     </div>
 
     <style>
@@ -51,6 +62,12 @@
         align-items: center;
       }
 
+      #{{ section_id }}.is-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 45;
+      }
+
       #{{ section_id }} .th-moving-announcement-bar__viewport {
         width: 100%;
         overflow: hidden;
@@ -58,6 +75,7 @@
         align-items: center;
         justify-content: center;
         min-height: 42px;
+        position: relative;
       }
 
       #{{ section_id }} .th-moving-announcement-bar__track {
@@ -100,6 +118,34 @@
         opacity: .9;
       }
 
+      #{{ section_id }} .th-moving-announcement-bar__close {
+        position: absolute;
+        inset-inline-end: .35rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .14);
+        color: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      #{{ section_id }} .th-moving-announcement-bar__close:hover {
+        background: rgba(255, 255, 255, .22);
+      }
+
+      #{{ section_id }} .th-moving-announcement-bar__close:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+      }
+
       @keyframes th-moving-announcement-{{ section.id }} {
         from { transform: translateX(0); }
         to { transform: translateX(50%); }
@@ -125,6 +171,35 @@
         }
       }
     </style>
+
+    {% if dismissible %}
+      <script>
+        (function () {
+          var root = document.getElementById('{{ section_id }}');
+          if (!root) return;
+
+          var key = 'th-announcement-dismissed-{{ section.id }}';
+
+          try {
+            if (window.localStorage && localStorage.getItem(key) === '1') {
+              root.remove();
+              return;
+            }
+          } catch (e) {}
+
+          var closeButton = root.querySelector('[data-th-announcement-close]');
+          if (!closeButton) return;
+
+          closeButton.addEventListener('click', function () {
+            root.remove();
+            try {
+              if (window.localStorage) {
+                localStorage.setItem(key, '1');
+              }
+            } catch (e) {}
+          });
+        })();
+      </script>
+    {% endif %}
   </section>
 {% endif %}
-
