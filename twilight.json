@@ -3267,35 +3267,15 @@
                     "maxLength": 60
                 },
                 {
-                    "id": "mobile_nav_style",
-                    "type": "items",
-                    "format": "dropdown-list",
-                    "label": "طريقة عرض التنقل (موبايل)",
-                    "description": "اختر كيف سيتنقل الزوار بين البطاقات على الأجهزة المحمولة",
+                    "id": "show_mobile_dots",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "إظهار نقاط التنقل (موبايل)",
+                    "description": "عند التفعيل تظهر نقاط التنقل أسفل بطاقات المميزات على الجوال",
                     "labelHTML": null,
-                    "icon": "sicon-keyboard_arrow_down",
-                    "selected": [
-                        {
-                            "label": "dots",
-                            "value": "نقاط (Dots) - بسيط وأنيق",
-                            "key": "7cf37722-8b75-42b1-b5e3-e6974bec2495"
-                        }
-                    ],
-                    "options": [
-                        {
-                            "label": "dots",
-                            "value": "نقاط (Dots) - بسيط وأنيق",
-                            "key": "7cf37722-8b75-42b1-b5e3-e6974bec2495"
-                        },
-                        {
-                            "label": "thumbnails",
-                            "value": "أيقونات (Thumbnails) - تفاعلي",
-                            "key": "e35bcd0c-4a2e-4e9b-8025-a83e2984d639"
-                        }
-                    ],
-                    "source": "Manual",
-                    "multichoice": false,
-                    "searchable": false,
+                    "icon": "sicon-toggle-off",
+                    "value": true,
+                    "selected": false,
                     "required": false
                 },
                 {

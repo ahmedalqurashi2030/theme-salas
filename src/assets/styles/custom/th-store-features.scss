@@ -192,10 +192,6 @@
     @media (min-width: 1024px) {
       display: none !important;
     }
-
-    &--hidden {
-      display: none !important;
-    }
   }
 
   &__dots {
@@ -234,39 +230,6 @@
       color: #b89021;
       font-size: 1.12rem;
       font-weight: 900;
-    }
-  }
-
-  &__thumbs {
-    display: flex;
-    gap: .5rem;
-    justify-content: center;
-  }
-
-  &__thumb {
-    width: 2.55rem;
-    height: 2.55rem;
-    border-radius: .7rem;
-    border: 2px solid transparent;
-    background: linear-gradient(180deg, #f8f8f8, #f0f0f0);
-    opacity: .56;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .25s ease;
-
-    i {
-      font-size: 1.2rem;
-      color: #b89021;
-    }
-
-    &.is-active {
-      opacity: 1;
-      border-color: var(--th-gold);
-      background: #fff;
-      box-shadow: 0 10px 20px -14px rgba(212, 175, 55, .8);
-      transform: translateY(-1px) scale(1.08);
     }
   }
 }
