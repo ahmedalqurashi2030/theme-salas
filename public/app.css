@@ -1018,6 +1018,9 @@ input:where([type='file']):focus{
 .-mt-62{
     margin-top: -248px;
 }
+.mb-0\.5{
+    margin-bottom: 0.125rem;
+}
 .mb-1{
     margin-bottom: 0.25rem;
 }
@@ -1107,9 +1110,6 @@ input:where([type='file']):focus{
 }
 .mt-auto{
     margin-top: auto;
-}
-.mb-0\.5{
-    margin-bottom: 0.125rem;
 }
 .line-clamp-1{
     overflow: hidden;
@@ -2008,6 +2008,10 @@ input:where([type='file']):focus{
     padding-top: 0.375rem;
     padding-bottom: 0.375rem;
 }
+.py-10{
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
 .py-2{
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -2035,10 +2039,6 @@ input:where([type='file']):focus{
 .py-8{
     padding-top: 2rem;
     padding-bottom: 2rem;
-}
-.py-10{
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
 }
 .\!pt-1{
     padding-top: 0.25rem !important;
@@ -30981,6 +30981,10 @@ body.drawer-open {
         padding-top: 0px;
         padding-bottom: 0px;
     }
+    .md\:py-14{
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
     .md\:py-2{
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
@@ -30988,10 +30992,6 @@ body.drawer-open {
     .md\:py-4{
         padding-top: 1rem;
         padding-bottom: 1rem;
-    }
-    .md\:py-14{
-        padding-top: 3.5rem;
-        padding-bottom: 3.5rem;
     }
     .md\:pb-16{
         padding-bottom: 4rem;

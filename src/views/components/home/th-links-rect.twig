@@ -20,7 +20,7 @@
 {% set section_id = 'tharaa-rect-' ~ random() %}
 
 {% if items is not empty %}
-	<section class="s-block tharaa-links-section style-rect {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile }}; --th-items-desktop: {{ items_desktop }}; --th-gap: 20px;">
+	<section class="s-block tharaa-links-section style-rect py-10 md:py-14 {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile }}; --th-items-desktop: {{ items_desktop }}; --th-gap: 20px;">
 		<div class="container">
 
 			{% include 'components.home._partials.section-header' with {
@@ -43,11 +43,11 @@
 
 				<div class="tharaa-track">
 					{% for item in items %}
-						<a href="{{ item.url|default('#') }}" class="tharaa-card" aria-label="{{ item.title }}">
+						<a href="{{ item.url|default('#') }}" class="tharaa-card flex flex-col relative" aria-label="{{ item.title }}">
 							<div class="tharaa-card__visual">
 								<img class="tharaa-card__img" src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" decoding="async">
 							</div>
-							<div class="tharaa-card__content">
+							<div class="tharaa-card__content px-2.5 text-center">
 								<span class="tharaa-card__title">{{ item.title }}</span>
 								{% if item.count is defined %}
 									<span class="tharaa-card__count">{{ item.count }}</span>
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 
-			<div class="tharaa-progress">
+			<div class="tharaa-progress mx-auto mt-3">
 				<div class="tharaa-progress__bar"></div>
 			</div>
 		</div>
