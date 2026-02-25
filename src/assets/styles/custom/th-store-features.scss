@@ -1,10 +1,6 @@
 .th-store-features {
   --th-charcoal: #191919;
   --th-gold: #d4af37;
-  --th-gold-light: #f2dc97;
-  --th-gold-soft: rgba(212, 175, 55, .12);
-  --th-cream: #faf8f3;
-  --th-cream-2: #f6f1e4;
   --th-card-border: #f0ede5;
   --th-gray-300: #d4d4d4;
   --th-gray-500: #6f6f6f;
@@ -12,15 +8,10 @@
   position: relative;
   overflow: hidden;
 
-
-
-
-
-
-  &__header {
-    max-width: 51rem;
-    margin-left: auto;
-    margin-right: auto;
+  &__header .right-side {
+    width: 100%;
+    padding-inline: 0;
+    text-align: center;
   }
 
   &__title {
@@ -77,25 +68,17 @@
     position: relative;
     width: 100%;
     min-height: 100%;
-    border-radius: 1.75rem;
     background:
       linear-gradient(180deg, rgba(255, 255, 255, .96), #fff 55%),
       linear-gradient(135deg, rgba(212, 175, 55, .03), transparent 70%);
     border: 1px solid var(--th-card-border);
     transition: transform .45s cubic-bezier(.2, .8, .2, 1), box-shadow .45s ease, border-color .3s ease;
-
-    @media (max-width: 767px) {
-      border-radius: 1.35rem;
-    }
   }
 
   &__icon-wrap {
     position: absolute;
-    top: -2.05rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 4.1rem;
-    height: 4.1rem;
     border-radius: 1.15rem;
     background: linear-gradient(180deg, #fff, #fdfaf1);
     border: 1px solid rgba(212, 175, 55, .2);
@@ -105,59 +88,14 @@
     .th-store-features__card-inner:hover & {
       transform: translateX(-50%) translateY(-2px) scale(1.08);
     }
-
-    @media (min-width: 768px) {
-      width: 4.9rem;
-      height: 4.9rem;
-      top: -2.45rem;
-    }
-
-    @media (min-width: 1024px) {
-      width: 5.7rem;
-      height: 5.7rem;
-      top: -2.85rem;
-    }
   }
 
   &__icon {
-    font-size: 1.9rem;
     color: var(--th-gold);
-
-    @media (min-width: 768px) {
-      font-size: 2.3rem;
-    }
-  }
-
-  &__featured-star {
-    position: absolute;
-    top: -.4rem;
-    inset-inline-end: -.4rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #f2cf67, #c89b22);
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 18px rgba(200, 155, 34, .5);
-    animation: th-store-feature-star-pulse 2s infinite;
-
-    i {
-      font-size: .78rem;
-    }
-
-    @media (min-width: 768px) {
-      width: 1.95rem;
-      height: 1.95rem;
-      top: -.5rem;
-      inset-inline-end: -.5rem;
-    }
   }
 
 
   &__card-title {
-    margin: 0 0 .9rem;
     font-size: clamp(1.25rem, 1.7vw, 1.9rem);
     font-weight: 900;
     color: var(--th-charcoal);
@@ -287,17 +225,5 @@
       box-shadow: 0 10px 20px -14px rgba(212, 175, 55, .8);
       transform: translateY(-1px) scale(1.08);
     }
-  }
-}
-
-@keyframes th-store-feature-star-pulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, .45), 0 8px 18px rgba(200, 155, 34, .5);
-  }
-
-  50% {
-    box-shadow: 0 0 0 10px rgba(212, 175, 55, 0), 0 8px 18px rgba(200, 155, 34, .5);
   }
 }

@@ -55,12 +55,10 @@
 						</a>
 					{% endif %}
 
-					<div class="th-cart-wrapper flex items-center gap-2{{ theme.settings.show_cart_quantity_and_currency ? ' show-cart-total' : '' }}">
-						{% if theme.settings.show_cart_quantity_and_currency %}
-							<div class="th-cart-total hidden md:flex flex-col items-end leading-tight" data-cart-total>
-								<span class="font-bold text-sm">{{ cart.total|money }}</span>
-							</div>
-						{% endif %}
+					<div class="th-cart-wrapper flex items-center gap-2">
+						<div class="th-cart-total hidden md:flex flex-col items-end leading-tight" data-cart-total>
+							<span class="font-bold text-sm">{{ cart.total|money }}</span>
+						</div>
 						<salla-cart-summary class="th-icon-btn" aria-label="{{ trans('blocks.header.cart') }}">
 							<div slot="icon" class="relative">
 								<i class="sicon-shopping-bag"></i>

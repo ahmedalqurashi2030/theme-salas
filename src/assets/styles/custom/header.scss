@@ -662,3 +662,38 @@ body.drawer-open {
 [dir="ltr"] .mobile-drawer[x-show] {
     animation: slideInFromLeft 0.3s ease-out;
 }
+
+/* =========================================
+   Cart Total in Header - Controlled by Setting
+   =========================================
+   When data-show-cart-total="false" on body → hide .th-cart-total
+   When data-show-cart-total="true" on body  → show .th-cart-total
+*/
+body[data-show-cart-total="false"] .th-cart-total {
+    display: none !important;
+}
+
+body[data-show-cart-total="true"] .th-cart-total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.2;
+
+    span {
+        font-weight: 700;
+        font-size: 0.875rem;
+        color: var(--th-text-main);
+        white-space: nowrap;
+    }
+}
+
+/* Style the wrapper when showing total */
+.th-cart-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    salla-cart-summary {
+        display: inline-flex;
+    }
+}
