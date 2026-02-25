@@ -15,7 +15,7 @@
 {% set card_layout = 'stacked' %}
 {% set show_mobile_dots = true %}
 
-{# Show dots switch (new) with fallback for old mobile_nav_style setting #}
+{# Show dots switch #}
 {% set show_mobile_dots_raw = component.show_mobile_dots|default(true) %}
 {% if show_mobile_dots_raw is iterable %}
 	{% if attribute(show_mobile_dots_raw, 'selected') is defined %}
@@ -23,16 +23,6 @@
 	{% else %}
 		{% set show_mobile_dots_raw = attribute(show_mobile_dots_raw, 'value')|default(show_mobile_dots_raw) %}
 	{% endif %}
-{% endif %}
-
-{% if component.show_mobile_dots is not defined and component.mobile_nav_style is defined %}
-	{% set old_mobile_nav_raw = component.mobile_nav_style.selected[0].label
-		|default(component.mobile_nav_style.selected[0].value
-		|default(component.mobile_nav_style[0].label
-		|default(component.mobile_nav_style[0].value
-		|default(component.mobile_nav_style.value
-		|default(component.mobile_nav_style|default('dots'))))))|lower %}
-	{% set show_mobile_dots_raw = old_mobile_nav_raw == 'thumbnails' ? false : true %}
 {% endif %}
 
 {% if show_mobile_dots_raw in [false, 0, '0', 'false', 'off', 'no'] %}
