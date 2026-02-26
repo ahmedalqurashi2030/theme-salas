@@ -26,14 +26,21 @@
         "component-random-testimonials"
     ],
     "settings": [
+
+        
         {
-            "id": "g-colors-title",
+            "type": "static",
+            "id": "static-line1",
+            "format": "line"
+        },
+        {
             "type": "static",
             "format": "title",
-            "value": "ألوان المتجر",
-            "variant": "h6",
-            "icon": "sicon-pencil-paintbrush"
+            "id": "static-label2",
+            "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'> ألوان المتجر  </h6></div>",
+            "variant": "h6"
         },
+       
         {
             "id": "enable_dark_mode",
             "type": "boolean",
