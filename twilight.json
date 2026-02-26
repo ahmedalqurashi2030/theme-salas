@@ -167,22 +167,18 @@
             "group": "colors",
             "info": "لون خلفية الترويسة"
         },
+        
         {
-            "id": "g-colors-line",
             "type": "static",
-            "format": "line",
-            "label": "Line",
-            "icon": "sicon-minus",
-            "tab": "appearance",
-            "group": "divider"
+            "id": "static-line2",
+            "format": "line"
         },
         {
-            "id": "g-header-title",
             "type": "static",
             "format": "title",
-            "value": "إعدادات الشريط العلوي",
-            "variant": "h6",
-            "icon": "sicon-grid-4"
+            "id": "static-label1",
+            "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>   إعدادات الشريط العلوي</h6></div>",
+            "variant": "h6"
         },
         {
             "id": "header_is_sticky",
@@ -250,28 +246,17 @@
             "group": "divider"
         },
         {
-            "id": "g-global-announcement-title",
-            "type": "static",
-            "format": "title",
-            "value": "إعلان ترويجي عام لكل الصفحات",
-            "variant": "h6",
-            "icon": "sicon-megaphone"
-        },
-        {
-            "id": "global_announcement_enabled",
-            "type": "boolean",
-            "format": "switch",
-            "label": "تفعيل الإعلان الترويجي في جميع الصفحات",
-            "description": "إظهار شريط إعلان عام أعلى المتجر في كل الصفحات.",
-            "labelHTML": null,
-            "icon": "sicon-toggle-off",
-            "value": false,
-            "selected": false,
-            "required": false,
-            "tab": "header",
-            "group": "announcement",
-            "info": "عند التفعيل يظهر الإعلان في الصفحات كلها وليس الرئيسية فقط."
-        },
+    "type": "static",
+    "id": "static-line3",
+    "format": "line"
+},
+{
+    "type": "static",
+    "format": "title",
+    "id": "static-label3",
+    "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الإعلان الترويجي في جميع الصفحات</h6></div>",
+    "variant": "h6"
+},
         {
             "id": "global_announcement_text",
             "type": "string",
@@ -371,19 +356,17 @@
             "info": "يتم حفظ اختيار الإغلاق محليًا في المتصفح."
         },
         {
-            "id": "g-global-announcement-line",
-            "type": "static",
-            "format": "line",
-            "label": "Line"
-        },
-        {
-            "id": "g-home-title",
-            "type": "static",
-            "format": "title",
-            "value": "إعدادات الصفحة الرئيسية",
-            "variant": "h6",
-            "icon": "sicon-home"
-        },
+    "type": "static",
+    "id": "static-line4",
+    "format": "line"
+},
+{
+    "type": "static",
+    "format": "title",
+    "id": "static-label4",
+    "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الصفحة الرئيسية</h6></div>",
+    "variant": "h6"
+},
         {
             "id": "squar_photo_bg_image_size",
             "type": "items",
@@ -442,22 +425,17 @@
             "info": "عرض (زر الكل) في الصفحة الرئيسية"
         },
         {
-            "id": "g-home-line",
-            "type": "static",
-            "format": "line",
-            "label": "Line",
-            "icon": "sicon-minus",
-            "tab": "homepage",
-            "group": "divider"
-        },
-        {
-            "id": "g-product-title",
-            "type": "static",
-            "format": "title",
-            "value": "إعدادات صفحة المنتج",
-            "variant": "h6",
-            "icon": "sicon-shopping-cart"
-        },
+    "type": "static",
+    "id": "static-line5",
+    "format": "line"
+},
+{
+    "type": "static",
+    "format": "title",
+    "id": "static-label5",
+    "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات صفحة المنتج</h6></div>",
+    "variant": "h6"
+},
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
@@ -636,22 +614,17 @@
             "group": "card_design"
         },
         {
-            "id": "g-product-line",
-            "type": "static",
-            "format": "line",
-            "label": "Line",
-            "icon": "sicon-minus",
-            "tab": "product",
-            "group": "divider"
-        },
-        {
-            "id": "g-footer-title",
-            "type": "static",
-            "format": "title",
-            "value": "إعدادات الفوتر",
-            "variant": "h6",
-            "icon": "sicon-layout-1"
-        },
+    "type": "static",
+    "id": "static-line6",
+    "format": "line"
+},
+{
+    "type": "static",
+    "format": "title",
+    "id": "static-label6",
+    "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الفوتر</h6></div>",
+    "variant": "h6"
+},
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
