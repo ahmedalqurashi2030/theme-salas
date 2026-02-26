@@ -93,6 +93,7 @@ class Home extends BasePage {
         const thumb = section.querySelector('[data-th-promo-scroll-thumb]');
         const trackBar = section.querySelector('[data-th-promo-scroll-track]');
         if (!track || !thumb || !trackBar) return;
+        if (!section.classList.contains('th-promo-hero--scroll-products')) return;
 
         const getDirection = () => {
             const scopedDir = section.closest('[dir]')?.getAttribute('dir');

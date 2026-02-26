@@ -20,9 +20,9 @@
 
 <section class="s-block th-promo-hero {{ should_scroll_products ? 'th-promo-hero--scroll-products' : 'th-promo-hero--grid-products' }}" id="{{ section_id }}" aria-labelledby="{{ section_id }}-title">
   <div class="container">
-    <div class="th-promo-hero__shell">
-      <header class="th-promo-hero__header">
-        <figure class="th-promo-hero__visual">
+    <div class="th-promo-hero__shell grid gap-6 overflow-hidden rounded-[20px] border border-[#e4e8f1] p-6 shadow-[0_16px_30px_rgba(17,24,39,0.08)] md:p-8">
+      <header class="th-promo-hero__header grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)] lg:items-center lg:gap-8">
+        <figure class="th-promo-hero__visual order-1 m-0 grid place-items-center">
           <img src="{{ hero_image_src }}"
                alt="{{ title }}"
                class="th-promo-hero__hero-image"
@@ -30,7 +30,7 @@
                decoding="async">
         </figure>
 
-        <div class="th-promo-hero__content">
+        <div class="th-promo-hero__content order-2 grid content-center gap-3 text-start">
           <span class="th-promo-hero__eyebrow">Limited Offer</span>
           <h2 class="th-promo-hero__title" id="{{ section_id }}-title">{{ title }}</h2>
 
@@ -39,7 +39,7 @@
           {% endif %}
 
           {% if show_countdown and countdown_end %}
-            <div class="th-promo-hero__timer-wrap">
+            <div class="th-promo-hero__timer-wrap grid gap-2">
               <p class="th-promo-hero__timer-label">Offer ends in</p>
               <div class="th-promo-hero__timer"
                    data-th-promo-countdown
@@ -78,11 +78,11 @@
         </div>
       </header>
 
-      <div class="th-promo-hero__products" aria-label="Featured products">
-        <p class="th-promo-hero__products-heading">Featured Products</p>
+      <div class="th-promo-hero__products grid gap-4" aria-label="Featured products">
+        <p class="th-promo-hero__products-heading text-start">Featured Products</p>
 
         {% if products|length %}
-          <div class="th-promo-hero__products-list" data-th-promo-products-track>
+          <div class="th-promo-hero__products-list flex gap-4 overflow-x-auto snap-x snap-mandatory {{ should_scroll_products ? '' : 'lg:grid lg:grid-cols-4 lg:overflow-visible lg:snap-none lg:pb-0' }}" data-th-promo-products-track>
             {% for product in products %}
               {% set product_id = product.id ?? null %}
               {% set product_url = product.url ?? '#' %}
@@ -93,8 +93,8 @@
               {% set product_stars = product.rating.stars ?? product.rating ?? 0 %}
               {% set product_stars = product_stars|round(0, 'floor') %}
 
-              <article class="th-promo-hero__product-card">
-                <a href="{{ product_url }}" class="th-promo-hero__product-link" aria-label="{{ product_name }}">
+              <article class="th-promo-hero__product-card {{ should_scroll_products ? 'th-promo-hero__product-card--scroll snap-start' : 'lg:min-w-0' }}">
+                <a href="{{ product_url }}" class="th-promo-hero__product-link flex min-w-0 flex-1 items-center gap-2.5 p-1 lg:min-h-[104px]" aria-label="{{ product_name }}">
                   <span class="th-promo-hero__product-image-wrap">
                     <img src="{{ product_image }}"
                          alt="{{ product_image_alt }}"
@@ -103,7 +103,7 @@
                          decoding="async">
                   </span>
 
-                  <span class="th-promo-hero__product-content">
+                  <span class="th-promo-hero__product-content grid min-w-0 gap-0.5">
                     <span class="th-promo-hero__product-title">{{ product_name }}</span>
                     {% if show_rating %}
                       <span class="th-promo-hero__rating" aria-label="Rating {{ product_stars }} out of 5">
@@ -133,9 +133,11 @@
             {% endfor %}
           </div>
 
-          <div class="th-promo-hero__scroll-track" data-th-promo-scroll-track aria-hidden="true">
-            <span class="th-promo-hero__scroll-thumb" data-th-promo-scroll-thumb></span>
-          </div>
+          {% if should_scroll_products %}
+            <div class="th-promo-hero__scroll-track" data-th-promo-scroll-track aria-hidden="true">
+              <span class="th-promo-hero__scroll-thumb" data-th-promo-scroll-thumb></span>
+            </div>
+          {% endif %}
         {% else %}
           <div class="th-promo-hero__empty">No selected products for this section yet.</div>
         {% endif %}

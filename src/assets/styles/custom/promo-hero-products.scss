@@ -26,26 +26,7 @@
   padding-block: var(--promo-space-4);
 
   &__shell {
-    border-radius: var(--promo-radius-lg);
-    border: 1px solid #e4e8f1;
     background: linear-gradient(90deg, #f9e5e7 0%, #ebf3ff 100%);
-    padding: var(--promo-space-3);
-    box-shadow: 0 16px 30px rgba(17, 24, 39, 0.08);
-    display: grid;
-    gap: var(--promo-space-3);
-    overflow: hidden;
-  }
-
-  &__header {
-    display: grid;
-    gap: var(--promo-space-2);
-  }
-
-  &__visual {
-    margin: 0;
-    order: 1;
-    display: grid;
-    place-items: center;
   }
 
   &__hero-image {
@@ -53,14 +34,6 @@
     height: auto;
     object-fit: contain;
     transition: transform 320ms var(--promo-ease);
-  }
-
-  &__content {
-    order: 2;
-    display: grid;
-    gap: 12px;
-    align-content: center;
-    text-align: start;
   }
 
   &__eyebrow {
@@ -94,11 +67,6 @@
     p {
       margin: 0;
     }
-  }
-
-  &__timer-wrap {
-    display: grid;
-    gap: var(--promo-space-1);
   }
 
   &__timer-label {
@@ -181,11 +149,6 @@
     outline-offset: 2px;
   }
 
-  &__products {
-    display: grid;
-    gap: var(--promo-space-2);
-  }
-
   &__products-heading {
     margin: 0;
     font-size: 14px;
@@ -194,10 +157,6 @@
   }
 
   &__products-list {
-    display: flex;
-    gap: var(--promo-space-2);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
     scrollbar-width: none;
     padding-bottom: var(--promo-space-1);
   }
@@ -208,16 +167,10 @@
 
   &__product-card {
     min-width: 228px;
-    scroll-snap-align: start;
     background: var(--promo-card);
     border-radius: var(--promo-radius-md);
     border: 1px solid #e7ebf4;
     box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px;
-    overflow: hidden;
     transition: transform 220ms var(--promo-ease), box-shadow 220ms var(--promo-ease);
   }
 
@@ -227,13 +180,6 @@
   }
 
   &__product-link {
-    min-height: 80px;
-    min-width: 0;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 4px;
     color: inherit;
     text-decoration: none;
   }
@@ -260,12 +206,6 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-  }
-
-  &__product-content {
-    min-width: 0;
-    display: grid;
-    gap: 2px;
   }
 
   &__product-title {
@@ -384,10 +324,6 @@
 
 @media (min-width: 768px) {
   .th-promo-hero {
-    &__shell {
-      padding: var(--promo-space-4);
-    }
-
     &__title {
       font-size: clamp(32px, 4vw, 56px);
     }
@@ -395,107 +331,10 @@
 }
 
 @media (min-width: 1024px) {
-  .th-promo-hero {
-    &__header {
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
-      gap: var(--promo-space-4);
-      align-items: center;
-    }
-
-    &__visual {
-      order: 1;
-    }
-
-    &__content {
-      order: 2;
-    }
-
-    &__product-link {
-      min-height: 104px;
-    }
-  }
-
-  /* 4 cards or fewer: keep classic grid */
-  .th-promo-hero:not(.th-promo-hero--scroll-products) .th-promo-hero__products-list {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    overflow: visible;
-    scroll-snap-type: none;
-    padding-bottom: 0;
-  }
-
-  .th-promo-hero:not(.th-promo-hero--scroll-products) .th-promo-hero__product-card {
-    min-width: 0;
-  }
-
-  .th-promo-hero:not(.th-promo-hero--scroll-products) .th-promo-hero__scroll-track {
-    display: none;
-  }
-
-  /* More than 4 cards: force horizontal scrolling with visible track */
-  .th-promo-hero.th-promo-hero--scroll-products .th-promo-hero__products-list {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: var(--promo-space-1);
-  }
-
-  .th-promo-hero.th-promo-hero--scroll-products .th-promo-hero__product-card {
+  /* More than 4 cards: keep 4 visible cards with horizontal scrolling */
+  .th-promo-hero__product-card--scroll {
     flex: 0 0 calc((100% - (var(--promo-space-2) * 3)) / 4);
     min-width: 220px;
-    scroll-snap-align: start;
-  }
-
-  .th-promo-hero.th-promo-hero--scroll-products .th-promo-hero__scroll-track {
-    display: block;
-  }
-}
-
-[dir='rtl'] .th-promo-hero {
-  &__header {
-    direction: rtl;
-  }
-
-  &__content {
-    text-align: right;
-  }
-
-  &__product-link {
-    flex-direction: row;
-    text-align: right;
-  }
-
-  &__add-btn {
-    margin-right: 0;
-    margin-left: 0;
-  }
-
-  &__products-heading {
-    text-align: right;
-  }
-}
-
-[dir='ltr'] .th-promo-hero {
-  &__header {
-    direction: ltr;
-  }
-
-  &__content {
-    text-align: left;
-  }
-
-  &__product-link {
-    flex-direction: row;
-    text-align: left;
-  }
-
-  &__add-btn {
-    margin-right: 0;
-    margin-left: 0;
-  }
-
-  &__products-heading {
-    text-align: left;
   }
 }
 
