@@ -2,11 +2,45 @@
   Tharaa | Double Banner (Home Component)
 ========================================================= #}
 
-{% set is_rounded      = component.is_rounded ?? true %}
-{% set uniform_height  = component.uniform_height ?? true %}
-{% set mobile_vertical = component.mobile_vertical ?? false %}
-{% set gap             = component.gap ?? 0 %}
-{% set custom_class    = component.custom_class ?? '' %}
+{% set is_rounded_raw      = component.is_rounded|default(true) %}
+{% set uniform_height_raw  = component.uniform_height|default(true) %}
+{% set mobile_vertical_raw = component.mobile_vertical|default(false) %}
+{% set gap_raw             = component.gap|default(16) %}
+{% set custom_class        = component.custom_class|default('')|trim %}
+
+{% if is_rounded_raw is iterable %}
+	{% if attribute(is_rounded_raw, 'selected') is defined %}
+		{% set is_rounded_raw = attribute(is_rounded_raw, 'selected') %}
+	{% else %}
+		{% set is_rounded_raw = attribute(is_rounded_raw, 'value')|default(is_rounded_raw) %}
+	{% endif %}
+{% endif %}
+
+{% if uniform_height_raw is iterable %}
+	{% if attribute(uniform_height_raw, 'selected') is defined %}
+		{% set uniform_height_raw = attribute(uniform_height_raw, 'selected') %}
+	{% else %}
+		{% set uniform_height_raw = attribute(uniform_height_raw, 'value')|default(uniform_height_raw) %}
+	{% endif %}
+{% endif %}
+
+{% if mobile_vertical_raw is iterable %}
+	{% if attribute(mobile_vertical_raw, 'selected') is defined %}
+		{% set mobile_vertical_raw = attribute(mobile_vertical_raw, 'selected') %}
+	{% else %}
+		{% set mobile_vertical_raw = attribute(mobile_vertical_raw, 'value')|default(mobile_vertical_raw) %}
+	{% endif %}
+{% endif %}
+
+{% if gap_raw is iterable %}
+	{% set gap_raw = attribute(gap_raw, 'value')|default(16) %}
+{% endif %}
+
+{% set is_rounded = is_rounded_raw not in [false, 0, '0', 'false', 'off', 'no'] %}
+{% set uniform_height = uniform_height_raw not in [false, 0, '0', 'false', 'off', 'no'] %}
+{% set mobile_vertical = mobile_vertical_raw not in [false, 0, '0', 'false', 'off', 'no'] %}
+{% set gap = gap_raw is numeric ? gap_raw : 16 %}
+{% set gap = gap < 0 ? 0 : (gap > 50 ? 50 : gap) %}
 
 {% set first_image  = component['first_banner_image'] ?? component.first_banner_image ?? null %}
 {% set first_link   = component['first_banner_link'] ?? component.first_banner_link ?? '' %}
@@ -28,24 +62,21 @@
 {% endif %}
 
 {% if first_image or second_image %}
-	<section class="s-block th-banners {{ custom_class }}">
+	<section class="s-block th-banners th-banners--double {{ custom_class }}">
 		<div class="container">
 
 			<div
-				class="th-banners__grid th-banners__grid--2
-					                  {{ is_rounded ? 'th-banners__grid--rounded' : '' }}
-					                  {{ uniform_height ? 'th-banners__grid--uniform' : '' }}
-					                  {{ mobile_vertical ? 'th-banners__grid--stack-mobile' : '' }}" style="--th-gap: {{ gap }}px;">
+				class="th-banners__grid grid md:grid-cols-2 {{ mobile_vertical ? 'grid-cols-1' : 'grid-cols-2' }}" style="--th-gap: {{ gap }}px;">
 
 				{# البانر الأول #}
 				{% if first_image %}
 					{% if first_link %}
-						<a href="{{ first_link }}" class="th-banner" target="_blank" rel="noopener">
+						<a href="{{ first_link }}" class="th-banners__item group block overflow-hidden bg-gray-100 {{ is_rounded ? 'rounded-md' : 'rounded-none' }} {{ uniform_height ? 'aspect-[16/8]' : '' }}">
 						{% else %}
-							<div class="th-banner">
+							<div class="th-banners__item group block overflow-hidden bg-gray-100 {{ is_rounded ? 'rounded-md' : 'rounded-none' }} {{ uniform_height ? 'aspect-[16/8]' : '' }}">
 							{% endif %}
 
-							<img class="th-banner__img" src="{{ first_image }}" alt="" loading="eager" decoding="async" fetchpriority="high">
+							<img class="block w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="{{ first_image }}" alt="banner-1" loading="eager" decoding="async" fetchpriority="high">
 
 							{% if first_link %}
 							</a>
@@ -57,12 +88,12 @@
 				{# البانر الثاني #}
 				{% if second_image %}
 					{% if second_link %}
-						<a href="{{ second_link }}" class="th-banner" target="_blank" rel="noopener">
+						<a href="{{ second_link }}" class="th-banners__item group block overflow-hidden bg-gray-100 {{ is_rounded ? 'rounded-md' : 'rounded-none' }} {{ uniform_height ? 'aspect-[16/8]' : '' }}">
 						{% else %}
-							<div class="th-banner">
+							<div class="th-banners__item group block overflow-hidden bg-gray-100 {{ is_rounded ? 'rounded-md' : 'rounded-none' }} {{ uniform_height ? 'aspect-[16/8]' : '' }}">
 							{% endif %}
 
-							<img class="th-banner__img" src="{{ second_image }}" alt="" loading="lazy" decoding="async">
+							<img class="block w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="{{ second_image }}" alt="banner-2" loading="lazy" decoding="async">
 
 							{% if second_link %}
 							</a>

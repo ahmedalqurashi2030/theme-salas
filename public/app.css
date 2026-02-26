@@ -1168,6 +1168,9 @@ input:where([type='file']):focus{
 .hidden{
     display: none;
 }
+.aspect-\[16\/8\]{
+    aspect-ratio: 16/8;
+}
 .aspect-\[4\/5\]{
     aspect-ratio: 4/5;
 }
@@ -1753,6 +1756,9 @@ input:where([type='file']):focus{
 }
 .rounded-md{
     border-radius: 0.375rem;
+}
+.rounded-none{
+    border-radius: 0px;
 }
 .rounded-sm{
     border-radius: 0.125rem;
@@ -28678,14 +28684,6 @@ body[data-show-cart-total=true] .th-cart-total span {
   grid-gap: var(--th-gap);
   gap: var(--th-gap);
 }
-.th-banners__grid--2 {
-  grid-template-columns: 1fr;
-}
-@media (min-width: 768px) {
-  .th-banners__grid--2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
 .th-banners__grid--4 {
   grid-template-columns: 1fr;
 }
@@ -28699,19 +28697,8 @@ body[data-show-cart-total=true] .th-cart-total span {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 767px) {
-  .th-banners__grid--stack-mobile {
-    grid-template-columns: 1fr;
-  }
-}
-.th-banners__grid--uniform.th-banners__grid--2 .th-banner {
-  aspect-ratio: 16/8;
-}
 .th-banners__grid--uniform.th-banners__grid--4 .th-banner {
   aspect-ratio: 1/1;
-}
-.th-banners__grid--rounded .th-banner {
-  border-radius: 14px;
 }
 .th-banner {
   display: block;
@@ -30636,6 +30623,12 @@ body[data-show-cart-total=true] .th-cart-total span {
     --tw-scale-x: 1.1;
     --tw-scale-y: 1.1;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(1.1) scaleY(1.1);
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.group:hover .group-hover\:scale-\[1\.03\]{
+    --tw-scale-x: 1.03;
+    --tw-scale-y: 1.03;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(1.03) scaleY(1.03);
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .group:hover .group-hover\:opacity-100{

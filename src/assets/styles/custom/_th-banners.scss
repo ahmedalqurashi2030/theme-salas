@@ -18,17 +18,6 @@
     gap: var(--th-gap);
 
     // ==============================
-    // Double banners section
-    // ==============================
-    &--2 {
-      grid-template-columns: 1fr;
-
-      @media (min-width: 768px) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    // ==============================
     // Quad banners section (square)
     // ==============================
     &--4 {
@@ -45,32 +34,13 @@
       }
     }
 
-    &--stack-mobile {
-      @media (max-width: 767px) {
-        grid-template-columns: 1fr;
-      }
-    }
-
     // Same height behavior differs by section type:
-    // - double banners => rectangular cards
     // - quad banners => square cards
     &--uniform {
-      &.th-banners__grid--2 {
-        .th-banner {
-          aspect-ratio: 16 / 8;
-        }
-      }
-
       &.th-banners__grid--4 {
         .th-banner {
           aspect-ratio: 1 / 1;
         }
-      }
-    }
-
-    &--rounded {
-      .th-banner {
-        border-radius: 14px;
       }
     }
   }
