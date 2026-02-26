@@ -263,8 +263,9 @@
     max-width: 220px;
 
     @media (min-width: 1024px) {
-      width: calc((100% - (14px * 4)) / 5);
-      min-width: 200px;
+      width: calc((100% - (14px * (var(--th-desktop-products-per-row, 6) - 1))) / var(--th-desktop-products-per-row, 6));
+      flex: 0 0 calc((100% - (14px * (var(--th-desktop-products-per-row, 6) - 1))) / var(--th-desktop-products-per-row, 6));
+      min-width: 0;
       max-width: none;
     }
   }
@@ -595,4 +596,22 @@
     background: #f2f2f2 !important;
   }
 
+}
+
+.tharaa-theme.th-hide-card-rating .s-product-card-entry .s-product-card-rating {
+  display: none !important;
+}
+
+.tharaa-theme.th-hide-card-rating .product-entry .product-rating,
+.tharaa-theme.th-hide-card-rating .th-card-rating {
+  display: none !important;
+}
+
+.tharaa-theme.th-hide-card-discount .s-product-card-entry .th-product-card-discount-badge,
+.tharaa-theme.th-hide-card-discount .s-product-card-entry .s-product-card-discount-badge {
+  display: none !important;
+}
+
+.tharaa-theme.th-hide-card-discount .th-card-discount-badge {
+  display: none !important;
 }

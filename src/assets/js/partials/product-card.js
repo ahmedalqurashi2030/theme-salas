@@ -34,6 +34,11 @@ class ProductCard extends HTMLElement {
 
     this.fitImageHeight = salla.config.get('store.settings.product.fit_type');
     this.placeholder = salla.url.asset(salla.config.get('theme.settings.placeholder'));
+    this.showCardRating = this.parseBooleanSetting(salla.config.get('theme.settings.card_show_rating'), true);
+    this.showCardDiscountBadge = this.parseBooleanSetting(
+      salla.config.get('theme.settings.card_show_discount_badge'),
+      true,
+    );
     this.getProps();
 
     this.source = salla.config.get('page.slug');
@@ -69,6 +74,23 @@ class ProductCard extends HTMLElement {
     this.minimal = this.hasAttribute('minimal');
     this.isSpecial = this.hasAttribute('isSpecial');
     this.showQuantity = this.hasAttribute('showQuantity');
+  }
+
+  parseBooleanSetting(value, fallback = true) {
+    if (value === undefined || value === null || value === '') return fallback;
+    if (Array.isArray(value) && value.length) {
+      return this.parseBooleanSetting(value[0]?.value ?? value[0]?.selected ?? value[0], fallback);
+    }
+    if (typeof value === 'object') {
+      return this.parseBooleanSetting(value.value ?? value.selected ?? '', fallback);
+    }
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'number') return value === 1;
+
+    const normalized = String(value).trim().toLowerCase();
+    if (['1', 'true', 'yes', 'on'].includes(normalized)) return true;
+    if (['0', 'false', 'no', 'off'].includes(normalized)) return false;
+    return fallback;
   }
 
   escapeHTML(str = '') {
@@ -129,11 +151,13 @@ class ProductCard extends HTMLElement {
   }
 
   getDiscountBadgeHtml() {
+    if (!this.showCardDiscountBadge) return '';
     const p = this.getDiscountPercent();
     return p ? `<span class="th-product-card-discount-badge">-${p}%</span>` : '';
   }
 
   getRatingHtml() {
+    if (!this.showCardRating) return '';
     // 1. Check for Real Rating
     const hasRating = !!this.product?.rating?.stars;
     const ratingValue = hasRating ? this.product.rating.stars : 5.0;
@@ -226,6 +250,13 @@ class ProductCard extends HTMLElement {
             </salla-add-product-button>
           </div>`
       : '';
+    const ratingHtml = this.getRatingHtml();
+    const metaRowHtml = (ratingHtml || addToCartBtn)
+      ? `<div class="s-product-card-meta">
+          ${ratingHtml}
+          ${addToCartBtn}
+        </div>`
+      : '';
 
     this.innerHTML = `
       <div class="${!this.fullImage ? 's-product-card-image' : 's-product-card-image-full'}">
@@ -263,10 +294,7 @@ class ProductCard extends HTMLElement {
 
       <div class="s-product-card-content">
         <!-- Row 1: Rating + Add to Cart Button -->
-        <div class="s-product-card-meta">
-          ${this.getRatingHtml()}
-          ${addToCartBtn}
-        </div>
+        ${metaRowHtml}
 
         ${brandName ? `<span class="s-product-card-brand">${brandName}</span>` : ''}
 

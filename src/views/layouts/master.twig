@@ -61,6 +61,12 @@
 		{% set desktop_products_per_row_raw = theme.settings.get('desktop_products_per_row', '6') %}
 		{% set desktop_products_per_row = desktop_products_per_row_raw.value ?? desktop_products_per_row_raw[0].value ?? desktop_products_per_row_raw %}
 		{% set desktop_products_per_row = desktop_products_per_row in ['4', '5', '6', '7', '8', 4, 5, 6, 7, 8] ? desktop_products_per_row : '6' %}
+		{% set card_show_rating_raw = theme.settings.get('card_show_rating', true) %}
+		{% set card_show_discount_badge_raw = theme.settings.get('card_show_discount_badge', true) %}
+		{% set card_show_rating_value = card_show_rating_raw.value ?? card_show_rating_raw.selected ?? card_show_rating_raw %}
+		{% set card_show_discount_badge_value = card_show_discount_badge_raw.value ?? card_show_discount_badge_raw.selected ?? card_show_discount_badge_raw %}
+		{% set card_show_rating_enabled = card_show_rating_value in [true, 1, '1', 'true', 'on', 'yes'] %}
+		{% set card_show_discount_badge_enabled = card_show_discount_badge_value in [true, 1, '1', 'true', 'on', 'yes'] %}
 
 		{% include 'pages.partials.loading-screen-assets' %}
 
@@ -112,6 +118,8 @@
 																				  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
 																				  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
 																				  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
+																				  {{ card_show_rating_enabled ? '' : ' th-hide-card-rating' }}
+																				  {{ card_show_discount_badge_enabled ? '' : ' th-hide-card-discount' }}
 																				  ">
 	<div class="loader-init"></div>
 	<noscript>
