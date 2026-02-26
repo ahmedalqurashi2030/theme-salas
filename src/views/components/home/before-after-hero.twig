@@ -20,6 +20,9 @@
 
 {% set before_image = component.before_image ?? component.after_image ?? '' %}
 {% set after_image = component.after_image ?? component.before_image ?? '' %}
+{% set layout_style_raw = component.layout_style[0] ?? component.layout_style ?? 'split' %}
+{% set layout_style = layout_style_raw.label ?? layout_style_raw.key ?? layout_style_raw.value ?? layout_style_raw %}
+{% set is_stacked_layout = layout_style in ['stacked', 'عمودي (المحتوى فوق الصورة)'] %}
 
 {% set before_word = trans('components.comparison.before') %}
 {% set after_word = trans('components.comparison.after') %}
@@ -28,21 +31,21 @@
 {% set before_alt = before_desc ? before_word ~ ': ' ~ before_desc : before_word %}
 {% set after_alt = after_desc ? after_word ~ ': ' ~ after_desc : after_word %}
 
-<section class="s-block th-before-after-hero">
+<section class="s-block th-before-after-hero {{ is_stacked_layout ? 'th-before-after-hero--stacked' : 'th-before-after-hero--split' }}">
 	<div class="container">
-		<div class="th-before-after-hero__panel">
-			<div class="th-before-after-hero__inner">
-				<div class="th-before-after-hero__content">
+		<div class="th-before-after-hero__panel relative overflow-hidden rounded-[20px] p-[14px] md:p-6 lg:p-8">
+			<div class="th-before-after-hero__inner relative grid items-center gap-6 {{ is_stacked_layout ? 'grid-cols-1' : 'lg:grid-cols-[minmax(250px,0.88fr)_minmax(0,1fr)] lg:gap-[30px]' }}">
+				<div class="th-before-after-hero__content min-w-0 {{ is_stacked_layout ? 'text-center' : 'text-center lg:text-right ltr:lg:text-left' }}">
 					{% if subtitle %}
-						<span class="th-before-after-hero__eyebrow">{{ subtitle }}</span>
+						<span class="th-before-after-hero__eyebrow mb-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5">{{ subtitle }}</span>
 					{% endif %}
 
 					{% if title %}
-						<h2 class="th-before-after-hero__title">{{ title }}</h2>
+						<h2 class="th-before-after-hero__title mb-3">{{ title }}</h2>
 					{% endif %}
 
 					{% if description %}
-						<div class="th-before-after-hero__desc">
+						<div class="th-before-after-hero__desc mb-5 {{ is_stacked_layout ? 'mx-auto max-w-[62ch]' : 'mx-auto max-w-[62ch] lg:mx-0 lg:max-w-none' }}">
 							{{ description|raw }}
 						</div>
 					{% endif %}
@@ -50,7 +53,7 @@
 
 				</div>
 
-				<div class="th-before-after-hero__visual">
+				<div class="th-before-after-hero__visual min-w-0">
 					<div class="th-before-after-hero__compare js-before-after-hero" data-initial-position="50" style="--th-before-after-pos: 50%;">
 						<div class="th-before-after-hero__base">
 							<img class="th-before-after-hero__img" src="{{ before_image }}" alt="{{ before_alt }}">

@@ -1690,35 +1690,39 @@
                     "maxLength": 1000
                 },
                 {
-                    "id": "button_text",
-                    "type": "string",
-                    "format": "text",
-                    "label": "نص الزر",
-                    "description": "النص المساعد: النص الذي يظهر داخل زر الدعوة لاتخاذ إجراء.",
-                    "labelHTML": null,
-                    "placeholder": "Placeholder text ..",
-                    "icon": "sicon-format-text-alt",
-                    "value": "تسوّقي الآن",
-                    "multilanguage": false,
-                    "required": false,
-                    "minLength": 6,
-                    "maxLength": 30
-                },
-                {
-                    "id": "button_link",
-                    "type": "string",
-                    "format": "url",
-                    "inputType": "url",
-                    "label": "رابط الزر",
-                    "description": "الرابط الذي ينتقل إليه المستخدم عند الضغط على الزر",
-                    "labelHTML": null,
-                    "placeholder": "e.g. https://salla.sa",
-                    "icon": "sicon-link",
-                    "value": null,
-                    "required": false,
-                    "minLength": 6,
-                    "maxLength": 30
-                },
+  "id": "layout_style",
+  "type": "items",
+  "format": "dropdown-list",
+  "label": "تخطيط القسم",
+  "description": "اختر طريقة ترتيب المحتوى مع المقارنة",
+  "labelHTML": null,
+  "icon": "sicon-keyboard_arrow_down",
+  "selected": [
+    {
+      "label": "split",
+      "value": "جانبي (النص بجانب الصورة)",
+      "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
+    }
+  ],
+  "options": [
+    {
+      "label": "split",
+      "value": "جانبي (النص بجانب الصورة)",
+      "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
+    },
+    {
+      "label": "stacked",
+      "value": "عمودي (المحتوى فوق الصورة)",
+      "key": "84de0019-b67f-4c72-a204-c740ec69e4dc"
+    }
+  ],
+  "source": "Manual",
+  "multichoice": false,
+  "searchable": false,
+  "required": false
+},
+
+    
                 {
                     "id": "before_image",
                     "type": "string",
