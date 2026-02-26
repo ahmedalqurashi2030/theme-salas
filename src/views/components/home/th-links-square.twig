@@ -20,7 +20,7 @@
 {% set section_id = 'tharaa-square-' ~ random() %}
 
 {% if items is not empty %}
-	<section class="s-block tharaa-links-section style-square py-10 md:py-14 {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile }}; --th-items-desktop: {{ items_desktop }}; --th-gap: 20px;">
+	<section class="s-block tharaa-links-section style-square py-10  {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile }}; --th-items-desktop: {{ items_desktop }}; --th-gap: 20px;">
 		<div class="container">
 
 			{% include 'components.home._partials.section-header' with {
