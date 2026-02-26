@@ -3,9 +3,15 @@
   Controlled by theme.settings (twilight.json -> settings)
 #}
 
-{% set enabled_raw = theme.settings.get('global_announcement_visibility', theme.settings.get('global_announcement_enabled', false)) %}
+{% set enabled_raw = theme.settings.get('global_announcement_visibility', theme.settings.get('global_announcement_enabled', true)) %}
 {% set enabled = enabled_raw not in [false, 0, '0', 'false', 'off', 'no', null, ''] %}
-{% set announcement_text = theme.settings.get('global_announcement_text', '')|trim %}
+{% set announcement_text_raw = theme.settings.get('global_announcement_text', 'تخفيضات الصيف خصم 30%') %}
+{% set announcement_text = announcement_text_raw|trim %}
+{% if announcement_text_raw is iterable %}
+  {% set announcement_text = announcement_text_raw[user.language.code]
+    |default(announcement_text_raw.ar|default(announcement_text_raw.en|default('')))
+    |trim %}
+{% endif %}
 
 {% if enabled and announcement_text %}
   {% set announcement_link = theme.settings.get('global_announcement_link', '')|trim %}
