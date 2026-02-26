@@ -47,7 +47,7 @@
     
 
     <div class="th-featured-products-banner__layout grid gap-4 lg:gap-6 lg:grid-cols-[minmax(280px,32%)_1fr]">
-      <article class="th-featured-products-banner__promo relative overflow-hidden rounded-2xl min-h-[320px] sm:min-h-[380px] lg:min-h-[380px] order-2 lg:order-1">
+      <article class="th-featured-products-banner__promo relative overflow-hidden rounded-2xl min-h-[320px] sm:min-h-[380px] lg:min-h-[380px] order-1 lg:order-1">
         {% if banner_image %}
           <img src="{{ banner_image }}" alt="{{ banner_title ?: section_title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
         {% endif %}
@@ -77,7 +77,7 @@
         </div>
       </article>
 
-      <div class="th-featured-products-banner__products order-1 lg:order-2 overflow-hidden">
+      <div class="th-featured-products-banner__products order-2 lg:order-2 overflow-hidden">
         <salla-products-slider
           class="th-products-slider"
           source="selected"
