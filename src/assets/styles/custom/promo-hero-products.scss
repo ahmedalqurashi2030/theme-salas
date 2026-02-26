@@ -410,25 +410,44 @@
       order: 2;
     }
 
-    &__products-list {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      overflow: visible;
-      scroll-snap-type: none;
-      padding-bottom: 0;
-    }
-
-    &__product-card {
-      min-width: 0;
-    }
-
     &__product-link {
       min-height: 104px;
     }
+  }
 
-    &__scroll-track {
-      display: none;
-    }
+  /* 4 cards or fewer: keep classic grid */
+  .th-promo-hero:not(.th-promo-hero--scroll-products) .th-promo-hero__products-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+
+  .th-promo-hero:not(.th-promo-hero--scroll-products) .th-promo-hero__product-card {
+    min-width: 0;
+  }
+
+  .th-promo-hero:not(.th-promo-hero--scroll-products) .th-promo-hero__scroll-track {
+    display: none;
+  }
+
+  /* More than 4 cards: force horizontal scrolling with visible track */
+  .th-promo-hero.th-promo-hero--scroll-products .th-promo-hero__products-list {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: var(--promo-space-1);
+  }
+
+  .th-promo-hero.th-promo-hero--scroll-products .th-promo-hero__product-card {
+    flex: 0 0 calc((100% - (var(--promo-space-2) * 3)) / 4);
+    min-width: 220px;
+    scroll-snap-align: start;
+  }
+
+  .th-promo-hero.th-promo-hero--scroll-products .th-promo-hero__scroll-track {
+    display: block;
   }
 }
 

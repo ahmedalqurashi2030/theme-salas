@@ -89,8 +89,6 @@ class Home extends BasePage {
     }
 
     initPromoProductsScroll(section) {
-        // ... (will restore the original if I didn't mean to delete it wait! I shouldn't replace lines 91-164! Let me use multi replace or just insert after initPromoProductsScroll)
-
         const track = section.querySelector('[data-th-promo-products-track]');
         const thumb = section.querySelector('[data-th-promo-scroll-thumb]');
         const trackBar = section.querySelector('[data-th-promo-scroll-track]');

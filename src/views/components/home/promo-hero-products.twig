@@ -14,10 +14,11 @@
 {% set button_text = component.button_text ?? 'Go Shopping' %}
 {% set button_link = component.button_link ?? '' %}
 {% set products = component.products ?? [] %}
+{% set should_scroll_products = products|length > 4 %}
 {% set section_id = 'th-promo-hero-' ~ position %}
 {% set hero_image_src = hero_image ?? 'images/placeholder.png'|asset %}
 
-<section class="s-block th-promo-hero" id="{{ section_id }}" aria-labelledby="{{ section_id }}-title">
+<section class="s-block th-promo-hero {{ should_scroll_products ? 'th-promo-hero--scroll-products' : 'th-promo-hero--grid-products' }}" id="{{ section_id }}" aria-labelledby="{{ section_id }}-title">
   <div class="container">
     <div class="th-promo-hero__shell">
       <header class="th-promo-hero__header">
