@@ -58,6 +58,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		{{ theme.settings.set('placeholder', 'images/placeholder.png') }}
+		{% set desktop_products_per_row_raw = theme.settings.get('desktop_products_per_row', '6') %}
+		{% set desktop_products_per_row = desktop_products_per_row_raw.value ?? desktop_products_per_row_raw[0].value ?? desktop_products_per_row_raw %}
+		{% set desktop_products_per_row = desktop_products_per_row in ['4', '5', '6', '7', '8', 4, 5, 6, 7, 8] ? desktop_products_per_row : '6' %}
 
 		{% include 'pages.partials.loading-screen-assets' %}
 
@@ -96,6 +99,8 @@
 			--th-text-secondary: {{theme.settings.get('secondary_text_color', '#111827')}}
 			;
 			--th-header-bg: {{theme.settings.get('header_bg_color', '#ffffff')}}
+			;
+			--th-desktop-products-per-row: {{ desktop_products_per_row }}
 			;
 
 		}

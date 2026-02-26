@@ -611,11 +611,11 @@
             "format": "dropdown-list",
             "label": "عدد المنتجات في الصف الواحد (للكمبيوتر فقط)",
             "description": "يتم تطبيقه على قسم المنتجات الثابتة وصفحات التصنيفات",
-            "icon": "sicon-grid-4",
+            "icon": "sicon-grid-6",
             "selected": [
                 {
-                    "label": "4 منتجات",
-                    "value": "4"
+                    "label": "6 منتجات",
+                    "value": "6"
                 }
             ],
             "options": [
@@ -1644,21 +1644,7 @@
             "icon": "sicon-store",
             "path": "home.before-after-hero",
             "fields": [
-                {
-                    "id": "subtitle",
-                    "type": "string",
-                    "format": "text",
-                    "label": "النص المميز فوق العنوان",
-                    "description": "العنوان الرئيسي الظاهر بجانب الصور.",
-                    "labelHTML": null,
-                    "placeholder": "Placeholder text ..",
-                    "icon": "sicon-format-text-alt",
-                    "value": null,
-                    "multilanguage": true,
-                    "required": true,
-                    "minLength": 6,
-                    "maxLength": 60
-                },
+               
                 {
                     "id": "title",
                     "type": "string",
@@ -1690,37 +1676,37 @@
                     "maxLength": 1000
                 },
                 {
-  "id": "layout_style",
-  "type": "items",
-  "format": "dropdown-list",
-  "label": "تخطيط القسم",
-  "description": "اختر طريقة ترتيب المحتوى مع المقارنة",
-  "labelHTML": null,
-  "icon": "sicon-keyboard_arrow_down",
-  "selected": [
-    {
-      "label": "split",
-      "value": "جانبي (النص بجانب الصورة)",
-      "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
-    }
-  ],
-  "options": [
-    {
-      "label": "split",
-      "value": "جانبي (النص بجانب الصورة)",
-      "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
-    },
-    {
-      "label": "stacked",
-      "value": "عمودي (المحتوى فوق الصورة)",
-      "key": "84de0019-b67f-4c72-a204-c740ec69e4dc"
-    }
-  ],
-  "source": "Manual",
-  "multichoice": false,
-  "searchable": false,
-  "required": false
-},
+                "id": "layout_style",
+                "type": "items",
+                "format": "dropdown-list",
+                "label": "تخطيط القسم",
+                "description": "اختر طريقة ترتيب المحتوى مع المقارنة",
+                "labelHTML": null,
+                "icon": "sicon-keyboard_arrow_down",
+                "selected": [
+                    {
+                    "label": "split",
+                    "value": "جانبي (النص بجانب الصورة)",
+                    "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
+                    }
+                ],
+                "options": [
+                    {
+                    "label": "split",
+                    "value": "جانبي (النص بجانب الصورة)",
+                    "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
+                    },
+                    {
+                    "label": "stacked",
+                    "value": "عمودي (المحتوى فوق الصورة)",
+                    "key": "84de0019-b67f-4c72-a204-c740ec69e4dc"
+                    }
+                ],
+                "source": "Manual",
+                "multichoice": false,
+                "searchable": false,
+                "required": false
+                },
 
     
                 {

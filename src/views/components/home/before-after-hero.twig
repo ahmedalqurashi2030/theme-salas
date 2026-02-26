@@ -12,7 +12,6 @@
 | component.after_label | string | After badge text
 #}
 
-{% set subtitle = component.subtitle ?? '' %}
 {% set title = component.title ?? 'شاهدي النتيجة قبل وبعد' %}
 {% set description = component.description ?? '' %}
 {% set button_text = component.button_text ?? '' %}
@@ -36,10 +35,7 @@
 		<div class="th-before-after-hero__panel relative overflow-hidden rounded-[20px] p-[14px] md:p-6 lg:p-8">
 			<div class="th-before-after-hero__inner relative grid items-center gap-6 {{ is_stacked_layout ? 'grid-cols-1' : 'lg:grid-cols-[minmax(250px,0.88fr)_minmax(0,1fr)] lg:gap-[30px]' }}">
 				<div class="th-before-after-hero__content min-w-0 {{ is_stacked_layout ? 'text-center' : 'text-center lg:text-right ltr:lg:text-left' }}">
-					{% if subtitle %}
-						<span class="th-before-after-hero__eyebrow mb-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5">{{ subtitle }}</span>
-					{% endif %}
-
+				
 					{% if title %}
 						<h2 class="th-before-after-hero__title mb-3">{{ title }}</h2>
 					{% endif %}

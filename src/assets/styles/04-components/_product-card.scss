@@ -509,18 +509,18 @@
 
   @media (min-width: 1024px) {
     .s-products-list-wrapper {
-      grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+      grid-template-columns: repeat(var(--th-desktop-products-per-row, 6), minmax(0, 1fr)) !important;
       gap: 16px !important;
     }
 
     salla-products-slider {
-      --slides-per-view: 6;
+      --slides-per-view: var(--th-desktop-products-per-row, 6);
     }
   }
 
   @media (min-width: 1280px) {
     salla-products-slider {
-      --slides-per-view: 7;
+      --slides-per-view: var(--th-desktop-products-per-row, 6);
     }
   }
 
