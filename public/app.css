@@ -27105,12 +27105,10 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   color: var(--color-primary);
 }
 .th-before-after-hero {
-  --th-ba-radius-xl: 28px;
   --th-ba-radius-lg: 22px;
   --th-ba-handle-size: 46px;
   --th-ba-divider-size: 2px;
   --th-ba-shadow: 0 20px 50px rgba(15, 23, 42, 0.14);
-  --th-ba-shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
   padding-top: max(24px, min(5vw, 72px));
   padding-bottom: max(24px, min(5vw, 72px));
   position: relative;
