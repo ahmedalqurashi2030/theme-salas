@@ -3,15 +3,10 @@
  * Mobile-first, 8px spacing system, Salla variables, RTL/LTR safe.
  */
 .th-promo-hero {
-  --promo-space-1: 8px;
   --promo-space-2: 16px;
-  --promo-space-3: 24px;
   --promo-space-4: 32px;
-  --promo-space-5: 40px;
 
-  --promo-radius-sm: 10px;
   --promo-radius-md: 14px;
-  --promo-radius-lg: 20px;
 
   --promo-primary: var(--color-primary, #1e66f5);
   --promo-on-primary: var(--color-primary-reverse, #ffffff);

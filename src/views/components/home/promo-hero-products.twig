@@ -93,8 +93,8 @@
               {% set product_stars = product.rating.stars ?? product.rating ?? 0 %}
               {% set product_stars = product_stars|round(0, 'floor') %}
 
-              <article class="th-promo-hero__product-card min-w-[228px] overflow-hidden {{ should_scroll_products ? 'th-promo-hero__product-card--scroll snap-start' : 'lg:min-w-0' }}">
-                <a href="{{ product_url }}" class="th-promo-hero__product-link flex min-w-0 flex-1 items-center gap-2.5 p-1 no-underline lg:min-h-[104px]" aria-label="{{ product_name }}">
+              <article class="th-promo-hero__product-card flex min-w-[228px] items-center gap-2.5 overflow-hidden p-2 {{ should_scroll_products ? 'th-promo-hero__product-card--scroll snap-start' : 'lg:min-w-0' }}">
+                <a href="{{ product_url }}" class="th-promo-hero__product-link flex min-w-0 flex-1 items-center gap-2.5 p-0 no-underline lg:min-h-[104px]" aria-label="{{ product_name }}">
                   <span class="th-promo-hero__product-image-wrap grid h-[58px] w-[58px] shrink-0 place-items-center overflow-hidden rounded-[10px] border border-[#e8edf7] bg-[#f8fafc]">
                     <img src="{{ product_image }}"
                          alt="{{ product_image_alt }}"
