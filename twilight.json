@@ -257,6 +257,23 @@
     "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الإعلان الترويجي في جميع الصفحات</h6></div>",
     "variant": "h6"
 },
+
+        {
+            "id": "global_announcement_visibility",
+            "type": "boolean",
+            "format": "switch",
+            "label": "إظهار شريط الإعلان",
+            "description": "عند التعطيل سيتم إخفاء شريط الإعلان في جميع الأجهزة.",
+            "labelHTML": null,
+            "icon": "sicon-toggle-off",
+            "value": true,
+            "selected": false,
+            "required": false,
+            "tab": "header",
+            "group": "announcement",
+            "info": "تحكم عام بظهور الإعلان على الموقع بالكامل."
+        },
+
         {
             "id": "global_announcement_text",
             "type": "string",
@@ -270,7 +287,7 @@
             "multilanguage": true,
             "required": false,
             "minLength": 15,
-            "maxLength": 100,
+            "maxLength": 150,
             "tab": "header",
             "group": "announcement",
             "info": "يفضل أن يكون النص واضحًا ومباشرًا."

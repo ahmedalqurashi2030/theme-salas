@@ -3,7 +3,8 @@
   Controlled by theme.settings (twilight.json -> settings)
 #}
 
-{% set enabled = theme.settings.get('global_announcement_enabled', false) %}
+{% set enabled_raw = theme.settings.get('global_announcement_visibility', theme.settings.get('global_announcement_enabled', false)) %}
+{% set enabled = enabled_raw not in [false, 0, '0', 'false', 'off', 'no', null, ''] %}
 {% set announcement_text = theme.settings.get('global_announcement_text', '')|trim %}
 
 {% if enabled and announcement_text %}
