@@ -61,6 +61,9 @@
 		{% set desktop_products_per_row_raw = theme.settings.get('desktop_products_per_row', '6') %}
 		{% set desktop_products_per_row = desktop_products_per_row_raw.value ?? desktop_products_per_row_raw[0].value ?? desktop_products_per_row_raw %}
 		{% set desktop_products_per_row = desktop_products_per_row in ['4', '5', '6', '7', '8', 4, 5, 6, 7, 8] ? desktop_products_per_row : '6' %}
+		{% set show_cart_quantity_and_currency_raw = theme.settings.get('show_cart_quantity_and_currency', true) %}
+		{% set show_cart_quantity_and_currency_value = show_cart_quantity_and_currency_raw.value ?? show_cart_quantity_and_currency_raw.selected ?? show_cart_quantity_and_currency_raw %}
+		{% set show_cart_quantity_and_currency_enabled = show_cart_quantity_and_currency_value in [true, 1, '1', 'true', 'on', 'yes'] %}
 		{% set card_show_rating_raw = theme.settings.get('card_show_rating', true) %}
 		{% set card_show_discount_badge_raw = theme.settings.get('card_show_discount_badge', true) %}
 		{% set card_show_rating_value = card_show_rating_raw.value ?? card_show_rating_raw.selected ?? card_show_rating_raw %}
@@ -114,7 +117,7 @@
 	{# tracking services, custom css feature. #}
 	{% hook 'head:end' %}
 </head>
-<body id="app" data-header-is-sticky="{{ theme.settings.get('header_is_sticky', false) ? 'true' : 'false' }}" data-image-zoom="{{ theme.settings.get('imageZoom', false) ? 'true' : 'false' }}" data-can-access-wallet="{{ user.can_access_wallet ? 'true' : 'false' }}" data-show-cart-total="{{ theme.settings.show_cart_quantity_and_currency ? 'true' : 'false' }}" class="overflow-x-hidden {% hook 'body:classes' %}
+<body id="app" data-header-is-sticky="{{ theme.settings.get('header_is_sticky', false) ? 'true' : 'false' }}" data-image-zoom="{{ theme.settings.get('imageZoom', false) ? 'true' : 'false' }}" data-can-access-wallet="{{ user.can_access_wallet ? 'true' : 'false' }}" data-show-cart-total="{{ show_cart_quantity_and_currency_enabled ? 'true' : 'false' }}" class="overflow-x-hidden {% hook 'body:classes' %}
 																				  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
 																				  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
 																				  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}

@@ -673,6 +673,10 @@ body[data-show-cart-total="false"] .th-cart-total {
     display: none !important;
 }
 
+body[data-show-cart-total="false"] .th-cart-wrapper .s-cart-summary-content {
+    display: none !important;
+}
+
 body[data-show-cart-total="true"] .th-cart-total {
     display: flex;
     flex-direction: column;
