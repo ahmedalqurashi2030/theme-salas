@@ -9,9 +9,9 @@
 {% set banners = component.banners ?? [] %}
 
 {% if banners|length %}
-  <section class="s-block th-banners th-banners--quad">
-    <div class="th-banners__container">
-      <div class="th-banners__grid th-banners__grid--4 {{ mobile_two_columns ? 'th-banners__grid--mobile-two' : '' }} {{ uniform_height ? 'th-banners__grid--uniform' : '' }}" style="--th-gap: {{ gap }}px;">
+  <section class="s-block s-block--banners th-banners th-banners--quad">
+    <div class="container">
+      <div class="th-banners__grid grid {{ mobile_two_columns ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 lg:grid-cols-4' }}" style="--th-gap: {{ gap }}px;">
 
         {% for banner in banners|slice(0, 4) %}
           {% set img = banner['banners.image'] ?? banner.image ?? null %}
@@ -24,15 +24,24 @@
           {% if img and img.original is defined %}
             {% set img = img.original %}
           {% endif %}
+          {% if url and url.url is defined %}
+            {% set url = url.url %}
+          {% endif %}
+          {% if url and url.value is defined %}
+            {% set url = url.value %}
+          {% endif %}
+          {% if url and url[0] is defined %}
+            {% set url = url[0].url ?? url[0].value ?? url %}
+          {% endif %}
 
           {% if img %}
             {% if url %}
-              <a href="{{ url }}" class="th-banner" aria-label="{{ alt_txt|default('banner-' ~ loop.index) }}">
+              <a href="{{ url }}" class="th-banners__item group block overflow-hidden bg-gray-100 rounded-md {{ uniform_height ? 'aspect-square' : '' }}" aria-label="{{ alt_txt|default('banner-' ~ loop.index) }}">
             {% else %}
-              <div class="th-banner">
+              <div class="th-banners__item group block overflow-hidden bg-gray-100 rounded-md {{ uniform_height ? 'aspect-square' : '' }}">
             {% endif %}
 
-            <img class="th-banner__img" src="{{ img }}" alt="{{ alt_txt|default('') }}" loading="{{ loop.first ? 'eager' : 'lazy' }}" decoding="async" fetchpriority="{{ loop.first ? 'high' : 'auto' }}">
+            <img class="block w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="{{ img }}" alt="{{ alt_txt|default('') }}" loading="{{ loop.first ? 'eager' : 'lazy' }}" decoding="async" fetchpriority="{{ loop.first ? 'high' : 'auto' }}">
 
             {% if url %}
               </a>

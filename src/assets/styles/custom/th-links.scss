@@ -1,286 +1,84 @@
 // =====================================================
-// Tharaa Theme - Links Components SCSS
+// Tharaa Theme - Links Components SCSS (Hybrid Model)
 // =====================================================
 // Components: th-links-circle, th-links-square, th-links-rect
-// Architecture: BEM + Modular + Responsive + RTL Ready
-// Version: 1.0.0
+// Description: Refactored to rely mainly on Tailwind for 
+// layout and Salla's core CSS for base UI.
 // =====================================================
 
-// =====================================================
-// 1. Design Tokens (From Tharaa Design System)
-// =====================================================
-
-// Import Tharaa base variables (assuming they exist in main theme)
-// If not, these variables should be defined:
-
-// Colors - Luxury Palette
-$tharaa-color-primary: var(--th-header-elements, var(--th-text-primary, #1a1a1a)) !default;
-$tharaa-color-secondary: var(--th-promo-tag, #d4af37) !default;
-$tharaa-color-accent: var(--th-text-secondary, #8b7355) !default;
-$tharaa-color-bg-light: var(--th-bg-secondary, #fafafa) !default;
-$tharaa-color-text: var(--th-text-primary, #2c2c2c) !default;
-$tharaa-color-text-light: var(--th-text-secondary, #6b6b6b) !default;
-
-// Typography
-$tharaa-font-body: var(--tharaa-font-body, 'Almarai', -apple-system, sans-serif) !default;
-$tharaa-font-heading: var(--tharaa-font-heading, 'Playfair Display', Georgia, serif) !default;
-
-// Spacing & Layout
-$tharaa-container-width: var(--tharaa-container, 1300px) !default;
-$tharaa-gap-base: var(--tharaa-gap, 20px) !default;
-$tharaa-gap-sm: calc(#{$tharaa-gap-base} * 0.5) !default;
-$tharaa-gap-lg: calc(#{$tharaa-gap-base} * 1.5) !default;
-
-// Border Radius
-$tharaa-radius-sm: var(--tharaa-radius-sm, 4px) !default;
-$tharaa-radius-md: var(--tharaa-radius-md, 8px) !default;
-$tharaa-radius-lg: var(--tharaa-radius-lg, 16px) !default;
-$tharaa-radius-xl: var(--tharaa-radius-xl, 24px) !default;
-$tharaa-radius-full: var(--tharaa-radius-full, 9999px) !default;
-
-// Shadows
-$tharaa-shadow-sm: var(--tharaa-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05)) !default;
-$tharaa-shadow-md: var(--tharaa-shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07)) !default;
-$tharaa-shadow-lg: var(--tharaa-shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.1)) !default;
-$tharaa-shadow-xl: var(--tharaa-shadow-xl, 0 20px 40px rgba(0, 0, 0, 0.15)) !default;
-
-// Transitions
-$tharaa-transition-fast: var(--tharaa-transition-fast, 150ms ease) !default;
-$tharaa-transition-base: var(--tharaa-transition, 300ms cubic-bezier(0.4, 0, 0.2, 1)) !default;
-$tharaa-transition-slow: var(--tharaa-transition-slow, 400ms ease) !default;
-
-// Breakpoints
-$breakpoint-mobile: 768px;
-$breakpoint-tablet: 1024px;
-// =====================================================
-// Tharaa Theme - Links Components SCSS
-// =====================================================
-// Components: th-links-circle, th-links-square, th-links-rect
-// Architecture: BEM + Modular + Responsive + RTL Ready
-// Version: 1.0.0
-// =====================================================
-
-// =====================================================
-// 1. Design Tokens (From Tharaa Design System)
-// =====================================================
-
-// Import Tharaa base variables (assuming they exist in main theme)
-// If not, these variables should be defined:
-
-// Colors - Luxury Palette
-$tharaa-color-primary: var(--th-header-elements, var(--th-text-primary, #1a1a1a)) !default;
-$tharaa-color-secondary: var(--th-promo-tag, #d4af37) !default;
-$tharaa-color-accent: var(--th-text-secondary, #8b7355) !default;
-$tharaa-color-bg-light: var(--th-bg-secondary, #fafafa) !default;
-$tharaa-color-text: var(--th-text-primary, #2c2c2c) !default;
-$tharaa-color-text-light: var(--th-text-secondary, #6b6b6b) !default;
-
-// Typography
-$tharaa-font-body: var(--tharaa-font-body, 'Almarai', -apple-system, sans-serif) !default;
-$tharaa-font-heading: var(--tharaa-font-heading, 'Playfair Display', Georgia, serif) !default;
-
-// Spacing & Layout
-$tharaa-container-width: var(--tharaa-container, 1300px) !default;
-$tharaa-gap-base: var(--tharaa-gap, 20px) !default;
-$tharaa-gap-sm: calc(#{$tharaa-gap-base} * 0.5) !default;
-$tharaa-gap-lg: calc(#{$tharaa-gap-base} * 1.5) !default;
-
-// Border Radius
-$tharaa-radius-sm: var(--tharaa-radius-sm, 4px) !default;
-$tharaa-radius-md: var(--tharaa-radius-md, 8px) !default;
-$tharaa-radius-lg: var(--tharaa-radius-lg, 16px) !default;
-$tharaa-radius-xl: var(--tharaa-radius-xl, 24px) !default;
-$tharaa-radius-full: var(--tharaa-radius-full, 9999px) !default;
-
-// Shadows
-$tharaa-shadow-sm: var(--tharaa-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05)) !default;
-$tharaa-shadow-md: var(--tharaa-shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07)) !default;
-$tharaa-shadow-lg: var(--tharaa-shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.1)) !default;
-$tharaa-shadow-xl: var(--tharaa-shadow-xl, 0 20px 40px rgba(0, 0, 0, 0.15)) !default;
-
-// Transitions
-$tharaa-transition-fast: var(--tharaa-transition-fast, 150ms ease) !default;
-$tharaa-transition-base: var(--tharaa-transition, 300ms cubic-bezier(0.4, 0, 0.2, 1)) !default;
-$tharaa-transition-slow: var(--tharaa-transition-slow, 400ms ease) !default;
-
-// Breakpoints
-$breakpoint-mobile: 768px;
-$breakpoint-tablet: 1024px;
-$breakpoint-desktop: 1280px;
-
-// =====================================================
-// 2. Base Styles - Shared by All Components
-// =====================================================
-
-// Main Section Container
 .tharaa-links-section {
-  position: relative;
-  overflow: hidden;
+  @apply relative overflow-hidden;
 }
 
 // =====================================================
-// 4. Track Wrapper & Track (Slider Container)
-// =====================================================
-
-.tharaa-track-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.tharaa-track {
-  display: flex;
-  gap: var(--th-gap, #{$tharaa-gap-base});
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  cursor: grab;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 20px;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  &.is-dragging {
-    cursor: grabbing;
-    scroll-behavior: auto;
-    scroll-snap-type: none;
-  }
-
-  @media (max-width: $breakpoint-mobile) {
-    gap: calc(var(--th-gap, #{$tharaa-gap-base}) * .75);
-  }
-}
-
-// =====================================================
-// 5. Layout Modes (Grid / Double Row)
+// Custom Modes Layout Additions (Grid / Double Row)
+// (Mostly handled by Twig now, keeping necessary overrides here)
 // =====================================================
 
 .tharaa-links-section.mode-grid {
   .tharaa-track {
-    flex-wrap: wrap;
-    justify-content: center;
-    overflow: visible;
+    @apply flex-wrap justify-center overflow-visible cursor-default;
     scroll-snap-type: none;
-    cursor: default;
 
-    @media (max-width: $breakpoint-mobile) {
-      justify-content: flex-start;
-      gap: 10px;
+    @media (max-width: 768px) {
+      @apply justify-start gap-[10px];
     }
   }
 
   .tharaa-card {
-    width: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
+    width: calc((100% - (var(--th-gap, 20px) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
 
-    @media (max-width: $breakpoint-mobile) {
-      width: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-mobile, 3) - 1))) / var(--th-items-mobile, 3));
+    @media (max-width: 768px) {
+      width: calc((100% - (var(--th-gap, 20px) * (var(--th-items-mobile, 3) - 1))) / var(--th-items-mobile, 3));
     }
   }
 
   .tharaa-nav-btn,
   .tharaa-progress {
-    display: none !important;
+    @apply hidden !important;
   }
 }
 
 .tharaa-links-section.mode-double {
   .tharaa-track {
-    display: grid;
+    // We leave this grid display as it is complex to inline cleanly for 2 rows
+    @apply grid;
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
-    grid-auto-columns: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
-    gap: var(--th-gap, #{$tharaa-gap-base});
+    grid-auto-columns: calc((100% - (var(--th-gap, 20px) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
+    gap: var(--th-gap, 20px);
 
-    @media (max-width: $breakpoint-mobile) {
-      display: flex;
-      gap: calc(var(--th-gap, #{$tharaa-gap-base}) * .75);
+    @media (max-width: 768px) {
+      @apply flex;
+      gap: calc(var(--th-gap, 20px) * .75);
     }
   }
 }
 
 // =====================================================
-// 6. Card Component (Base Styles)
+// Card Component Base Specifics
 // =====================================================
-
 .tharaa-card {
-  flex: 0 0 auto;
-  width: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
-  min-width: 110px;
-  cursor: pointer;
-  position: relative;
+  @apply flex-none min-w-[110px] cursor-pointer relative no-underline;
+  width: calc((100% - (var(--th-gap, 20px) * (var(--th-items-desktop, 6) - 1))) / var(--th-items-desktop, 6));
   scroll-snap-align: start;
-  text-decoration: none;
-  transition: $tharaa-transition-base;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  @media (max-width: $breakpoint-mobile) {
-    width: calc((100% - (var(--th-gap, #{$tharaa-gap-base}) * (var(--th-items-mobile, 3) - 1))) / var(--th-items-mobile, 3));
+  @media (max-width: 768px) {
+    width: calc((100% - (var(--th-gap, 20px) * (var(--th-items-mobile, 3) - 1))) / var(--th-items-mobile, 3));
   }
 }
 
-.tharaa-card__visual {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: $tharaa-color-bg-light;
-  overflow: hidden;
-  position: relative;
-  border-radius: $tharaa-radius-full;
-  border: 2px solid transparent;
-  transition: $tharaa-transition-base;
-  will-change: transform;
-}
-
-.tharaa-card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.tharaa-card__content {
-  width: 100%;
-  transition: $tharaa-transition-base;
-  z-index: 2;
-}
-
-.tharaa-card__title {
-  font-family: $tharaa-font-body;
-  font-size: 14px;
-  font-weight: 700;
-  color: $tharaa-color-primary;
-
-  @media (max-width: $breakpoint-mobile) {
-    font-size: 13px;
-  }
-}
-
-.tharaa-card__count {
-  font-size: 11px;
-  color: $tharaa-color-secondary;
-  font-weight: 600;
-  display: block;
-}
-
-.tharaa-card__badge {
-  font-size: 11px;
-  color: $tharaa-color-secondary;
-  font-weight: 700;
-  display: block;
-  text-transform: uppercase;
-}
-
 // =====================================================
-// 7. Hover Effects (Luxury Touch)
+// Hover Effects (Luxury Touch)
 // =====================================================
-
 @media (hover: hover) {
   .tharaa-card:hover {
     .tharaa-card__visual {
+      @apply shadow-lg;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-color: var(--th-promo-tag, #d4af37);
       transform: translateY(-5px);
-      box-shadow: $tharaa-shadow-lg;
-      border-color: $tharaa-color-secondary;
     }
 
     .tharaa-card__img {
@@ -288,183 +86,75 @@ $breakpoint-desktop: 1280px;
     }
 
     .tharaa-card__title {
-      color: $tharaa-color-secondary;
+      color: var(--th-promo-tag, #d4af37);
     }
   }
 }
 
 // =====================================================
-// 8. Style Modifiers (Circle / Square / Rect)
+// Navigation Buttons (Prev / Next)
 // =====================================================
-
-.tharaa-links-section.style-circle {
-  .tharaa-card__visual {
-    border-radius: $tharaa-radius-full;
-  }
-}
-
-.tharaa-links-section.style-square {
-  .tharaa-card__visual {
-    border-radius: $tharaa-radius-xl;
-  }
-}
-
-.tharaa-links-section.style-rect {
-  .tharaa-card__visual {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 3 / 4;
-    border-radius: 11px;
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top,
-          color-mix(in srgb, var(--th-bg-main), #000 72%) 0%,
-          transparent 60%);
-      pointer-events: none;
-    }
-  }
-
-  .tharaa-card__content {
-    position: absolute;
-    bottom: 15px;
-    inset-inline-start: 0;
-    inset-inline-end: 0;
-    z-index: 3;
-  }
-
-  .tharaa-card__title {
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    font-size: 15px;
-  }
-
-  .tharaa-card__count,
-  .tharaa-card__badge {
-    color: rgba(255, 255, 255, 0.8);
-  }
-}
-
-// =====================================================
-// 9. Navigation Buttons (Prev / Next)
-// =====================================================
-
 .tharaa-nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--th-bg-main);
+  @apply absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center opacity-0 pointer-events-none z-10 cursor-pointer;
+  background-color: var(--th-bg-main);
+  color: var(--th-header-elements, var(--th-text-primary, #1a1a1a));
   border: 1px solid color-mix(in srgb, var(--th-text-primary), #fff 85%);
-  color: $tharaa-color-primary;
-  box-shadow: $tharaa-shadow-sm;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: $tharaa-transition-base;
-  font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
   .tharaa-links-section:hover &.is-visible {
-    opacity: 1;
-    pointer-events: all;
+    @apply opacity-100 pointer-events-auto;
   }
 
   &:hover {
-    background: $tharaa-color-secondary;
-    color: #fff;
-    border-color: $tharaa-color-secondary;
+    @apply text-white;
+    background-color: var(--th-promo-tag, #d4af37);
+    border-color: var(--th-promo-tag, #d4af37);
   }
 
   &:focus-visible {
-    outline: 2px solid $tharaa-color-secondary;
+    @apply opacity-100 pointer-events-auto;
+    outline: 2px solid var(--th-promo-tag, #d4af37);
     outline-offset: 2px;
-    opacity: 1;
-    pointer-events: all;
   }
 
-  @media (max-width: $breakpoint-mobile) {
-    display: none !important;
+  @media (max-width: 768px) {
+    @apply hidden !important;
   }
 }
 
 // RTL-aware nav positioning
 .btn-prev {
-  inset-inline-end: 10px;
-  inset-inline-start: auto;
+  @apply ltr:left-2.5 rtl:right-2.5;
 }
 
 .btn-next {
-  inset-inline-start: 10px;
-  inset-inline-end: auto;
+  @apply ltr:right-2.5 rtl:left-2.5;
 }
 
 // =====================================================
-// 10. Progress Bar
+// Progress Bar
 // =====================================================
-
 .tharaa-progress {
-  width: 120px;
-  height: 3px;
+  @apply w-[120px] h-[3px] rounded-[10px] relative overflow-hidden;
   background: color-mix(in srgb, var(--th-text-primary), #fff 85%);
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
   transition: opacity 0.3s;
 
-  @media (max-width: $breakpoint-mobile) {
-    width: 100px;
+  @media (max-width: 768px) {
+    @apply w-[100px];
   }
 }
 
 .tharaa-progress__bar {
+  @apply absolute top-0 left-0 h-full rounded-[10px];
+  background-color: var(--th-promo-tag, #d4af37);
   width: 30%; // Initial width (updated via JS)
-  height: 100%;
-  background: $tharaa-color-secondary;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 10px;
   transition: transform 0.1s linear, width 0.2s ease;
   transform: translateX(0);
 }
 
-// RTL Support for progress bar
-[dir="rtl"] .tharaa-progress__bar {
-  left: 0;
-}
-
-[dir="ltr"] .tharaa-progress__bar {
-  left: 0;
-}
-
-// Hide progress bar in grid mode (handled by layout mode styles above)
-
 // =====================================================
-// 11. RTL Support (Additional Adjustments)
-// =====================================================
-
-[dir="rtl"] {
-  .tharaa-track {
-    direction: rtl;
-  }
-}
-
-[dir="ltr"] {
-  .tharaa-track {
-    direction: ltr;
-  }
-}
-
-// =====================================================
-// 12. Accessibility Enhancements
+// Accessibility Enhancements & Print
 // =====================================================
 
 // Reduced motion support
@@ -481,13 +171,9 @@ $breakpoint-desktop: 1280px;
 
 // Focus indicators
 .tharaa-card:focus-visible {
-  outline: 2px solid $tharaa-color-secondary;
+  outline: 2px solid var(--th-promo-tag, #d4af37);
   outline-offset: 4px;
 }
-
-// =====================================================
-// 13. Print Styles
-// =====================================================
 
 @media print {
   .tharaa-links-section {
@@ -496,160 +182,10 @@ $breakpoint-desktop: 1280px;
 
   .tharaa-nav-btn,
   .tharaa-progress {
-    display: none !important;
+    @apply hidden !important;
   }
 
   .tharaa-track {
-    overflow: visible;
-    display: flex;
-    flex-wrap: wrap;
-  }
-}
-
-// =====================================================
-// END OF STYLES
-// =====================================================
-// =====================================================
-// Section Header (Hybrid: Salla structure + custom look)
-// =====================================================
-
-.th-links-header {
-  margin-bottom: 24px;
-  align-items: center;
-  gap: 14px;
-
-  >.right-side {
-    padding-inline: 0;
-    min-width: 0;
-    flex: 1 1 auto;
-  }
-
-  @media (max-width: $breakpoint-mobile) {
-    margin-bottom: 18px;
-    gap: 10px;
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
-.th-links-header__main {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  min-width: 0;
-}
-
-.th-links-header__side-bar {
-  width: 4px;
-  min-height: 48px;
-  border-radius: 999px;
-  background: var(--th-promo-tag);
-}
-
-.th-links-header__content {
-  min-width: 0;
-  width: 100%;
-}
-
-.th-links-header__title-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 100%;
-}
-
-.th-links-header__line {
-  width: 34px;
-  height: 1px;
-  background: color-mix(in srgb, var(--th-text-primary), #fff 70%);
-}
-
-.th-links-header__title-head {
-  font-family: $tharaa-font-heading;
-  font-size: 26px;
-  font-weight: 700;
-  color: $tharaa-color-primary;
-  margin: 0;
-  line-height: 1.2;
-
-  @media (max-width: $breakpoint-mobile) {
-    font-size: 22px;
-  }
-}
-
-.th-links-header__title-sub {
-  font-family: $tharaa-font-body;
-  font-size: 14px;
-  color: $tharaa-color-text-light;
-  margin: 8px 0 0;
-  font-weight: 400;
-
-  @media (max-width: $breakpoint-mobile) {
-    font-size: 13px;
-  }
-}
-
-.th-links-header__action.s-block__display-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--th-bg-main);
-  color: var(--th-header-elements);
-  border: 1px solid color-mix(in srgb, var(--th-text-primary), #fff 85%);
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: $tharaa-transition-base;
-
-  &:hover {
-    color: #fff;
-    background: var(--th-promo-tag);
-    border-color: var(--th-promo-tag);
-    transform: translateY(-1px);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--th-promo-tag);
-    outline-offset: 2px;
-  }
-
-  i {
-    flex-shrink: 0;
-  }
-}
-
-.th-links-header--center {
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
-  >.right-side {
-    justify-content: center;
-  }
-
-  .th-links-header__main {
-    justify-content: center;
-  }
-
-  .th-links-header__content {
-    text-align: center;
-  }
-
-  .th-links-header__title-row {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .th-links-header__action {
-    margin-inline: auto;
-  }
-}
-
-@media (max-width: $breakpoint-mobile) {
-  .th-links-header:not(.th-links-header--center) .th-links-header__action {
-    align-self: flex-start;
+    @apply overflow-visible flex flex-wrap;
   }
 }

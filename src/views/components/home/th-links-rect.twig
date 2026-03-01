@@ -41,16 +41,16 @@
 					</button>
 				{% endif %}
 
-				<div class="tharaa-track">
+				<div class="tharaa-track flex gap-[var(--th-gap,20px)] overflow-x-auto overflow-y-hidden scroll-smooth [scrollbar-width:none] snap-x snap-mandatory scroll-p-5 cursor-grab">
 					{% for item in items %}
 						<a href="{{ item.url|default('#') }}" class="tharaa-card flex flex-col relative" aria-label="{{ item.title }}">
-							<div class="tharaa-card__visual">
-								<img class="tharaa-card__img" src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" decoding="async">
+							<div class="tharaa-card__visual w-full aspect-[3/4] bg-[var(--th-bg-secondary,#fafafa)] overflow-hidden relative rounded-xl border-2 border-transparent transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-t after:from-[color-mix(in_srgb,var(--th-bg-main),#000_72%)] after:to-transparent after:pointer-events-none">
+								<img class="tharaa-card__img w-full h-full object-cover transition-transform duration-500 ease-in-out" src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" decoding="async">
 							</div>
-							<div class="tharaa-card__content px-2.5 text-center">
-								<span class="tharaa-card__title">{{ item.title }}</span>
+							<div class="tharaa-card__content px-2.5 text-center absolute bottom-[15px] inset-x-0 z-10 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+								<span class="tharaa-card__title block mb-0.5 font-bold text-[15px] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">{{ item.title }}</span>
 								{% if item.count is defined %}
-									<span class="tharaa-card__count">{{ item.count }}</span>
+									<span class="tharaa-card__count block text-[11px] font-semibold text-white/80">{{ item.count }}</span>
 								{% endif %}
 							</div>
 						</a>
