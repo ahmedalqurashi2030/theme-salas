@@ -169,14 +169,72 @@ salla-search {
 }
 
 .th-lang-switch {
-    min-width: 34px;
+    @apply inline-flex items-center rounded-full bg-white border border-gray-200;
+    gap: 8px;
+    height: 38px;
+    padding-inline: 12px;
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
 
-    .flag {
-        display: inline-block;
+    &:hover {
+        @apply bg-gray-50 border-gray-300;
+    }
+
+    &:focus-visible {
+        @apply outline-none ring-2 ring-primary/30;
+    }
+
+    &__chevron {
+        font-size: 14px;
+        color: #6b7280;
+    }
+
+    &__code {
+        font-size: 28px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        color: #111827;
+    }
+
+    &__divider {
+        width: 1px;
+        height: 18px;
+        background: #d1d5db;
+    }
+
+    &__globe {
         width: 20px;
-        height: 14px;
-        border-radius: 3px;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+        height: 20px;
+        color: #111827;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+[dir="ltr"] .th-lang-switch {
+    .th-lang-switch__chevron {
+        order: 3;
+    }
+
+    .th-lang-switch__code {
+        order: 2;
+    }
+
+    .th-lang-switch__divider {
+        order: 1;
+    }
+
+    .th-lang-switch__globe {
+        order: 0;
     }
 }
 

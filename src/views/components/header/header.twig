@@ -46,9 +46,20 @@
 
 					{% set tr_language = trans('blocks.header.language') %}
 					{% set language_label = tr_language starts with 'blocks.' ? 'Language' : tr_language %}
-					{% set current_country = user.language.country_code|default('sa')|lower %}
-					<button type="button" class="btn--icon th-lang-switch" aria-label="{{ language_label }}" onclick="var modal=document.querySelector('salla-localization-modal'); if (modal) { modal.open(); }">
-						<span class="flag iti__flag iti__{{ current_country }}" aria-hidden="true"></span>
+					{% set current_language = user.language.code|default('ar')|upper %}
+					<button type="button" class="th-lang-switch" aria-label="{{ language_label }}" onclick="var modal=document.querySelector('salla-localization-modal'); if (modal) { modal.open(); }">
+						<i class="sicon-chevron-down th-lang-switch__chevron" aria-hidden="true"></i>
+						<span class="th-lang-switch__code" aria-hidden="true">{{ current_language }}</span>
+						<span class="th-lang-switch__divider" aria-hidden="true"></span>
+						<span class="th-lang-switch__globe" aria-hidden="true">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="12" r="9"></circle>
+								<path d="M3.6 9h16.8"></path>
+								<path d="M3.6 15h16.8"></path>
+								<path d="M12 3a13.8 13.8 0 0 1 0 18"></path>
+								<path d="M12 3a13.8 13.8 0 0 0 0 18"></path>
+							</svg>
+						</span>
 						<span class="sr-only">{{ language_label }}</span>
 					</button>
 
