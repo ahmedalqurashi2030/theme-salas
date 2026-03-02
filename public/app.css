@@ -1507,6 +1507,11 @@ input:where([type='file']):focus{
 .cursor-pointer{
     cursor: pointer;
 }
+.select-none{
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+}
 .resize{
     resize: both;
 }
@@ -2490,6 +2495,10 @@ input:where([type='file']):focus{
 .text-\[color\:var\(--th-header-elements\2c var\(--th-text-primary\2c \#1a1a1a\)\)\]{
     color: #1a1a1a;
     color: var(--th-header-elements,var(--th-text-primary,#1a1a1a));
+}
+.text-\[color\:var\(--th-promo-tag\2c \#d4af37\)\]{
+    color: #d4af37;
+    color: var(--th-promo-tag,#d4af37);
 }
 .text-amber-400{
     --tw-text-opacity: 1;
@@ -28126,12 +28135,35 @@ body[data-show-cart-total=true] .th-cart-total span {
     position: relative;
     overflow: hidden;
 }
+.tharaa-track{
+    position: relative;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-y;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.tharaa-track::-webkit-scrollbar {
+  display: none;
+}
+.tharaa-track.is-dragging{
+    cursor: grabbing;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  scroll-behavior: auto;
+}
+.tharaa-track.is-dragging .tharaa-card,
+.tharaa-track.is-dragging .tharaa-card__img {
+  pointer-events: none;
+}
 .tharaa-links-section.mode-grid .tharaa-track{
     cursor: default;
     flex-wrap: wrap;
     justify-content: center;
     overflow: visible;
   scroll-snap-type: none;
+  touch-action: auto;
 }
 @media (max-width: 768px) {
   .tharaa-links-section.mode-grid .tharaa-track{
@@ -28191,6 +28223,9 @@ body[data-show-cart-total=true] .th-cart-total span {
   width: calc((100% - 20px * (6 - 1)) / 6);
   width: calc((100% - var(--th-gap, 20px) * (var(--th-items-desktop, 6) - 1)) / var(--th-items-desktop, 6));
   scroll-snap-align: start;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 @media (max-width: 768px) {
@@ -28252,7 +28287,7 @@ input[type=radio].sr-only:checked ~ div.tharaa-nav-btn {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-.tharaa-links-section:hover .tharaa-nav-btn.is-visible{
+.tharaa-links-section.th-links-is-scrollable:hover .tharaa-nav-btn.is-visible, .tharaa-links-section.th-links-is-scrollable:focus-within .tharaa-nav-btn.is-visible{
     pointer-events: auto;
     opacity: 1;
 }
@@ -28297,6 +28332,7 @@ input[type=radio].sr-only:checked ~ div.tharaa-nav-btn {
     border-radius: 10px;
   background: color-mix(in srgb, var(--th-text-primary), #fff 85%);
   transition: opacity 0.3s;
+  opacity: 0;
 }
 @media (max-width: 768px) {
   .tharaa-progress{
@@ -28306,7 +28342,6 @@ input[type=radio].sr-only:checked ~ div.tharaa-nav-btn {
 .tharaa-progress__bar{
     position: absolute;
     top: 0px;
-    left: 0px;
     height: 100%;
     border-radius: 10px;
 }
@@ -28317,18 +28352,20 @@ input[type=radio].sr-only:checked ~ div.tharaa-progress__bar {
   border-color: var(--color-main);
 }
 .tharaa-progress__bar {
+  left: 0;
   background-color: #d4af37;
   background-color: var(--th-promo-tag, #d4af37);
-  width: 30%;
-  transition: transform 0.1s linear, width 0.2s ease;
-  transform: translateX(0);
+  width: 30px;
+  transition: transform 0.15s linear, width 0.2s ease;
+  transform: translate3d(0, 0, 0);
 }
 @media (prefers-reduced-motion: reduce) {
   .tharaa-card,
   .tharaa-card__visual,
   .tharaa-card__img,
   .tharaa-nav-btn,
-  .tharaa-track {
+  .tharaa-track,
+  .tharaa-progress__bar {
     transition: none !important;
   }
 }
@@ -28931,8 +28968,6 @@ input[type=radio].sr-only:checked ~ div.tharaa-progress__bar {
   position: relative;
   width: 100%;
   min-height: 100%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), #fff 55%), linear-gradient(135deg, rgba(212, 175, 55, 0.03), transparent 70%);
-  border: 1px solid var(--th-card-border);
   transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s ease, border-color 0.3s ease;
 }
 .th-store-features__icon-wrap {

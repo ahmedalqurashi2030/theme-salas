@@ -5,431 +5,490 @@
  * Components: th-links-circle, th-links-square, th-links-rect
  * Features: Slider, Layout Switching, Progress Bar, Navigation, Drag to Scroll
  * Compatible with: Salla Platform
- * Version: 1.0.0
+ * Version: 2.0.0
  * =====================================================
  */
 
 (function () {
   'use strict';
 
-  /**
-   * Tharaa Links UI Manager
-   * Namespaced to avoid conflicts with other scripts
-   */
-  const TharaaLinksUI = {
-    /**
-     * Initialize all link sections on the page
-     */
-    init: function () {
-      // Find all link sections
-      const sections = document.querySelectorAll('.tharaa-links-section');
+  const SECTION_SELECTOR = '.tharaa-links-section';
+  const SECTION_STATE = new WeakMap();
 
-      if (sections.length === 0) {
-        return; // No sections found, exit early
-      }
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-      // Initialize each section
-      sections.forEach(section => {
-        this.initSection(section);
-      });
-    },
+  const getSectionDirection = (section) => {
+    const parentWithDir = section.closest('[dir]');
+    const scopedDir = section.getAttribute('dir')
+      || section.dataset.thLinksDir
+      || (parentWithDir ? parentWithDir.getAttribute('dir') : '');
+    const documentDir = document.documentElement.getAttribute('dir') || document.dir;
 
-    /**
-     * Initialize a single section
-     * @param {HTMLElement} section - The section element
-     */
-    initSection: function (section) {
-      if (section.dataset.tharaaLinksInitialized === 'true') {
-        return;
-      }
-      section.dataset.tharaaLinksInitialized = 'true';
+    return (scopedDir || documentDir || 'ltr').toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
+  };
 
-      const track = section.querySelector('.tharaa-track');
-      const prevBtn = section.querySelector('.btn-prev');
-      const nextBtn = section.querySelector('.btn-next');
-      const progressBar = section.querySelector('.tharaa-progress__bar');
-      const progressContainer = section.querySelector('.tharaa-progress');
+  const createScrollModel = (track, direction) => {
+    const isRTL = direction === 'rtl';
 
-      if (!track) {
-        console.warn('Tharaa Links: Track not found in section', section);
-        return;
-      }
+    const getMaxScroll = () => Math.max(track.scrollWidth - track.clientWidth, 0);
 
-      // Get autoplay setting from data attribute
-      const autoplay = section.dataset.autoplay === 'true';
-      let autoplayInterval = null;
+    const detectRTLScrollMode = () => {
+      const previous = track.scrollLeft;
 
-      const isRTLDocument = () => document.dir === 'rtl' || document.documentElement.dir === 'rtl';
-      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-      const getMaxScroll = () => Math.max(track.scrollWidth - track.clientWidth, 0);
-
-      /**
-       * Detect RTL scroll model used by current browser:
-       * - negative: 0 at start and negative values while scrolling forward
-       * - reverse: max at start and 0 at end
-       * - default: 0 at start and positive values while scrolling forward
-       */
-      const detectRTLScrollMode = () => {
-        const previous = track.scrollLeft;
-
-        track.scrollLeft = -1;
-        if (track.scrollLeft < 0) {
-          track.scrollLeft = previous;
-          return 'negative';
-        }
-
-        track.scrollLeft = 1;
-        const mode = track.scrollLeft === 0 ? 'reverse' : 'default';
+      track.scrollLeft = -1;
+      if (track.scrollLeft < 0) {
         track.scrollLeft = previous;
-        return mode;
-      };
+        return 'negative';
+      }
 
-      const rtlScrollMode = isRTLDocument() ? detectRTLScrollMode() : 'default';
+      track.scrollLeft = 1;
+      const mode = track.scrollLeft === 0 ? 'reverse' : 'default';
+      track.scrollLeft = previous;
+      return mode;
+    };
 
-      /**
-       * Return a direction-agnostic logical scroll position (0..max).
-       */
-      const getLogicalScrollLeft = () => {
-        const maxScroll = getMaxScroll();
+    const rtlMode = isRTL ? detectRTLScrollMode() : 'default';
 
-        if (!isRTLDocument()) {
-          return clamp(track.scrollLeft, 0, maxScroll);
-        }
+    const getLogicalScroll = () => {
+      const maxScroll = getMaxScroll();
 
-        if (rtlScrollMode === 'negative') {
-          return clamp(-track.scrollLeft, 0, maxScroll);
-        }
-
-        if (rtlScrollMode === 'reverse') {
-          return clamp(maxScroll - track.scrollLeft, 0, maxScroll);
-        }
-
+      if (!isRTL) {
         return clamp(track.scrollLeft, 0, maxScroll);
-      };
+      }
 
-      /**
-       * Set logical scroll position and convert it to browser-native raw value.
-       */
-      const setLogicalScrollLeft = (value, behavior = 'auto') => {
-        const maxScroll = getMaxScroll();
-        const logical = clamp(value, 0, maxScroll);
+      if (rtlMode === 'negative') {
+        return clamp(-track.scrollLeft, 0, maxScroll);
+      }
 
-        if (!isRTLDocument()) {
-          track.scrollTo({ left: logical, behavior });
-          return;
-        }
+      if (rtlMode === 'reverse') {
+        return clamp(maxScroll - track.scrollLeft, 0, maxScroll);
+      }
 
-        let rawTarget = logical;
-        if (rtlScrollMode === 'negative') {
-          rawTarget = -logical;
-        } else if (rtlScrollMode === 'reverse') {
-          rawTarget = maxScroll - logical;
-        }
+      return clamp(track.scrollLeft, 0, maxScroll);
+    };
 
-        track.scrollTo({ left: rawTarget, behavior });
-      };
+    const setLogicalScroll = (value, behavior = 'auto') => {
+      const maxScroll = getMaxScroll();
+      const logicalValue = clamp(value, 0, maxScroll);
 
-      /**
-       * Update UI state (progress bar, navigation buttons)
-       */
-      const updateUI = () => {
-        // Skip update if in grid mode
-        if (section.classList.contains('mode-grid')) {
-          if (progressContainer) progressContainer.style.opacity = '0';
-          if (prevBtn) prevBtn.classList.remove('is-visible');
-          if (nextBtn) nextBtn.classList.remove('is-visible');
-          return;
-        }
+      if (!isRTL) {
+        track.scrollTo({ left: logicalValue, behavior });
+        return;
+      }
 
-        // Calculate scroll position
-        const isRTL = isRTLDocument();
-        const maxScroll = getMaxScroll();
-        const scrollLeft = getLogicalScrollLeft();
+      let rawValue = logicalValue;
+      if (rtlMode === 'negative') {
+        rawValue = -logicalValue;
+      } else if (rtlMode === 'reverse') {
+        rawValue = maxScroll - logicalValue;
+      }
 
-        // Hide UI if content fits in viewport
-        if (maxScroll <= 5) {
-          if (progressContainer) progressContainer.style.opacity = '0';
-          if (prevBtn) prevBtn.classList.remove('is-visible');
-          if (nextBtn) nextBtn.classList.remove('is-visible');
-          return;
-        }
+      track.scrollTo({ left: rawValue, behavior });
+    };
 
-        // Show progress container
-        if (progressContainer) progressContainer.style.opacity = '1';
+    return {
+      isRTL,
+      getMaxScroll,
+      getLogicalScroll,
+      setLogicalScroll,
+    };
+  };
 
-        // Update progress bar
+  const getScrollStep = (track) => {
+    const firstCard = track.querySelector('.tharaa-card');
+    const fallback = track.clientWidth * 0.72;
+
+    if (!firstCard) {
+      return fallback;
+    }
+
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const styles = window.getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+
+    return Math.max(cardWidth + gap, fallback);
+  };
+
+  const destroySection = (section) => {
+    const state = SECTION_STATE.get(section);
+    if (!state) {
+      section.dataset.tharaaLinksInitialized = 'false';
+      return;
+    }
+
+    state.destroy();
+  };
+
+  const initSection = (section) => {
+    if (!section) return;
+
+    // Re-init safely if component was already initialized.
+    destroySection(section);
+    section.dataset.tharaaLinksInitialized = 'true';
+
+    const track = section.querySelector('[data-th-links-track], .tharaa-track');
+    if (!track) {
+      console.warn('Tharaa Links: Track not found in section', section);
+      section.dataset.tharaaLinksInitialized = 'false';
+      return;
+    }
+
+    const prevBtn = section.querySelector('.btn-prev');
+    const nextBtn = section.querySelector('.btn-next');
+    const progressContainer = section.querySelector('.tharaa-progress');
+    const progressBar = section.querySelector('.tharaa-progress__bar');
+    const autoplayEnabled = section.dataset.autoplay === 'true';
+
+    const direction = getSectionDirection(section);
+    const scrollModel = createScrollModel(track, direction);
+
+    const cleanups = [];
+    let autoplayTimer = null;
+    let interactionLocked = false;
+
+    let isDraggingPointer = false;
+    let activePointerId = null;
+    let startPointerX = 0;
+    let startScrollLogical = 0;
+    let dragged = false;
+    let suppressClickUntil = 0;
+
+    const addListener = (target, event, handler, options) => {
+      target.addEventListener(event, handler, options);
+      cleanups.push(() => target.removeEventListener(event, handler, options));
+    };
+
+    const setButtonVisibility = (button, visible) => {
+      if (!button) return;
+      button.classList.toggle('is-visible', visible);
+      button.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      button.tabIndex = visible ? 0 : -1;
+    };
+
+    const updateUI = () => {
+      if (section.classList.contains('mode-grid')) {
+        section.classList.remove('th-links-is-scrollable');
+        if (progressContainer) progressContainer.style.opacity = '0';
+        setButtonVisibility(prevBtn, false);
+        setButtonVisibility(nextBtn, false);
+        return;
+      }
+
+      const maxScroll = scrollModel.getMaxScroll();
+      const currentScroll = scrollModel.getLogicalScroll();
+      const hasOverflow = maxScroll > 2;
+
+      section.classList.toggle('th-links-is-scrollable', hasOverflow);
+
+      if (progressContainer) {
+        progressContainer.style.opacity = hasOverflow ? '1' : '0';
+      }
+
+      if (!hasOverflow) {
         if (progressBar) {
-          const thumbPercent = Math.max((track.clientWidth / track.scrollWidth) * 100, 18);
-          const clampedThumbPercent = Math.min(thumbPercent, 100);
-          const travelPercent = Math.max(100 - clampedThumbPercent, 0);
-          const ratio = maxScroll > 0 ? (scrollLeft / maxScroll) : 0;
-          const offset = isRTL ? (1 - ratio) * travelPercent : ratio * travelPercent;
-
-          progressBar.style.width = `${clampedThumbPercent}%`;
-          progressBar.style.transform = `translateX(${offset}%)`;
+          progressBar.style.width = '0px';
+          progressBar.style.transform = 'translate3d(0, 0, 0)';
         }
 
-        // Update navigation buttons visibility
-        if (prevBtn) {
-          scrollLeft > 20
-            ? prevBtn.classList.add('is-visible')
-            : prevBtn.classList.remove('is-visible');
-        }
-
-        if (nextBtn) {
-          scrollLeft < maxScroll - 20
-            ? nextBtn.classList.add('is-visible')
-            : nextBtn.classList.remove('is-visible');
-        }
-      };
-
-      /**
-       * Scroll Event Handler (Throttled via requestAnimationFrame)
-       */
-      let ticking = false;
-      track.addEventListener('scroll', () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            updateUI();
-            ticking = false;
-          });
-          ticking = true;
-        }
-      }, { passive: true });
-
-      /**
-       * Navigation Button Handlers
-       */
-      const getScrollAmount = () => {
-        return track.clientWidth * 0.7; // Scroll 70% of viewport
-      };
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-          const scrollAmount = getScrollAmount();
-          const currentScroll = getLogicalScrollLeft();
-          setLogicalScrollLeft(currentScroll + scrollAmount, 'smooth');
-        });
+        setButtonVisibility(prevBtn, false);
+        setButtonVisibility(nextBtn, false);
+        return;
       }
 
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-          const scrollAmount = getScrollAmount();
-          const currentScroll = getLogicalScrollLeft();
-          setLogicalScrollLeft(currentScroll - scrollAmount, 'smooth');
-        });
+      if (progressBar && progressContainer) {
+        const containerWidth = progressContainer.clientWidth;
+        const widthRatio = track.scrollWidth > 0 ? (track.clientWidth / track.scrollWidth) : 0;
+        const thumbWidth = clamp(containerWidth * widthRatio, 20, containerWidth);
+        const travel = Math.max(containerWidth - thumbWidth, 0);
+        const ratio = maxScroll > 0 ? (currentScroll / maxScroll) : 0;
+        const visualRatio = scrollModel.isRTL ? (1 - ratio) : ratio;
+
+        progressBar.style.width = `${thumbWidth}px`;
+        progressBar.style.transform = `translate3d(${travel * visualRatio}px, 0, 0)`;
       }
 
-      /**
-       * Drag to Scroll (Mouse & Touch)
-       */
-      let isDown = false;
-      let startX;
-      let scrollLeft;
+      setButtonVisibility(prevBtn, currentScroll > 6);
+      setButtonVisibility(nextBtn, currentScroll < maxScroll - 6);
+    };
 
-      // Mouse events
-      track.addEventListener('mousedown', (e) => {
-        if (section.classList.contains('mode-grid')) return;
+    let isTicking = false;
+    const requestUIUpdate = () => {
+      if (isTicking) return;
 
-        isDown = true;
-        track.classList.add('is-dragging');
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-
-        // Prevent text selection while dragging
-        e.preventDefault();
-      });
-
-      track.addEventListener('mouseleave', () => {
-        isDown = false;
-        track.classList.remove('is-dragging');
-      });
-
-      track.addEventListener('mouseup', () => {
-        isDown = false;
-        track.classList.remove('is-dragging');
-      });
-
-      track.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 2.5; // Scroll speed multiplier
-        track.scrollLeft = scrollLeft - walk;
-      });
-
-      // Touch events (mobile)
-      let touchStartX = 0;
-      let touchScrollLeft = 0;
-
-      track.addEventListener('touchstart', (e) => {
-        if (section.classList.contains('mode-grid')) return;
-
-        touchStartX = e.touches[0].pageX - track.offsetLeft;
-        touchScrollLeft = track.scrollLeft;
-      }, { passive: true });
-
-      track.addEventListener('touchmove', (e) => {
-        if (section.classList.contains('mode-grid')) return;
-
-        const x = e.touches[0].pageX - track.offsetLeft;
-        const walk = (x - touchStartX) * 2;
-        track.scrollLeft = touchScrollLeft - walk;
-      }, { passive: true });
-
-      /**
-       * Autoplay Functionality
-       */
-      if (autoplay) {
-        const startAutoplay = () => {
-          // Don't autoplay in grid mode
-          if (section.classList.contains('mode-grid')) return;
-
-          autoplayInterval = setInterval(() => {
-            const maxScroll = getMaxScroll();
-            const currentScroll = getLogicalScrollLeft();
-
-            // Check if reached end
-            if (currentScroll >= maxScroll - 10) {
-              // Reset to start
-              setLogicalScrollLeft(0, 'smooth');
-            } else {
-              // Scroll forward
-              setLogicalScrollLeft(currentScroll + 200, 'smooth');
-            }
-          }, 3000); // Scroll every 3 seconds
-        };
-
-        // Pause autoplay on hover (desktop only)
-        if (window.matchMedia('(hover: hover)').matches) {
-          section.addEventListener('mouseenter', () => {
-            if (autoplayInterval) {
-              clearInterval(autoplayInterval);
-              autoplayInterval = null;
-            }
-          });
-
-          section.addEventListener('mouseleave', () => {
-            if (!autoplayInterval && !section.classList.contains('mode-grid')) {
-              startAutoplay();
-            }
-          });
-        }
-
-        // Start autoplay
-        startAutoplay();
-      }
-
-      /**
-       * Resize Observer - Update UI on window resize
-       */
-      const resizeObserver = new ResizeObserver(() => {
+      isTicking = true;
+      window.requestAnimationFrame(() => {
         updateUI();
+        isTicking = false;
       });
+    };
 
-      resizeObserver.observe(track);
+    const scrollByStep = (directionMultiplier) => {
+      const step = getScrollStep(track);
+      const target = scrollModel.getLogicalScroll() + (step * directionMultiplier);
+      scrollModel.setLogicalScroll(target, 'smooth');
+    };
 
-      /**
-       * Intersection Observer - Pause autoplay when out of view
-       */
-      if (autoplay && 'IntersectionObserver' in window) {
+    const startAutoplay = () => {
+      if (!autoplayEnabled || autoplayTimer || section.classList.contains('mode-grid') || interactionLocked) {
+        return;
+      }
+
+      if (scrollModel.getMaxScroll() <= 2) {
+        return;
+      }
+
+      autoplayTimer = window.setInterval(() => {
+        const maxScroll = scrollModel.getMaxScroll();
+        if (maxScroll <= 2) return;
+
+        const current = scrollModel.getLogicalScroll();
+        const next = current + getScrollStep(track);
+
+        if (next >= maxScroll - 4) {
+          scrollModel.setLogicalScroll(0, 'smooth');
+          return;
+        }
+
+        scrollModel.setLogicalScroll(next, 'smooth');
+      }, 3200);
+    };
+
+    const stopAutoplay = () => {
+      if (!autoplayTimer) return;
+      window.clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    };
+
+    const pauseAutoplayForInteraction = () => {
+      interactionLocked = true;
+      stopAutoplay();
+    };
+
+    const resumeAutoplayAfterInteraction = () => {
+      interactionLocked = false;
+      startAutoplay();
+    };
+
+    const handlePointerDown = (event) => {
+      if (section.classList.contains('mode-grid')) return;
+      if (event.pointerType === 'touch') return; // Keep native touch scroll.
+      if (event.button !== undefined && event.button !== 0) return;
+      if (event.target.closest('.tharaa-nav-btn')) return;
+      if (event.target.closest('input, textarea, select, button')) return;
+
+      isDraggingPointer = true;
+      dragged = false;
+      activePointerId = event.pointerId;
+      startPointerX = event.clientX;
+      startScrollLogical = scrollModel.getLogicalScroll();
+
+      track.classList.add('is-dragging');
+      if (typeof track.setPointerCapture === 'function') {
+        track.setPointerCapture(event.pointerId);
+      }
+      pauseAutoplayForInteraction();
+
+      event.preventDefault();
+    };
+
+    const handlePointerMove = (event) => {
+      if (!isDraggingPointer || event.pointerId !== activePointerId) return;
+
+      const deltaX = event.clientX - startPointerX;
+      if (Math.abs(deltaX) > 3) {
+        dragged = true;
+      }
+
+      const nextScroll = startScrollLogical - (deltaX * 1.25);
+      scrollModel.setLogicalScroll(nextScroll, 'auto');
+
+      if (dragged) {
+        event.preventDefault();
+      }
+    };
+
+    const stopPointerDrag = (event) => {
+      if (!isDraggingPointer) return;
+      if (event && activePointerId !== null && event.pointerId !== activePointerId) return;
+
+      if (dragged) {
+        suppressClickUntil = Date.now() + 260;
+      }
+
+      isDraggingPointer = false;
+      activePointerId = null;
+      dragged = false;
+      track.classList.remove('is-dragging');
+      resumeAutoplayAfterInteraction();
+    };
+
+    const preventClickAfterDrag = (event) => {
+      if (Date.now() > suppressClickUntil) return;
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    const handleTrackKeydown = (event) => {
+      if (section.classList.contains('mode-grid')) return;
+
+      if (event.key === 'Home') {
+        scrollModel.setLogicalScroll(0, 'smooth');
+        event.preventDefault();
+        return;
+      }
+
+      if (event.key === 'End') {
+        scrollModel.setLogicalScroll(scrollModel.getMaxScroll(), 'smooth');
+        event.preventDefault();
+        return;
+      }
+
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+        return;
+      }
+
+      const step = Math.max(track.clientWidth * 0.45, getScrollStep(track) * 0.8);
+      const isArrowRight = event.key === 'ArrowRight';
+      const delta = isArrowRight
+        ? (scrollModel.isRTL ? -step : step)
+        : (scrollModel.isRTL ? step : -step);
+
+      scrollModel.setLogicalScroll(scrollModel.getLogicalScroll() + delta, 'smooth');
+      event.preventDefault();
+    };
+
+    const handleDragStart = (event) => {
+      if (event.target instanceof HTMLImageElement) {
+        event.preventDefault();
+      }
+    };
+
+    if (nextBtn) {
+      addListener(nextBtn, 'click', () => {
+        pauseAutoplayForInteraction();
+        scrollByStep(1);
+        resumeAutoplayAfterInteraction();
+      });
+    }
+
+    if (prevBtn) {
+      addListener(prevBtn, 'click', () => {
+        pauseAutoplayForInteraction();
+        scrollByStep(-1);
+        resumeAutoplayAfterInteraction();
+      });
+    }
+
+    addListener(track, 'scroll', requestUIUpdate, { passive: true });
+    addListener(track, 'keydown', handleTrackKeydown);
+    addListener(track, 'pointerdown', handlePointerDown);
+    addListener(track, 'pointermove', handlePointerMove);
+    addListener(track, 'pointerup', stopPointerDrag);
+    addListener(track, 'pointercancel', stopPointerDrag);
+    addListener(track, 'lostpointercapture', stopPointerDrag);
+    addListener(track, 'click', preventClickAfterDrag, true);
+    addListener(track, 'dragstart', handleDragStart);
+
+    if (autoplayEnabled) {
+      if (window.matchMedia('(hover: hover)').matches) {
+        addListener(section, 'mouseenter', pauseAutoplayForInteraction);
+        addListener(section, 'mouseleave', resumeAutoplayAfterInteraction);
+      }
+
+      addListener(section, 'focusin', pauseAutoplayForInteraction);
+      addListener(section, 'focusout', resumeAutoplayAfterInteraction);
+
+      if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (!entry.isIntersecting && autoplayInterval) {
-              // Section is out of view, pause autoplay
-              clearInterval(autoplayInterval);
-              autoplayInterval = null;
-            } else if (entry.isIntersecting && autoplay && !autoplayInterval && !section.classList.contains('mode-grid')) {
-              // Section is in view, resume autoplay
-              autoplayInterval = setInterval(() => {
-                const currentScroll = getLogicalScrollLeft();
-                setLogicalScrollLeft(currentScroll + 200, 'smooth');
-              }, 3000);
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              resumeAutoplayAfterInteraction();
+            } else {
+              pauseAutoplayForInteraction();
             }
           });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.15 });
 
         observer.observe(section);
+        cleanups.push(() => observer.disconnect());
       }
+    }
 
-      /**
-       * Initial UI Update
-       */
-      updateUI();
+    if ('ResizeObserver' in window) {
+      const resizeObserver = new ResizeObserver(requestUIUpdate);
+      resizeObserver.observe(track);
+      if (progressContainer) {
+        resizeObserver.observe(progressContainer);
+      }
+      cleanups.push(() => resizeObserver.disconnect());
+    } else {
+      addListener(window, 'resize', requestUIUpdate);
+    }
 
-      /**
-       * Cleanup on unload (prevent memory leaks)
-       */
-      window.addEventListener('unload', () => {
-        if (autoplayInterval) {
-          clearInterval(autoplayInterval);
-        }
-        if (resizeObserver) {
-          resizeObserver.disconnect();
+    startAutoplay();
+    updateUI();
+
+    const destroy = () => {
+      stopAutoplay();
+      cleanups.forEach((cleanup) => {
+        try {
+          cleanup();
+        } catch (error) {
+          // Keep destroy safe even if one cleanup fails.
         }
       });
-    },
 
-    /**
-     * Public method to refresh a specific section
-     * @param {string} sectionId - The section ID
-     */
+      track.classList.remove('is-dragging');
+      section.classList.remove('th-links-is-scrollable');
+      section.dataset.tharaaLinksInitialized = 'false';
+      SECTION_STATE.delete(section);
+    };
+
+    SECTION_STATE.set(section, { destroy, updateUI });
+  };
+
+  const initAllSections = () => {
+    const sections = document.querySelectorAll(SECTION_SELECTOR);
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      if (section.dataset.tharaaLinksInitialized === 'true' && SECTION_STATE.has(section)) {
+        return;
+      }
+
+      initSection(section);
+    });
+  };
+
+  const TharaaLinksUI = {
+    init: initAllSections,
+
     refresh: function (sectionId) {
       const section = document.getElementById(sectionId);
-      if (section) {
-        section.dataset.tharaaLinksInitialized = 'false';
-        this.initSection(section);
-      }
+      if (!section) return;
+
+      initSection(section);
     },
 
-    /**
-     * Public method to destroy a section (cleanup)
-     * @param {string} sectionId - The section ID
-     */
     destroy: function (sectionId) {
       const section = document.getElementById(sectionId);
       if (!section) return;
 
-      section.dataset.tharaaLinksInitialized = 'false';
-
-      // Remove event listeners and intervals
-      const track = section.querySelector('.tharaa-track');
-      if (track) {
-        // Clone and replace to remove all event listeners
-        const newTrack = track.cloneNode(true);
-        track.parentNode.replaceChild(newTrack, track);
-      }
-    }
+      destroySection(section);
+    },
   };
 
-  /**
-   * Initialize on DOM ready
-   */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      TharaaLinksUI.init();
-    });
+    document.addEventListener('DOMContentLoaded', initAllSections, { once: true });
   } else {
-    // DOM is already ready
-    TharaaLinksUI.init();
+    initAllSections();
   }
 
-  /**
-   * Expose to global scope for external access
-   * This allows calling TharaaLinksUI.refresh() or TharaaLinksUI.destroy() from outside
-   */
+  if (typeof salla !== 'undefined' && salla.event && typeof salla.event.on === 'function') {
+    // Re-init after dynamic block rendering in preview/customizer.
+    salla.event.on('theme::preview::rendered', initAllSections);
+    salla.event.on('theme::component::loaded', initAllSections);
+  }
+
   window.TharaaLinksUI = TharaaLinksUI;
-
-  /**
-   * Salla Integration - Re-initialize after dynamic content updates
-   * Listen for Salla's custom events if needed
-   */
-  if (typeof salla !== 'undefined') {
-    // Example: Re-initialize when products are updated
-    // salla.event.on('product:updated', () => {
-    //   TharaaLinksUI.init();
-    // });
-  }
-
 })();

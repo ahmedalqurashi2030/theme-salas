@@ -11,7 +11,7 @@
 {% if banners|length %}
   <section class="s-block s-block--banners th-banners th-banners--quad">
     <div class="container">
-      <div class="th-banners__grid grid {{ mobile_two_columns ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 lg:grid-cols-4' }}" style="--th-gap: {{ gap }}px;">
+      <div class="th-banners__grid grid {{ mobile_two_columns ? 'grid-cols-2' : 'grid-cols-1' }} md:grid-cols-2 lg:grid-cols-4" style="--th-gap: {{ gap }}px;">
 
         {% for banner in banners|slice(0, 4) %}
           {% set img = banner['banners.image'] ?? banner.image ?? null %}

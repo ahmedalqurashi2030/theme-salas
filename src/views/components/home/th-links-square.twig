@@ -20,7 +20,7 @@
 {% set section_id = 'tharaa-square-' ~ random() %}
 
 {% if items is not empty %}
-	<section class="s-block tharaa-links-section style-square py-10  {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile }}; --th-items-desktop: {{ items_desktop }}; --th-gap: 20px;">
+	<section class="s-block tharaa-links-section style-square py-10  {{ display_mode == 'list' ? 'mode-grid' : '' }} {{ two_rows ? 'mode-double' : '' }}" id="{{ section_id }}" data-th-links-dir="{{ user.language.dir|default('ltr') }}" data-autoplay="{{ autoplay ? 'true' : 'false' }}" data-items-mobile="{{ items_mobile }}" data-items-desktop="{{ items_desktop }}" style="--th-items-mobile: {{ items_mobile }}; --th-items-desktop: {{ items_desktop }}; --th-gap: 20px;">
 		<div class="container">
 
 			{% include 'components.home._partials.section-header' with {
@@ -33,24 +33,24 @@
 
 			<div class="tharaa-track-wrapper">
 				{% if show_controls %}
-					<button class="tharaa-nav-btn btn-prev" aria-label="{{ trans('common.previous') }}">
+					<button type="button" class="tharaa-nav-btn btn-prev" aria-label="{{ trans('common.previous') }}">
 						<i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'right' : 'left' }}"></i>
 					</button>
-					<button class="tharaa-nav-btn btn-next" aria-label="{{ trans('common.next') }}">
+					<button type="button" class="tharaa-nav-btn btn-next" aria-label="{{ trans('common.next') }}">
 						<i class="sicon-chevron-{{ user.language.dir == 'rtl' ? 'left' : 'right' }}"></i>
 					</button>
 				{% endif %}
 
-				<div class="tharaa-track flex gap-[var(--th-gap,20px)] overflow-x-auto overflow-y-hidden scroll-smooth [scrollbar-width:none] snap-x snap-mandatory scroll-p-5 cursor-grab">
+				<div class="tharaa-track flex gap-[var(--th-gap,20px)] overflow-x-auto overflow-y-hidden scroll-smooth [scrollbar-width:none] snap-x snap-mandatory scroll-p-5 cursor-grab select-none" data-th-links-track tabindex="0" role="region" aria-label="{{ section_title }}">
 					{% for item in items %}
 						<a href="{{ item.url|default('#') }}" class="tharaa-card flex flex-col items-center text-center" aria-label="{{ item.title }}">
 							<div class="tharaa-card__visual w-full aspect-square bg-[var(--th-bg-secondary,#fafafa)] overflow-hidden relative rounded-3xl border-2 border-transparent transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform">
-								<img class="tharaa-card__img w-full h-full object-cover transition-transform duration-500 ease-in-out" src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" decoding="async">
+								<img class="tharaa-card__img w-full h-full object-cover transition-transform duration-500 ease-in-out" src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" decoding="async" draggable="false">
 							</div>
 							<div class="tharaa-card__content mt-3 text-center transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10">
 								<span class="tharaa-card__title block mb-0.5 font-bold text-[13px] md:text-[14px] text-[color:var(--th-header-elements,var(--th-text-primary,#1a1a1a))]">{{ item.title }}</span>
 								{% if item.count is defined %}
-									<span class="tharaa-card__count block text-[11px] font-semibold text-[color:var(--th-promo-tag,#d4af37))]">{{ item.count }}</span>
+									<span class="tharaa-card__count block text-[11px] font-semibold text-[color:var(--th-promo-tag,#d4af37)]">{{ item.count }}</span>
 								{% endif %}
 							</div>
 						</a>
@@ -58,9 +58,10 @@
 				</div>
 			</div>
 
-			<div class="tharaa-progress mx-auto mt-3">
+			<div class="tharaa-progress mx-auto mt-3" aria-hidden="true">
 				<div class="tharaa-progress__bar"></div>
 			</div>
 		</div>
 	</section>
 {% endif %}
+
