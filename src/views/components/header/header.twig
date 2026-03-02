@@ -44,15 +44,13 @@
 						<i class="sicon-search"></i>
 					</button>
 
-					{% if store.settings.is_multilingual %}
-						{% set tr_language = trans('blocks.header.language') %}
-						{% set language_label = tr_language starts with 'blocks.' ? 'Language' : tr_language %}
-						{% set current_country = user.language.country_code|default('sa')|lower %}
-						<button type="button" class="btn--icon th-lang-switch" aria-label="{{ language_label }}" onclick="var modal=document.querySelector('salla-localization-modal'); if (modal) { modal.open(); }">
-							<span class="flag iti__flag iti__{{ current_country }}" aria-hidden="true"></span>
-							<span class="sr-only">{{ language_label }}</span>
-						</button>
-					{% endif %}
+					{% set tr_language = trans('blocks.header.language') %}
+					{% set language_label = tr_language starts with 'blocks.' ? 'Language' : tr_language %}
+					{% set current_country = user.language.country_code|default('sa')|lower %}
+					<button type="button" class="btn--icon th-lang-switch" aria-label="{{ language_label }}" onclick="var modal=document.querySelector('salla-localization-modal'); if (modal) { modal.open(); }">
+						<span class="flag iti__flag iti__{{ current_country }}" aria-hidden="true"></span>
+						<span class="sr-only">{{ language_label }}</span>
+					</button>
 
 					<div class="hidden lg:block">
 						<salla-user-menu avatar-only show-header></salla-user-menu>
