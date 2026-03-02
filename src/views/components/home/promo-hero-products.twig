@@ -4,7 +4,6 @@
 #}
 
 {% set tr_badge = trans('components.promo_hero.badge') %}
-{% set tr_countdown_label = trans('components.promo_hero.countdown_label') %}
 {% set tr_offer_finished = trans('components.promo_hero.offer_finished') %}
 {% set tr_featured_products = trans('components.promo_hero.featured_products') %}
 {% set tr_days = trans('components.promo_hero.days') %}
@@ -17,7 +16,6 @@
 {% set tr_rating_suffix = trans('components.promo_hero.rating_suffix') %}
 
 {% set offer_badge_text = tr_badge starts with 'components.' ? 'Limited Offer' : tr_badge %}
-{% set offer_remaining_text = tr_countdown_label starts with 'components.' ? 'Offer ends in' : tr_countdown_label %}
 {% set offer_finished_text = tr_offer_finished starts with 'components.' ? 'Offer has ended' : tr_offer_finished %}
 {% set included_products_text = tr_featured_products starts with 'components.' ? 'Featured products' : tr_featured_products %}
 {% set timer_days_text = tr_days starts with 'components.' ? 'Days' : tr_days %}
@@ -80,7 +78,6 @@
 
           {% if show_countdown and countdown_end %}
             <div class="th-promo-hero__timer-wrap">
-              <p class="th-promo-hero__timer-label">{{ offer_remaining_text }}</p>
               <div
                 class="th-promo-hero__timer"
                 data-th-promo-countdown

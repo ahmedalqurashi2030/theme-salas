@@ -6,8 +6,6 @@
 {% set tr_customers_count = trans('components.testimonials.customers_count') %}
 {% set tr_empty = trans('components.testimonials.empty') %}
 {% set tr_customer_name = trans('components.testimonials.customer_name') %}
-{% set tr_average_rating_prefix = trans('components.testimonials.average_rating_prefix') %}
-{% set tr_average_rating_suffix = trans('components.testimonials.average_rating_suffix') %}
 {% set tr_rating_prefix = trans('components.testimonials.rating_prefix') %}
 {% set tr_rating_suffix = trans('components.testimonials.rating_suffix') %}
 
@@ -16,8 +14,6 @@
 {% set default_customers_count = tr_customers_count starts with 'components.' ? '2k+ Happy Customers' : tr_customers_count %}
 {% set default_empty_text = tr_empty starts with 'components.' ? 'No testimonials available yet.' : tr_empty %}
 {% set default_customer_name = tr_customer_name starts with 'components.' ? 'Customer' : tr_customer_name %}
-{% set average_rating_prefix = tr_average_rating_prefix starts with 'components.' ? 'Average rating' : tr_average_rating_prefix %}
-{% set average_rating_suffix = tr_average_rating_suffix starts with 'components.' ? 'out of 5' : tr_average_rating_suffix %}
 {% set rating_prefix = tr_rating_prefix starts with 'components.' ? 'Rating' : tr_rating_prefix %}
 {% set rating_suffix = tr_rating_suffix starts with 'components.' ? 'out of 5' : tr_rating_suffix %}
 
@@ -105,18 +101,6 @@
 {% set slider_show_controls = show_controls and has_multiple_reviews %}
 {% set slider_show_pagination = show_pagination and has_multiple_reviews %}
 {% set slider_auto_play = auto_play and has_multiple_reviews %}
-{% set total_stars = 0 %}
-
-{% for stat_item in reviews %}
-  {% set stat_stars = stat_item.stars|default(attribute(stat_item, 'items.stars')|default(5)) %}
-  {% set stat_stars = stat_stars < 1 ? 1 : (stat_stars > 5 ? 5 : stat_stars) %}
-  {% set total_stars = total_stars + stat_stars %}
-{% endfor %}
-
-{% set average_stars = reviews|length ? (total_stars / reviews|length) : 5 %}
-{% set average_stars_rounded = average_stars|round %}
-{% set average_stars_value = average_stars|number_format(1, '.', '') %}
-{% set average_rating_aria = average_rating_prefix ~ ' ' ~ average_stars_value ~ ' ' ~ average_rating_suffix %}
 {% set empty_reviews_text = default_empty_text %}
 
 {% set slider_config = {
@@ -160,14 +144,6 @@
                 {% endfor %}
               </span>
               <span class="th-home-testimonials__stat-text">{{ customers_count_text }}</span>
-            </div>
-            <div class="th-home-testimonials__stat th-home-testimonials__stat--rating" aria-label="{{ average_rating_aria }}">
-              <span class="th-home-testimonials__stat-stars th-ui-stars" aria-hidden="true">
-                {% for i in 1..5 %}
-                  <i class="sicon-star2 {{ i <= average_stars_rounded ? 'is-active' : '' }}"></i>
-                {% endfor %}
-              </span>
-              <span class="th-home-testimonials__stat-text">{{ average_stars_value }}/5</span>
             </div>
           </div>
         {% endif %}

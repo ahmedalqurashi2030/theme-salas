@@ -83,13 +83,6 @@
     @apply grid gap-2;
   }
 
-  &__timer-label {
-    margin: 0;
-    color: var(--promo-muted);
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
   &__timer {
     @apply grid grid-cols-4 gap-2;
     width: fit-content;
