@@ -52,7 +52,7 @@
 						<span class="th-lang-switch__code" aria-hidden="true">{{ current_language }}</span>
 						<span class="th-lang-switch__divider" aria-hidden="true"></span>
 						<span class="th-lang-switch__globe" aria-hidden="true">
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+							<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
 								<circle cx="12" cy="12" r="9"></circle>
 								<path d="M3.6 9h16.8"></path>
 								<path d="M3.6 15h16.8"></path>
@@ -62,6 +62,23 @@
 						</span>
 						<span class="sr-only">{{ language_label }}</span>
 					</button>
+
+					{# التأكد من أن المتجر يدعم أكثر من لغة #}
+{% if store.languages|length > 1 %}
+    <div class="language-selector">
+        {% for language in store.languages %}
+            {# إظهار اللغات المتاحة باستثناء اللغة الحالية التي يتصفح بها المستخدم #}
+            {% if language.code != store.language.code %}
+                <a href="{{ language.url }}" class="lang-link">
+                    {# أيقونة العلم الخاصة باللغة #}
+                    <img src="{{ language.flag }}" alt="{{ language.name }}" width="24" height="24">
+                    {# اسم اللغة (مثال: English أو العربية) #}
+                    <span>{{ language.name }}</span>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
 
 					<div class="hidden lg:block">
 						<salla-user-menu avatar-only show-header></salla-user-menu>
