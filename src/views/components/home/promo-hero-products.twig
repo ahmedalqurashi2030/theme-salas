@@ -3,48 +3,71 @@
   Path: home.promo-hero-products
 #}
 
-{% set is_ar = user.language.code starts with 'ar' %}
-{% set tr_offer_remaining = trans('pages.offer.offer_remaining_time') %}
-{% set tr_offer_finished = trans('pages.offer.offer_finished') %}
-{% set tr_included_products = trans('pages.offer.included_products') %}
+{% set tr_badge = trans('components.promo_hero.badge') %}
+{% set tr_countdown_label = trans('components.promo_hero.countdown_label') %}
+{% set tr_offer_finished = trans('components.promo_hero.offer_finished') %}
+{% set tr_featured_products = trans('components.promo_hero.featured_products') %}
+{% set tr_days = trans('components.promo_hero.days') %}
+{% set tr_hours = trans('components.promo_hero.hours') %}
+{% set tr_minutes = trans('components.promo_hero.minutes') %}
+{% set tr_seconds = trans('components.promo_hero.seconds') %}
+{% set tr_shop_now = trans('components.promo_hero.shop_now') %}
+{% set tr_empty_products = trans('components.promo_hero.empty_products') %}
+{% set tr_rating_prefix = trans('components.promo_hero.rating_prefix') %}
+{% set tr_rating_suffix = trans('components.promo_hero.rating_suffix') %}
 
-{% set offer_badge_text = is_ar ? 'عرض محدود' : 'Limited Offer' %}
-{% set offer_remaining_text = tr_offer_remaining starts with 'pages.' ? (is_ar ? 'ينتهي العرض خلال' : 'Offer ends in') : tr_offer_remaining %}
-{% set offer_finished_text = tr_offer_finished starts with 'pages.' ? (is_ar ? 'انتهى العرض' : 'Offer has ended') : tr_offer_finished %}
-{% set included_products_text = tr_included_products starts with 'pages.' ? (is_ar ? 'المنتجات المميزة' : 'Featured products') : tr_included_products %}
-{% set timer_days_text = is_ar ? 'يوم' : 'Days' %}
-{% set timer_hours_text = is_ar ? 'ساعة' : 'Hr' %}
-{% set timer_minutes_text = is_ar ? 'دقيقة' : 'Min' %}
-{% set timer_seconds_text = is_ar ? 'ثانية' : 'Sec' %}
+{% set offer_badge_text = tr_badge starts with 'components.' ? 'Limited Offer' : tr_badge %}
+{% set offer_remaining_text = tr_countdown_label starts with 'components.' ? 'Offer ends in' : tr_countdown_label %}
+{% set offer_finished_text = tr_offer_finished starts with 'components.' ? 'Offer has ended' : tr_offer_finished %}
+{% set included_products_text = tr_featured_products starts with 'components.' ? 'Featured products' : tr_featured_products %}
+{% set timer_days_text = tr_days starts with 'components.' ? 'Days' : tr_days %}
+{% set timer_hours_text = tr_hours starts with 'components.' ? 'Hr' : tr_hours %}
+{% set timer_minutes_text = tr_minutes starts with 'components.' ? 'Min' : tr_minutes %}
+{% set timer_seconds_text = tr_seconds starts with 'components.' ? 'Sec' : tr_seconds %}
+{% set rating_prefix = tr_rating_prefix starts with 'components.' ? 'Rating' : tr_rating_prefix %}
+{% set rating_suffix = tr_rating_suffix starts with 'components.' ? 'out of 5' : tr_rating_suffix %}
 
-{% set title = component.title ?? (is_ar ? 'تسوق بذكاء لوقت محدود' : 'Shop Smart for a Limited Time') %}
-{% set description = component.description ?? '' %}
+{% set title = component.title ?? 'Shop Smart for a Limited Time' %}
+{% if title is iterable %}
+  {% set title = title.value|default(title.ar|default(title.en|default('Shop Smart for a Limited Time'))) %}
+{% endif %}
+
+{% set description_raw = component.description ?? '' %}
+{% if description_raw is iterable %}
+  {% set description_raw = description_raw.value|default(description_raw.ar|default(description_raw.en|default(''))) %}
+{% endif %}
+{% set description = description_raw|striptags|trim %}
+
 {% set hero_image = component.hero_image ?? null %}
 {% set countdown_end = component.countdown_end ?? '' %}
 {% set show_countdown_raw = component.show_countdown ?? false %}
 {% set show_countdown = show_countdown_raw in [true, 1, '1', 'true'] %}
 {% set show_rating_raw = component.show_price ?? true %}
 {% set show_rating = show_rating_raw in [true, 1, '1', 'true'] %}
-{% set button_text = component.button_text ?? (is_ar ? 'تسوّق الآن' : 'Shop Now') %}
+{% set button_text = component.button_text ?? (tr_shop_now starts with 'components.' ? 'Shop Now' : tr_shop_now) %}
+{% if button_text is iterable %}
+  {% set button_text = button_text.value|default(button_text.ar|default(button_text.en|default(tr_shop_now starts with 'components.' ? 'Shop Now' : tr_shop_now))) %}
+{% endif %}
 {% set button_link = component.button_link ?? '' %}
 {% set products = component.products ?? [] %}
 {% set should_scroll_products = products|length > 4 %}
 {% set section_id = 'th-promo-hero-' ~ position %}
 {% set placeholder_image = theme.settings.get('placeholder', 'images/placeholder.png')|asset %}
 {% set hero_image_src = hero_image ? hero_image : placeholder_image %}
-{% set empty_products_text = is_ar ? 'لا توجد منتجات مختارة لهذا القسم حالياً.' : 'No selected products for this section yet.' %}
+{% set empty_products_text = tr_empty_products starts with 'components.' ? 'No selected products for this section yet.' : tr_empty_products %}
 
 <section class="s-block th-promo-hero th-ui-section {{ should_scroll_products ? 'th-promo-hero--scroll-products' : 'th-promo-hero--grid-products' }}" id="{{ section_id }}" aria-labelledby="{{ section_id }}-title">
   <div class="container">
     <div class="th-promo-hero__shell">
       <header class="th-promo-hero__header">
         <figure class="th-promo-hero__visual">
-          <img src="{{ hero_image_src }}"
-               alt="{{ title }}"
-               class="th-promo-hero__hero-image"
-               loading="lazy"
-               decoding="async"
-               draggable="false">
+          <img
+            src="{{ hero_image_src }}"
+            alt="{{ title }}"
+            class="th-promo-hero__hero-image"
+            loading="lazy"
+            decoding="async"
+            draggable="false">
         </figure>
 
         <div class="th-promo-hero__content">
@@ -52,19 +75,20 @@
           <h2 class="th-promo-hero__title" id="{{ section_id }}-title">{{ title }}</h2>
 
           {% if description %}
-            <div class="th-promo-hero__description">{{ description|raw }}</div>
+            <div class="th-promo-hero__description">{{ description }}</div>
           {% endif %}
 
           {% if show_countdown and countdown_end %}
             <div class="th-promo-hero__timer-wrap">
               <p class="th-promo-hero__timer-label">{{ offer_remaining_text }}</p>
-              <div class="th-promo-hero__timer"
-                   data-th-promo-countdown
-                   data-end="{{ countdown_end|e('html_attr') }}"
-                   data-expired-text="{{ offer_finished_text|e('html_attr') }}"
-                   role="timer"
-                   aria-live="polite"
-                   aria-atomic="true">
+              <div
+                class="th-promo-hero__timer"
+                data-th-promo-countdown
+                data-end="{{ countdown_end|e('html_attr') }}"
+                data-expired-text="{{ offer_finished_text|e('html_attr') }}"
+                role="timer"
+                aria-live="polite"
+                aria-atomic="true">
                 <div class="th-promo-hero__timer-item">
                   <span class="th-promo-hero__timer-value" data-part="days">00</span>
                   <span class="th-promo-hero__timer-unit">{{ timer_days_text }}</span>
@@ -103,28 +127,30 @@
             {% for product in products %}
               {% set product_id = product.id ?? null %}
               {% set product_url = product.url ?? '#' %}
-              {% set product_name = product.name ?? (is_ar ? 'منتج' : 'Product') %}
+              {% set product_name = product.name ?? 'Product' %}
               {% set product_image = product.image.url ?? product.image ?? placeholder_image %}
               {% set product_image_alt = product.image.alt ?? product_name %}
               {% set product_price = product.sale_price ?? product.price ?? product.regular_price ?? null %}
               {% set product_stars = product.rating.stars ?? product.rating ?? 0 %}
               {% set product_stars = product_stars|round(0, 'floor') %}
+              {% set product_stars = product_stars < 0 ? 0 : (product_stars > 5 ? 5 : product_stars) %}
 
               <article class="th-promo-hero__product-card th-ui-card {{ should_scroll_products ? 'th-promo-hero__product-card--scroll' : '' }}">
                 <a href="{{ product_url }}" class="th-promo-hero__product-link" aria-label="{{ product_name }}">
                   <span class="th-promo-hero__product-image-wrap">
-                    <img src="{{ product_image }}"
-                         alt="{{ product_image_alt }}"
-                         class="th-promo-hero__product-image"
-                         loading="lazy"
-                         decoding="async"
-                         draggable="false">
+                    <img
+                      src="{{ product_image }}"
+                      alt="{{ product_image_alt }}"
+                      class="th-promo-hero__product-image"
+                      loading="lazy"
+                      decoding="async"
+                      draggable="false">
                   </span>
 
                   <span class="th-promo-hero__product-content">
                     <span class="th-promo-hero__product-title">{{ product_name }}</span>
                     {% if show_rating %}
-                      <span class="th-promo-hero__rating th-ui-stars" aria-label="{{ is_ar ? ('التقييم ' ~ product_stars ~ ' من 5') : ('Rating ' ~ product_stars ~ ' out of 5') }}">
+                      <span class="th-promo-hero__rating th-ui-stars" aria-label="{{ rating_prefix ~ ' ' ~ product_stars ~ ' ' ~ rating_suffix }}">
                         {% for i in 1..5 %}
                           <i class="sicon-star2 {{ i <= product_stars ? 'is-active' : '' }}" aria-hidden="true"></i>
                         {% endfor %}

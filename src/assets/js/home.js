@@ -1,6 +1,7 @@
 import "lite-youtube-embed";
 import BasePage from "./base-page";
 import Lightbox from "fslightbox";
+import "./custom/th-links";
 window.fslightbox = Lightbox;
 
 class Home extends BasePage {

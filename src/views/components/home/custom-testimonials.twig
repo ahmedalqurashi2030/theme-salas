@@ -1,80 +1,99 @@
 {% set reviews = component.items|default([]) %}
 {% set slider_id = 'custom-testimonials-' ~ (position ?? 'home') %}
-{% set is_ar = user.language.code starts with 'ar' %}
 
-{% set section_title = component.section_title|default(is_ar ? 'تجارب عملائنا المميزة' : "Customer Testimonials") %}
+{% set tr_section_title = trans('components.testimonials.section_title') %}
+{% set tr_section_subtitle = trans('components.testimonials.section_subtitle') %}
+{% set tr_customers_count = trans('components.testimonials.customers_count') %}
+{% set tr_empty = trans('components.testimonials.empty') %}
+{% set tr_customer_name = trans('components.testimonials.customer_name') %}
+{% set tr_average_rating_prefix = trans('components.testimonials.average_rating_prefix') %}
+{% set tr_average_rating_suffix = trans('components.testimonials.average_rating_suffix') %}
+{% set tr_rating_prefix = trans('components.testimonials.rating_prefix') %}
+{% set tr_rating_suffix = trans('components.testimonials.rating_suffix') %}
+
+{% set default_section_title = tr_section_title starts with 'components.' ? 'Customer Testimonials' : tr_section_title %}
+{% set default_section_subtitle = tr_section_subtitle starts with 'components.' ? 'Real feedback from customers who trusted our products and service.' : tr_section_subtitle %}
+{% set default_customers_count = tr_customers_count starts with 'components.' ? '2k+ Happy Customers' : tr_customers_count %}
+{% set default_empty_text = tr_empty starts with 'components.' ? 'No testimonials available yet.' : tr_empty %}
+{% set default_customer_name = tr_customer_name starts with 'components.' ? 'Customer' : tr_customer_name %}
+{% set average_rating_prefix = tr_average_rating_prefix starts with 'components.' ? 'Average rating' : tr_average_rating_prefix %}
+{% set average_rating_suffix = tr_average_rating_suffix starts with 'components.' ? 'out of 5' : tr_average_rating_suffix %}
+{% set rating_prefix = tr_rating_prefix starts with 'components.' ? 'Rating' : tr_rating_prefix %}
+{% set rating_suffix = tr_rating_suffix starts with 'components.' ? 'out of 5' : tr_rating_suffix %}
+
+{% set section_title = component.section_title|default(default_section_title) %}
 {% if section_title is iterable %}
-	{% set section_title = section_title.value|default(section_title.ar|default(section_title.en|default(is_ar ? 'تجارب عملائنا المميزة' : "Customer Testimonials"))) %}
+  {% set section_title = section_title.value|default(section_title.ar|default(section_title.en|default(default_section_title))) %}
 {% endif %}
 
-{% set section_subtitle = component.section_subtitle|default(is_ar ? 'نفخر بخدمة آلاف العملاء، وتقييماتهم هي الدافع لتقديم الأفضل دائمًا.' : "Real feedback from customers who trusted our products and service.") %}
+{% set section_subtitle = component.section_subtitle|default(default_section_subtitle) %}
 {% if section_subtitle is iterable %}
-	{% set section_subtitle = section_subtitle.value|default(section_subtitle.ar|default(section_subtitle.en|default(is_ar ? 'نفخر بخدمة آلاف العملاء، وتقييماتهم هي الدافع لتقديم الأفضل دائمًا.' : "Real feedback from customers who trusted our products and service."))) %}
+  {% set section_subtitle = section_subtitle.value|default(section_subtitle.ar|default(section_subtitle.en|default(default_section_subtitle))) %}
 {% endif %}
 
-{% set customers_count_text = component.customers_count_text|default(is_ar ? '2k+ عميل سعيد' : "2k+ Happy Customers") %}
+{% set customers_count_text = component.customers_count_text|default(default_customers_count) %}
 {% if customers_count_text is iterable %}
-	{% set customers_count_text = customers_count_text.value|default(customers_count_text.ar|default(customers_count_text.en|default(is_ar ? '2k+ عميل سعيد' : "2k+ Happy Customers"))) %}
+  {% set customers_count_text = customers_count_text.value|default(customers_count_text.ar|default(customers_count_text.en|default(default_customers_count))) %}
 {% endif %}
 
 {% if attribute(component, 'show-stats') is defined %}
-	{% set show_stats_raw = attribute(component, 'show-stats') %}
+  {% set show_stats_raw = attribute(component, 'show-stats') %}
 {% elseif attribute(component, 'show_stats') is defined %}
-	{% set show_stats_raw = attribute(component, 'show_stats') %}
+  {% set show_stats_raw = attribute(component, 'show_stats') %}
 {% else %}
-	{% set show_stats_raw = true %}
+  {% set show_stats_raw = true %}
 {% endif %}
 {% if show_stats_raw is iterable %}
-	{% if attribute(show_stats_raw, 'selected') is defined %}
-		{% set show_stats_raw = attribute(show_stats_raw, 'selected') %}
-	{% else %}
-		{% set show_stats_raw = attribute(show_stats_raw, 'value')|default(show_stats_raw) %}
-	{% endif %}
+  {% if attribute(show_stats_raw, 'selected') is defined %}
+    {% set show_stats_raw = attribute(show_stats_raw, 'selected') %}
+  {% else %}
+    {% set show_stats_raw = attribute(show_stats_raw, 'value')|default(show_stats_raw) %}
+  {% endif %}
 {% endif %}
 
 {% if attribute(component, 'auto-play') is defined %}
-	{% set auto_play_raw = attribute(component, 'auto-play') %}
+  {% set auto_play_raw = attribute(component, 'auto-play') %}
 {% elseif attribute(component, 'auto_play') is defined %}
-	{% set auto_play_raw = attribute(component, 'auto_play') %}
+  {% set auto_play_raw = attribute(component, 'auto_play') %}
 {% else %}
-	{% set auto_play_raw = true %}
+  {% set auto_play_raw = true %}
 {% endif %}
 {% if auto_play_raw is iterable %}
-	{% if attribute(auto_play_raw, 'selected') is defined %}
-		{% set auto_play_raw = attribute(auto_play_raw, 'selected') %}
-	{% else %}
-		{% set auto_play_raw = attribute(auto_play_raw, 'value')|default(auto_play_raw) %}
-	{% endif %}
+  {% if attribute(auto_play_raw, 'selected') is defined %}
+    {% set auto_play_raw = attribute(auto_play_raw, 'selected') %}
+  {% else %}
+    {% set auto_play_raw = attribute(auto_play_raw, 'value')|default(auto_play_raw) %}
+  {% endif %}
 {% endif %}
 
 {% if attribute(component, 'show-pagination') is defined %}
-	{% set show_pagination_raw = attribute(component, 'show-pagination') %}
+  {% set show_pagination_raw = attribute(component, 'show-pagination') %}
 {% elseif attribute(component, 'show_pagination') is defined %}
-	{% set show_pagination_raw = attribute(component, 'show_pagination') %}
+  {% set show_pagination_raw = attribute(component, 'show_pagination') %}
 {% else %}
-	{% set show_pagination_raw = true %}
+  {% set show_pagination_raw = true %}
 {% endif %}
 {% if show_pagination_raw is iterable %}
-	{% if attribute(show_pagination_raw, 'selected') is defined %}
-		{% set show_pagination_raw = attribute(show_pagination_raw, 'selected') %}
-	{% else %}
-		{% set show_pagination_raw = attribute(show_pagination_raw, 'value')|default(show_pagination_raw) %}
-	{% endif %}
+  {% if attribute(show_pagination_raw, 'selected') is defined %}
+    {% set show_pagination_raw = attribute(show_pagination_raw, 'selected') %}
+  {% else %}
+    {% set show_pagination_raw = attribute(show_pagination_raw, 'value')|default(show_pagination_raw) %}
+  {% endif %}
 {% endif %}
 
 {% if attribute(component, 'show_controls') is defined %}
-	{% set show_controls_raw = attribute(component, 'show_controls') %}
+  {% set show_controls_raw = attribute(component, 'show_controls') %}
 {% elseif attribute(component, 'show-controls') is defined %}
-	{% set show_controls_raw = attribute(component, 'show-controls') %}
+  {% set show_controls_raw = attribute(component, 'show-controls') %}
 {% else %}
-	{% set show_controls_raw = true %}
+  {% set show_controls_raw = true %}
 {% endif %}
 {% if show_controls_raw is iterable %}
-	{% if attribute(show_controls_raw, 'selected') is defined %}
-		{% set show_controls_raw = attribute(show_controls_raw, 'selected') %}
-	{% else %}
-		{% set show_controls_raw = attribute(show_controls_raw, 'value')|default(show_controls_raw) %}
-	{% endif %}
+  {% if attribute(show_controls_raw, 'selected') is defined %}
+    {% set show_controls_raw = attribute(show_controls_raw, 'selected') %}
+  {% else %}
+    {% set show_controls_raw = attribute(show_controls_raw, 'value')|default(show_controls_raw) %}
+  {% endif %}
 {% endif %}
 
 {% set show_stats = show_stats_raw in [true, 1, '1', 'true'] %}
@@ -89,16 +108,16 @@
 {% set total_stars = 0 %}
 
 {% for stat_item in reviews %}
-	{% set stat_stars = stat_item.stars|default(attribute(stat_item, 'items.stars')|default(5)) %}
-	{% set stat_stars = stat_stars < 1 ? 1 : (stat_stars > 5 ? 5 : stat_stars) %}
-	{% set total_stars = total_stars + stat_stars %}
+  {% set stat_stars = stat_item.stars|default(attribute(stat_item, 'items.stars')|default(5)) %}
+  {% set stat_stars = stat_stars < 1 ? 1 : (stat_stars > 5 ? 5 : stat_stars) %}
+  {% set total_stars = total_stars + stat_stars %}
 {% endfor %}
 
 {% set average_stars = reviews|length ? (total_stars / reviews|length) : 5 %}
 {% set average_stars_rounded = average_stars|round %}
 {% set average_stars_value = average_stars|number_format(1, '.', '') %}
-{% set average_rating_aria = is_ar ? ('متوسط التقييم ' ~ average_stars_value ~ ' من 5') : ('Average rating ' ~ average_stars_value ~ ' out of 5') %}
-{% set empty_reviews_text = is_ar ? 'لا توجد آراء متاحة حاليًا.' : 'No testimonials available yet.' %}
+{% set average_rating_aria = average_rating_prefix ~ ' ' ~ average_stars_value ~ ' ' ~ average_rating_suffix %}
+{% set empty_reviews_text = default_empty_text %}
 
 {% set slider_config = {
   "slidesPerView": 1,
@@ -123,83 +142,84 @@
 } %}
 
 <section class="s-block th-home-testimonials th-ui-section py-8 lg:py-10">
-	<div class="container">
-		<header class="s-block__title th-home-testimonials__header">
-			<div class="right-side th-home-testimonials__header-inner">
-				<h2 class="th-home-testimonials__title">{{ section_title }}</h2>
-				<p class="th-home-testimonials__subtitle">{{ section_subtitle }}</p>
+  <div class="container">
+    <header class="s-block__title th-home-testimonials__header">
+      <div class="right-side th-home-testimonials__header-inner">
+        <h2 class="th-home-testimonials__title">{{ section_title }}</h2>
+        <p class="th-home-testimonials__subtitle">{{ section_subtitle }}</p>
 
-				{% if show_stats %}
-					<div class="th-home-testimonials__stats">
-						<div class="th-home-testimonials__stat th-home-testimonials__stat--customers">
-							<span class="th-home-testimonials__avatars" aria-hidden="true">
-								{% for item in reviews|slice(0, 4) %}
-									{% set stat_avatar = item.avatar|default(attribute(item, 'items.avatar')|default('')) %}
-									{% if stat_avatar %}
-										<img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ stat_avatar }}" alt="" class="lazy th-home-testimonials__avatar-chip">
-									{% endif %}
-								{% endfor %}
-							</span>
-							<span class="th-home-testimonials__stat-text">{{ customers_count_text }}</span>
-						</div>
-						<div class="th-home-testimonials__stat th-home-testimonials__stat--rating" aria-label="{{ average_rating_aria }}">
-							<span class="th-home-testimonials__stat-stars th-ui-stars" aria-hidden="true">
-								{% for i in 1..5 %}
-									<i class="sicon-star2 {{ i <= average_stars_rounded ? 'is-active' : '' }}"></i>
-								{% endfor %}
-							</span>
-							<span class="th-home-testimonials__stat-text">{{ average_stars_value }}/5</span>
-						</div>
-					</div>
-				{% endif %}
-			</div>
-		</header>
+        {% if show_stats %}
+          <div class="th-home-testimonials__stats">
+            <div class="th-home-testimonials__stat th-home-testimonials__stat--customers">
+              <span class="th-home-testimonials__avatars" aria-hidden="true">
+                {% for item in reviews|slice(0, 4) %}
+                  {% set stat_avatar = item.avatar|default(attribute(item, 'items.avatar')|default('')) %}
+                  {% if stat_avatar %}
+                    <img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ stat_avatar }}" alt="" class="lazy th-home-testimonials__avatar-chip">
+                  {% endif %}
+                {% endfor %}
+              </span>
+              <span class="th-home-testimonials__stat-text">{{ customers_count_text }}</span>
+            </div>
+            <div class="th-home-testimonials__stat th-home-testimonials__stat--rating" aria-label="{{ average_rating_aria }}">
+              <span class="th-home-testimonials__stat-stars th-ui-stars" aria-hidden="true">
+                {% for i in 1..5 %}
+                  <i class="sicon-star2 {{ i <= average_stars_rounded ? 'is-active' : '' }}"></i>
+                {% endfor %}
+              </span>
+              <span class="th-home-testimonials__stat-text">{{ average_stars_value }}/5</span>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </header>
 
-		{% if reviews|length %}
-			<salla-slider id="{{ slider_id }}" class="th-home-testimonials__slider s-slider-wrapper" type="carousel" show-controls="{{ slider_show_controls ? 'true' : 'false' }}" auto-play="{{ slider_auto_play ? 'true' : 'false' }}" slider-config='{{ slider_config|json_encode|e("html_attr") }}' {% if slider_show_controls %} controls-outer {% endif %} {% if slider_show_pagination %} pagination {% endif %}>
-				<div slot="items">
-					{% for index, item in reviews %}
-						{% set reviewer_name = item.name|default(attribute(item, 'items.name')|default(is_ar ? 'عميل' : 'Customer')) %}
-						{% set reviewer_avatar = item.avatar|default(attribute(item, 'items.avatar')|default('')) %}
-						{% set reviewer_stars = item.stars|default(attribute(item, 'items.stars')|default(5)) %}
-						{% set reviewer_text = item.text|default(attribute(item, 'items.text')|default('')) %}
-						{% set reviewer_stars = reviewer_stars < 1 ? 1 : (reviewer_stars > 5 ? 5 : reviewer_stars) %}
+    {% if reviews|length %}
+      <salla-slider id="{{ slider_id }}" class="th-home-testimonials__slider s-slider-wrapper" type="carousel" show-controls="{{ slider_show_controls ? 'true' : 'false' }}" auto-play="{{ slider_auto_play ? 'true' : 'false' }}" slider-config='{{ slider_config|json_encode|e("html_attr") }}' {% if slider_show_controls %} controls-outer {% endif %} {% if slider_show_pagination %} pagination {% endif %}>
+        <div slot="items">
+          {% for index, item in reviews %}
+            {% set reviewer_name = item.name|default(attribute(item, 'items.name')|default(default_customer_name)) %}
+            {% set reviewer_avatar = item.avatar|default(attribute(item, 'items.avatar')|default('')) %}
+            {% set reviewer_stars = item.stars|default(attribute(item, 'items.stars')|default(5)) %}
+            {% set reviewer_text = item.text|default(attribute(item, 'items.text')|default('')) %}
+            {% set reviewer_stars = reviewer_stars < 1 ? 1 : (reviewer_stars > 5 ? 5 : reviewer_stars) %}
+            {% set reviewer_rating_aria = rating_prefix ~ ' ' ~ reviewer_stars ~ ' ' ~ rating_suffix %}
 
-						<div class="swiper-slide th-home-testimonials__slide h-auto">
-							<article class="th-home-testimonial-card th-ui-card">
-								<div class="th-home-testimonial-card__head">
-									<span class="th-home-testimonial-card__quote" aria-hidden="true">&ldquo;</span>
-									<div class="th-home-testimonial-card__stars th-ui-stars" aria-label="{{ is_ar ? ('التقييم ' ~ reviewer_stars ~ ' من 5') : ('Rating ' ~ reviewer_stars ~ ' out of 5') }}">
-										{% for i in 1..5 %}
-											<i class="sicon-star2 {{ i <= reviewer_stars ? 'is-active' : '' }}"></i>
-										{% endfor %}
-									</div>
-								</div>
+            <div class="swiper-slide th-home-testimonials__slide h-auto">
+              <article class="th-home-testimonial-card th-ui-card">
+                <div class="th-home-testimonial-card__head">
+                  <span class="th-home-testimonial-card__quote" aria-hidden="true">&ldquo;</span>
+                  <div class="th-home-testimonial-card__stars th-ui-stars" aria-label="{{ reviewer_rating_aria }}">
+                    {% for i in 1..5 %}
+                      <i class="sicon-star2 {{ i <= reviewer_stars ? 'is-active' : '' }}"></i>
+                    {% endfor %}
+                  </div>
+                </div>
 
-								<p class="th-home-testimonial-card__text">{{ reviewer_text }}</p>
+                <p class="th-home-testimonial-card__text">{{ reviewer_text }}</p>
 
-								<footer class="th-home-testimonial-card__footer">
-									<div class="th-home-testimonial-card__author-wrap">
-										<span class="th-home-testimonial-card__avatar">
-											<img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ reviewer_avatar }}" alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}" decoding="async" class="lazy th-home-testimonial-card__avatar-image">
-										</span>
-										<div class="th-home-testimonial-card__author">
-											<strong class="th-home-testimonial-card__author-name">{{ reviewer_name }}</strong>
-											<small class="th-home-testimonial-card__author-rating th-ui-stars" aria-label="{{ is_ar ? ('التقييم ' ~ reviewer_stars ~ ' من 5') : ('Rating ' ~ reviewer_stars ~ ' out of 5') }}">
-												{% for i in 1..5 %}
-													<i class="sicon-star2 {{ i <= reviewer_stars ? 'is-active' : '' }}" aria-hidden="true"></i>
-												{% endfor %}
-											</small>
-										</div>
-									</div>
-								</footer>
-							</article>
-						</div>
-					{% endfor %}
-				</div>
-			</salla-slider>
-		{% else %}
-			<div class="th-home-testimonials__empty th-ui-empty">{{ empty_reviews_text }}</div>
-		{% endif %}
-	</div>
+                <footer class="th-home-testimonial-card__footer">
+                  <div class="th-home-testimonial-card__author-wrap">
+                    <span class="th-home-testimonial-card__avatar">
+                      <img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ reviewer_avatar }}" alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}" decoding="async" class="lazy th-home-testimonial-card__avatar-image">
+                    </span>
+                    <div class="th-home-testimonial-card__author">
+                      <strong class="th-home-testimonial-card__author-name">{{ reviewer_name }}</strong>
+                      <small class="th-home-testimonial-card__author-rating th-ui-stars" aria-label="{{ reviewer_rating_aria }}">
+                        {% for i in 1..5 %}
+                          <i class="sicon-star2 {{ i <= reviewer_stars ? 'is-active' : '' }}" aria-hidden="true"></i>
+                        {% endfor %}
+                      </small>
+                    </div>
+                  </div>
+                </footer>
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      </salla-slider>
+    {% else %}
+      <div class="th-home-testimonials__empty th-ui-empty">{{ empty_reviews_text }}</div>
+    {% endif %}
+  </div>
 </section>

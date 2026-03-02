@@ -15,7 +15,7 @@
       "my_account": "حسابي"
     },
     "appBanner": {
-      "download_now": "حمله الان"
+      "download_now": "حمّله الآن"
     }
   },
   "components": {
@@ -26,7 +26,24 @@
       "minutes": "دقيقة",
       "hours": "ساعة",
       "days": "يوم",
-      "most_requested": "الأكثر طلباً هذا الأسبوع"
+      "most_requested": "الأكثر طلبًا هذا الأسبوع",
+      "offer_finished": "انتهى العرض",
+      "featured_products": "المنتجات المميزة",
+      "shop_now": "تسوق الآن",
+      "empty_products": "لا توجد منتجات مختارة لهذا القسم حاليًا.",
+      "rating_prefix": "التقييم",
+      "rating_suffix": "من 5"
+    },
+    "testimonials": {
+      "section_title": "تجارب عملائنا المميزة",
+      "section_subtitle": "نفخر بخدمة آلاف العملاء، وتقييماتهم هي الدافع لتقديم الأفضل دائمًا.",
+      "customers_count": "2k+ عميل سعيد",
+      "empty": "لا توجد آراء متاحة حاليًا.",
+      "customer_name": "عميل",
+      "average_rating_prefix": "متوسط التقييم",
+      "average_rating_suffix": "من 5",
+      "rating_prefix": "التقييم",
+      "rating_suffix": "من 5"
     },
     "product_categories": {
       "section_title": "منتجات مختارة",
@@ -58,7 +75,7 @@
       "can_edit_or_delete_your_review_within": "يمكنك تعديل أو حذف تقييمك خلال",
       "edit_period_ended": "تم انتهاء المدة المحددة لتعديل التقييم",
       "delete_period_ended": "تم انتهاء المدة المحددة لحذف التقييم",
-      "days_since_added": "أيام من إضافته",
+      "days_since_added": "أيام منذ إضافته",
       "option_name": "الخيار",
       "option_content": "المحتوى"
     }
@@ -73,7 +90,7 @@
     "adding": "جاري الإضافة...",
     "added": "تمت الإضافة ✓",
     "product_added_to_cart": "تمت إضافة المنتج إلى السلة",
-    "bank_offer_sub_title_multiple": "ادفع قيمة مشترياتك عبر أحد البطاقات البنكة التالية واحصل على الخصم المحدد",
-    "bank_offer_sub_title_single": "ادفع قيمة مشترياتك عبر أحد بطاقات بنك :bank_name واحصل على خصم بنسبة "
+    "bank_offer_sub_title_multiple": "ادفع قيمة مشترياتك عبر أحد البطاقات البنكية التالية واحصل على الخصم المحدد",
+    "bank_offer_sub_title_single": "ادفع قيمة مشترياتك عبر بطاقة بنك :bank_name واحصل على خصم"
   }
 }

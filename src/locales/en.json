@@ -26,7 +26,24 @@
       "minutes": "Minutes",
       "hours": "Hours",
       "days": "Days",
-      "most_requested": "Most Requested This Week"
+      "most_requested": "Most Requested This Week",
+      "offer_finished": "Offer has ended",
+      "featured_products": "Featured products",
+      "shop_now": "Shop Now",
+      "empty_products": "No selected products for this section yet.",
+      "rating_prefix": "Rating",
+      "rating_suffix": "out of 5"
+    },
+    "testimonials": {
+      "section_title": "Customer Testimonials",
+      "section_subtitle": "Real feedback from customers who trusted our products and service.",
+      "customers_count": "2k+ Happy Customers",
+      "empty": "No testimonials available yet.",
+      "customer_name": "Customer",
+      "average_rating_prefix": "Average rating",
+      "average_rating_suffix": "out of 5",
+      "rating_prefix": "Rating",
+      "rating_suffix": "out of 5"
     },
     "product_categories": {
       "section_title": "Selected Products",
