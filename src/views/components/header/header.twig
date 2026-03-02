@@ -11,7 +11,7 @@
 					{% component 'footer.menu' with {is_header:true} %}
 
 					{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-						<button type="button" onclick="salla.event.dispatch('localization::open')" class="th-topbtn text-xs">
+						<button type="button" onclick="var modal=document.querySelector('salla-localization-modal'); if(modal){modal.open();}" class="th-topbtn text-xs">
 							<span class="flag iti__flag iti__{{ user.language.country_code }}"></span>
 							<span>{{ currency.symbol }}</span>
 						</button>
@@ -44,11 +44,12 @@
 						<i class="sicon-search"></i>
 					</button>
 
-					{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+					{% if store.settings.is_multilingual %}
 						{% set tr_language = trans('blocks.header.language') %}
 						{% set language_label = tr_language starts with 'blocks.' ? 'Language' : tr_language %}
-						<button type="button" onclick="salla.event.dispatch('localization::open')" class="th-icon-btn th-lang-switch" aria-label="{{ language_label }}">
-							<span class="flag iti__flag iti__{{ user.language.country_code }}" aria-hidden="true"></span>
+						{% set current_country = user.language.country_code|default('sa')|lower %}
+						<button type="button" class="btn--icon th-lang-switch" aria-label="{{ language_label }}" onclick="var modal=document.querySelector('salla-localization-modal'); if (modal) { modal.open(); }">
+							<span class="flag iti__flag iti__{{ current_country }}" aria-hidden="true"></span>
 							<span class="sr-only">{{ language_label }}</span>
 						</button>
 					{% endif %}
