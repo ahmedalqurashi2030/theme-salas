@@ -196,7 +196,7 @@
   .tab-trigger{
     &.is-active button{
       @apply bg-primary  border-primary;
-       /* padding ط§ظ„ط¬ط¯ظٹط¯ */
+       /* custom padding */
       padding: .3rem .7rem;
     }
   }

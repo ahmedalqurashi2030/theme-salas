@@ -44,6 +44,15 @@
 						<i class="sicon-search"></i>
 					</button>
 
+					{% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+						{% set tr_language = trans('blocks.header.language') %}
+						{% set language_label = tr_language starts with 'blocks.' ? 'Language' : tr_language %}
+						<button type="button" onclick="salla.event.dispatch('localization::open')" class="th-icon-btn th-lang-switch" aria-label="{{ language_label }}">
+							<span class="flag iti__flag iti__{{ user.language.country_code }}" aria-hidden="true"></span>
+							<span class="th-icon-label hidden lg:block">{{ language_label }}</span>
+						</button>
+					{% endif %}
+
 					<div class="hidden lg:block">
 						<salla-user-menu avatar-only show-header></salla-user-menu>
 					</div>

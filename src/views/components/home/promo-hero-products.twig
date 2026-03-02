@@ -117,8 +117,6 @@
       </header>
 
       <div class="th-promo-hero__products" aria-label="{{ included_products_text }}">
-        <p class="th-promo-hero__products-heading">{{ included_products_text }}</p>
-
         {% if products|length %}
           <div class="th-promo-hero__products-list {{ should_scroll_products ? 'th-promo-hero__products-list--scroll' : 'th-promo-hero__products-list--grid' }}" data-th-promo-products-track>
             {% for product in products %}

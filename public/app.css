@@ -21334,6 +21334,9 @@ input[type=radio].sr-only:checked ~ div.main-header .header-actions .action-btn 
     opacity: 1;
   }
 }
+.tharaa-theme .s-search-input {
+  height: 45px !important;
+}
 .store-footer{
     position: relative;
     margin-top: 2rem;
@@ -22543,7 +22546,7 @@ input[type=radio].sr-only:checked ~ div.has-overlay:after {
     --tw-bg-opacity: 1;
     background-color: rgba(197, 160, 89, 1);
     background-color: rgba(197, 160, 89, var(--tw-bg-opacity, 1));
-  /* padding ط§ظ„ط¬ط¯ظٹط¯ */
+  /* custom padding */
   padding: 0.3rem 0.7rem;
 }
 .s-block--special-products .tabs{
@@ -27548,6 +27551,16 @@ salla-search {
 .th-icon-btn:hover .th-icon-label {
   color: #d4af37;
   color: var(--th-primary);
+}
+.th-lang-switch {
+  min-width: 34px;
+}
+.th-lang-switch .flag {
+  display: inline-block;
+  width: 20px;
+  height: 14px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 /* Cart Badge */
 .th-badge {
