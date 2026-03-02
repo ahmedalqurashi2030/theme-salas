@@ -1,11 +1,18 @@
 /**
  * =====================================================
- * Tharaa Theme - Links Components JavaScript
+ * Tharaa Theme — Links Slider Controller
  * =====================================================
  * Components: th-links-circle, th-links-square, th-links-rect
- * Features: Slider, Layout Switching, Progress Bar, Navigation, Drag to Scroll
- * Compatible with: Salla Platform
- * Version: 2.0.0
+ * Features:
+ *   ✅ RTL / LTR aware scrolling & progress bar
+ *   ✅ Mouse drag to scroll (pointer events)
+ *   ✅ Touch-friendly (native scroll preserved)
+ *   ✅ Progress bar hidden until items overflow container
+ *   ✅ Nav buttons hidden until items overflow container
+ *   ✅ Keyboard accessible (ArrowLeft / ArrowRight / Home / End)
+ *   ✅ Autoplay with pause on hover / focus / off-screen
+ *   ✅ ResizeObserver keeps UI in sync
+ *   ✅ Salla preview hot-reload aware
  * =====================================================
  */
 
@@ -15,429 +22,327 @@
   const SECTION_SELECTOR = '.tharaa-links-section';
   const SECTION_STATE = new WeakMap();
 
-  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+  // ─── Utilities ──────────────────────────────────────────────────────────────
 
-  const getSectionDirection = (section) => {
-    const parentWithDir = section.closest('[dir]');
-    const scopedDir = section.getAttribute('dir')
-      || section.dataset.thLinksDir
-      || (parentWithDir ? parentWithDir.getAttribute('dir') : '');
-    const documentDir = document.documentElement.getAttribute('dir') || document.dir;
+  const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 
-    return (scopedDir || documentDir || 'ltr').toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
+  /**
+   * Resolve RTL/LTR direction for a section.
+   * Checks: section data attr → nearest ancestor [dir] → documentElement.
+   */
+  const getDirection = (section) => {
+    const attr =
+      section.dataset.thLinksDir ||
+      section.getAttribute('dir') ||
+      section.closest('[dir]')?.getAttribute('dir') ||
+      document.documentElement.getAttribute('dir') ||
+      document.dir ||
+      'ltr';
+    return attr.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
   };
 
+  // ─── RTL-aware scroll model ──────────────────────────────────────────────────
+
+  /**
+   * Browsers implement RTL scrollLeft in three incompatible ways.
+   * We normalise to a "logical scroll" (0 = start, maxScroll = end)
+   * regardless of direction or browser quirks.
+   */
   const createScrollModel = (track, direction) => {
     const isRTL = direction === 'rtl';
 
     const getMaxScroll = () => Math.max(track.scrollWidth - track.clientWidth, 0);
 
-    const detectRTLScrollMode = () => {
-      const previous = track.scrollLeft;
-
+    // Detect which RTL scrollLeft convention this browser uses.
+    const detectRTLMode = () => {
+      const saved = track.scrollLeft;
       track.scrollLeft = -1;
-      if (track.scrollLeft < 0) {
-        track.scrollLeft = previous;
-        return 'negative';
-      }
-
+      if (track.scrollLeft < 0) { track.scrollLeft = saved; return 'negative'; }
       track.scrollLeft = 1;
       const mode = track.scrollLeft === 0 ? 'reverse' : 'default';
-      track.scrollLeft = previous;
+      track.scrollLeft = saved;
       return mode;
     };
 
-    const rtlMode = isRTL ? detectRTLScrollMode() : 'default';
+    const rtlMode = isRTL ? detectRTLMode() : 'default';
 
-    const getLogicalScroll = () => {
-      const maxScroll = getMaxScroll();
-
-      if (!isRTL) {
-        return clamp(track.scrollLeft, 0, maxScroll);
-      }
-
-      if (rtlMode === 'negative') {
-        return clamp(-track.scrollLeft, 0, maxScroll);
-      }
-
-      if (rtlMode === 'reverse') {
-        return clamp(maxScroll - track.scrollLeft, 0, maxScroll);
-      }
-
-      return clamp(track.scrollLeft, 0, maxScroll);
+    const getLogical = () => {
+      const max = getMaxScroll();
+      if (!isRTL) return clamp(track.scrollLeft, 0, max);
+      if (rtlMode === 'negative') return clamp(-track.scrollLeft, 0, max);
+      if (rtlMode === 'reverse') return clamp(max - track.scrollLeft, 0, max);
+      return clamp(track.scrollLeft, 0, max);
     };
 
-    const setLogicalScroll = (value, behavior = 'auto') => {
-      const maxScroll = getMaxScroll();
-      const logicalValue = clamp(value, 0, maxScroll);
-
-      if (!isRTL) {
-        track.scrollTo({ left: logicalValue, behavior });
-        return;
+    const setLogical = (value, behavior = 'auto') => {
+      const max = getMaxScroll();
+      const logical = clamp(value, 0, max);
+      let raw = logical;
+      if (isRTL) {
+        if (rtlMode === 'negative') raw = -logical;
+        else if (rtlMode === 'reverse') raw = max - logical;
       }
-
-      let rawValue = logicalValue;
-      if (rtlMode === 'negative') {
-        rawValue = -logicalValue;
-      } else if (rtlMode === 'reverse') {
-        rawValue = maxScroll - logicalValue;
-      }
-
-      track.scrollTo({ left: rawValue, behavior });
+      track.scrollTo({ left: raw, behavior });
     };
 
-    return {
-      isRTL,
-      getMaxScroll,
-      getLogicalScroll,
-      setLogicalScroll,
-    };
+    return { isRTL, getMaxScroll, getLogical, setLogical };
   };
+
+  // ─── Helpers ─────────────────────────────────────────────────────────────────
 
   const getScrollStep = (track) => {
-    const firstCard = track.querySelector('.tharaa-card');
+    const card = track.querySelector('.tharaa-card');
     const fallback = track.clientWidth * 0.72;
-
-    if (!firstCard) {
-      return fallback;
-    }
-
-    const cardWidth = firstCard.getBoundingClientRect().width;
-    const styles = window.getComputedStyle(track);
-    const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
-
-    return Math.max(cardWidth + gap, fallback);
+    if (!card) return fallback;
+    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0') || 0;
+    return Math.max(card.getBoundingClientRect().width + gap, fallback);
   };
 
-  const destroySection = (section) => {
-    const state = SECTION_STATE.get(section);
-    if (!state) {
-      section.dataset.tharaaLinksInitialized = 'false';
-      return;
-    }
+  // ─── Section lifecycle ───────────────────────────────────────────────────────
 
-    state.destroy();
+  const destroySection = (section) => {
+    SECTION_STATE.get(section)?.destroy();
+    section.dataset.tharaaLinksInitialized = 'false';
   };
 
   const initSection = (section) => {
     if (!section) return;
 
-    // Re-init safely if component was already initialized.
     destroySection(section);
     section.dataset.tharaaLinksInitialized = 'true';
 
     const track = section.querySelector('[data-th-links-track], .tharaa-track');
     if (!track) {
-      console.warn('Tharaa Links: Track not found in section', section);
+      console.warn('Tharaa Links: track not found', section);
       section.dataset.tharaaLinksInitialized = 'false';
       return;
     }
 
     const prevBtn = section.querySelector('.btn-prev');
     const nextBtn = section.querySelector('.btn-next');
-    const progressContainer = section.querySelector('.tharaa-progress');
+    const progressWrap = section.querySelector('.tharaa-progress');
     const progressBar = section.querySelector('.tharaa-progress__bar');
     const autoplayEnabled = section.dataset.autoplay === 'true';
 
-    const direction = getSectionDirection(section);
-    const scrollModel = createScrollModel(track, direction);
+    const direction = getDirection(section);
+    const sm = createScrollModel(track, direction);
 
     const cleanups = [];
     let autoplayTimer = null;
     let interactionLocked = false;
+    let isTicking = false;
 
-    let isDraggingPointer = false;
-    let activePointerId = null;
-    let startPointerX = 0;
-    let startScrollLogical = 0;
-    let dragged = false;
+    // Drag state
+    let dragging = false;
+    let activePtr = null;
+    let startX = 0;
+    let startScroll = 0;
+    let hasDragged = false;
     let suppressClickUntil = 0;
 
-    const addListener = (target, event, handler, options) => {
-      target.addEventListener(event, handler, options);
-      cleanups.push(() => target.removeEventListener(event, handler, options));
+    // ── Event wiring helper ------------------------------------------------
+    const on = (el, ev, fn, opts) => {
+      el.addEventListener(ev, fn, opts);
+      cleanups.push(() => el.removeEventListener(ev, fn, opts));
     };
 
-    const setButtonVisibility = (button, visible) => {
-      if (!button) return;
-      button.classList.toggle('is-visible', visible);
-      button.setAttribute('aria-hidden', visible ? 'false' : 'true');
-      button.tabIndex = visible ? 0 : -1;
-    };
-
+    // ── UI update -----------------------------------------------------------
     const updateUI = () => {
+      // Grid mode — nothing to animate.
       if (section.classList.contains('mode-grid')) {
         section.classList.remove('th-links-is-scrollable');
-        if (progressContainer) progressContainer.style.opacity = '0';
-        setButtonVisibility(prevBtn, false);
-        setButtonVisibility(nextBtn, false);
+        if (progressWrap) progressWrap.style.opacity = '0';
+        setBtn(prevBtn, false);
+        setBtn(nextBtn, false);
         return;
       }
 
-      const maxScroll = scrollModel.getMaxScroll();
-      const currentScroll = scrollModel.getLogicalScroll();
-      const hasOverflow = maxScroll > 2;
+      const max = sm.getMaxScroll();
+      const cur = sm.getLogical();
+      const hasOverflow = max > 4;
 
       section.classList.toggle('th-links-is-scrollable', hasOverflow);
 
-      if (progressContainer) {
-        progressContainer.style.opacity = hasOverflow ? '1' : '0';
+      // Progress bar — show/hide based on overflow
+      if (progressWrap) {
+        progressWrap.style.opacity = hasOverflow ? '1' : '0';
       }
 
       if (!hasOverflow) {
+        // All items visible — full-width bar, no nav needed.
         if (progressBar) {
-          progressBar.style.width = '0px';
-          progressBar.style.transform = 'translate3d(0, 0, 0)';
+          progressBar.style.width = '100%';
+          progressBar.style.transform = 'translate3d(0,0,0)';
         }
-
-        setButtonVisibility(prevBtn, false);
-        setButtonVisibility(nextBtn, false);
+        setBtn(prevBtn, false);
+        setBtn(nextBtn, false);
         return;
       }
 
-      if (progressBar && progressContainer) {
-        const containerWidth = progressContainer.clientWidth;
-        const widthRatio = track.scrollWidth > 0 ? (track.clientWidth / track.scrollWidth) : 0;
-        const thumbWidth = clamp(containerWidth * widthRatio, 20, containerWidth);
-        const travel = Math.max(containerWidth - thumbWidth, 0);
-        const ratio = maxScroll > 0 ? (currentScroll / maxScroll) : 0;
-        const visualRatio = scrollModel.isRTL ? (1 - ratio) : ratio;
+      // Thumb width proportional to visible / total content.
+      if (progressBar && progressWrap) {
+        const wrapW = progressWrap.clientWidth;
+        const ratio = track.scrollWidth > 0 ? track.clientWidth / track.scrollWidth : 0;
+        const thumbW = clamp(wrapW * ratio, 18, wrapW);
+        const travel = Math.max(wrapW - thumbW, 0);
+        const progress = max > 0 ? cur / max : 0;
 
-        progressBar.style.width = `${thumbWidth}px`;
-        progressBar.style.transform = `translate3d(${travel * visualRatio}px, 0, 0)`;
+        // For RTL: thumb moves right-to-left, so invert when tracking LTR translateX.
+        // The progress bar element always starts at left:0 in CSS.
+        // In RTL, when scroll is at start (0), bar should be at END visually.
+        const visualProgress = sm.isRTL ? 1 - progress : progress;
+
+        progressBar.style.width = `${thumbW}px`;
+        progressBar.style.transform = `translate3d(${travel * visualProgress}px,0,0)`;
       }
 
-      setButtonVisibility(prevBtn, currentScroll > 6);
-      setButtonVisibility(nextBtn, currentScroll < maxScroll - 6);
+      setBtn(prevBtn, cur > 6);
+      setBtn(nextBtn, cur < max - 6);
     };
 
-    let isTicking = false;
-    const requestUIUpdate = () => {
+    const setBtn = (btn, visible) => {
+      if (!btn) return;
+      btn.classList.toggle('is-visible', visible);
+      btn.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      btn.tabIndex = visible ? 0 : -1;
+    };
+
+    const scheduleUpdate = () => {
       if (isTicking) return;
-
       isTicking = true;
-      window.requestAnimationFrame(() => {
-        updateUI();
-        isTicking = false;
-      });
+      requestAnimationFrame(() => { updateUI(); isTicking = false; });
     };
 
-    const scrollByStep = (directionMultiplier) => {
-      const step = getScrollStep(track);
-      const target = scrollModel.getLogicalScroll() + (step * directionMultiplier);
-      scrollModel.setLogicalScroll(target, 'smooth');
+    // ── Scroll step ---------------------------------------------------------
+    const scrollStep = (mult) => {
+      sm.setLogical(sm.getLogical() + getScrollStep(track) * mult, 'smooth');
     };
 
+    // ── Autoplay ------------------------------------------------------------
     const startAutoplay = () => {
-      if (!autoplayEnabled || autoplayTimer || section.classList.contains('mode-grid') || interactionLocked) {
-        return;
-      }
-
-      if (scrollModel.getMaxScroll() <= 2) {
-        return;
-      }
-
-      autoplayTimer = window.setInterval(() => {
-        const maxScroll = scrollModel.getMaxScroll();
-        if (maxScroll <= 2) return;
-
-        const current = scrollModel.getLogicalScroll();
-        const next = current + getScrollStep(track);
-
-        if (next >= maxScroll - 4) {
-          scrollModel.setLogicalScroll(0, 'smooth');
-          return;
-        }
-
-        scrollModel.setLogicalScroll(next, 'smooth');
+      if (!autoplayEnabled || autoplayTimer || section.classList.contains('mode-grid') || interactionLocked) return;
+      if (sm.getMaxScroll() <= 4) return;
+      autoplayTimer = setInterval(() => {
+        const max = sm.getMaxScroll();
+        if (max <= 4) return;
+        const next = sm.getLogical() + getScrollStep(track);
+        sm.setLogical(next >= max - 4 ? 0 : next, 'smooth');
       }, 3200);
     };
 
-    const stopAutoplay = () => {
-      if (!autoplayTimer) return;
-      window.clearInterval(autoplayTimer);
-      autoplayTimer = null;
-    };
+    const stopAutoplay = () => { clearInterval(autoplayTimer); autoplayTimer = null; };
+    const pauseAP = () => { interactionLocked = true; stopAutoplay(); };
+    const resumeAP = () => { interactionLocked = false; startAutoplay(); };
 
-    const pauseAutoplayForInteraction = () => {
-      interactionLocked = true;
-      stopAutoplay();
-    };
-
-    const resumeAutoplayAfterInteraction = () => {
-      interactionLocked = false;
-      startAutoplay();
-    };
-
-    const handlePointerDown = (event) => {
+    // ── Drag (pointer events — desktop mice & stylus only) ------------------
+    // Touch devices use native scroll (touch-action: pan-y in CSS).
+    const onPointerDown = (e) => {
       if (section.classList.contains('mode-grid')) return;
-      if (event.pointerType === 'touch') return; // Keep native touch scroll.
-      if (event.button !== undefined && event.button !== 0) return;
-      if (event.target.closest('.tharaa-nav-btn')) return;
-      if (event.target.closest('input, textarea, select, button')) return;
+      if (e.pointerType === 'touch') return;
+      if (e.button !== undefined && e.button !== 0) return;
+      if (e.target.closest('.tharaa-nav-btn, input, textarea, select, button')) return;
 
-      isDraggingPointer = true;
-      dragged = false;
-      activePointerId = event.pointerId;
-      startPointerX = event.clientX;
-      startScrollLogical = scrollModel.getLogicalScroll();
+      dragging = true;
+      hasDragged = false;
+      activePtr = e.pointerId;
+      startX = e.clientX;
+      startScroll = sm.getLogical();
 
       track.classList.add('is-dragging');
-      if (typeof track.setPointerCapture === 'function') {
-        track.setPointerCapture(event.pointerId);
-      }
-      pauseAutoplayForInteraction();
-
-      event.preventDefault();
+      track.setPointerCapture?.(e.pointerId);
+      pauseAP();
+      e.preventDefault();
     };
 
-    const handlePointerMove = (event) => {
-      if (!isDraggingPointer || event.pointerId !== activePointerId) return;
-
-      const deltaX = event.clientX - startPointerX;
-      if (Math.abs(deltaX) > 3) {
-        dragged = true;
-      }
-
-      const nextScroll = startScrollLogical - (deltaX * 1.25);
-      scrollModel.setLogicalScroll(nextScroll, 'auto');
-
-      if (dragged) {
-        event.preventDefault();
-      }
+    const onPointerMove = (e) => {
+      if (!dragging || e.pointerId !== activePtr) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) hasDragged = true;
+      // Positive dx = moving right = scrolling left (towards start in LTR).
+      sm.setLogical(startScroll - dx * 1.3, 'auto');
+      if (hasDragged) e.preventDefault();
     };
 
-    const stopPointerDrag = (event) => {
-      if (!isDraggingPointer) return;
-      if (event && activePointerId !== null && event.pointerId !== activePointerId) return;
-
-      if (dragged) {
-        suppressClickUntil = Date.now() + 260;
-      }
-
-      isDraggingPointer = false;
-      activePointerId = null;
-      dragged = false;
+    const onPointerUp = (e) => {
+      if (!dragging) return;
+      if (e && activePtr !== null && e.pointerId !== activePtr) return;
+      if (hasDragged) suppressClickUntil = Date.now() + 280;
+      dragging = false; activePtr = null; hasDragged = false;
       track.classList.remove('is-dragging');
-      resumeAutoplayAfterInteraction();
+      resumeAP();
     };
 
-    const preventClickAfterDrag = (event) => {
-      if (Date.now() > suppressClickUntil) return;
-      event.preventDefault();
-      event.stopPropagation();
+    const onClickCapture = (e) => {
+      if (Date.now() < suppressClickUntil) { e.preventDefault(); e.stopPropagation(); }
     };
 
-    const handleTrackKeydown = (event) => {
+    const onDragStart = (e) => { if (e.target instanceof HTMLImageElement) e.preventDefault(); };
+
+    // ── Keyboard navigation -------------------------------------------------
+    const onKeydown = (e) => {
       if (section.classList.contains('mode-grid')) return;
 
-      if (event.key === 'Home') {
-        scrollModel.setLogicalScroll(0, 'smooth');
-        event.preventDefault();
-        return;
-      }
+      if (e.key === 'Home') { sm.setLogical(0, 'smooth'); e.preventDefault(); return; }
+      if (e.key === 'End') { sm.setLogical(sm.getMaxScroll(), 'smooth'); e.preventDefault(); return; }
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
 
-      if (event.key === 'End') {
-        scrollModel.setLogicalScroll(scrollModel.getMaxScroll(), 'smooth');
-        event.preventDefault();
-        return;
-      }
-
-      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
-        return;
-      }
-
-      const step = Math.max(track.clientWidth * 0.45, getScrollStep(track) * 0.8);
-      const isArrowRight = event.key === 'ArrowRight';
-      const delta = isArrowRight
-        ? (scrollModel.isRTL ? -step : step)
-        : (scrollModel.isRTL ? step : -step);
-
-      scrollModel.setLogicalScroll(scrollModel.getLogicalScroll() + delta, 'smooth');
-      event.preventDefault();
+      const step = Math.max(track.clientWidth * 0.4, getScrollStep(track) * 0.8);
+      // In RTL, ArrowRight = scroll toward start (negative logical direction).
+      const mult = (e.key === 'ArrowRight') === !sm.isRTL ? 1 : -1;
+      sm.setLogical(sm.getLogical() + step * mult, 'smooth');
+      e.preventDefault();
     };
 
-    const handleDragStart = (event) => {
-      if (event.target instanceof HTMLImageElement) {
-        event.preventDefault();
-      }
-    };
+    // ── Wire events ---------------------------------------------------------
+    if (nextBtn) on(nextBtn, 'click', () => { pauseAP(); scrollStep(1); resumeAP(); });
+    if (prevBtn) on(prevBtn, 'click', () => { pauseAP(); scrollStep(-1); resumeAP(); });
 
-    if (nextBtn) {
-      addListener(nextBtn, 'click', () => {
-        pauseAutoplayForInteraction();
-        scrollByStep(1);
-        resumeAutoplayAfterInteraction();
-      });
-    }
+    on(track, 'scroll', scheduleUpdate, { passive: true });
+    on(track, 'keydown', onKeydown);
+    on(track, 'pointerdown', onPointerDown);
+    on(track, 'pointermove', onPointerMove);
+    on(track, 'pointerup', onPointerUp);
+    on(track, 'pointercancel', onPointerUp);
+    on(track, 'lostpointercapture', onPointerUp);
+    on(track, 'click', onClickCapture, true);
+    on(track, 'dragstart', onDragStart);
 
-    if (prevBtn) {
-      addListener(prevBtn, 'click', () => {
-        pauseAutoplayForInteraction();
-        scrollByStep(-1);
-        resumeAutoplayAfterInteraction();
-      });
-    }
-
-    addListener(track, 'scroll', requestUIUpdate, { passive: true });
-    addListener(track, 'keydown', handleTrackKeydown);
-    addListener(track, 'pointerdown', handlePointerDown);
-    addListener(track, 'pointermove', handlePointerMove);
-    addListener(track, 'pointerup', stopPointerDrag);
-    addListener(track, 'pointercancel', stopPointerDrag);
-    addListener(track, 'lostpointercapture', stopPointerDrag);
-    addListener(track, 'click', preventClickAfterDrag, true);
-    addListener(track, 'dragstart', handleDragStart);
-
+    // Autoplay suspend on hover / focus / off-screen.
     if (autoplayEnabled) {
       if (window.matchMedia('(hover: hover)').matches) {
-        addListener(section, 'mouseenter', pauseAutoplayForInteraction);
-        addListener(section, 'mouseleave', resumeAutoplayAfterInteraction);
+        on(section, 'mouseenter', pauseAP);
+        on(section, 'mouseleave', resumeAP);
       }
-
-      addListener(section, 'focusin', pauseAutoplayForInteraction);
-      addListener(section, 'focusout', resumeAutoplayAfterInteraction);
+      on(section, 'focusin', pauseAP);
+      on(section, 'focusout', resumeAP);
 
       if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              resumeAutoplayAfterInteraction();
-            } else {
-              pauseAutoplayForInteraction();
-            }
-          });
-        }, { threshold: 0.15 });
-
-        observer.observe(section);
-        cleanups.push(() => observer.disconnect());
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((e) => (e.isIntersecting ? resumeAP() : pauseAP())),
+          { threshold: 0.15 }
+        );
+        io.observe(section);
+        cleanups.push(() => io.disconnect());
       }
     }
 
+    // Keep UI in sync when container or window resizes.
     if ('ResizeObserver' in window) {
-      const resizeObserver = new ResizeObserver(requestUIUpdate);
-      resizeObserver.observe(track);
-      if (progressContainer) {
-        resizeObserver.observe(progressContainer);
-      }
-      cleanups.push(() => resizeObserver.disconnect());
+      const ro = new ResizeObserver(scheduleUpdate);
+      ro.observe(track);
+      if (progressWrap) ro.observe(progressWrap);
+      cleanups.push(() => ro.disconnect());
     } else {
-      addListener(window, 'resize', requestUIUpdate);
+      on(window, 'resize', scheduleUpdate);
     }
 
     startAutoplay();
     updateUI();
 
+    // ── Destroy -------------------------------------------------------------
     const destroy = () => {
       stopAutoplay();
-      cleanups.forEach((cleanup) => {
-        try {
-          cleanup();
-        } catch (error) {
-          // Keep destroy safe even if one cleanup fails.
-        }
-      });
-
+      cleanups.forEach((fn) => { try { fn(); } catch (_) { } });
       track.classList.remove('is-dragging');
       section.classList.remove('th-links-is-scrollable');
       section.dataset.tharaaLinksInitialized = 'false';
@@ -447,47 +352,31 @@
     SECTION_STATE.set(section, { destroy, updateUI });
   };
 
-  const initAllSections = () => {
-    const sections = document.querySelectorAll(SECTION_SELECTOR);
-    if (!sections.length) return;
+  // ─── Boot ────────────────────────────────────────────────────────────────────
 
-    sections.forEach((section) => {
-      if (section.dataset.tharaaLinksInitialized === 'true' && SECTION_STATE.has(section)) {
-        return;
-      }
-
+  const initAll = () => {
+    document.querySelectorAll(SECTION_SELECTOR).forEach((section) => {
+      if (section.dataset.tharaaLinksInitialized === 'true' && SECTION_STATE.has(section)) return;
       initSection(section);
     });
   };
 
   const TharaaLinksUI = {
-    init: initAllSections,
-
-    refresh: function (sectionId) {
-      const section = document.getElementById(sectionId);
-      if (!section) return;
-
-      initSection(section);
-    },
-
-    destroy: function (sectionId) {
-      const section = document.getElementById(sectionId);
-      if (!section) return;
-
-      destroySection(section);
-    },
+    init: initAll,
+    refresh: (id) => initSection(document.getElementById(id)),
+    destroy: (id) => destroySection(document.getElementById(id)),
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAllSections, { once: true });
+    document.addEventListener('DOMContentLoaded', initAll, { once: true });
   } else {
-    initAllSections();
+    initAll();
   }
 
-  if (typeof salla !== 'undefined' && salla.event && typeof salla.event.on === 'function') {
-    // Re-init after dynamic block rendering in preview/customizer.
-    salla.event.on('theme::preview::rendered', initAllSections);
-    salla.event.on('theme::component::loaded', initAllSections);
+  // Salla theme preview hot-reload.
+  if (typeof salla !== 'undefined' && salla.event?.on) {
+    salla.event.on('theme::preview::rendered', initAll);
+    salla.event.on('theme::component::loaded', initAll);
   }
 
   window.TharaaLinksUI = TharaaLinksUI;
