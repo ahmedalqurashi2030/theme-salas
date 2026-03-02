@@ -31,12 +31,17 @@ module.exports = {
                 'auto-fill': 'repeat(auto-fill, 290px)',
             },
             colors: {
-                'primary': '#C5A059', // Luxury Gold
-                'primary-dark': '#B08D45',
-                'secondary': '#1A1A1A',
-                'dark': '#1D1F1F',
-                'darker': '#0E0F0F',
-                'danger': '#AE0A0A'
+                'primary': 'var(--color-primary, #C5A059)',
+                'primary-dark': 'var(--color-primary-dark, #B08D45)',
+                'primary-light': 'var(--color-primary-light, #d4b574)',
+                'primary-reverse': 'var(--color-primary-reverse, #ffffff)',
+                'secondary': 'var(--color-secondary, #1A1A1A)',
+                'dark': 'var(--color-dark, #1D1F1F)',
+                'darker': 'var(--color-darker, #0E0F0F)',
+                'danger': 'var(--color-danger, #AE0A0A)',
+                'success': 'var(--color-success, #28a745)',
+                'warning': 'var(--color-warning, #ffc107)',
+                'info': 'var(--color-info, #17a2b8)'
             },
             spacing: {
                 '3.75': '15px',

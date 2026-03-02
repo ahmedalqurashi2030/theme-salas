@@ -402,7 +402,8 @@
     }
 
     &:focus-visible {
-      @apply outline-none ring-2 ring-primary/40;
+      outline: none;
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary, var(--th-color-primary, #1e66f5)) 40%, transparent);
     }
   }
 

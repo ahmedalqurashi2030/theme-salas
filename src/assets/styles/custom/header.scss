@@ -1,30 +1,33 @@
 /* =========================================
    THARAA PRO THEME - HEADER STYLES
+   مرتبط بمتغيرات سلة من master.twig فقط (لا ألوان ثابتة)
    ========================================= */
 
 :root {
-    --th-primary: #d4af37;
-    /* Gold */
-    --th-primary-dark: #b5952f;
-    --th-text-main: #1a1a1a;
-    --th-text-muted: #666666;
-    --th-bg-light: #f9fafb;
-    --th-border-color: #e5e7eb;
+    /* ربط بألوان الثيم من سلة (theme.settings في master.twig) */
+    --th-primary: var(--th-color-primary, #d4af37);
+    --th-primary-dark: var(--color-primary-dark, #b5952f);
+    --th-text-main: var(--th-text-primary, #1a1a1a);
+    --th-text-muted: var(--th-text-secondary, #666666);
+    --th-bg-light: var(--th-bg-secondary, #f9fafb);
+    --th-border-color: var(--th-border-soft, #e5e7eb);
+    --th-header-elements: var(--th-text-primary, #111827);
+    /* ثوابت تصميم (لا تتحكم من لوحة سلة) */
     --th-shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     --th-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
     --th-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .th-header {
-    font-family: 'Tajawal', 'Inter', sans-serif;
-    background: #fff;
+    font-family: var(--font-main), sans-serif;
+    background: var(--th-header-bg, #ffffff);
     position: relative;
     z-index: 50;
 }
 
 /* 1. Top Bar */
 .th-topbar {
-    background-color: #f8f9fb;
+    background-color: var(--th-bg-secondary, #f8fafb);
     color: var(--th-text-main);
     font-size: 12px;
     padding: 6px 0;
@@ -43,7 +46,7 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        background: #fff;
+        background: var(--th-header-bg, #ffffff);
         padding: 4px 12px;
         border-radius: 999px;
         border: 1px solid var(--th-border-color);
@@ -65,7 +68,7 @@
 
 /* 2. Main Header */
 .th-main-header {
-    background: #fff;
+    background: var(--th-header-bg, #ffffff);
     position: sticky;
     top: 0;
     z-index: 999;
@@ -109,10 +112,10 @@ salla-search {
     flex: 1;
     max-width: 100%;
     --salla-border-radius: 999px;
-    --salla-bg-surface: #fff;
+    --salla-bg-surface: var(--th-header-bg, #ffffff);
     --salla-height: 46px;
     --salla-color-text: var(--th-text-main);
-    --salla-color-placeholder: #9ca3af;
+    --salla-color-placeholder: var(--th-text-secondary, #6b7280);
     --salla-color-border: var(--th-border-color);
     box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
 }
@@ -169,25 +172,29 @@ salla-search {
 }
 
 .th-lang-switch {
-    @apply inline-flex items-center justify-center rounded-full bg-white border border-gray-200;
+    @apply inline-flex items-center justify-center rounded-full border;
+    background-color: var(--th-header-bg, #ffffff);
+    border-color: var(--th-border-color);
     width: 40px;
     height: 40px;
     padding: 0;
-    color: #0f172a;
-    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+    color: var(--th-text-primary, #0f172a);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
     &:hover {
-        @apply bg-gray-50 border-gray-300;
+        background-color: var(--th-bg-secondary, #f9fafb);
+        border-color: var(--th-border-color);
     }
 
     &:focus-visible {
-        @apply outline-none ring-2 ring-primary/30;
+        outline: none;
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary, var(--th-color-primary, #1e66f5)) 30%, transparent);
     }
 
     &__globe {
         width: 18px;
         height: 18px;
-        color: #111827;
+        color: var(--th-text-primary, #111827);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -198,160 +205,6 @@ salla-search {
         }
     }
 }
-
-/* Cart Badge */
-.th-badge {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: var(--th-primary);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 4px;
-    border-radius: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
-.s-search-input {
-    border-radius: 8rem;
-    background: #f4f6f8;
-    height: 45px;
-}
-
-
-.s-search-icon-wrap {
-    background-color: var(--th-color-primary);
-
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* 3. Navigation Bar */
-.th-navbar {
-    background: var(--th-header-bg);
-    height: 56px;
-    position: relative;
-    z-index: 990;
-
-    .container {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        flex-wrap: nowrap;
-        gap: 0;
-    }
-
-    /* Direct child flex container from menu.twig */
-    >.container>.th-nav-list {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        flex-wrap: nowrap;
-        width: 100%;
-    }
-}
-
-
-
-.sicon-layout-grid .text-lg {
-    background-color: var(--th-primary-color);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-/* All Categories Button */
-.th-all-cats-wrapper {
-    height: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    .th-all-cats-btn {
-        height: 44px;
-        padding: 0 18px;
-        background: #f3f4f6;
-        border: 1px solid var(--th-border-color);
-        border-radius: 999px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--th-text-main);
-        cursor: pointer;
-        transition: var(--th-transition);
-
-        i:first-child {
-            font-size: 20px;
-            color: var(--th-primary);
-        }
-    }
-
-    &:hover .th-all-cats-btn {
-        background: #fff;
-        color: var(--th-primary);
-        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
-    }
-}
-
-/* Vertical Mega Menu - nested inside wrapper for correct positioning */
-.th-all-cats-wrapper .th-mega-menu {
-    position: absolute;
-    top: 54px;
-    /* Exact height of navbar */
-    right: 0;
-    width: 900px;
-    max-width: calc(100vw - 40px);
-    background: #fff;
-    //   border: 1px solid var(--th-border-color);
-    //   border-top: 3px solid var(--th-primary);
-    //   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-    border-radius: 0 0 12px 12px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(15px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
-    display: flex;
-    overflow: hidden;
-    margin-top: 0;
-
-    /* Fix for RTL/LTR alignment */
-    [dir="rtl"] & {
-        right: 0;
-        left: auto;
-    }
-
-    [dir="ltr"] & {
-        right: auto;
-        left: 0;
-    }
-}
-
-/* Hide duplicate button in main header if present */
-.th-main-header .th-all-cats-wrapper {
-    display: none !important;
-}
-
 
 .th-all-cats-wrapper:hover .th-mega-menu {
     opacity: 1;
@@ -382,7 +235,7 @@ salla-search {
 
         &:hover,
         &.active {
-            background: #fff;
+            background: var(--th-header-bg, #ffffff);
             color: var(--th-primary);
             border-inline-start-color: var(--th-primary);
             padding-inline-start: 25px;
@@ -402,7 +255,7 @@ salla-search {
 .th-mega-content {
     flex: 1;
     padding: 30px;
-    background: #fff;
+    background: var(--th-header-bg, #ffffff);
     min-height: 400px;
 
     .th-mega-pane {
@@ -455,7 +308,7 @@ salla-search {
 /* Dropdowns */
 .th-dropdown {
     position: absolute;
-    background: #fff;
+    background: var(--th-header-bg, #ffffff);
     min-width: 220px;
     padding: 10px 0;
     border: 1px solid var(--th-border-color);
@@ -512,7 +365,7 @@ salla-search {
     height: 24px;
     border-radius: 50%;
     object-fit: cover;
-    background: #eee;
+    background: var(--th-border-color);
 }
 
 /* Animations */
@@ -597,7 +450,7 @@ body.drawer-open {
     height: 100vh;
     height: 100dvh;
     /* Dynamic viewport height for mobile browsers */
-    background: #fff;
+    background: var(--th-header-bg, #ffffff);
     z-index: 2001;
     box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
     display: flex;

@@ -1,29 +1,20 @@
-
-// Colors
+// Colors — لا تعرّف --color-primary هنا؛ تأتي من master.twig
 $main-color: var(--color-primary);
 $infinte-color: var(--infinte-color);
 $main-text-color: var(--main-text-color);
 
 :root {
-  --infinte-color: #c9c9c9;
-  --main-text-color: #231f1e;
-  --main-text-color-dark: #2b2d34;
-
-  /* current */
-  --color-primary: #5cd5c4;
-  --color-primary: #414042;
-  --color-primary-d: #272628;
-  --color-primary-l: #676668;
-  --color-primary-reverse: #ff6767;
-  --color-text: #7c8082;
-  --bg-gray: #c6c7ce1a;
-  --color-grey: #f5f7f9;
-  --color-light-grey: #eeeeee;
-  /* font-size */
+  --infinte-color: var(--th-text-secondary, #6b7280);
+  --main-text-color: var(--th-text-primary, #111827);
+  --main-text-color-dark: var(--th-text-primary, #111827);
+  --color-primary-d: var(--color-primary-dark, currentColor);
+  --color-primary-l: var(--color-primary-light, currentColor);
+  --color-primary-reverse: var(--color-primary-reverse, #111827);
+  --color-text: var(--th-text-secondary, #6b7280);
+  --bg-gray: var(--th-bg-secondary, #f8fafc);
+  --color-grey: var(--th-bg-secondary, #f5f7f9);
+  --color-light-grey: var(--th-border-soft, #e5e7eb);
   --font-sm: 0.8685714286rem;
-  /* font-family: ; */
-  --font-main: "DINNextLTArabic";
-
-  /* plugins */
+  --font-main: var(--font-main, "DINNextLTArabic");
   --mm-ocd-width: calc(100% - 51px);
 }

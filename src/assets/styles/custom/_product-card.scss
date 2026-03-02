@@ -74,7 +74,7 @@ $teal-badge: #00C9A7;
   .s-product-card-wishlist-btn {
     position: absolute;
     top: 12px;
-    right: 12px;
+    inset-inline-end: 12px;
     background: transparent !important;
     border: none !important;
     padding: 0;
@@ -101,7 +101,7 @@ $teal-badge: #00C9A7;
   .s-product-card-promotion-title {
     position: absolute;
     top: 12px;
-    left: 12px;
+    inset-inline-start: 12px;
     background: $teal-badge;
     color: #fff;
     font-size: 10px;
@@ -251,7 +251,7 @@ $teal-badge: #00C9A7;
     font-weight: bold;
     padding: 2px 8px;
     border-radius: 99px;
-    margin-right: auto;
+    margin-inline-end: auto;
     /* Push it to the left edge if using flex-row-reverse */
   }
 

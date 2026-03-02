@@ -228,9 +228,9 @@
                 <h1 class="text-xl md:text-2xl leading-10 font-bold mb-6 text-gray-800">{{ product.name }}</h1>
 
                 {% if product.subtitle %}
-                    <h2 class="product-entry__sub-title text-sm text-gray-500 leading-6 mb-2.5">
+                    <p class="product-entry__sub-title text-sm text-gray-500 leading-6 mb-2.5">
                         {{ product.subtitle }}
-                    </h2>
+                    </p>
                 {% endif %}
 
                 {% if product.rating %}
@@ -244,14 +244,14 @@
                 {# Price #}
                 <div class="flex whitespace-nowrap gap-4 items-center">
                   <div class="{{ product.is_on_sale ? '' : 'hidden' }} space-x-2 rtl:space-x-reverse whitespace-nowrap">
-                      <h4 class="text-red-800 font-bold text-xl inline-block">{{product.sale_price|money}}</h4>
-                      <span class="text-gray-500 line-through">{{product.regular_price|money}}</span>
+                      <span class="text-red-800 font-bold text-xl inline-block">{{ product.sale_price|money }}</span>
+                      <span class="text-gray-500 line-through">{{ product.regular_price|money }}</span>
                   </div>
                   <div class="gap-4 {{ product.is_on_sale ? 'hidden' : 'flex' }}">
-                      {% if product.starting_price %} 
+                      {% if product.starting_price %}
                           <span class="">{{ trans('pages.products.starting_price') }}</span>
-                      {% endif %} 
-                          <h2 class=" font-bold text-xl inline-block"> {{product.starting_price ? product.starting_price|money : product.price|money }}</h2>
+                      {% endif %}
+                          <span class="font-bold text-xl inline-block">{{ product.starting_price ? product.starting_price|money : product.price|money }}</span>
                   </div>
                 </div>
 
@@ -358,14 +358,14 @@
 
                             <div class="flex whitespace-nowrap price-wrapper gap-4 items-center">
                               <div class="{{ product.is_on_sale ? '' : 'hidden' }} price_is_on_sale space-x-2 rtl:space-x-reverse whitespace-nowrap">
-                                <h2 class="total-price text-red-800 font-bold text-xl inline-block">{{product.sale_price|money}}</h2>
-                                <span class="before-price text-gray-500 line-through">{{product.regular_price|money}}</span>
+                                <span class="total-price text-red-800 font-bold text-xl inline-block">{{ product.sale_price|money }}</span>
+                                <span class="before-price text-gray-500 line-through">{{ product.regular_price|money }}</span>
                               </div>
                               <div class="starting-or-normal-price gap-4 {{ product.is_on_sale ? 'hidden' : 'flex' }}">
-                                {% if product.starting_price %} 
+                                {% if product.starting_price %}
                                   <span class="starting-price-title">{{ trans('pages.products.starting_price') }}</span>
-                                {% endif %} 
-                                <h2 class="total-price font-bold text-xl inline-block"> {{product.starting_price ? product.starting_price|money : product.price|money }}</h2>
+                                {% endif %}
+                                <span class="total-price font-bold text-xl inline-block">{{ product.starting_price ? product.starting_price|money : product.price|money }}</span>
                               </div>
                             </div>
 
