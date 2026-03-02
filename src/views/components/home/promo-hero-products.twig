@@ -34,7 +34,7 @@
 {% set hero_image_src = hero_image ? hero_image : placeholder_image %}
 {% set empty_products_text = is_ar ? 'لا توجد منتجات مختارة لهذا القسم حالياً.' : 'No selected products for this section yet.' %}
 
-<section class="s-block th-promo-hero {{ should_scroll_products ? 'th-promo-hero--scroll-products' : 'th-promo-hero--grid-products' }}" id="{{ section_id }}" aria-labelledby="{{ section_id }}-title">
+<section class="s-block th-promo-hero th-ui-section {{ should_scroll_products ? 'th-promo-hero--scroll-products' : 'th-promo-hero--grid-products' }}" id="{{ section_id }}" aria-labelledby="{{ section_id }}-title">
   <div class="container">
     <div class="th-promo-hero__shell">
       <header class="th-promo-hero__header">
@@ -110,7 +110,7 @@
               {% set product_stars = product.rating.stars ?? product.rating ?? 0 %}
               {% set product_stars = product_stars|round(0, 'floor') %}
 
-              <article class="th-promo-hero__product-card {{ should_scroll_products ? 'th-promo-hero__product-card--scroll' : '' }}">
+              <article class="th-promo-hero__product-card th-ui-card {{ should_scroll_products ? 'th-promo-hero__product-card--scroll' : '' }}">
                 <a href="{{ product_url }}" class="th-promo-hero__product-link" aria-label="{{ product_name }}">
                   <span class="th-promo-hero__product-image-wrap">
                     <img src="{{ product_image }}"
@@ -124,7 +124,7 @@
                   <span class="th-promo-hero__product-content">
                     <span class="th-promo-hero__product-title">{{ product_name }}</span>
                     {% if show_rating %}
-                      <span class="th-promo-hero__rating" aria-label="{{ is_ar ? ('التقييم ' ~ product_stars ~ ' من 5') : ('Rating ' ~ product_stars ~ ' out of 5') }}">
+                      <span class="th-promo-hero__rating th-ui-stars" aria-label="{{ is_ar ? ('التقييم ' ~ product_stars ~ ' من 5') : ('Rating ' ~ product_stars ~ ' out of 5') }}">
                         {% for i in 1..5 %}
                           <i class="sicon-star2 {{ i <= product_stars ? 'is-active' : '' }}" aria-hidden="true"></i>
                         {% endfor %}
@@ -157,7 +157,7 @@
             </div>
           {% endif %}
         {% else %}
-          <div class="th-promo-hero__empty">{{ empty_products_text }}</div>
+          <div class="th-promo-hero__empty th-ui-empty">{{ empty_products_text }}</div>
         {% endif %}
       </div>
     </div>

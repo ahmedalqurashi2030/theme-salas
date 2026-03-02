@@ -1,0 +1,82 @@
+/* Tharaa UI System
+ * Cross-component UX layer for consistency and accessibility.
+ */
+:root {
+  --th-ui-radius-sm: 10px;
+  --th-ui-radius-md: 14px;
+  --th-ui-radius-lg: 20px;
+  --th-ui-border: var(--th-border-soft, #e5e7eb);
+  --th-ui-text: var(--th-text-primary, #111827);
+  --th-ui-muted: var(--th-text-secondary, #6b7280);
+  --th-ui-surface: var(--th-bg-main, #ffffff);
+  --th-ui-surface-soft: var(--th-bg-secondary, #f8fafc);
+  --th-ui-accent: var(--color-primary, #1e66f5);
+  --th-ui-star: #f5b01b;
+  --th-ui-star-off: #d5deea;
+  --th-ui-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+  --th-ui-shadow-hover: 0 14px 28px rgba(15, 23, 42, 0.12);
+  --th-ui-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.th-ui-section {
+  color: var(--th-ui-text);
+}
+
+.th-ui-panel {
+  border: 1px solid var(--th-ui-border);
+  border-radius: var(--th-ui-radius-lg);
+  background: var(--th-ui-surface);
+  box-shadow: var(--th-ui-shadow);
+}
+
+.th-ui-card {
+  border: 1px solid var(--th-ui-border);
+  border-radius: var(--th-ui-radius-md);
+  background: var(--th-ui-surface);
+  box-shadow: var(--th-ui-shadow);
+  transition:
+    transform 240ms var(--th-ui-ease),
+    box-shadow 240ms var(--th-ui-ease),
+    border-color 240ms var(--th-ui-ease);
+}
+
+@media (hover: hover) {
+  .th-ui-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--th-ui-shadow-hover);
+    border-color: color-mix(in srgb, var(--th-ui-accent), #ffffff 74%);
+  }
+}
+
+.th-ui-stars {
+  @apply inline-flex items-center;
+  gap: 0.125rem;
+  color: var(--th-ui-star-off);
+  line-height: 1;
+}
+
+.th-ui-stars .is-active {
+  color: var(--th-ui-star);
+}
+
+.th-ui-empty {
+  @apply rounded-[14px] border border-dashed text-center;
+  border-color: color-mix(in srgb, var(--th-ui-border), #ffffff 8%);
+  background: color-mix(in srgb, var(--th-ui-surface), transparent 8%);
+  color: var(--th-ui-muted);
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.th-ui-section :is(a, button, [role='button'], input, select, textarea):focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--th-ui-accent), #000 12%);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .th-ui-card,
+  .th-ui-section * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
