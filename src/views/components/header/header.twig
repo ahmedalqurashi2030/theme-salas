@@ -49,7 +49,7 @@
 						{% set language_label = tr_language starts with 'blocks.' ? 'Language' : tr_language %}
 						<button type="button" onclick="salla.event.dispatch('localization::open')" class="th-icon-btn th-lang-switch" aria-label="{{ language_label }}">
 							<span class="flag iti__flag iti__{{ user.language.country_code }}" aria-hidden="true"></span>
-							<span class="th-icon-label hidden lg:block">{{ language_label }}</span>
+							<span class="sr-only">{{ language_label }}</span>
 						</button>
 					{% endif %}
 
