@@ -1,9 +1,10 @@
 .th-store-features {
-  --th-charcoal: #191919;
-  --th-gold: #d4af37;
-  --th-card-border: #f0ede5;
-  --th-gray-300: #d4d4d4;
-  --th-gray-500: #6f6f6f;
+  /* ربط بمتغيرات سلة والتوكنز فقط */
+  --th-charcoal: var(--th-text-primary, #191919);
+  --th-gold: var(--th-color-primary, #d4af37);
+  --th-card-border: var(--th-border-soft, #f0ede5);
+  --th-gray-300: var(--th-border-soft, #d4d4d4);
+  --th-gray-500: var(--th-text-secondary, #6f6f6f);
 
   position: relative;
   overflow: hidden;
@@ -76,8 +77,8 @@
     left: 50%;
     transform: translateX(-50%);
     border-radius: 1.15rem;
-    background: linear-gradient(180deg, #fff, #fdfaf1);
-    border: 1px solid rgba(212, 175, 55, .2);
+    background: linear-gradient(180deg, var(--th-bg-main, #ffffff), var(--th-bg-secondary, #fdfaf1));
+    border: 1px solid color-mix(in srgb, var(--th-gold) 20%, transparent);
     z-index: 3;
     transition: transform .35s ease, box-shadow .35s ease;
 
@@ -104,7 +105,7 @@
     transition: color .25s ease;
 
     .th-store-features__card-inner:hover & {
-      color: #b89021;
+      color: var(--color-primary-dark, #b89021);
     }
 
     &::after {
@@ -114,7 +115,7 @@
       height: 2px;
       border-radius: 8px;
       margin: .72rem auto 0;
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0), rgba(212, 175, 55, .7), rgba(212, 175, 55, 0));
+      background: linear-gradient(90deg, color-mix(in srgb, var(--th-gold) 0%, transparent), color-mix(in srgb, var(--th-gold) 70%, transparent), color-mix(in srgb, var(--th-gold) 0%, transparent));
       transition: width .35s ease;
     }
 
@@ -124,7 +125,7 @@
   }
 
   &__card-description {
-    color: #666;
+    color: var(--th-text-secondary, #666666);
     font-size: .96rem;
     line-height: 1.8;
     font-weight: 500;
@@ -209,8 +210,8 @@
     &.is-active {
       width: 1.55rem;
       border-radius: .45rem;
-      background: linear-gradient(135deg, var(--th-gold), #bf9526);
-      box-shadow: 0 0 0 4px rgba(212, 175, 55, .2);
+      background: linear-gradient(135deg, var(--th-gold), var(--color-primary-dark, #bf9526));
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--th-gold) 20%, transparent);
     }
   }
 
@@ -220,10 +221,10 @@
     gap: .35rem;
     font-size: .88rem;
     font-weight: 700;
-    color: #7a7a7a;
+    color: var(--th-text-secondary, #7a7a7a);
 
     [data-th-store-features-current] {
-      color: #b89021;
+      color: var(--color-primary-dark, #b89021);
       font-size: 1.12rem;
       font-weight: 900;
     }

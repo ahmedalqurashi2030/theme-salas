@@ -60,7 +60,7 @@
 
   &__avatar-chip {
     @apply h-6 w-6 rounded-full object-cover;
-    border: 2px solid #fff;
+    border: 2px solid var(--th-bg-main, #ffffff);
     margin-inline-start: -0.5rem;
   }
 

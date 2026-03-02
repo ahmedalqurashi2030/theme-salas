@@ -57,7 +57,7 @@
   aspect-ratio: 16/10;
   border-radius: var(--th-ba-radius-lg);
   overflow: hidden;
-  background: #dce2eb;
+  background: var(--th-border-soft, #dce2eb);
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: var(--th-ba-shadow);
   touch-action: pan-y;

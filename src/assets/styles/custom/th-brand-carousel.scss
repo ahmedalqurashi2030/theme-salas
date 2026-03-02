@@ -7,8 +7,8 @@
   --sb-duration: 40s;
   --sb-item-w: 160px;
   --sb-item-h: 90px;
-  --sb-bg: #fff;
-  --sb-border: #f1f5f9;
+  --sb-bg: var(--th-bg-main, #ffffff);
+  --sb-border: var(--th-border-soft, #f1f5f9);
   --sb-ease: linear;
   --sb-mask-size: 80px;
 
@@ -62,12 +62,12 @@
 
     &::before {
       left: 0;
-      background: linear-gradient(to right, var(--color-main-bg, #fff), transparent);
+      background: linear-gradient(to right, var(--th-bg-main, #ffffff), transparent);
     }
 
     &::after {
       right: 0;
-      background: linear-gradient(to left, var(--color-main-bg, #fff), transparent);
+      background: linear-gradient(to left, var(--th-bg-main, #ffffff), transparent);
     }
   }
 
