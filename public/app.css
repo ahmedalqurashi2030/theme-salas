@@ -29539,6 +29539,10 @@ body[data-show-cart-total=true] .th-cart-total span {
   min-height: 0;
   padding: 1.25rem 1.25rem 0.9rem;
 }
+html[dir=rtl] .th-quick-view-modal .th-quick-view-media {
+  border-left: none;
+  border-right: 1px solid #eef2f7;
+}
 .th-quick-view-modal .th-quick-view-image-wrap {
   min-height: 270px;
 }
@@ -29784,28 +29788,64 @@ body[data-show-cart-total=true] .th-cart-total span {
 @media (max-width: 767px) {
   .th-quick-view-modal .s-salla-modal-body {
     padding: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .th-quick-view-modal .th-quick-view-sheet {
     max-width: 100%;
     min-height: auto;
+    max-height: 95dvh;
     border-radius: 1rem 1rem 0 0;
     border-left: none;
     border-right: none;
     border-bottom: none;
   }
   .th-quick-view-modal .th-quick-view-grid {
-    min-height: auto;
+    flex: 1 1 auto;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
   .th-quick-view-modal .th-quick-view-media {
     border-left: none;
+    border-right: none;
     border-bottom: 1px solid #eef2f7;
     padding: 1rem 1rem 0.75rem;
   }
+  .th-quick-view-modal .th-quick-view-image-wrap {
+    min-height: 220px;
+  }
   .th-quick-view-modal .th-quick-view-content {
     padding: 0.9rem 0.85rem;
+    overflow-y: visible;
   }
   .th-quick-view-modal .th-quick-view-footer {
     grid-template-columns: 1fr 5rem;
+  }
+}
+@media (max-width: 420px) {
+  .th-quick-view-modal .th-quick-view-thumb {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+  .th-quick-view-modal .th-quick-view-footer {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+  .th-quick-view-modal .th-quick-view-qty {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+}
+@media (max-height: 720px) and (min-width: 768px) {
+  .th-quick-view-modal .s-salla-modal-body {
+    align-items: flex-start;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -31797,9 +31837,6 @@ body[data-show-cart-total=true] .th-cart-total span {
     }
     .md\:flex-row{
         flex-direction: row;
-    }
-    .md\:flex-row-reverse{
-        flex-direction: row-reverse;
     }
     .md\:items-start{
         align-items: flex-start;
