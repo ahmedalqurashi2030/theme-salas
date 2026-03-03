@@ -204,6 +204,8 @@ class ProductCard extends HTMLElement {
     const addBtnContainer = modal.querySelector('[data-quick-view="add-button"]');
     const linkEl = modal.querySelector('[data-quick-view="link"]');
     const stockEl = modal.querySelector('[data-quick-view="stock"]');
+    const wishlistBtn = modal.querySelector('[data-quick-view="wishlist-btn"]');
+    const shareBtn = modal.querySelector('[data-quick-view="share-btn"]');
 
     if (imageEl) {
       imageEl.src = product?.image?.url || product?.thumbnail || this.placeholder || imageEl.src;
@@ -254,6 +256,47 @@ class ProductCard extends HTMLElement {
       const isOut = !!product?.is_out_of_stock;
       stockEl.textContent = isOut ? this.outOfStock || '' : '';
       stockEl.classList.toggle('hidden', !isOut);
+    }
+
+    if (wishlistBtn) {
+      wishlistBtn.dataset.productId = product.id;
+      wishlistBtn.classList.toggle('is-active', !!this.isInWishlist);
+
+      if (!wishlistBtn.dataset.boundWishlist) {
+        wishlistBtn.dataset.boundWishlist = 'true';
+        wishlistBtn.addEventListener('click', () => {
+          const id = Number(wishlistBtn.dataset.productId);
+          if (!id || !window.salla?.wishlist?.toggle) return;
+          window.salla.wishlist.toggle(id);
+        });
+      }
+    }
+
+    if (shareBtn) {
+      shareBtn.dataset.productUrl = product?.url || window.location.href;
+      shareBtn.dataset.productTitle = product?.name || document.title;
+
+      if (!shareBtn.dataset.boundShare) {
+        shareBtn.dataset.boundShare = 'true';
+        shareBtn.addEventListener('click', async () => {
+          const url = shareBtn.dataset.productUrl || window.location.href;
+          const title = shareBtn.dataset.productTitle || document.title;
+
+          try {
+            if (navigator.share) {
+              await navigator.share({ title, url });
+              return;
+            }
+
+            if (navigator.clipboard?.writeText) {
+              await navigator.clipboard.writeText(url);
+              window.salla?.notify?.success?.(title, window.salla?.lang?.get?.('common.copied') || '');
+            }
+          } catch (e) {
+            // silent fail – sharing is an enhancement only
+          }
+        });
+      }
     }
   }
 

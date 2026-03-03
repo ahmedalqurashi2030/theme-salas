@@ -106,7 +106,7 @@ class App extends AppHelpers {
               return Number(autoplayConfig.delay);
             }
 
-            return 10000;
+            return 3000;
           };
 
           const syncDuration = () => {

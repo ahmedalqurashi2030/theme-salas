@@ -190,27 +190,7 @@
   }
 }
 
-html[dir='rtl'] .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active,
-.th-home-testimonials__slider[dir='rtl'].th-testimonials-loading-pagination .swiper-pagination-bullet-active {
-  background-position: right center;
-}
-
-html[dir='rtl'] .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active.is-loading,
-.th-home-testimonials__slider[dir='rtl'].th-testimonials-loading-pagination .swiper-pagination-bullet-active.is-loading {
-  animation-name: th-testimonials-pagination-load-rtl;
-}
-
 @keyframes th-testimonials-pagination-load-ltr {
-  from {
-    background-size: 0% 100%;
-  }
-
-  to {
-    background-size: 100% 100%;
-  }
-}
-
-@keyframes th-testimonials-pagination-load-rtl {
   from {
     background-size: 0% 100%;
   }

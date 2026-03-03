@@ -109,7 +109,7 @@
 			;
 			--th-header-bg: {{theme.settings.get('header_bg_color', '#ffffff')}}
 			;
-			--th-desktop-products-per-row: {{ desktop_products_per_row }}
+			--th-desktop-products-per-row: {{desktop_products_per_row}}
 			;
 
 		}
@@ -118,12 +118,12 @@
 	{% hook 'head:end' %}
 </head>
 <body id="app" data-header-is-sticky="{{ theme.settings.get('header_is_sticky', false) ? 'true' : 'false' }}" data-image-zoom="{{ theme.settings.get('imageZoom', false) ? 'true' : 'false' }}" data-can-access-wallet="{{ user.can_access_wallet ? 'true' : 'false' }}" data-show-cart-total="{{ show_cart_quantity_and_currency_enabled ? 'true' : 'false' }}" class="overflow-x-hidden {% hook 'body:classes' %}
-																				  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
-																				  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
-																				  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
-																				  {{ card_show_rating_enabled ? '' : ' th-hide-card-rating' }}
-																				  {{ card_show_discount_badge_enabled ? '' : ' th-hide-card-discount' }}
-																				  ">
+																						  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
+																						  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
+																						  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
+																						  {{ card_show_rating_enabled ? '' : ' th-hide-card-rating' }}
+																						  {{ card_show_discount_badge_enabled ? '' : ' th-hide-card-discount' }}
+																						  ">
 	<div class="loader-init"></div>
 	<noscript>
 		To get full functionality of this site you need to enable JavaScript. Here is how
@@ -146,54 +146,73 @@
 		<salla-login-modal></salla-login-modal>
 	{% endif %}
 
-	{# Quick View Modal for product cards #}
-	<div id="product-quick-view-modal" class="fixed inset-0 z-40 hidden" aria-hidden="true" role="dialog">
-		<div class="s-salla-modal-overlay fixed inset-0 bg-slate-900/40 opacity-0"></div>
+	{# --- Premium Quick View Modal --- #}
+	<div
+		id="product-quick-view-modal" class="th-quick-view-modal fixed inset-0 z-[100] hidden" aria-hidden="true" role="dialog">
+		{# غلاف شفاف مع إغلاق خارجي #}
+		<div class="s-salla-modal-overlay fixed inset-0 bg-slate-900/60 transition-opacity opacity-0 cursor-pointer" data-close-modal="product-quick-view-modal" aria-label="{{ trans('common.close') }}"></div>
 
-		<div class="s-salla-modal-body fixed inset-0 flex items-center justify-center p-4 sm:p-8 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-			<div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden">
-				<div class="flex flex-col md:flex-row-reverse md:items-stretch">
-					{# الصورة الكبيرة على اليمين #}
-					<div class="relative md:w-1/2 bg-slate-50 flex items-center justify-center p-6 sm:p-8">
+		{# الكرت الأساسي، تم وضع transition هنا ليشتغل منه التحريك #}
+		<div class="s-salla-modal-body fixed inset-x-0 bottom-0 sm:inset-0 flex items-end sm:items-center justify-center sm:p-4 opacity-0 translate-y-full sm:translate-y-4 sm:scale-95 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] pointer-events-none">
+
+			<div
+				class="bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl max-w-5xl w-full overflow-hidden flex flex-col sm:max-h-[85vh] max-h-[90vh] pointer-events-auto">
+
+				{# خط سحب في الجوال #}
+				<div class="w-full flex justify-center py-3 sm:hidden" data-close-modal="product-quick-view-modal">
+					<div class="w-12 h-1.5 bg-gray-200 rounded-full"></div>
+				</div>
+
+				<div
+					class="flex flex-col md:flex-row-reverse md:items-stretch overflow-y-auto sm:overflow-hidden h-full">
+
+					{# الصورة الكبيرة (نصف الشاشة يمين) #}
+					<div class="relative w-full md:w-[55%] bg-slate-50 flex items-center justify-center p-6 sm:p-12 shrink-0 sm:overflow-y-auto">
 						<img
-							data-quick-view="image"
-							src="{{ theme.settings.get('placeholder', 'images/placeholder.png')|asset }}"
-							alt=""
-							class="max-h-96 w-full object-contain" />
+						data-quick-view="image" src="{{ theme.settings.get('placeholder', 'images/placeholder.png')|asset }}" alt="" class="w-full h-auto max-h-[300px] sm:max-h-[500px] object-contain transition-transform duration-500 hover:scale-105"/>
 
-						<button
-							type="button"
-							class="absolute top-4 inset-inline-start-4 text-slate-400 hover:text-slate-600"
-							data-close-modal="product-quick-view-modal"
-							aria-label="{{ trans('common.close') }}">
-							<i class="sicon-close text-xl" data-close-modal="product-quick-view-modal"></i>
+						{# زر الإغلاق الدائري العائم #}
+						<button type="button" class="absolute top-4 sm:top-6 inset-inline-end-4 sm:inset-inline-end-6 w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow-sm text-slate-500 hover:text-slate-900 hover:bg-white flex items-center justify-center transition-all z-10" data-close-modal="product-quick-view-modal" aria-label="{{ trans('common.close') }}">
+							<i class="sicon-close text-xl pointer-events-none"></i>
 						</button>
 					</div>
 
-					{# معلومات المنتج وزر الإضافة للسلة على اليسار #}
-					<div class="md:w-1/2 p-5 sm:p-7 flex flex-col gap-3">
-						<p data-quick-view="brand" class="text-xs sm:text-sm font-medium text-slate-500"></p>
+					{# التفاصيل والبيانات (نصف الشاشة يسار) #}
+					<div class="w-full md:w-[45%] p-6 sm:p-10 shrink-0 flex flex-col bg-white sm:overflow-y-auto shadow-[-4px_0_24px_rgba(0,0,0,0.02)] z-10">
 
-						<h3
-							data-quick-view="title"
-							class="text-lg sm:text-xl font-semibold text-slate-900 leading-snug line-clamp-3"></h3>
+						<div class="flex items-center gap-3 mb-2">
+							<p data-quick-view="brand" class="text-xs font-bold tracking-widest uppercase text-slate-400"></p>
+						</div>
 
-						<div class="mt-1 flex items-center justify-between gap-3">
-							<div data-quick-view="price" class="text-base sm:text-xl font-bold text-rose-600"></div>
+						<h3 data-quick-view="title" class="text-xl sm:text-2xl font-bold text-slate-900 leading-tight mb-4"></h3>
+
+						<div class="flex items-baseline gap-3 mb-6 bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
+							<div data-quick-view="price" class="text-2xl sm:text-3xl font-extrabold text-[var(--th-primary,#C5A059)] tracking-tight"></div>
 							<div data-quick-view="badge" class="text-xs"></div>
 						</div>
 
-						<p data-quick-view="stock" class="text-xs sm:text-sm font-medium text-rose-600 hidden"></p>
+						<p data-quick-view="stock" class="text-sm font-semibold text-rose-500 bg-rose-50 w-fit px-3 py-1 rounded-md mb-4 hidden"></p>
 
-						<div class="mt-4" data-quick-view="add-button"></div>
+						{# أزرار الإجراءات (الأساسية والثانوية) #}
+						<div class="mt-auto flex flex-col gap-4">
+							<div data-quick-view="add-button" class="w-full"></div>
 
-						<a
-							data-quick-view="link"
-							href="#"
-							class="inline-flex items-center text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 mt-3">
-							<span>{{ trans('pages.products.view_product')|default('عرض التفاصيل الكاملة') }}</span>
-							<i class="sicon-arrow-left2 text-xs ms-1"></i>
-						</a>
+							<div class="flex items-center gap-3 mt-2">
+								<button type="button" data-quick-view="wishlist-btn" class="flex-1 h-12 rounded-xl border-2 border-slate-100 flex items-center justify-center gap-2 text-slate-600 font-medium hover:border-rose-200 hover:bg-rose-50 hover:text-rose-500 transition-colors">
+									<i class="sicon-heart text-lg pointer-events-none"></i>
+									<span>{{ trans('pages.products.add_to_wishlist')|default('أضف للمفضلة') }}</span>
+								</button>
+								<button type="button" data-quick-view="share-btn" class="w-12 h-12 shrink-0 rounded-xl border-2 border-slate-100 flex items-center justify-center text-slate-600 hover:border-slate-300 transition-colors">
+									<i class="sicon-share text-lg pointer-events-none"></i>
+								</button>
+							</div>
+
+							<a data-quick-view="link" href="#" class="w-full h-12 mt-2 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold text-slate-500 bg-slate-50 hover:bg-slate-100 transition-colors">
+								<span>{{ trans('pages.products.view_product')|default('عرض التفاصيل الكاملة') }}</span>
+								<i class="sicon-arrow-left2 text-xs rtl:hidden mt-0.5"></i>
+								<i class="sicon-arrow-right2 text-xs hidden rtl:inline-block mt-0.5"></i>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
