@@ -48,7 +48,7 @@
                             <div class="p-3 flex-grow flex flex-col justify-center w-full">
                                 <p class="mb-1">{{ trans('pages.offer.buy_quantity', {quantity:discount.quantity_text})|number }}</p>
                                 {% if discount.show_discounted_price %}
-                                    <div class="text-sm text-gray-400">
+                                    <div class="text-sm text-gray-500">
                                         <span>{{ trans('pages.offer.with_price', {price:''}) }}</span>
                                         <span class="font-extrabold text-red-400 text-3xl">{{ discount.price|number({'.':'٫'}) }}</span> {{ user.currency.symbol }}
                                     </div>

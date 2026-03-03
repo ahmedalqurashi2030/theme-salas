@@ -40,6 +40,7 @@ class App extends AppHelpers {
 
     salla.comment.event.onAdded(() => window.location.reload());
 
+    this.initLoadingBarPagination();
     this.status = 'ready';
     document.dispatchEvent(new CustomEvent('theme::ready'));
     this.log('Theme Loaded');
@@ -50,7 +51,25 @@ class App extends AppHelpers {
     return this;
   }
 
-
+  // --- Start Custom Feature: Loading Bar Pagination for Sliders ---
+  initLoadingBarPagination() {
+    // Sliders wait to be defined
+    customElements.whenDefined('salla-slider').then(() => {
+      const sliders = document.querySelectorAll('salla-slider[has-pagination="true"]');
+      sliders.forEach(slider => {
+        // Only target sliders with auto-play
+        if (slider.hasAttribute('auto-play')) {
+          // Listen to slideChange to force animation restart if needed
+          slider.addEventListener('slideChange', (e) => {
+            // The bullet 'active' class is handled by salla-slider automatically.
+            // The CSS ::part(bullet-active) will replay its animation natively
+            // because Swiper removes and adds the active part string completely on change.
+          });
+        }
+      });
+    });
+  }
+  // --- End Custom Feature ---
 
   initTharaaHeaderMenu() {
     const header = document.querySelector('.th-header');

@@ -32,7 +32,7 @@
 				</a>
 
 				<a href="{{ store.url }}" class="store-logo shrink-0" aria-label="{{ store.name }}">
-					<img src="{{ store.logo }}" alt="{{ store.name }}" class="h-10 md:h-12 w-auto object-contain">
+					<img src="{{ store.logo }}" alt="{{ store.name }}" width="192" height="64" loading="eager" decoding="async" class="h-10 md:h-12 w-auto object-contain">
 				</a>
 
 				<div class="header-search flex-1 hidden lg:block">
@@ -40,7 +40,9 @@
 				</div>
 
 				<div class="header-actions flex items-center gap-6">
-					<button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')" aria-label="{{ trans('blocks.header.search_placeholder')|default('فتح البحث') }}">
+					{% set tr_open_search = trans('blocks.header.open_search') %}
+					{% set open_search_label = tr_open_search starts with 'blocks.' ? 'فتح البحث' : tr_open_search %}
+					<button class="lg:hidden text-xl" onclick="salla.event.dispatch('search::open')" aria-label="{{ open_search_label }}">
 						<i class="sicon-search"></i>
 					</button>
 

@@ -206,6 +206,139 @@ salla-search {
     }
 }
 
+/* Cart Badge */
+.th-badge {
+    position: absolute;
+    top: -6px;
+    inset-inline-end: -6px;
+    background: var(--th-primary);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.s-search-input {
+    border-radius: 8rem;
+    background: #f4f6f8;
+    height: 45px;
+}
+
+.s-search-icon-wrap {
+    background-color: var(--th-primary, #C5A059);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 3. Navigation Bar */
+.th-navbar {
+    background: var(--th-header-bg, #ffffff);
+    height: 56px;
+    position: relative;
+    z-index: 990;
+
+    .container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        flex-wrap: nowrap;
+        gap: 0;
+    }
+
+    /* Direct child flex container from menu.twig */
+    >.container>.th-nav-list {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+}
+
+.sicon-layout-grid .text-lg {
+    background-color: var(--th-primary, #C5A059);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* All Categories Button */
+.th-all-cats-wrapper {
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .th-all-cats-btn {
+        height: 44px;
+        padding: 0 18px;
+        background: var(--th-bg-secondary, #f3f4f6);
+        border: 1px solid var(--th-border-color);
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--th-text-main);
+        cursor: pointer;
+        transition: var(--th-transition);
+
+        i:first-child {
+            font-size: 20px;
+            color: var(--th-primary);
+        }
+    }
+
+    &:hover .th-all-cats-btn {
+        background: var(--th-header-bg, #ffffff);
+        color: var(--th-primary);
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
+    }
+}
+
+/* Vertical Mega Menu - nested inside wrapper for correct positioning */
+.th-all-cats-wrapper .th-mega-menu {
+    position: absolute;
+    top: 54px;
+    /* Exact height of navbar */
+    inset-inline-end: 0;
+    width: 900px;
+    max-width: calc(100vw - 40px);
+    background: var(--th-header-bg, #ffffff);
+    border-radius: 0 0 12px 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    display: flex;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+/* Hide duplicate button in main header if present */
+.th-main-header .th-all-cats-wrapper {
+    display: none !important;
+}
+
 .th-all-cats-wrapper:hover .th-mega-menu {
     opacity: 1;
     visibility: visible;

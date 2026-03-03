@@ -7,7 +7,7 @@
 
     .product-entry__title a {
       @apply text-white line-clamp-3;
-      text-shadow: 0 0 1px #999;
+      text-shadow: 0 0 1px rgba(17, 24, 39, 0.55);
     }
   }
 
@@ -51,8 +51,8 @@
       @apply absolute top-0 rtl:left-0 ltr:right-0;
 
       .sicon-heart {
-        text-shadow: 0 0 2px #999;
-        color: #fff;
+        text-shadow: 0 0 2px rgba(17, 24, 39, 0.55);
+        color: var(--th-promo-tag-bg, #ffffff);
       }
     }
   }
@@ -63,8 +63,8 @@
       @apply absolute bottom-2 rtl:left-2 ltr:right-2;
 
       span{
-        color: #fff;
-        text-shadow: 0 0 2px #666;
+        color: var(--th-promo-tag-bg, #ffffff);
+        text-shadow: 0 0 2px rgba(17, 24, 39, 0.65);
       }
     }
   }
@@ -101,8 +101,8 @@
         @apply absolute rtl:right-3 ltr:left-3 -top-8;
 
         span{
-          color: #fff;
-          text-shadow: 0 0 2px #666;
+          color: var(--th-promo-tag-bg, #ffffff);
+          text-shadow: 0 0 2px rgba(17, 24, 39, 0.65);
         }
       }
     }
@@ -113,8 +113,8 @@
 
     button {
       @apply w-10 h-10 rounded-full p-0 border-0;
-      background-color: #fff;
-      border: 1px solid #e5e7eb;
+      background-color: var(--th-bg-main, #ffffff);
+      border: 1px solid var(--th-border-soft, #e5e7eb);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 

@@ -27,7 +27,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <p class="text-gray-400 text-sm">{{ comment.created_at|time_ago }}</p>
+                <p class="text-gray-500 text-sm">{{ comment.created_at|time_ago }}</p>
                 {% if comment.stars %}
                     <div class="w-full comment__rating text-xs mb-2.5 rtl:space-x-reverse space-x-1">
                         {% for i in 1..5 %}
