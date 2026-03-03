@@ -417,14 +417,32 @@ class App extends AppHelpers {
 
   initiateModals() {
     this.onClick('[data-modal-trigger]', e => {
-      let id = '#' + e.target.dataset.modalTrigger;
+      const clickedElement = e.target instanceof Element ? e.target : null;
+      const trigger = clickedElement?.closest?.('[data-modal-trigger]') || e.currentTarget;
+      const modalId = trigger?.dataset?.modalTrigger;
+      if (!modalId) return;
+
+      const id = `#${modalId}`;
       this.removeClass(id, 'hidden');
-      setTimeout(() => this.toggleModal(id, true)); //small amont of time to running toggle After adding hidden
+      setTimeout(() => this.toggleModal(id, true)); // small amount of time to run animation after hidden is removed
     });
-    salla.event.document.onClick("[data-close-modal]", e => this.toggleModal('#' + e.target.dataset.closeModal, false));
+
+    salla.event.document.onClick("[data-close-modal]", e => {
+      const clickedElement = e.target instanceof Element ? e.target : null;
+      const trigger = clickedElement?.closest?.('[data-close-modal]') || e.currentTarget || e.target;
+      const modalId = trigger?.dataset?.closeModal;
+      if (!modalId) return;
+
+      this.toggleModal(`#${modalId}`, false);
+    });
   }
 
   toggleModal(id, isOpen) {
+    const modal = document.querySelector(id);
+    if (!modal) return this;
+
+    modal.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+
     this.toggleClassIf(`${id} .s-salla-modal-overlay`, 'ease-out duration-300 opacity-100', 'opacity-0', () => isOpen)
       .toggleClassIf(`${id} .s-salla-modal-body`,
         'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100', //add these classes
@@ -434,6 +452,7 @@ class App extends AppHelpers {
     if (!isOpen) {
       setTimeout(() => this.addClass(id, 'hidden'), 350);
     }
+    return this;
   }
 
   initiateCollapse() {
