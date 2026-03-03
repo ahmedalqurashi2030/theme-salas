@@ -52,6 +52,16 @@
     color: #9ca3af;
   }
 
+  .th-quick-view-close-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    line-height: 1;
+    font-weight: 500;
+    transform: translateY(-1px);
+  }
+
   .th-quick-view-gallery {
     display: flex;
     justify-content: center;
