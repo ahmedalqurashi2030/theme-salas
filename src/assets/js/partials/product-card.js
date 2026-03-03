@@ -180,21 +180,8 @@ class ProductCard extends HTMLElement {
     return document.getElementById('product-quick-view-modal');
   }
 
-  setQuickViewModalState(modal, { loading = false, hasError = false, errorMessage = '' } = {}) {
-    const loadingEl = modal.querySelector('[data-quick-view="loading"]');
-    const errorEl = modal.querySelector('[data-quick-view="error"]');
-    const errorMessageEl = modal.querySelector('[data-quick-view="error-message"]');
-
-    if (loadingEl) {
-      loadingEl.classList.toggle('hidden', !loading);
-    }
-    if (errorEl) {
-      errorEl.classList.toggle('hidden', !hasError);
-    }
-    if (errorMessageEl && errorMessage) {
-      errorMessageEl.textContent = errorMessage;
-    }
-    modal.classList.toggle('is-loading', loading);
+  resetQuickViewModalState(modal) {
+    modal.classList.remove('is-loading');
   }
 
   resolveQuickViewProduct() {
@@ -373,8 +360,19 @@ class ProductCard extends HTMLElement {
       ? triggerElement
       : document.activeElement;
 
-    this.setQuickViewModalState(modal, { loading: true, hasError: false });
     modal.dataset.quickViewQty = '1';
+    this.resetQuickViewModalState(modal);
+
+    // Populate immediately from available card data (no loading overlay).
+    try {
+      this.populateQuickViewModal(modal, product);
+      this.resetQuickViewModalState(modal);
+    } catch (error) {
+      this.resetQuickViewModalState(modal);
+      if (window.salla?.log) {
+        window.salla.log(`ThemeApp(Raed)::Quick view rendering failed ${error?.message ? `- ${error.message}` : ''}`);
+      }
+    }
 
     const modalId = '#product-quick-view-modal';
     modal.classList.remove('hidden');
@@ -385,19 +383,7 @@ class ProductCard extends HTMLElement {
     }
 
     window.requestAnimationFrame(() => {
-      try {
-        this.populateQuickViewModal(modal, product);
-        this.setQuickViewModalState(modal, { loading: false, hasError: false });
-        this.focusQuickViewModal(modal);
-      } catch (error) {
-        this.setQuickViewModalState(modal, {
-          loading: false,
-          hasError: true,
-          errorMessage:
-            window.salla?.lang?.get?.('common.messages.unexpected_error')
-            || 'Unable to load product preview now.',
-        });
-      }
+      this.focusQuickViewModal(modal);
     });
   }
 
@@ -521,12 +507,6 @@ class ProductCard extends HTMLElement {
 
     imageEl.src = images[0].url;
     imageEl.alt = this.escapeHTML(images[0].alt || productName || '');
-
-    if (images.length === 1) {
-      galleryEl.classList.add('hidden');
-      galleryEl.innerHTML = '';
-      return;
-    }
 
     galleryEl.innerHTML = images
       .map((image, index) => `

@@ -165,15 +165,6 @@
 				class="th-quick-view-sheet bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl max-w-6xl w-full overflow-hidden flex flex-col sm:max-h-[88vh] max-h-[92vh] pointer-events-auto relative"
 				data-quick-view="sheet">
 
-				<div class="th-quick-view-loading hidden" data-quick-view="loading" aria-live="polite" aria-atomic="true">
-					<span class="th-quick-view-spinner" aria-hidden="true"></span>
-					<span class="th-quick-view-loading-text">{{ user.language.code starts with 'ar' ? 'جاري التحميل...' : 'Loading...' }}</span>
-				</div>
-
-				<div class="th-quick-view-error hidden" data-quick-view="error" role="status" aria-live="polite">
-					<p data-quick-view="error-message">{{ trans('common.messages.unexpected_error')|default('Unable to load product preview now.') }}</p>
-				</div>
-
 				{# خط سحب في الجوال #}
 				<button type="button" class="th-quick-view-drag-handle w-full flex justify-center py-3 sm:hidden" data-quick-view="drag-handle" data-close-modal="product-quick-view-modal" aria-label="{{ trans('common.close') }}">
 					<span class="w-12 h-1.5 bg-gray-300 rounded-full pointer-events-none"></span>
@@ -187,7 +178,6 @@
 						<div class="th-quick-view-image-wrap flex-1 min-h-[260px] sm:min-h-[360px] flex items-center justify-center px-2">
 							<img
 								data-quick-view="image"
-								data-quick-view-skeleton
 								src="{{ theme.settings.get('placeholder', 'images/placeholder.png')|asset }}"
 								alt=""
 								class="w-full h-auto max-h-[520px] object-contain transition-transform duration-500"/>
@@ -209,12 +199,12 @@
 							<div data-quick-view="badge" class="text-xs"></div>
 						</div>
 
-						<h3 id="product-quick-view-title" data-quick-view="title" data-quick-view-skeleton class="text-xl sm:text-[1.75rem] font-bold text-slate-900 leading-tight mb-2"></h3>
+						<h3 id="product-quick-view-title" data-quick-view="title" class="text-xl sm:text-[1.75rem] font-bold text-slate-900 leading-tight mb-2"></h3>
 
 						<div data-quick-view="rating" class="th-quick-view-rating hidden"></div>
 
 						<div class="th-quick-view-price-box">
-							<div data-quick-view="price" data-quick-view-skeleton class="text-2xl sm:text-3xl font-extrabold text-[var(--th-color-primary,var(--color-primary,#C5A059))] tracking-tight"></div>
+							<div data-quick-view="price" class="text-2xl sm:text-3xl font-extrabold text-[var(--th-color-primary,var(--color-primary,#C5A059))] tracking-tight"></div>
 						</div>
 
 						<div class="th-quick-view-action-icons">
