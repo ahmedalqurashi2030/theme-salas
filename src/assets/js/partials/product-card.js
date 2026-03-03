@@ -184,10 +184,12 @@ class ProductCard extends HTMLElement {
     this.populateQuickViewModal(modal);
 
     const modalId = '#product-quick-view-modal';
+    // Always make sure the modal container is visible before running the animation helper
+    modal.classList.remove('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+
     if (window.app && typeof app?.toggleModal === 'function') {
       app.toggleModal(modalId, true);
-    } else {
-      modal.classList.remove('hidden');
     }
   }
 

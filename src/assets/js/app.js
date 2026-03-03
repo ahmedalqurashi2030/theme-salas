@@ -86,7 +86,7 @@ class App extends AppHelpers {
           }
 
           slider.dataset.loadingPaginationReady = 'true';
-          slider.classList.add('th-slider-loading-pagination');
+          slider.classList.add('th-testimonials-loading-pagination');
 
           const getActiveDelay = () => {
             const activeSlide =

@@ -1141,6 +1141,12 @@ input:where([type='file']):focus{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 }
+.line-clamp-3{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
 .block{
     display: block;
 }
@@ -1291,6 +1297,9 @@ input:where([type='file']):focus{
 .max-h-full{
     max-height: 100%;
 }
+.max-h-96{
+    max-height: 24rem;
+}
 .min-h-7{
     min-height: 1.75rem;
 }
@@ -1419,6 +1428,9 @@ input:where([type='file']):focus{
 }
 .max-w-xs{
     max-width: 20rem;
+}
+.max-w-4xl{
+    max-width: 56rem;
 }
 .flex-1{
     flex: 1 1 0%;
@@ -29039,7 +29051,7 @@ body[data-show-cart-total=true] .th-cart-total span {
   --th-testimonials-shadow-hover: 0 16px 28px rgba(15, 23, 42, 0.12);
   --th-testimonials-pagination-dot: #c8d4e5;
   --th-testimonials-pagination-track: #d6deea;
-  --th-testimonials-pagination-fill: var(--color-primary, #1e66f5);
+  --th-testimonials-pagination-fill: var(--th-color-primary, var(--color-primary, #1e66f5));
   --th-testimonials-pagination-active-width: 40px;
   --th-testimonials-pagination-active-height: 8px;
   position: relative;
@@ -29207,10 +29219,17 @@ body[data-show-cart-total=true] .th-cart-total span {
   left: auto;
 }
 .th-home-testimonials__slider .swiper-pagination-bullets.swiper-pagination-horizontal {
+  width: auto !important;
+  left: 50% !important;
+  right: auto !important;
+}
+.th-home-testimonials__slider .swiper-pagination-bullets.swiper-pagination-horizontal {
   bottom: 8px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  transform: translateX(-50%);
+  justify-content: center;
 }
 .th-home-testimonials__slider .swiper-pagination-bullet{
   margin: 0 !important;
@@ -29228,25 +29247,17 @@ body[data-show-cart-total=true] .th-cart-total span {
 .th-home-testimonials__slider .swiper-pagination-bullet-active {
   width: var(--th-testimonials-pagination-active-width);
   height: var(--th-testimonials-pagination-active-height);
-  background: var(--th-testimonials-pagination-track);
+  background-color: var(--th-testimonials-pagination-track);
+  background-image: linear-gradient(90deg, var(--th-testimonials-pagination-fill), var(--th-testimonials-pagination-fill));
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: left center;
 }
-.th-home-testimonials__slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: inherit;
-  background: var(--th-testimonials-pagination-fill);
-  transform: scaleX(0);
-  transform-origin: left center;
+.th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active.is-loading {
+  animation: th-testimonials-pagination-load-ltr 3000ms linear forwards;
+  animation: th-testimonials-pagination-load-ltr var(--th-slider-pagination-delay, 3000ms) linear forwards;
 }
-.th-home-testimonials__slider.th-slider-loading-pagination .swiper-pagination-bullet-active.is-loading::before {
-  animation: th-testimonials-pagination-load 10000ms linear forwards;
-  animation: th-testimonials-pagination-load var(--th-slider-pagination-delay, 10000ms) linear forwards;
-}
-.th-home-testimonials__slider.th-slider-loading-pagination.is-paused .swiper-pagination-bullet-active.is-loading::before {
+.th-home-testimonials__slider.th-testimonials-loading-pagination.is-paused .swiper-pagination-bullet-active.is-loading {
   animation-play-state: paused;
 }
 @media (max-width: 1023px) {
@@ -29257,16 +29268,28 @@ body[data-show-cart-total=true] .th-cart-total span {
         display: none;
     }
 }
-html[dir=rtl] .th-home-testimonials__slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before,
-.th-home-testimonials__slider[dir=rtl].th-slider-loading-pagination .swiper-pagination-bullet-active::before {
-  transform-origin: right center;
+html[dir=rtl] .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active,
+.th-home-testimonials__slider[dir=rtl].th-testimonials-loading-pagination .swiper-pagination-bullet-active {
+  background-position: right center;
 }
-@keyframes th-testimonials-pagination-load {
+html[dir=rtl] .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active.is-loading,
+.th-home-testimonials__slider[dir=rtl].th-testimonials-loading-pagination .swiper-pagination-bullet-active.is-loading {
+  animation-name: th-testimonials-pagination-load-rtl;
+}
+@keyframes th-testimonials-pagination-load-ltr {
   from {
-    transform: scaleX(0);
+    background-size: 0% 100%;
   }
   to {
-    transform: scaleX(1);
+    background-size: 100% 100%;
+  }
+}
+@keyframes th-testimonials-pagination-load-rtl {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
   }
 }
 .th-home-testimonial-card{
@@ -29450,12 +29473,12 @@ html[dir=rtl] .th-home-testimonials__slider.th-slider-loading-pagination .swiper
   .th-home-testimonial-card,
   .th-home-testimonials__slider .s-slider--nav-arrow,
   .th-home-testimonials__slider .swiper-pagination-bullet,
-  .th-home-testimonials__slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before {
+  .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active {
     transition: none !important;
     animation: none !important;
   }
-  .th-home-testimonials__slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before {
-    transform: scaleX(1);
+  .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active {
+    background-size: 100% 100%;
   }
 }
 .th-store-features {
@@ -31251,6 +31274,9 @@ html[dir=rtl] .th-home-testimonials__slider.th-slider-loading-pagination .swiper
     .sm\:p-8{
         padding: 2rem;
     }
+    .sm\:p-7{
+        padding: 1.75rem;
+    }
     .sm\:py-10{
         padding-top: 2.5rem;
         padding-bottom: 2.5rem;
@@ -31290,6 +31316,10 @@ html[dir=rtl] .th-home-testimonials__slider.th-slider-loading-pagination .swiper
     .sm\:text-sm{
         font-size: 0.875rem;
         line-height: 1.25rem;
+    }
+    .sm\:text-xl{
+        font-size: 1.25rem;
+        line-height: 1.75rem;
     }
 }
 @media (min-width: 768px){
@@ -31389,6 +31419,9 @@ html[dir=rtl] .th-home-testimonials__slider.th-slider-loading-pagination .swiper
     .md\:w-auto{
         width: auto;
     }
+    .md\:w-1\/2{
+        width: 50%;
+    }
     .md\:grid-cols-2{
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -31407,11 +31440,17 @@ html[dir=rtl] .th-home-testimonials__slider.th-slider-loading-pagination .swiper
     .md\:flex-row{
         flex-direction: row;
     }
+    .md\:flex-row-reverse{
+        flex-direction: row-reverse;
+    }
     .md\:items-start{
         align-items: flex-start;
     }
     .md\:items-center{
         align-items: center;
+    }
+    .md\:items-stretch{
+        align-items: stretch;
     }
     .md\:gap-6{
         gap: 1.5rem;

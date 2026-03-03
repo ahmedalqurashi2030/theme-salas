@@ -13,7 +13,7 @@
   --th-testimonials-shadow-hover: 0 16px 28px rgba(15, 23, 42, 0.12);
   --th-testimonials-pagination-dot: #c8d4e5;
   --th-testimonials-pagination-track: #d6deea;
-  --th-testimonials-pagination-fill: var(--color-primary, #1e66f5);
+  --th-testimonials-pagination-fill: var(--th-color-primary, var(--color-primary, #1e66f5));
   --th-testimonials-pagination-active-width: 40px;
   --th-testimonials-pagination-active-height: 8px;
 
@@ -138,6 +138,11 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    width: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+    justify-content: center;
   }
 
   .swiper-pagination-bullet {
@@ -157,25 +162,19 @@
   .swiper-pagination-bullet-active {
     width: var(--th-testimonials-pagination-active-width);
     height: var(--th-testimonials-pagination-active-height);
-    background: var(--th-testimonials-pagination-track);
+    background-color: var(--th-testimonials-pagination-track);
+    background-image: linear-gradient(90deg, var(--th-testimonials-pagination-fill), var(--th-testimonials-pagination-fill));
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-position: left center;
   }
 
-  &.th-slider-loading-pagination {
-    .swiper-pagination-bullet-active::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: var(--th-testimonials-pagination-fill);
-      transform: scaleX(0);
-      transform-origin: left center;
+  &.th-testimonials-loading-pagination {
+    .swiper-pagination-bullet-active.is-loading {
+      animation: th-testimonials-pagination-load-ltr var(--th-slider-pagination-delay, 3000ms) linear forwards;
     }
 
-    .swiper-pagination-bullet-active.is-loading::before {
-      animation: th-testimonials-pagination-load var(--th-slider-pagination-delay, 10000ms) linear forwards;
-    }
-
-    &.is-paused .swiper-pagination-bullet-active.is-loading::before {
+    &.is-paused .swiper-pagination-bullet-active.is-loading {
       animation-play-state: paused;
     }
   }
@@ -191,18 +190,33 @@
   }
 }
 
-html[dir='rtl'] .th-home-testimonials__slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before,
-.th-home-testimonials__slider[dir='rtl'].th-slider-loading-pagination .swiper-pagination-bullet-active::before {
-  transform-origin: right center;
+html[dir='rtl'] .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active,
+.th-home-testimonials__slider[dir='rtl'].th-testimonials-loading-pagination .swiper-pagination-bullet-active {
+  background-position: right center;
 }
 
-@keyframes th-testimonials-pagination-load {
+html[dir='rtl'] .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active.is-loading,
+.th-home-testimonials__slider[dir='rtl'].th-testimonials-loading-pagination .swiper-pagination-bullet-active.is-loading {
+  animation-name: th-testimonials-pagination-load-rtl;
+}
+
+@keyframes th-testimonials-pagination-load-ltr {
   from {
-    transform: scaleX(0);
+    background-size: 0% 100%;
   }
 
   to {
-    transform: scaleX(1);
+    background-size: 100% 100%;
+  }
+}
+
+@keyframes th-testimonials-pagination-load-rtl {
+  from {
+    background-size: 0% 100%;
+  }
+
+  to {
+    background-size: 100% 100%;
   }
 }
 
@@ -333,12 +347,12 @@ html[dir='rtl'] .th-home-testimonials__slider.th-slider-loading-pagination .swip
   .th-home-testimonial-card,
   .th-home-testimonials__slider .s-slider--nav-arrow,
   .th-home-testimonials__slider .swiper-pagination-bullet,
-  .th-home-testimonials__slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before {
+  .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active {
     transition: none !important;
     animation: none !important;
   }
 
-  .th-home-testimonials__slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before {
-    transform: scaleX(1);
+  .th-home-testimonials__slider.th-testimonials-loading-pagination .swiper-pagination-bullet-active {
+    background-size: 100% 100%;
   }
 }
