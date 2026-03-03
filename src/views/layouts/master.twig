@@ -167,7 +167,7 @@
 
 				<div class="th-quick-view-loading hidden" data-quick-view="loading" aria-live="polite" aria-atomic="true">
 					<span class="th-quick-view-spinner" aria-hidden="true"></span>
-					<span class="th-quick-view-loading-text">{{ trans('common.loading')|default('Loading...') }}</span>
+					<span class="th-quick-view-loading-text">{{ user.language.code starts with 'ar' ? 'جاري التحميل...' : 'Loading...' }}</span>
 				</div>
 
 				<div class="th-quick-view-error hidden" data-quick-view="error" role="status" aria-live="polite">
