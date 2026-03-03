@@ -611,21 +611,85 @@ salla-slider.photos-slider {
 }
 
 // bullet pagination -------
-salla-slider {
-  .swiper-pagination-bullet {
-    width: 20px;
-    border-radius: 5px;
-    background: #fff;
-    opacity: 0.3;
-
-    &-active {
-      opacity: 1;
-      background-color: var(--color-primary);
-    }
-  }
+salla-slider.th-slider-loading-pagination {
+  --th-slider-pagination-delay: 10000ms;
+  --th-slider-pagination-dot: rgba(17, 24, 39, 0.28);
+  --th-slider-pagination-track: rgba(17, 24, 39, 0.18);
+  --th-slider-pagination-fill: #111827;
+  --th-slider-pagination-active-width: 40px;
+  --th-slider-pagination-active-height: 8px;
 
   .swiper-pagination-bullets.swiper-pagination-horizontal {
     @apply bottom-3 sm:bottom-6;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    margin: 0 !important;
+    border-radius: 999px;
+    background: var(--th-slider-pagination-dot);
+    opacity: 1;
+    position: relative;
+    overflow: hidden;
+    transition:
+      width 220ms var(--th-ease, ease),
+      height 220ms var(--th-ease, ease),
+      background-color 220ms var(--th-ease, ease);
+  }
+
+  .swiper-pagination-bullet-active {
+    width: var(--th-slider-pagination-active-width);
+    height: var(--th-slider-pagination-active-height);
+    background: var(--th-slider-pagination-track);
+  }
+
+  .swiper-pagination-bullet-active::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--th-slider-pagination-fill);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .swiper-pagination-bullet-active.is-loading::before {
+    animation: th-slider-pagination-load var(--th-slider-pagination-delay) linear forwards;
+  }
+
+  &.is-paused .swiper-pagination-bullet-active.is-loading::before {
+    animation-play-state: paused;
+  }
+}
+
+html[dir='rtl'] salla-slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before,
+salla-slider[dir='rtl'].th-slider-loading-pagination .swiper-pagination-bullet-active::before {
+  transform-origin: right center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  salla-slider.th-slider-loading-pagination .swiper-pagination-bullet,
+  salla-slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  salla-slider.th-slider-loading-pagination .swiper-pagination-bullet-active::before {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes th-slider-pagination-load {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
   }
 }
 

@@ -53,20 +53,124 @@ class App extends AppHelpers {
 
   // --- Start Custom Feature: Loading Bar Pagination for Sliders ---
   initLoadingBarPagination() {
-    // Sliders wait to be defined
     customElements.whenDefined('salla-slider').then(() => {
-      const sliders = document.querySelectorAll('salla-slider[has-pagination="true"]');
-      sliders.forEach(slider => {
-        // Only target sliders with auto-play
-        if (slider.hasAttribute('auto-play')) {
-          // Listen to slideChange to force animation restart if needed
-          slider.addEventListener('slideChange', (e) => {
-            // The bullet 'active' class is handled by salla-slider automatically.
-            // The CSS ::part(bullet-active) will replay its animation natively
-            // because Swiper removes and adds the active part string completely on change.
-          });
+      const isCustomerReviewsSlider = (slider) => {
+        return slider.classList.contains('th-home-testimonials__slider')
+          || slider.classList.contains('s-reviews-testimonials-slider')
+          || !!slider.closest('.th-home-testimonials')
+          || !!slider.closest('.s-block--testimonials');
+      };
+
+      const bindSlider = (slider) => {
+        if (!(slider instanceof HTMLElement) || slider.tagName !== 'SALLA-SLIDER') {
+          return;
         }
+        if (!isCustomerReviewsSlider(slider)) {
+          return;
+        }
+        if (slider.dataset.loadingPaginationBound === 'true') {
+          return;
+        }
+        slider.dataset.loadingPaginationBound = 'true';
+
+        const activateLoadingPagination = () => {
+          if (slider.dataset.loadingPaginationReady === 'true') {
+            return;
+          }
+
+          const swiper = slider.slider;
+          const hasPagination = !!swiper?.params?.pagination;
+          const hasAutoplay = !!swiper?.params?.autoplay;
+          if (!hasPagination || !hasAutoplay) {
+            return;
+          }
+
+          slider.dataset.loadingPaginationReady = 'true';
+          slider.classList.add('th-slider-loading-pagination');
+
+          const getActiveDelay = () => {
+            const activeSlide =
+              swiper?.slides?.[swiper.activeIndex] ||
+              slider.querySelector('.swiper-slide-active');
+            const perSlideDelay = Number(activeSlide?.getAttribute?.('data-swiper-autoplay'));
+            if (Number.isFinite(perSlideDelay) && perSlideDelay > 0) {
+              return perSlideDelay;
+            }
+
+            const autoplayConfig = swiper?.params?.autoplay;
+            if (
+              autoplayConfig &&
+              typeof autoplayConfig === 'object' &&
+              Number.isFinite(Number(autoplayConfig.delay))
+            ) {
+              return Number(autoplayConfig.delay);
+            }
+
+            return 10000;
+          };
+
+          const syncDuration = () => {
+            slider.style.setProperty('--th-slider-pagination-delay', `${getActiveDelay()}ms`);
+          };
+
+          const restartBulletAnimation = () => {
+            const activeBullet = slider.querySelector('.swiper-pagination-bullet-active');
+            if (!activeBullet) {
+              return;
+            }
+
+            slider
+              .querySelectorAll('.swiper-pagination-bullet.is-loading')
+              .forEach((bullet) => bullet.classList.remove('is-loading'));
+
+            // Force reflow so animation restarts reliably after slide changes.
+            // eslint-disable-next-line no-unused-expressions
+            activeBullet.offsetWidth;
+            activeBullet.classList.add('is-loading');
+          };
+
+          syncDuration();
+          restartBulletAnimation();
+
+          slider.addEventListener('slideChangeTransitionStart', () => {
+            syncDuration();
+            restartBulletAnimation();
+          });
+
+          slider.addEventListener('mouseenter', () => slider.classList.add('is-paused'));
+          slider.addEventListener('mouseleave', () => slider.classList.remove('is-paused'));
+          slider.addEventListener('focusin', () => slider.classList.add('is-paused'));
+          slider.addEventListener('focusout', () => slider.classList.remove('is-paused'));
+        };
+
+        if (slider.slider) {
+          activateLoadingPagination();
+        }
+
+        slider.addEventListener('afterInit', activateLoadingPagination, { once: true });
+      };
+
+      document.querySelectorAll('salla-slider').forEach(bindSlider);
+
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType !== Node.ELEMENT_NODE) {
+              return;
+            }
+
+            const element = /** @type {HTMLElement} */ (node);
+            if (element.matches?.('salla-slider')) {
+              bindSlider(element);
+            }
+            element.querySelectorAll?.('salla-slider').forEach(bindSlider);
+          });
+        });
       });
+
+      if (document.body) {
+        observer.observe(document.body, { childList: true, subtree: true });
+      }
     });
   }
   // --- End Custom Feature ---
