@@ -374,6 +374,7 @@ class ProductCard extends HTMLElement {
       : document.activeElement;
 
     this.setQuickViewModalState(modal, { loading: true, hasError: false });
+    modal.dataset.quickViewQty = '1';
 
     const modalId = '#product-quick-view-modal';
     modal.classList.remove('hidden');
@@ -617,6 +618,97 @@ class ProductCard extends HTMLElement {
     notifyEl.classList.remove('hidden');
   }
 
+  stripHtml(text = '') {
+    return String(text)
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  renderQuickViewDescription(modal, product) {
+    const descriptionEl = modal.querySelector('[data-quick-view="description"]');
+    if (!descriptionEl) return;
+
+    const plainDescription = this.stripHtml(product?.description || '');
+    if (!plainDescription) {
+      descriptionEl.innerHTML = '';
+      descriptionEl.classList.add('hidden');
+      return;
+    }
+
+    const maxLength = 235;
+    const isLong = plainDescription.length > maxLength;
+    const shortDescription = isLong ? `${plainDescription.slice(0, maxLength).trim()}...` : plainDescription;
+    const sectionTitle =
+      window.salla?.lang?.get?.('common.product_details')
+      || (salla.config.get('theme.is_rtl') ? 'تفاصيل المنتج' : 'Product details');
+    const readMoreText =
+      window.salla?.lang?.get?.('common.read_more')
+      || (salla.config.get('theme.is_rtl') ? 'اقرأ المزيد' : 'Read more');
+
+    descriptionEl.innerHTML = `
+      <h4 class="th-quick-view-description-title">${this.escapeHTML(sectionTitle)}</h4>
+      <p class="th-quick-view-description-text">${this.escapeHTML(shortDescription)}</p>
+      ${isLong ? `<button type="button" class="th-quick-view-description-toggle" data-quick-view="description-toggle">${this.escapeHTML(readMoreText)}</button>` : ''}
+    `;
+    descriptionEl.classList.remove('hidden');
+
+    if (!isLong) return;
+    const toggleButton = descriptionEl.querySelector('[data-quick-view="description-toggle"]');
+    if (!toggleButton || toggleButton.dataset.boundToggle === 'true') return;
+
+    toggleButton.dataset.boundToggle = 'true';
+    toggleButton.addEventListener('click', () => {
+      const isExpanded = descriptionEl.classList.toggle('is-expanded');
+      const textEl = descriptionEl.querySelector('.th-quick-view-description-text');
+      if (textEl) {
+        textEl.textContent = isExpanded ? plainDescription : shortDescription;
+      }
+      toggleButton.textContent = isExpanded
+        ? (salla.config.get('theme.is_rtl') ? 'إخفاء' : 'Show less')
+        : readMoreText;
+    });
+  }
+
+  getQuickViewQuantity(modal) {
+    const parsed = Number(modal?.dataset?.quickViewQty || 1);
+    if (!Number.isFinite(parsed) || parsed < 1) return 1;
+    return Math.round(parsed);
+  }
+
+  setQuickViewQuantity(modal, value) {
+    const normalized = Math.min(99, Math.max(1, Math.round(Number(value) || 1)));
+    modal.dataset.quickViewQty = String(normalized);
+
+    const quantityValueEl = modal.querySelector('[data-quick-view="qty-value"]');
+    if (quantityValueEl) {
+      quantityValueEl.textContent = String(normalized);
+    }
+
+    const addButton = modal.querySelector('[data-quick-view="add-button"] salla-add-product-button');
+    if (addButton) {
+      addButton.setAttribute('quantity', String(normalized));
+    }
+  }
+
+  bindQuickViewQuantityControls(modal) {
+    if (!modal || modal.dataset.quickViewQtyBound === 'true') return;
+    modal.dataset.quickViewQtyBound = 'true';
+
+    modal.addEventListener('click', (event) => {
+      const clickedElement = event.target instanceof Element ? event.target : null;
+      const plusBtn = clickedElement?.closest?.('[data-quick-view="qty-plus"]');
+      const minusBtn = clickedElement?.closest?.('[data-quick-view="qty-minus"]');
+
+      if (!plusBtn && !minusBtn) return;
+      event.preventDefault();
+      event.stopPropagation();
+
+      const currentQty = this.getQuickViewQuantity(modal);
+      this.setQuickViewQuantity(modal, plusBtn ? currentQty + 1 : currentQty - 1);
+    });
+  }
+
   populateQuickViewModal(modal, product = this.product) {
     const imageEl = modal.querySelector('[data-quick-view="image"]');
     const titleEl = modal.querySelector('[data-quick-view="title"]');
@@ -686,6 +778,7 @@ class ProductCard extends HTMLElement {
             product-status="${product.status}"
             product-type="${product.type}"
             class="w-full th-quick-view-add-btn"
+            quantity="${this.getQuickViewQuantity(modal)}"
             ${notifyAttributes}>
             ${buttonLabel}
           </salla-add-product-button>
@@ -706,6 +799,9 @@ class ProductCard extends HTMLElement {
     this.renderQuickViewRating(modal, product);
     this.renderQuickViewTax(modal, product);
     this.renderQuickViewNotify(modal, product);
+    this.renderQuickViewDescription(modal, product);
+    this.bindQuickViewQuantityControls(modal);
+    this.setQuickViewQuantity(modal, this.getQuickViewQuantity(modal));
 
     if (wishlistBtn) {
       wishlistBtn.dataset.productId = product.id;

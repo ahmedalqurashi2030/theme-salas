@@ -204,38 +204,45 @@
 					{# التفاصيل والبيانات (نصف الشاشة يسار) #}
 					<div class="th-quick-view-content w-full md:w-[44%] p-5 sm:p-8 shrink-0 flex flex-col bg-white sm:overflow-y-auto shadow-[-4px_0_24px_rgba(0,0,0,0.02)] z-10">
 
-						<div class="flex items-center gap-3 mb-2">
+						<div class="th-quick-view-head-row">
 							<p data-quick-view="brand" class="text-xs font-bold tracking-widest uppercase text-slate-400"></p>
-						</div>
-
-						<h3 id="product-quick-view-title" data-quick-view="title" data-quick-view-skeleton class="text-xl sm:text-2xl font-bold text-slate-900 leading-tight mb-3"></h3>
-
-						<div data-quick-view="rating" class="th-quick-view-rating hidden"></div>
-
-						<div class="flex items-baseline gap-3 mb-4 bg-slate-50/60 p-4 rounded-2xl border border-slate-100">
-							<div data-quick-view="price" data-quick-view-skeleton class="text-2xl sm:text-3xl font-extrabold text-[var(--th-color-primary,var(--color-primary,#C5A059))] tracking-tight"></div>
 							<div data-quick-view="badge" class="text-xs"></div>
 						</div>
 
+						<h3 id="product-quick-view-title" data-quick-view="title" data-quick-view-skeleton class="text-xl sm:text-[1.75rem] font-bold text-slate-900 leading-tight mb-2"></h3>
+
+						<div data-quick-view="rating" class="th-quick-view-rating hidden"></div>
+
+						<div class="th-quick-view-price-box">
+							<div data-quick-view="price" data-quick-view-skeleton class="text-2xl sm:text-3xl font-extrabold text-[var(--th-color-primary,var(--color-primary,#C5A059))] tracking-tight"></div>
+						</div>
+
+						<div class="th-quick-view-action-icons">
+							<button type="button" data-quick-view="wishlist-btn" class="th-quick-view-icon-btn" aria-pressed="false" aria-label="{{ trans('pages.products.add_to_wishlist')|default('Wishlist') }}">
+								<i class="sicon-heart text-base pointer-events-none"></i>
+								<span class="sr-only">{{ trans('pages.products.add_to_wishlist')|default('Add to wishlist') }}</span>
+							</button>
+							<button type="button" data-quick-view="share-btn" class="th-quick-view-icon-btn" aria-label="{{ trans('common.share')|default('Share') }}">
+								<i class="sicon-share text-base pointer-events-none"></i>
+							</button>
+						</div>
+
 						<p data-quick-view="tax" class="th-quick-view-tax hidden"></p>
-						<p data-quick-view="stock" class="text-sm font-semibold text-rose-600 bg-rose-50 w-fit px-3 py-1 rounded-md mb-3 hidden"></p>
+						<p data-quick-view="stock" class="text-sm font-semibold text-rose-600 bg-rose-50 w-fit px-3 py-1 rounded-md mb-2 hidden"></p>
 						<div data-quick-view="notify" class="th-quick-view-notify hidden"></div>
+						<div data-quick-view="description" class="th-quick-view-description hidden"></div>
 
 						{# أزرار الإجراءات (الأساسية والثانوية) #}
-						<div class="mt-auto flex flex-col gap-3 pt-4">
-							<div data-quick-view="add-button" class="w-full"></div>
-
-							<div class="flex items-center gap-3">
-								<button type="button" data-quick-view="wishlist-btn" class="flex-1 h-12 rounded-xl border-2 border-slate-100 flex items-center justify-center gap-2 text-slate-600 font-medium hover:border-rose-200 hover:bg-rose-50 hover:text-rose-500 transition-colors" aria-pressed="false">
-									<i class="sicon-heart text-lg pointer-events-none"></i>
-									<span>{{ trans('pages.products.add_to_wishlist')|default('أضف للمفضلة') }}</span>
-								</button>
-								<button type="button" data-quick-view="share-btn" class="w-12 h-12 shrink-0 rounded-xl border-2 border-slate-100 flex items-center justify-center text-slate-600 hover:border-slate-300 transition-colors" aria-label="{{ trans('common.share')|default('Share') }}">
-									<i class="sicon-share text-lg pointer-events-none"></i>
-								</button>
+						<div class="th-quick-view-footer mt-auto pt-4">
+							<div data-quick-view="add-button" class="th-quick-view-add-slot"></div>
+							<div class="th-quick-view-qty" data-quick-view="qty-control" role="group" aria-label="{{ trans('pages.products.quantity')|default('Quantity') }}">
+								<button type="button" class="th-quick-view-qty-btn" data-quick-view="qty-plus" aria-label="{{ trans('common.elements.increase_quantity')|default('Increase quantity') }}">+</button>
+								<span class="th-quick-view-qty-value" data-quick-view="qty-value">1</span>
+								<button type="button" class="th-quick-view-qty-btn" data-quick-view="qty-minus" aria-label="{{ trans('common.elements.decrease_quantity')|default('Decrease quantity') }}">-</button>
 							</div>
+						</div>
 
-							<a data-quick-view="link" href="#" class="w-full h-12 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 transition-colors">
+						<a data-quick-view="link" href="#" class="th-quick-view-link">
 								<span>{{ trans('pages.products.view_product')|default('عرض التفاصيل الكاملة') }}</span>
 								<i class="sicon-arrow-left2 text-xs rtl:hidden mt-0.5"></i>
 								<i class="sicon-arrow-right2 text-xs hidden rtl:inline-block mt-0.5"></i>
@@ -252,3 +259,4 @@
 
 	{% endblock %}
 </body></html>
+
