@@ -26,8 +26,6 @@
         "component-random-testimonials"
     ],
     "settings": [
-
-        
         {
             "type": "static",
             "id": "static-line1",
@@ -40,7 +38,6 @@
             "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'> ألوان المتجر  </h6></div>",
             "variant": "h6"
         },
-       
         {
             "id": "enable_dark_mode",
             "type": "boolean",
@@ -167,7 +164,6 @@
             "group": "colors",
             "info": "لون خلفية الترويسة"
         },
-        
         {
             "type": "static",
             "id": "static-line2",
@@ -222,7 +218,6 @@
             "group": "behavior",
             "info": "مثل صفحة الهبوط ، المدونة ،الصفحات التعريفية"
         },
-
         {
             "id": "show_cart_quantity_and_currency",
             "type": "boolean",
@@ -235,7 +230,6 @@
             "selected": false,
             "required": false
         },
-
         {
             "id": "g-header-line",
             "type": "static",
@@ -246,18 +240,17 @@
             "group": "divider"
         },
         {
-    "type": "static",
-    "id": "static-line3",
-    "format": "line"
-},
-{
-    "type": "static",
-    "format": "title",
-    "id": "static-label3",
-    "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الإعلان الترويجي في جميع الصفحات</h6></div>",
-    "variant": "h6"
-},
-
+            "type": "static",
+            "id": "static-line3",
+            "format": "line"
+        },
+        {
+            "type": "static",
+            "format": "title",
+            "id": "static-label3",
+            "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الإعلان الترويجي في جميع الصفحات</h6></div>",
+            "variant": "h6"
+        },
         {
             "id": "global_announcement_visibility",
             "type": "boolean",
@@ -273,7 +266,6 @@
             "group": "announcement",
             "info": "تحكم عام بظهور الإعلان على الموقع بالكامل."
         },
-
         {
             "id": "global_announcement_text",
             "type": "string",
@@ -373,17 +365,17 @@
             "info": "يتم حفظ اختيار الإغلاق محليًا في المتصفح."
         },
         {
-    "type": "static",
-    "id": "static-line4",
-    "format": "line"
-},
-{
-    "type": "static",
-    "format": "title",
-    "id": "static-label4",
-    "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الصفحة الرئيسية</h6></div>",
-    "variant": "h6"
-},
+            "type": "static",
+            "id": "static-line4",
+            "format": "line"
+        },
+        {
+            "type": "static",
+            "format": "title",
+            "id": "static-label4",
+            "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الصفحة الرئيسية</h6></div>",
+            "variant": "h6"
+        },
         {
             "id": "squar_photo_bg_image_size",
             "type": "items",
@@ -442,17 +434,17 @@
             "info": "عرض (زر الكل) في الصفحة الرئيسية"
         },
         {
-    "type": "static",
-    "id": "static-line5",
-    "format": "line"
-},
-{
-    "type": "static",
-    "format": "title",
-    "id": "static-label5",
-    "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات صفحة المنتج</h6></div>",
-    "variant": "h6"
-},
+            "type": "static",
+            "id": "static-line5",
+            "format": "line"
+        },
+        {
+            "type": "static",
+            "format": "title",
+            "id": "static-label5",
+            "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات صفحة المنتج</h6></div>",
+            "variant": "h6"
+        },
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
@@ -528,7 +520,6 @@
             "group": "gallery",
             "info": "تكبير الصور في سليدر صور المنتج"
         },
-      
         {
             "id": "card_primary_icons",
             "type": "boolean",
@@ -619,11 +610,26 @@
                 }
             ],
             "options": [
-                { "label": "4 منتجات", "value": "4" },
-                { "label": "5 منتجات", "value": "5" },
-                { "label": "6 منتجات (الافتراضي)", "value": "6" },
-                { "label": "7 منتجات", "value": "7" },
-                { "label": "8 منتجات", "value": "8" }
+                {
+                    "label": "4 منتجات",
+                    "value": "4"
+                },
+                {
+                    "label": "5 منتجات",
+                    "value": "5"
+                },
+                {
+                    "label": "6 منتجات (الافتراضي)",
+                    "value": "6"
+                },
+                {
+                    "label": "7 منتجات",
+                    "value": "7"
+                },
+                {
+                    "label": "8 منتجات",
+                    "value": "8"
+                }
             ],
             "source": "Manual",
             "required": true,
@@ -631,17 +637,17 @@
             "group": "card_design"
         },
         {
-    "type": "static",
-    "id": "static-line6",
-    "format": "line"
-},
-{
-    "type": "static",
-    "format": "title",
-    "id": "static-label6",
-    "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الفوتر</h6></div>",
-    "variant": "h6"
-},
+            "type": "static",
+            "id": "static-line6",
+            "format": "line"
+        },
+        {
+            "type": "static",
+            "format": "title",
+            "id": "static-label6",
+            "value": "<div class='rounded-lg' style='background-color: #21636d; display: flex; justify-content: center; align-items: center;padding: 15px;margin-bottom: 20px !important; flex-direction: column;gap: 15px;'><h6 style='color: #ffffff;font-size: 15px; font-weight: bold;'>إعدادات الفوتر</h6></div>",
+            "variant": "h6"
+        },
         {
             "type": "boolean",
             "icon": "sicon-toggle-off",
@@ -1644,7 +1650,6 @@
             "icon": "sicon-store",
             "path": "home.before-after-hero",
             "fields": [
-               
                 {
                     "id": "title",
                     "type": "string",
@@ -1676,39 +1681,37 @@
                     "maxLength": 1000
                 },
                 {
-                "id": "layout_style",
-                "type": "items",
-                "format": "dropdown-list",
-                "label": "تخطيط القسم",
-                "description": "اختر طريقة ترتيب المحتوى مع المقارنة",
-                "labelHTML": null,
-                "icon": "sicon-keyboard_arrow_down",
-                "selected": [
-                    {
-                    "label": "split",
-                    "value": "جانبي (النص بجانب الصورة)",
-                    "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
-                    }
-                ],
-                "options": [
-                    {
-                    "label": "split",
-                    "value": "جانبي (النص بجانب الصورة)",
-                    "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
-                    },
-                    {
-                    "label": "stacked",
-                    "value": "عمودي (المحتوى فوق الصورة)",
-                    "key": "84de0019-b67f-4c72-a204-c740ec69e4dc"
-                    }
-                ],
-                "source": "Manual",
-                "multichoice": false,
-                "searchable": false,
-                "required": false
+                    "id": "layout_style",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": "تخطيط القسم",
+                    "description": "اختر طريقة ترتيب المحتوى مع المقارنة",
+                    "labelHTML": null,
+                    "icon": "sicon-keyboard_arrow_down",
+                    "selected": [
+                        {
+                            "label": "split",
+                            "value": "جانبي (النص بجانب الصورة)",
+                            "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
+                        }
+                    ],
+                    "options": [
+                        {
+                            "label": "split",
+                            "value": "جانبي (النص بجانب الصورة)",
+                            "key": "2c0e54cf-c8b4-4a71-98ab-2b6518772a11"
+                        },
+                        {
+                            "label": "stacked",
+                            "value": "عمودي (المحتوى فوق الصورة)",
+                            "key": "84de0019-b67f-4c72-a204-c740ec69e4dc"
+                        }
+                    ],
+                    "source": "Manual",
+                    "multichoice": false,
+                    "searchable": false,
+                    "required": false
                 },
-
-    
                 {
                     "id": "before_image",
                     "type": "string",
@@ -1959,8 +1962,8 @@
                     "icon": "sicon-keyboard_arrow_down",
                     "selected": [
                         {
-                            "label": "البداية (يمين)",
-                            "value": "start",
+                            "label": "start",
+                            "value": "البداية (يمين)",
                             "key": "988f800d-913f-41d2-89e9-33e6692bc979"
                         }
                     ],
@@ -1977,8 +1980,8 @@
                         }
                     ],
                     "source": "Manual",
-                    "multichoice": true,
-                    "searchable": true,
+                    "multichoice": false,
+                    "searchable": false,
                     "required": false
                 },
                 {
@@ -2163,14 +2166,12 @@
                             "value": "https://res.cloudinary.com/dkbnpozos/image/upload/v1770013893/faces/Site/2026/campaigns/ramadan/icons-cat/Icons-Perfumes.jpg",
                             "required": true
                         },
-                        
-
-                          {
+                        {
                             "type": "items",
                             "icon": "sicon-link",
                             "label": "الرابط",
                             "id": "items.url",
-                            "value": null,
+                            "value": [],
                             "description": null,
                             "required": false,
                             "format": "variable-list",
