@@ -41,6 +41,7 @@ class App extends AppHelpers {
     salla.comment.event.onAdded(() => window.location.reload());
 
     this.initLoadingBarPagination();
+    this.initFeaturedProductsStyle3MobileNav();
     this.status = 'ready';
     document.dispatchEvent(new CustomEvent('theme::ready'));
     this.log('Theme Loaded');
@@ -196,6 +197,122 @@ class App extends AppHelpers {
     });
   }
   // --- End Custom Feature ---
+
+  initFeaturedProductsStyle3MobileNav() {
+    const blocks = document.querySelectorAll('.s-block--features-products.th-featured-products-style3.two-cols');
+    if (!blocks.length) {
+      return;
+    }
+
+    const mobileQuery = window.matchMedia('(max-width: 767px)');
+
+    const bindBlock = (block) => {
+      if (!(block instanceof HTMLElement) || block.dataset.featuredStyle3NavBound === 'true') {
+        return;
+      }
+      block.dataset.featuredStyle3NavBound = 'true';
+
+      const inner = block.querySelector('.inner');
+      const nav = block.querySelector('[data-featured-style3-nav]');
+      const prevBtn = block.querySelector('[data-featured-style3-nav-btn="prev"]');
+      const nextBtn = block.querySelector('[data-featured-style3-nav-btn="next"]');
+      const sections = inner ? Array.from(inner.children).filter((child) => child.tagName === 'SECTION') : [];
+
+      if (!inner || !nav || !prevBtn || !nextBtn || sections.length < 2) {
+        return;
+      }
+
+      let activeIndex = 0;
+      let scrollTimeout = null;
+
+      const isMobile = () => mobileQuery.matches;
+
+      const syncActiveIndexFromScroll = () => {
+        const containerRect = inner.getBoundingClientRect();
+        const isRTL = getComputedStyle(block).direction === 'rtl';
+
+        let nearestIndex = activeIndex;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        sections.forEach((section, index) => {
+          const sectionRect = section.getBoundingClientRect();
+          const distance = isRTL
+            ? Math.abs(sectionRect.right - containerRect.right)
+            : Math.abs(sectionRect.left - containerRect.left);
+
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        activeIndex = nearestIndex;
+        prevBtn.disabled = activeIndex <= 0;
+        nextBtn.disabled = activeIndex >= sections.length - 1;
+      };
+
+      const scrollToIndex = (index) => {
+        const targetIndex = Math.max(0, Math.min(index, sections.length - 1));
+        activeIndex = targetIndex;
+
+        sections[targetIndex].scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'start',
+        });
+
+        prevBtn.disabled = activeIndex <= 0;
+        nextBtn.disabled = activeIndex >= sections.length - 1;
+      };
+
+      const syncNavVisibility = () => {
+        nav.hidden = !isMobile();
+
+        if (!isMobile()) {
+          prevBtn.disabled = false;
+          nextBtn.disabled = false;
+          return;
+        }
+
+        syncActiveIndexFromScroll();
+      };
+
+      prevBtn.addEventListener('click', () => {
+        if (!isMobile()) {
+          return;
+        }
+        scrollToIndex(activeIndex - 1);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (!isMobile()) {
+          return;
+        }
+        scrollToIndex(activeIndex + 1);
+      });
+
+      inner.addEventListener('scroll', () => {
+        if (!isMobile()) {
+          return;
+        }
+
+        if (scrollTimeout) {
+          window.clearTimeout(scrollTimeout);
+        }
+        scrollTimeout = window.setTimeout(syncActiveIndexFromScroll, 80);
+      }, { passive: true });
+
+      if (typeof mobileQuery.addEventListener === 'function') {
+        mobileQuery.addEventListener('change', syncNavVisibility);
+      } else if (typeof mobileQuery.addListener === 'function') {
+        mobileQuery.addListener(syncNavVisibility);
+      }
+
+      syncNavVisibility();
+    };
+
+    blocks.forEach(bindBlock);
+  }
 
   initTharaaHeaderMenu() {
     const header = document.querySelector('.th-header');

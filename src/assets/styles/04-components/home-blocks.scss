@@ -406,11 +406,40 @@
 
 
 .s-block--features-products.th-featured-products-style3 {
+  .th-featured-products-style3__mobile-nav {
+    display: none;
+  }
+
   .th-featured-products-style3__grid {
     @apply items-stretch;
   }
 
   @media (max-width: 767px) {
+    .th-featured-products-style3__mobile-nav {
+      @apply mb-3 flex items-center justify-center gap-2;
+    }
+
+    .th-featured-products-style3__mobile-nav-btn {
+      @apply inline-flex items-center justify-center rounded-full;
+      width: 34px;
+      height: 34px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #111827;
+      font-size: 18px;
+      line-height: 1;
+      transition:
+        background-color 200ms ease,
+        border-color 200ms ease,
+        color 200ms ease,
+        opacity 200ms ease;
+
+      &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+    }
+
     &.two-cols {
       .inner {
         @apply flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory;
