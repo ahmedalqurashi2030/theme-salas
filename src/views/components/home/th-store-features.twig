@@ -60,17 +60,17 @@
 				</div>
 			</header>
 
-			<div class="th-store-features__slider flex gap-4 overflow-x-auto pt-14 pb-7 px-4 md:px-0 md:pt-15 md:grid md:grid-cols-4 md:gap-6" data-th-store-features-track>
+			<div class="th-store-features__slider flex gap-4 overflow-x-auto px-4 md:px-0 md:grid md:grid-cols-4 {{ is_inline_layout ? 'pt-2 pb-3 md:pt-0 md:pb-0 md:gap-0' : 'pt-14 pb-7 md:pt-15 md:gap-6' }}" data-th-store-features-track>
 				{% for feature in features %}
 					<article class="th-store-features__card" data-feature-index="{{ loop.index0 }}">
-						<div class="th-store-features__card-inner flex {{ is_inline_layout ? 'flex-row items-start text-start gap-4 px-5 py-6 md:px-6 md:py-7' : 'flex-col items-center text-center px-5 pt-12 pb-8 md:px-5 md:pt-14 md:pb-8' }} rounded-[1.35rem] md:rounded-[1.75rem]">
-							<div class="th-store-features__icon-wrap flex items-center justify-center {{ is_inline_layout ? 'th-store-features__icon-wrap--inline w-14 h-14 md:w-16 md:h-16' : 'w-[4.1rem] h-[4.1rem] -top-[2.05rem] md:w-[4.9rem] md:h-[4.9rem] md:-top-[2.45rem] lg:w-[5.7rem] lg:h-[5.7rem] lg:-top-[2.85rem]' }}">
-								<i class="{{ feature.icon|default('sicon-store') }} th-store-features__icon text-[1.9rem] md:text-[2.3rem]"></i>
+						<div class="th-store-features__card-inner flex {{ is_inline_layout ? 'flex-row items-center text-start gap-3.5 px-4 py-5 md:px-5 md:py-5' : 'flex-col items-center text-center px-5 pt-12 pb-8 md:px-5 md:pt-14 md:pb-8' }} rounded-[1.35rem] md:rounded-[1.75rem]">
+							<div class="th-store-features__icon-wrap flex items-center justify-center {{ is_inline_layout ? 'th-store-features__icon-wrap--inline w-12 h-12 md:w-[3.35rem] md:h-[3.35rem]' : 'w-[4.1rem] h-[4.1rem] -top-[2.05rem] md:w-[4.9rem] md:h-[4.9rem] md:-top-[2.45rem] lg:w-[5.7rem] lg:h-[5.7rem] lg:-top-[2.85rem]' }}">
+								<i class="{{ feature.icon|default('sicon-store') }} th-store-features__icon {{ is_inline_layout ? 'text-[1.25rem] md:text-[1.35rem]' : 'text-[1.9rem] md:text-[2.3rem]' }}"></i>
 							</div>
 
 							<div class="th-store-features__content {{ is_inline_layout ? 'min-w-0 flex-1' : '' }}">
 								{% if feature.title %}
-									<h3 class="th-store-features__card-title m-0 {{ is_inline_layout ? 'mb-2' : 'mb-[0.9rem]' }}">{{ feature.title }}</h3>
+									<h3 class="th-store-features__card-title m-0 {{ is_inline_layout ? 'mb-1' : 'mb-[0.9rem]' }}">{{ feature.title }}</h3>
 								{% endif %}
 
 								{% if feature.description %}
@@ -83,103 +83,17 @@
 			</div>
 
 			{% if show_mobile_dots %}
-				<div class="th-store-features__mobile-nav">
-					<div class="th-store-features__dots">
-						{% for feature in features %}
-							<button type="button" class="th-store-features__dot {{ loop.first ? 'is-active' : '' }}" data-go-to="{{ loop.index0 }}" aria-label="Go to card {{ loop.index }}"></button>
-						{% endfor %}
-					</div>
-
-					<div class="th-store-features__counter">
-						<span data-th-store-features-current>1</span>
-						<span>/</span>
-						<span>{{ features|length }}</span>
-					</div>
+				<div class="th-store-features__mobile-pagination swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal" data-th-store-features-pagination hidden>
+					{% for feature in features %}
+						<button
+							type="button"
+							class="swiper-pagination-bullet{{ loop.first ? ' swiper-pagination-bullet-active' : '' }}"
+							data-th-store-features-dot="{{ loop.index0 }}"
+							aria-label="{{ trans('common.slide')|default('Slide') }} {{ loop.index }}">
+						</button>
+					{% endfor %}
 				</div>
 			{% endif %}
 		</div>
 	</section>
-
-	<script>
-		(() => {
-			const sections = document.querySelectorAll('[data-th-store-features]');
-			if (!sections.length) return;
-
-			const debounce = (fn, wait = 120) => {
-				let timeout;
-				return (...args) => {
-					clearTimeout(timeout);
-					timeout = setTimeout(() => fn(...args), wait);
-				};
-			};
-
-			sections.forEach((section) => {
-				const track = section.querySelector('[data-th-store-features-track]');
-				if (!track) return;
-
-				const cards = section.querySelectorAll('.th-store-features__card');
-				const dots = section.querySelectorAll('.th-store-features__dot');
-				const counter = section.querySelector('[data-th-store-features-current]');
-				const total = cards.length;
-				if (!total) return;
-
-				let activeIndex = 0;
-				let isMobile = window.innerWidth < 1024;
-
-				const setActive = (index) => {
-					activeIndex = Math.max(0, Math.min(index, total - 1));
-					dots.forEach((dot, i) => dot.classList.toggle('is-active', i === activeIndex));
-					if (counter) counter.textContent = String(activeIndex + 1);
-				};
-
-				const scrollToCard = (index) => {
-					const card = cards[index];
-					if (!card) return;
-
-					const trackRect = track.getBoundingClientRect();
-					const cardRect = card.getBoundingClientRect();
-					const deltaX = (cardRect.left + cardRect.width / 2) - (trackRect.left + trackRect.width / 2);
-
-					track.scrollBy({ left: deltaX, behavior: 'smooth' });
-					setActive(index);
-				};
-
-				const updateFromScroll = debounce(() => {
-					if (!isMobile) return;
-
-					const center = track.getBoundingClientRect().left + track.clientWidth / 2;
-					let nextIndex = 0;
-					let minDistance = Infinity;
-
-					cards.forEach((card, index) => {
-						const cardRect = card.getBoundingClientRect();
-						const cardCenter = cardRect.left + cardRect.width / 2;
-						const distance = Math.abs(cardCenter - center);
-						if (distance < minDistance) {
-							minDistance = distance;
-							nextIndex = index;
-						}
-					});
-
-					setActive(nextIndex);
-				}, 120);
-
-				track.addEventListener('scroll', updateFromScroll);
-
-				section.querySelectorAll('[data-go-to]').forEach((button) => {
-					button.addEventListener('click', (event) => {
-						event.preventDefault();
-						const index = Number(button.dataset.goTo || 0);
-						scrollToCard(index);
-					});
-				});
-
-				window.addEventListener('resize', debounce(() => {
-					isMobile = window.innerWidth < 1024;
-				}, 200));
-
-				setActive(0);
-			});
-		})();
-	</script>
 {% endif %}

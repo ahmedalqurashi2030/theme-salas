@@ -1566,6 +1566,9 @@ input:where([type='file']):focus{
     gap: 20px;
     gap: var(--th-gap,20px);
 }
+.gap-3\.5{
+    gap: 0.875rem;
+}
 .space-x-1 > :not([hidden]) ~ :not([hidden]){
     --tw-space-x-reverse: 0;
     margin-right: calc(0.25rem * 0);
@@ -2197,6 +2200,9 @@ input:where([type='file']):focus{
 .pt-8{
     padding-top: 2rem;
 }
+.pb-3{
+    padding-bottom: 0.75rem;
+}
 .text-center{
     text-align: center;
 }
@@ -2267,6 +2273,9 @@ input:where([type='file']):focus{
 .text-xs{
     font-size: 0.75rem;
     line-height: 1rem;
+}
+.text-\[1\.25rem\]{
+    font-size: 1.25rem;
 }
 .font-bold{
     font-weight: 700;
@@ -31848,6 +31857,9 @@ body[data-show-cart-total=true] .th-cart-total span {
     .md\:h-\[400px\]{
         height: 400px;
     }
+    .md\:h-\[3\.35rem\]{
+        height: 3.35rem;
+    }
     .md\:\!w-2\/4{
         width: 50% !important;
     }
@@ -31881,6 +31893,9 @@ body[data-show-cart-total=true] .th-cart-total span {
     .md\:w-auto{
         width: auto;
     }
+    .md\:w-\[3\.35rem\]{
+        width: 3.35rem;
+    }
     .md\:grid-cols-2{
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -31910,6 +31925,9 @@ body[data-show-cart-total=true] .th-cart-total span {
     }
     .md\:gap-8{
         gap: 2rem;
+    }
+    .md\:gap-0{
+        gap: 0px;
     }
     .md\:space-x-12 > :not([hidden]) ~ :not([hidden]){
         --tw-space-x-reverse: 0;
@@ -31975,6 +31993,10 @@ body[data-show-cart-total=true] .th-cart-total span {
         padding-top: 1.75rem;
         padding-bottom: 1.75rem;
     }
+    .md\:py-5{
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+    }
     .md\:pb-16{
         padding-bottom: 4rem;
     }
@@ -31983,6 +32005,12 @@ body[data-show-cart-total=true] .th-cart-total span {
     }
     .md\:pt-14{
         padding-top: 3.5rem;
+    }
+    .md\:pb-0{
+        padding-bottom: 0px;
+    }
+    .md\:pt-0{
+        padding-top: 0px;
     }
     .md\:text-2xl{
         font-size: 1.5rem;
@@ -31997,6 +32025,9 @@ body[data-show-cart-total=true] .th-cart-total span {
     .md\:text-base{
         font-size: 1rem;
         line-height: 1.5rem;
+    }
+    .md\:text-\[1\.35rem\]{
+        font-size: 1.35rem;
     }
     .md\:first\:pt-24:first-child{
         padding-top: 6rem;
