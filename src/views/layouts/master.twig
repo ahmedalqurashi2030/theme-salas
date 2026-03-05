@@ -147,102 +147,201 @@
 	{% endif %}
 
 	{# --- Quick View Modal --- #}
-	<div
-		id="product-quick-view-modal"
-		class="th-quick-view-modal fixed inset-0 z-[100] hidden"
-		aria-hidden="true"
-		role="dialog"
-		aria-modal="true"
-		aria-labelledby="product-quick-view-title"
-		tabindex="-1">
-		{# غلاف شفاف مع إغلاق خارجي #}
-		<div class="s-salla-modal-overlay fixed inset-0 bg-slate-900/60 transition-opacity opacity-0 cursor-pointer" data-close-modal="product-quick-view-modal" aria-label="{{ trans('common.close') }}"></div>
+	{#
+  ================================================================
+  QUICK VIEW MODAL — Tharaa Theme (معايير سلة الرسمية)
+  ================================================================
+  الموقع   : يُضاف داخل <body> في master.twig
+  المكوّنات الرسمية المستخدمة:
+    • salla-button              → إغلاق / مفضلة / مشاركة
+    • salla-add-product-button  → إضافة للسلة (يُحقن بـ JS)
+    • salla-quantity-input      → التحكم في الكمية
+    • salla-product-availability→ الإشعار عند التوفر
+  ================================================================
+#}
 
-		{# الكرت الأساسي، تم وضع transition هنا ليشتغل منه التحريك #}
-		<div class="s-salla-modal-body fixed inset-x-0 bottom-0 sm:inset-0 flex items-end sm:items-center justify-center sm:p-4 opacity-0 translate-y-full sm:translate-y-4 sm:scale-95 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] pointer-events-none">
+<div
+  id="product-quick-view-modal"
+  class="th-quick-view-modal fixed inset-0 z-[200] hidden"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="product-quick-view-title">
 
-			<div
-				class="th-quick-view-sheet bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl max-w-6xl w-full overflow-hidden flex flex-col sm:max-h-[88vh] max-h-[92vh] pointer-events-auto relative"
-				data-quick-view="sheet">
+  {# ─── Overlay ─── #}
+  <div
+    class="s-salla-modal-overlay fixed inset-0 cursor-pointer"
+    data-close-modal="product-quick-view-modal"
+    aria-hidden="true">
+  </div>
 
-				{# خط سحب في الجوال #}
-				<button type="button" class="th-quick-view-drag-handle w-full flex justify-center py-3 sm:hidden" data-quick-view="drag-handle" data-close-modal="product-quick-view-modal" aria-label="{{ trans('common.close') }}">
-					<span class="w-12 h-1.5 bg-gray-300 rounded-full pointer-events-none"></span>
-				</button>
+  {# ─── Modal wrapper ─── #}
+  <div class="s-salla-modal-body fixed inset-0 flex items-end sm:items-center justify-center p-0 sm:p-4">
 
-				<div
-					class="th-quick-view-grid flex flex-col md:flex-row md:items-stretch overflow-y-auto sm:overflow-hidden h-full">
+    <div class="th-quick-view-sheet bg-white w-full relative" role="document">
 
-					{# الصورة الكبيرة (نصف الشاشة يمين) #}
-					<div class="th-quick-view-media relative w-full md:w-[56%] bg-slate-50 flex flex-col p-5 sm:p-8 shrink-0">
-						<div class="th-quick-view-image-wrap flex-1 min-h-[260px] sm:min-h-[360px] flex items-center justify-center px-2">
-							<img
-								data-quick-view="image"
-								src="{{ theme.settings.get('placeholder', 'images/placeholder.png')|asset }}"
-								alt=""
-								class="w-full h-auto max-h-[520px] object-contain transition-transform duration-500"/>
-						</div>
+      {# ─── Drag handle (mobile only) ─── #}
+      <div
+        class="th-quick-view-drag-handle sm:hidden flex justify-center pt-3 pb-1 cursor-grab"
+        data-quick-view="drag-handle"
+        aria-hidden="true">
+        <span class="block w-10 h-1 rounded-full bg-gray-200"></span>
+      </div>
 
-						{# زر الإغلاق الدائري العائم #}
-						<button type="button" class="th-quick-view-close absolute top-4 sm:top-5 inset-inline-end-4 sm:inset-inline-end-5 w-10 h-10 rounded-full bg-white/90 backdrop-blur shadow-sm text-slate-500 hover:text-slate-900 hover:bg-white flex items-center justify-center transition-all z-10" data-close-modal="product-quick-view-modal" data-quick-view="close-btn" aria-label="{{ trans('common.close') }}">
-							<span class="th-quick-view-close-icon pointer-events-none" aria-hidden="true">&times;</span>
-						</button>
+      {# ─── Main grid ─── #}
+      <div class="th-quick-view-grid">
 
-						<div class="th-quick-view-gallery hidden" data-quick-view="gallery" aria-label="{{ trans('pages.products.product_images')|default('Product images') }}"></div>
-					</div>
+        {# ══════════════════ MEDIA PANEL ══════════════════ #}
+        <div class="th-quick-view-media relative">
 
-					{# التفاصيل والبيانات (نصف الشاشة يسار) #}
-					<div class="th-quick-view-content w-full md:w-[44%] p-5 sm:p-8 shrink-0 flex flex-col bg-white sm:overflow-y-auto shadow-[-4px_0_24px_rgba(0,0,0,0.02)] z-10">
+          {# زر الإغلاق #}
+          <salla-button
+            type="button"
+            shape="icon"
+            fill="outline"
+            color="light"
+            size="sm"
+            class="th-quick-view-close"
+            data-close-modal="product-quick-view-modal"
+            aria-label="{{ trans('common.close') }}">
+            <i class="sicon-cancel" aria-hidden="true"></i>
+          </salla-button>
 
-						<div class="th-quick-view-head-row">
-							<p data-quick-view="brand" class="text-xs font-bold tracking-widest uppercase text-slate-400"></p>
-							<div data-quick-view="badge" class="text-xs"></div>
-						</div>
+          {# الصورة الرئيسية #}
+          <div class="th-quick-view-image-wrap">
+            <img
+              data-quick-view="image"
+              src="{{ theme.settings.get('placeholder', 'images/placeholder.png')|asset }}"
+              alt=""
+              loading="eager"
+              decoding="async" />
+          </div>
 
-						<h3 id="product-quick-view-title" data-quick-view="title" class="text-xl sm:text-[1.75rem] font-bold text-slate-900 leading-tight mb-2"></h3>
+          {# معرض الصور (يُملأ بـ JS) #}
+          <div
+            class="th-quick-view-gallery hidden"
+            data-quick-view="gallery"
+            role="list"
+            aria-label="{{ trans('pages.products.product_images') }}">
+          </div>
 
-						<div data-quick-view="rating" class="th-quick-view-rating hidden"></div>
+        </div>{# /media #}
 
-						<div class="th-quick-view-price-box">
-							<div data-quick-view="price" class="text-2xl sm:text-3xl font-extrabold text-[var(--th-color-primary,var(--color-primary,#C5A059))] tracking-tight"></div>
-						</div>
 
-						<div class="th-quick-view-action-icons">
-							<button type="button" data-quick-view="wishlist-btn" class="th-quick-view-icon-btn" aria-pressed="false" aria-label="{{ trans('pages.products.add_to_wishlist')|default('Wishlist') }}">
-								<i class="sicon-heart text-base pointer-events-none"></i>
-								<span class="sr-only">{{ trans('pages.products.add_to_wishlist')|default('Add to wishlist') }}</span>
-							</button>
-							<button type="button" data-quick-view="share-btn" class="th-quick-view-icon-btn" aria-label="{{ trans('common.share')|default('Share') }}">
-								<i class="sicon-share text-base pointer-events-none"></i>
-							</button>
-						</div>
+        {# ══════════════════ CONTENT PANEL ══════════════════ #}
+        <div class="th-quick-view-content">
 
-						<p data-quick-view="tax" class="th-quick-view-tax hidden"></p>
-						<p data-quick-view="stock" class="text-sm font-semibold text-rose-600 bg-rose-50 w-fit px-3 py-1 rounded-md mb-2 hidden"></p>
-						<div data-quick-view="notify" class="th-quick-view-notify hidden"></div>
-						<div data-quick-view="description" class="th-quick-view-description hidden"></div>
+          {# ─ ماركة + شارة ─ #}
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <p data-quick-view="brand" class="hidden text-xs font-bold uppercase tracking-widest text-primary opacity-80"></p>
+            <div data-quick-view="badge" class="ms-auto"></div>
+          </div>
 
-						{# أزرار الإجراءات (الأساسية والثانوية) #}
-						<div class="th-quick-view-footer mt-auto pt-4">
-							<div data-quick-view="add-button" class="th-quick-view-add-slot"></div>
-							<div class="th-quick-view-qty" data-quick-view="qty-control" role="group" aria-label="{{ trans('pages.products.quantity')|default('Quantity') }}">
-								<button type="button" class="th-quick-view-qty-btn" data-quick-view="qty-plus" aria-label="{{ trans('common.elements.increase_quantity')|default('Increase quantity') }}">+</button>
-								<span class="th-quick-view-qty-value" data-quick-view="qty-value">1</span>
-								<button type="button" class="th-quick-view-qty-btn" data-quick-view="qty-minus" aria-label="{{ trans('common.elements.decrease_quantity')|default('Decrease quantity') }}">-</button>
-							</div>
-						</div>
+          {# ─ اسم المنتج ─ #}
+          <h3
+            id="product-quick-view-title"
+            data-quick-view="title"
+            class="text-xl font-extrabold text-gray-900 leading-snug mb-2">
+          </h3>
 
-						<a data-quick-view="link" href="#" class="th-quick-view-link">
-								<span>{{ trans('pages.products.view_product')|default('عرض التفاصيل الكاملة') }}</span>
-								<i class="sicon-arrow-left2 text-xs rtl:hidden mt-0.5"></i>
-								<i class="sicon-arrow-right2 text-xs hidden rtl:inline-block mt-0.5"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+          {# ─ التقييم (يُبنى بـ JS باستخدام sicon) ─ #}
+          <div
+            data-quick-view="rating"
+            class="th-quick-view-rating hidden mb-2"
+            role="img">
+          </div>
+
+          {# ─ السعر ─ #}
+          <div class="th-quick-view-price-box mb-3">
+            <div data-quick-view="price"></div>
+          </div>
+
+          {# ─ مفضلة + مشاركة ─ #}
+          <div class="flex items-center gap-2 mb-3">
+            <salla-button
+              type="button"
+              shape="icon"
+              fill="outline"
+              color="light"
+              size="sm"
+              data-quick-view="wishlist-btn"
+              aria-pressed="false"
+              aria-label="{{ trans('pages.products.add_to_wishlist') }}">
+              <i class="sicon-heart" aria-hidden="true"></i>
+            </salla-button>
+
+            <salla-button
+              type="button"
+              shape="icon"
+              fill="outline"
+              color="light"
+              size="sm"
+              data-quick-view="share-btn"
+              aria-label="{{ trans('common.share') }}">
+              <i class="sicon-share" aria-hidden="true"></i>
+            </salla-button>
+          </div>
+
+          {# ─ الضريبة ─ #}
+          <p data-quick-view="tax" class="hidden text-xs text-gray-500 mb-1"></p>
+
+          {# ─ نفاد المخزون ─ #}
+          <p data-quick-view="stock" class="hidden text-sm font-bold text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-1.5 w-fit mb-2"></p>
+
+          {# ─ التوفر/الإشعار — salla-product-availability ─ #}
+          {#
+            يُفعَّل بـ JS عبر:
+            el.setAttribute('product-id', id)
+            el.removeAttribute('hidden') / classList.remove('hidden')
+          #}
+          <salla-product-availability
+            data-quick-view="availability"
+            class="hidden mb-2">
+          </salla-product-availability>
+
+          {# ─ الوصف المختصر ─ #}
+          <div data-quick-view="description" class="th-quick-view-description hidden mb-3"></div>
+
+          {# ─── Footer: إضافة + كمية ─── #}
+          <div class="th-quick-view-footer mt-auto pt-3 border-t border-gray-100">
+
+            {# زر الإضافة (يُحقن بـ JS) #}
+            <div data-quick-view="add-button" class="w-full mb-2"></div>
+
+            {#
+              salla-quantity-input — مكوّن سلة الرسمي
+              events: change → e.detail.quantity أو e.target.value
+            #}
+            <salla-quantity-input
+              data-quick-view="qty-input"
+              value="1"
+              min="1"
+              max="99"
+              class="th-quick-view-qty-input">
+            </salla-quantity-input>
+
+          </div>{# /footer #}
+
+          {# ─ رابط المنتج ─ #}
+          <a
+            data-quick-view="link"
+            href="#"
+            class="th-quick-view-link mt-2 inline-flex items-center gap-1">
+            <span>{{ trans('pages.products.view_product') }}</span>
+            <i class="sicon-arrow-left2 rtl:inline-block ltr:hidden" aria-hidden="true"></i>
+            <i class="sicon-arrow-right2 ltr:inline-block rtl:hidden" aria-hidden="true"></i>
+          </a>
+
+        </div>{# /content #}
+
+      </div>{# /grid #}
+
+    </div>{# /sheet #}
+
+  </div>{# /body #}
+
+</div>{# /modal #}
+
 
 	{% block scripts %}
 		<script src="{{ 'custom/th-links.js' | asset }}" defer></script>
