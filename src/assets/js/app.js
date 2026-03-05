@@ -41,7 +41,7 @@ class App extends AppHelpers {
     salla.comment.event.onAdded(() => window.location.reload());
 
     this.initLoadingBarPagination();
-    this.initFeaturedProductsStyle3MobileNav();
+    this.initFeaturedProductsStyle3MobilePagination();
     this.status = 'ready';
     document.dispatchEvent(new CustomEvent('theme::ready'));
     this.log('Theme Loaded');
@@ -198,7 +198,7 @@ class App extends AppHelpers {
   }
   // --- End Custom Feature ---
 
-  initFeaturedProductsStyle3MobileNav() {
+  initFeaturedProductsStyle3MobilePagination() {
     const blocks = document.querySelectorAll('.s-block--features-products.th-featured-products-style3.two-cols');
     if (!blocks.length) {
       return;
@@ -207,18 +207,17 @@ class App extends AppHelpers {
     const mobileQuery = window.matchMedia('(max-width: 767px)');
 
     const bindBlock = (block) => {
-      if (!(block instanceof HTMLElement) || block.dataset.featuredStyle3NavBound === 'true') {
+      if (!(block instanceof HTMLElement) || block.dataset.featuredStyle3PaginationBound === 'true') {
         return;
       }
-      block.dataset.featuredStyle3NavBound = 'true';
+      block.dataset.featuredStyle3PaginationBound = 'true';
 
       const inner = block.querySelector('.inner');
-      const nav = block.querySelector('[data-featured-style3-nav]');
-      const prevBtn = block.querySelector('[data-featured-style3-nav-btn="prev"]');
-      const nextBtn = block.querySelector('[data-featured-style3-nav-btn="next"]');
+      const pagination = block.querySelector('[data-featured-style3-pagination]');
+      const dots = Array.from(block.querySelectorAll('[data-featured-style3-dot]'));
       const sections = inner ? Array.from(inner.children).filter((child) => child.tagName === 'SECTION') : [];
 
-      if (!inner || !nav || !prevBtn || !nextBtn || sections.length < 2) {
+      if (!inner || !pagination || sections.length < 2 || dots.length !== sections.length) {
         return;
       }
 
@@ -226,6 +225,17 @@ class App extends AppHelpers {
       let scrollTimeout = null;
 
       const isMobile = () => mobileQuery.matches;
+
+      const setActiveDot = (index) => {
+        const safeIndex = Math.max(0, Math.min(index, dots.length - 1));
+        activeIndex = safeIndex;
+
+        dots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === safeIndex;
+          dot.classList.toggle('swiper-pagination-bullet-active', isActive);
+          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+      };
 
       const syncActiveIndexFromScroll = () => {
         const containerRect = inner.getBoundingClientRect();
@@ -246,49 +256,37 @@ class App extends AppHelpers {
           }
         });
 
-        activeIndex = nearestIndex;
-        prevBtn.disabled = activeIndex <= 0;
-        nextBtn.disabled = activeIndex >= sections.length - 1;
+        setActiveDot(nearestIndex);
       };
 
       const scrollToIndex = (index) => {
         const targetIndex = Math.max(0, Math.min(index, sections.length - 1));
-        activeIndex = targetIndex;
+        setActiveDot(targetIndex);
 
         sections[targetIndex].scrollIntoView({
           behavior: 'smooth',
           block: 'nearest',
           inline: 'start',
         });
-
-        prevBtn.disabled = activeIndex <= 0;
-        nextBtn.disabled = activeIndex >= sections.length - 1;
       };
 
-      const syncNavVisibility = () => {
-        nav.hidden = !isMobile();
+      const syncPaginationVisibility = () => {
+        pagination.hidden = !isMobile();
 
         if (!isMobile()) {
-          prevBtn.disabled = false;
-          nextBtn.disabled = false;
           return;
         }
 
         syncActiveIndexFromScroll();
       };
 
-      prevBtn.addEventListener('click', () => {
-        if (!isMobile()) {
-          return;
-        }
-        scrollToIndex(activeIndex - 1);
-      });
-
-      nextBtn.addEventListener('click', () => {
-        if (!isMobile()) {
-          return;
-        }
-        scrollToIndex(activeIndex + 1);
+      dots.forEach((dot, dotIndex) => {
+        dot.addEventListener('click', () => {
+          if (!isMobile()) {
+            return;
+          }
+          scrollToIndex(dotIndex);
+        });
       });
 
       inner.addEventListener('scroll', () => {
@@ -303,12 +301,12 @@ class App extends AppHelpers {
       }, { passive: true });
 
       if (typeof mobileQuery.addEventListener === 'function') {
-        mobileQuery.addEventListener('change', syncNavVisibility);
+        mobileQuery.addEventListener('change', syncPaginationVisibility);
       } else if (typeof mobileQuery.addListener === 'function') {
-        mobileQuery.addListener(syncNavVisibility);
+        mobileQuery.addListener(syncPaginationVisibility);
       }
 
-      syncNavVisibility();
+      syncPaginationVisibility();
     };
 
     blocks.forEach(bindBlock);

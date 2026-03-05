@@ -406,7 +406,7 @@
 
 
 .s-block--features-products.th-featured-products-style3 {
-  .th-featured-products-style3__mobile-nav {
+  .th-featured-products-style3__mobile-pagination {
     display: none;
   }
 
@@ -415,29 +415,43 @@
   }
 
   @media (max-width: 767px) {
-    .th-featured-products-style3__mobile-nav {
-      @apply mb-3 flex items-center justify-center gap-2;
+    .th-featured-products-style3__mobile-pagination {
+      @apply mb-3 inline-flex items-center justify-center gap-2;
+      width: 100%;
     }
 
-    .th-featured-products-style3__mobile-nav-btn {
-      @apply inline-flex items-center justify-center rounded-full;
-      width: 34px;
-      height: 34px;
-      border: 1px solid #d1d5db;
-      background: #fff;
-      color: #111827;
-      font-size: 18px;
-      line-height: 1;
+    .th-featured-products-style3__mobile-pagination .swiper-pagination-bullet {
+      width: 8px;
+      height: 8px;
+      margin: 0 !important;
+      border-radius: 999px;
+      opacity: 1;
+      border: 0;
+      background: rgba(17, 24, 39, 0.28);
+      position: relative;
+      overflow: hidden;
       transition:
+        width 200ms ease,
+        height 200ms ease,
         background-color 200ms ease,
-        border-color 200ms ease,
-        color 200ms ease,
-        opacity 200ms ease;
+        transform 200ms ease;
+      cursor: pointer;
+    }
 
-      &:disabled {
-        opacity: 0.45;
-        cursor: not-allowed;
-      }
+    .th-featured-products-style3__mobile-pagination .swiper-pagination-bullet-active {
+      width: 40px;
+      height: 8px;
+      background: rgba(17, 24, 39, 0.18);
+    }
+
+    .th-featured-products-style3__mobile-pagination .swiper-pagination-bullet-active::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--th-color-primary, var(--color-primary, #111827));
+      transform: scaleX(1);
+      transform-origin: left center;
     }
 
     &.two-cols {
@@ -557,4 +571,9 @@
       }
     }
   }
+}
+
+html[dir='rtl'] .s-block--features-products.th-featured-products-style3 .th-featured-products-style3__mobile-pagination .swiper-pagination-bullet-active::before,
+.s-block--features-products.th-featured-products-style3[dir='rtl'] .th-featured-products-style3__mobile-pagination .swiper-pagination-bullet-active::before {
+  transform-origin: right center;
 }
