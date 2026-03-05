@@ -18,8 +18,6 @@
   --th-testimonials-pagination-active-height: 8px;
 
   @apply relative overflow-hidden rounded-[22px] border p-5 md:p-7;
-  border-color: var(--th-testimonials-border);
-  background: linear-gradient(180deg, var(--th-testimonials-bg-start) 0%, var(--th-testimonials-bg-end) 100%);
 
   &__header {
     @apply mb-6 justify-center md:mb-8;

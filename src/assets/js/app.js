@@ -65,30 +65,51 @@ class App extends AppHelpers {
         if (!(slider instanceof HTMLElement) || slider.tagName !== 'SALLA-SLIDER') {
           return;
         }
-        if (!isCustomerReviewsSlider(slider)) {
-          return;
-        }
         if (slider.dataset.loadingPaginationBound === 'true') {
           return;
         }
         slider.dataset.loadingPaginationBound = 'true';
 
         const activateLoadingPagination = () => {
-          if (slider.dataset.loadingPaginationReady === 'true') {
-            return;
-          }
-
           const swiper = slider.slider;
+          const paginationType = swiper?.params?.pagination?.type;
           const hasPagination = !!swiper?.params?.pagination;
-          const hasAutoplay = !!swiper?.params?.autoplay;
-          if (!hasPagination || !hasAutoplay) {
+          const hasBulletPagination = hasPagination && (!paginationType || paginationType === 'bullets');
+          if (!swiper || !hasBulletPagination) {
             return;
           }
 
           slider.dataset.loadingPaginationReady = 'true';
-          slider.classList.add('th-testimonials-loading-pagination');
+          slider.classList.add('th-slider-loading-pagination');
+          if (isCustomerReviewsSlider(slider)) {
+            slider.classList.add('th-testimonials-loading-pagination');
+          }
+
+          const touchMediaQuery = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
+          const syncTouchSwipe = () => {
+            if (!touchMediaQuery.matches) {
+              return;
+            }
+
+            swiper.params.allowTouchMove = true;
+            swiper.params.simulateTouch = true;
+            swiper.allowTouchMove = true;
+          };
+          syncTouchSwipe();
+
+          if (typeof touchMediaQuery.addEventListener === 'function') {
+            touchMediaQuery.addEventListener('change', syncTouchSwipe);
+          } else if (typeof touchMediaQuery.addListener === 'function') {
+            touchMediaQuery.addListener(syncTouchSwipe);
+          }
+
+          const hasAutoplay = !!swiper?.params?.autoplay;
 
           const getActiveDelay = () => {
+            if (!hasAutoplay) {
+              return 3000;
+            }
+
             const activeSlide =
               swiper?.slides?.[swiper.activeIndex] ||
               slider.querySelector('.swiper-slide-active');
@@ -115,13 +136,14 @@ class App extends AppHelpers {
 
           const restartBulletAnimation = () => {
             const activeBullet = slider.querySelector('.swiper-pagination-bullet-active');
-            if (!activeBullet) {
-              return;
-            }
 
             slider
               .querySelectorAll('.swiper-pagination-bullet.is-loading')
               .forEach((bullet) => bullet.classList.remove('is-loading'));
+
+            if (!hasAutoplay || !activeBullet) {
+              return;
+            }
 
             // Force reflow so animation restarts reliably after slide changes.
             // eslint-disable-next-line no-unused-expressions

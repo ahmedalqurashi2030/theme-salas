@@ -615,7 +615,7 @@ salla-slider.th-slider-loading-pagination {
   --th-slider-pagination-delay: 10000ms;
   --th-slider-pagination-dot: rgba(17, 24, 39, 0.28);
   --th-slider-pagination-track: rgba(17, 24, 39, 0.18);
-  --th-slider-pagination-fill: #111827;
+  --th-slider-pagination-fill: var(--th-color-primary, var(--color-primary, #111827));
   --th-slider-pagination-active-width: 40px;
   --th-slider-pagination-active-height: 8px;
 
@@ -653,7 +653,7 @@ salla-slider.th-slider-loading-pagination {
     inset: 0;
     border-radius: inherit;
     background: var(--th-slider-pagination-fill);
-    transform: scaleX(0);
+    transform: scaleX(1);
     transform-origin: left center;
   }
 

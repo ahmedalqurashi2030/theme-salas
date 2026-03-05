@@ -3468,13 +3468,13 @@
                             "value": "أصالة مضمونة",
                             "multilanguage": false,
                             "required": false,
-                            "minLength": 6,
+                            "minLength": 0,
                             "maxLength": 30
                         },
                         {
                             "id": "features.description",
                             "type": "string",
-                            "format": "richtext",
+                            "format": "text",
                             "label": "وصف الميزة",
                             "description": "شرح تفصيلي للميزة",
                             "labelHTML": null,
@@ -3483,7 +3483,7 @@
                             "value": "منتجات فاخرة مختارة بعناية فائقة...",
                             "multilanguage": false,
                             "required": false,
-                            "minLength": 60,
+                            "minLength": 10,
                             "maxLength": 1000
                         },
                         {
