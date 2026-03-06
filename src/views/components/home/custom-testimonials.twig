@@ -126,22 +126,26 @@
   }
 } %}
 
-<section class="s-block th-home-testimonials th-ui-section py-8 lg:py-10">
-  <div class="container">
-    <header class="s-block__title th-home-testimonials__header">
-      <div class="right-side th-home-testimonials__header-inner">
-        <h2 class="th-home-testimonials__title">{{ section_title }}</h2>
-        <p class="th-home-testimonials__subtitle">{{ section_subtitle }}</p>
+<section class="s-block s-block--testimonials th-home-testimonials container overflow-hidden">
+  <div class="s-reviews-container">
+    <div class="s-reviews-header-wrapper s-block__title">
+      <div class="s-slider-block__title-right">
+        <h2 class="s-reviews-header">{{ section_title }}</h2>
+        {% if section_subtitle %}
+          <p class="s-block__title-desc th-home-testimonials__subtitle">{{ section_subtitle }}</p>
+        {% endif %}
 
         {% if show_stats %}
-          <div class="th-home-testimonials__stats">
-            <div class="th-home-testimonials__stat th-home-testimonials__stat--customers">
+          <div class="th-home-testimonials__stats" aria-label="{{ customers_count_text }}">
+            <div class="th-home-testimonials__stat">
               <span class="th-home-testimonials__avatars" aria-hidden="true">
                 {% for item in reviews|slice(0, 4) %}
                   {% set stat_avatar = item.avatar|default(attribute(item, 'items.avatar')|default('')) %}
-                  {% if stat_avatar %}
-                    <img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ stat_avatar }}" alt="" class="lazy th-home-testimonials__avatar-chip">
+                  {% if stat_avatar is iterable %}
+                    {% set stat_avatar = stat_avatar.url|default(stat_avatar.original|default(stat_avatar.value|default(''))) %}
                   {% endif %}
+                  {% set stat_avatar = stat_avatar ?: ('images/s-empty-square.png' | asset) %}
+                  <img src="{{ stat_avatar }}" loading="lazy" alt="" width="24" height="24" class="th-home-testimonials__avatar-chip">
                 {% endfor %}
               </span>
               <span class="th-home-testimonials__stat-text">{{ customers_count_text }}</span>
@@ -149,54 +153,80 @@
           </div>
         {% endif %}
       </div>
-    </header>
+    </div>
 
     {% if reviews|length %}
-      <salla-slider id="{{ slider_id }}" class="th-home-testimonials__slider s-slider-wrapper" type="carousel" show-controls="{{ slider_show_controls ? 'true' : 'false' }}" auto-play="{{ slider_auto_play ? 'true' : 'false' }}" slider-config='{{ slider_config|json_encode|e("html_attr") }}' {% if slider_show_controls %} controls-outer {% endif %} {% if slider_show_pagination %} pagination {% endif %}>
+      <salla-slider
+        id="{{ slider_id }}"
+        class="th-home-testimonials__slider testimonials-slider s-slider-wrapper"
+        type="testimonials"
+        show-controls="{{ slider_show_controls ? 'true' : 'false' }}"
+        auto-play="{{ slider_auto_play ? 'true' : 'false' }}"
+        slider-config='{{ slider_config|json_encode|e("html_attr") }}'
+        {% if slider_show_controls %}controls-outer{% endif %}
+        {% if slider_show_pagination %}pagination{% endif %}>
         <div slot="items">
           {% for index, item in reviews %}
             {% set reviewer_name = item.name|default(attribute(item, 'items.name')|default(default_customer_name)) %}
+            {% if reviewer_name is iterable %}
+              {% set reviewer_name = reviewer_name.value|default(reviewer_name.ar|default(reviewer_name.en|default(default_customer_name))) %}
+            {% endif %}
+
             {% set reviewer_avatar = item.avatar|default(attribute(item, 'items.avatar')|default('')) %}
+            {% if reviewer_avatar is iterable %}
+              {% set reviewer_avatar = reviewer_avatar.url|default(reviewer_avatar.original|default(reviewer_avatar.value|default(''))) %}
+            {% endif %}
+            {% set reviewer_avatar = reviewer_avatar ?: ('images/s-empty-square.png' | asset) %}
+
             {% set reviewer_stars = item.stars|default(attribute(item, 'items.stars')|default(5)) %}
-            {% set reviewer_text = item.text|default(attribute(item, 'items.text')|default('')) %}
+            {% if reviewer_stars is iterable %}
+              {% set reviewer_stars = reviewer_stars.selected|default(reviewer_stars.value|default(5)) %}
+            {% endif %}
+            {% set reviewer_stars = reviewer_stars + 0 %}
             {% set reviewer_stars = reviewer_stars < 1 ? 1 : (reviewer_stars > 5 ? 5 : reviewer_stars) %}
+
+            {% set reviewer_text = item.text|default(attribute(item, 'items.text')|default('')) %}
+            {% if reviewer_text is iterable %}
+              {% set reviewer_text = reviewer_text.value|default(reviewer_text.ar|default(reviewer_text.en|default(''))) %}
+            {% endif %}
+
             {% set reviewer_rating_aria = rating_prefix ~ ' ' ~ reviewer_stars ~ ' ' ~ rating_suffix %}
 
-            <div class="swiper-slide th-home-testimonials__slide h-auto">
-              <article class="th-home-testimonial-card th-ui-card">
-                <div class="th-home-testimonial-card__head">
-                  <span class="th-home-testimonial-card__quote" aria-hidden="true">&ldquo;</span>
-                  <div class="th-home-testimonial-card__stars th-ui-stars" aria-label="{{ reviewer_rating_aria }}">
-                    {% for i in 1..5 %}
-                      <i class="sicon-star2 {{ i <= reviewer_stars ? 'is-active' : '' }}"></i>
-                    {% endfor %}
-                  </div>
-                </div>
+            <div class="swiper-slide s-reviews-swiper-slide">
+              <article class="s-reviews-testimonial">
+                <div class="s-reviews-testimonial__inner">
+                  <span class="s-reviews-testimonial__icon" aria-hidden="true">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                      <title>quote-open</title>
+                      <path d="M8 12v-5.333c0-0.737-0.596-1.333-1.333-1.333-3.676 0-6.667 2.991-6.667 6.667v8c0 3.676 2.991 6.667 6.667 6.667h1.333c3.676 0 6.667-2.991 6.667-6.667v-1.333c0-3.676-2.991-6.667-6.667-6.667zM12 20c0 2.205-1.795 4-4 4h-1.333c-2.205 0-4-1.795-4-4v-8c0-1.739 1.115-3.221 2.667-3.772v5.105c0 0.737 0.596 1.333 1.333 1.333h1.333c2.205 0 4 1.795 4 4zM25.333 12v-5.333c0-0.737-0.596-1.333-1.333-1.333-3.676 0-6.667 2.991-6.667 6.667v8c0 3.676 2.991 6.667 6.667 6.667h1.333c3.676 0 6.667-2.991 6.667-6.667v-1.333c0-3.676-2.991-6.667-6.667-6.667zM29.333 20c0 2.205-1.795 4-4 4h-1.333c-2.205 0-4-1.795-4-4v-8c0-1.739 1.115-3.221 2.667-3.772v5.105c0 0.737 0.596 1.333 1.333 1.333h1.333c2.205 0 4 1.795 4 4z"></path>
+                    </svg>
+                  </span>
 
-                <p class="th-home-testimonial-card__text">{{ reviewer_text }}</p>
+                  <div class="s-reviews-testimonial__text">
+                    <p>{{ reviewer_text }}</p>
 
-                <footer class="th-home-testimonial-card__footer">
-                  <div class="th-home-testimonial-card__author-wrap">
-                    <span class="th-home-testimonial-card__avatar">
-                      <img src="{{ 'images/s-empty.png' | asset }}" data-src="{{ reviewer_avatar }}" alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}" decoding="async" class="lazy th-home-testimonial-card__avatar-image">
-                    </span>
-                    <div class="th-home-testimonial-card__author">
-                      <strong class="th-home-testimonial-card__author-name">{{ reviewer_name }}</strong>
-                      <small class="th-home-testimonial-card__author-rating th-ui-stars" aria-label="{{ reviewer_rating_aria }}">
-                        {% for i in 1..5 %}
-                          <i class="sicon-star2 {{ i <= reviewer_stars ? 'is-active' : '' }}" aria-hidden="true"></i>
-                        {% endfor %}
-                      </small>
+                    <div class="s-reviews-testimonial__name_wrapper">
+                      <span class="s-reviews-testimonial__avatar">
+                        <img src="{{ reviewer_avatar }}" loading="lazy" decoding="async" width="68" height="68" alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}">
+                      </span>
+
+                      <div class="s-reviews-testimonial__info">
+                        <h3>{{ reviewer_name }}</h3>
+                      </div>
+
+                      <div class="s-reviews-testimonial__rating" aria-label="{{ reviewer_rating_aria }}">
+                        <salla-rating-stars size="small" value="{{ reviewer_stars }}"></salla-rating-stars>
+                      </div>
                     </div>
                   </div>
-                </footer>
+                </div>
               </article>
             </div>
           {% endfor %}
         </div>
       </salla-slider>
     {% else %}
-      <div class="th-home-testimonials__empty th-ui-empty">{{ empty_reviews_text }}</div>
+      <div class="th-home-testimonials__empty">{{ empty_reviews_text }}</div>
     {% endif %}
   </div>
 </section>

@@ -136,7 +136,7 @@ class ProductCard extends HTMLElement {
     if (this.showQuantity && this.product?.quantity) {
       return `<div class="s-product-card-quantity">${this.remained} ${salla.helpers.number(this.product?.quantity)}</div>`;
     }
-    if (this.showQuantity && this.isUnavailable()) {
+    if (this.showQuantity && this.product?.is_out_of_stock) {
       return `<div class="s-product-card-out-badge">${this.outOfStock}</div>`;
     }
     return '';
@@ -453,6 +453,7 @@ class ProductCard extends HTMLElement {
     if (!imageEl || !galleryEl) return;
 
     if (!images.length) {
+      galleryEl.classList.remove('is-single');
       galleryEl.classList.add('hidden');
       galleryEl.innerHTML = '';
       return;
@@ -461,11 +462,6 @@ class ProductCard extends HTMLElement {
     imageEl.src = images[0].url;
     imageEl.alt = this.escapeHTML(images[0].alt || productName || '');
 
-    if (images.length === 1) {
-      galleryEl.classList.add('hidden');
-      galleryEl.innerHTML = '';
-      return;
-    }
 
     galleryEl.innerHTML = images
       .map((image, index) => `
@@ -480,6 +476,7 @@ class ProductCard extends HTMLElement {
       `)
       .join('');
 
+    galleryEl.classList.toggle('is-single', images.length === 1);
     galleryEl.classList.remove('hidden');
 
     if (galleryEl.dataset.boundGallery === 'true') return;
@@ -577,15 +574,17 @@ class ProductCard extends HTMLElement {
       return;
     }
 
+    const htmlLang = document?.documentElement?.lang || '';
+    const isArabic = htmlLang.toLowerCase().startsWith('ar');
     const maxLength = 235;
     const isLong = plainDescription.length > maxLength;
     const shortDescription = isLong ? `${plainDescription.slice(0, maxLength).trim()}...` : plainDescription;
-    const sectionTitle = this.getLangText('common.product_details', 'Product details');
+    const sectionTitle = this.getLangText('common.product_details', isArabic ? '\u062A\u0641\u0627\u0635\u064A\u0644 \u0627\u0644\u0645\u0646\u062A\u062C' : 'Product details');
     const readMoreText = this.getLangText([
       'components.product_tabs.read_more',
       'common.read_more',
-    ], 'Read more');
-    const readLessText = this.getLangText('components.product_tabs.read_less', 'Read less');
+    ], isArabic ? '\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u0645\u0632\u064A\u062F' : 'Read more');
+    const readLessText = this.getLangText('components.product_tabs.read_less', isArabic ? '\u0639\u0631\u0636 \u0623\u0642\u0644' : 'Read less');
 
     descriptionEl.innerHTML = `
       <h4 class="th-quick-view-description-title">${this.escapeHTML(sectionTitle)}</h4>
@@ -736,12 +735,28 @@ class ProductCard extends HTMLElement {
 
     const primaryActionsEl = modal.querySelector('[data-quick-view="primary-actions"]');
     const isOutOfStock = this.isUnavailable(product);
-    const canShowAddButton = !product?.donation?.can_donate && !isOutOfStock;
+    const isDonationProduct = Boolean(product?.donation?.can_donate);
+    const canShowAddButton = !isDonationProduct && !isOutOfStock;
+    const outOfStockLabel = this.escapeHTML(
+      this.outOfStock || this.getLangText('pages.products.out_of_stock', 'Out of stock'),
+    );
 
     quantityWrap?.classList.toggle('hidden', !canShowAddButton);
 
     if (addBtnContainer) {
-      if (!canShowAddButton) {
+      if (isOutOfStock && !isDonationProduct) {
+        addBtnContainer.innerHTML = `
+          <salla-button
+            type="button"
+            fill="solid"
+            disabled
+            aria-disabled="true"
+            class="w-full th-quick-view-add-btn th-quick-view-add-btn--disabled">
+            ${outOfStockLabel}
+          </salla-button>
+        `;
+        primaryActionsEl?.classList.remove('is-link-only');
+      } else if (!canShowAddButton) {
         addBtnContainer.innerHTML = '';
         primaryActionsEl?.classList.add('is-link-only');
       } else {
@@ -783,7 +798,6 @@ class ProductCard extends HTMLElement {
         primaryActionsEl?.classList.remove('is-link-only');
       }
     }
-
     if (linkEl) {
       linkEl.href = product?.url || '#';
     }
@@ -870,7 +884,7 @@ class ProductCard extends HTMLElement {
     this.minimal ? this.classList.add('s-product-card-minimal') : '';
     this.product?.donation ? this.classList.add('s-product-card-donation') : '';
     this.shadowOnHover ? this.classList.add('s-product-card-shadow') : '';
-    this.isUnavailable() ? this.classList.add('s-product-card-out-of-stock') : '';
+    this.product?.is_out_of_stock ? this.classList.add('s-product-card-out-of-stock') : '';
 
     // Apply Tharaa skin ONLY to the normal vertical card (most used in sliders/lists)
     const shouldSkin =
@@ -902,7 +916,7 @@ class ProductCard extends HTMLElement {
       : '';
 
     // Add to cart button HTML - moved to content area
-    const addToCartBtn = !this.hideAddBtn && !this.horizontal && !this.fullImage && !this.isUnavailable()
+    const addToCartBtn = !this.hideAddBtn && !this.horizontal && !this.fullImage
       ? `<div class="s-product-card-add-btn">
             <salla-add-product-button
               fill="outline"
