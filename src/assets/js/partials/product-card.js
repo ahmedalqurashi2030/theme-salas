@@ -79,6 +79,13 @@ class ProductCard extends HTMLElement {
     this.showQuantity = this.hasAttribute('showQuantity');
   }
 
+  isUnavailable(product = this.product) {
+    return Boolean(
+      product?.is_out_of_stock
+      || ['out', 'out-and-notify'].includes(product?.status),
+    );
+  }
+
   parseBooleanSetting(value, fallback = true) {
     if (value === undefined || value === null || value === '') return fallback;
     if (Array.isArray(value) && value.length) {
@@ -129,7 +136,7 @@ class ProductCard extends HTMLElement {
     if (this.showQuantity && this.product?.quantity) {
       return `<div class="s-product-card-quantity">${this.remained} ${salla.helpers.number(this.product?.quantity)}</div>`;
     }
-    if (this.showQuantity && this.product?.is_out_of_stock) {
+    if (this.showQuantity && this.isUnavailable()) {
       return `<div class="s-product-card-out-badge">${this.outOfStock}</div>`;
     }
     return '';
@@ -439,115 +446,6 @@ class ProductCard extends HTMLElement {
     });
   }
 
-  populateQuickViewModalLegacy(modal) {
-    const product = this.product;
-
-    const imageEl = modal.querySelector('[data-quick-view="image"]');
-    const titleEl = modal.querySelector('[data-quick-view="title"]');
-    const brandEl = modal.querySelector('[data-quick-view="brand"]');
-    const priceEl = modal.querySelector('[data-quick-view="price"]');
-    const badgeEl = modal.querySelector('[data-quick-view="badge"]');
-    const addBtnContainer = modal.querySelector('[data-quick-view="add-button"]');
-    const linkEl = modal.querySelector('[data-quick-view="link"]');
-    const stockEl = modal.querySelector('[data-quick-view="stock"]');
-    const wishlistBtn = modal.querySelector('[data-quick-view="wishlist-btn"]');
-    const shareBtn = modal.querySelector('[data-quick-view="share-btn"]');
-
-    if (imageEl) {
-      imageEl.src = product?.image?.url || product?.thumbnail || this.placeholder || imageEl.src;
-      imageEl.alt = this.escapeHTML(product?.image?.alt || product?.name || '');
-    }
-
-    if (titleEl) {
-      titleEl.textContent = product?.name || '';
-    }
-
-    if (brandEl) {
-      const brandName = product?.brand?.name || '';
-      brandEl.textContent = brandName;
-      brandEl.classList.toggle('hidden', !brandName);
-    }
-
-    const priceHtml = product?.donation?.can_donate ? '' : this.getProductPrice();
-
-    if (priceEl) {
-      priceEl.innerHTML = priceHtml;
-      priceEl.closest('.th-quick-view-price-box')?.classList.toggle('hidden', !priceHtml);
-    }
-
-    if (badgeEl) {
-      badgeEl.innerHTML = product?.is_on_sale ? this.getDiscountBadgeHtml() : '';
-    }
-
-    if (addBtnContainer) {
-      if (product?.donation?.can_donate) {
-        addBtnContainer.innerHTML = '';
-      } else {
-        addBtnContainer.innerHTML = `
-          <salla-add-product-button
-            fill="solid"
-            product-id="${product.id}"
-            product-status="${product.status}"
-            product-type="${product.type}"
-            class="w-full th-quick-view-add-btn">
-            <i class="sicon-shopping-bag mr-1"></i>
-            <span>${this.getPriceFormat(product?.price)}</span>
-          </salla-add-product-button>
-        `;
-      }
-    }
-
-    if (linkEl) {
-      linkEl.href = product?.url || '#';
-    }
-
-    if (stockEl) {
-      const isOut = !!product?.is_out_of_stock;
-      stockEl.textContent = isOut ? this.outOfStock || '' : '';
-      stockEl.classList.toggle('hidden', !isOut);
-    }
-
-    if (wishlistBtn) {
-      wishlistBtn.dataset.productId = product.id;
-      wishlistBtn.classList.toggle('is-active', !!this.isInWishlist);
-
-      if (!wishlistBtn.dataset.boundWishlist) {
-        wishlistBtn.dataset.boundWishlist = 'true';
-        wishlistBtn.addEventListener('click', () => {
-          const id = Number(wishlistBtn.dataset.productId);
-          if (!id || !window.salla?.wishlist?.toggle) return;
-          window.salla.wishlist.toggle(id);
-        });
-      }
-    }
-
-    if (shareBtn) {
-      shareBtn.dataset.productUrl = product?.url || window.location.href;
-      shareBtn.dataset.productTitle = product?.name || document.title;
-
-      if (!shareBtn.dataset.boundShare) {
-        shareBtn.dataset.boundShare = 'true';
-        shareBtn.addEventListener('click', async () => {
-          const url = shareBtn.dataset.productUrl || window.location.href;
-          const title = shareBtn.dataset.productTitle || document.title;
-
-          try {
-            if (navigator.share) {
-              await navigator.share({ title, url });
-              return;
-            }
-
-            if (navigator.clipboard?.writeText) {
-              await navigator.clipboard.writeText(url);
-              window.salla?.notify?.success?.(title, window.salla?.lang?.get?.('common.copied') || '');
-            }
-          } catch (e) {
-            // silent fail; sharing is an enhancement only
-          }
-        });
-      }
-    }
-  }
 
   renderQuickViewGallery(modal, images = [], productName = '') {
     const imageEl = modal.querySelector('[data-quick-view="image"]');
@@ -646,7 +544,7 @@ class ProductCard extends HTMLElement {
     const notifyEl = modal.querySelector('[data-quick-view="notify"]');
     if (!notifyEl) return;
 
-    const canNotify = Boolean(product?.notify_availability && product?.is_out_of_stock);
+    const canNotify = Boolean(product?.notify_availability && this.isUnavailable(product));
     const notifyLabel =
       window.salla?.lang?.get?.('pages.products.notify_me')
       || 'Notify me when available';
@@ -804,6 +702,7 @@ class ProductCard extends HTMLElement {
     const wishlistBtn = modal.querySelector('[data-quick-view="wishlist-btn"]');
     const shareEl = modal.querySelector('[data-quick-view="share"]');
     const shareTrigger = modal.querySelector('[data-quick-view="share-trigger"]');
+    const quantityWrap = modal.querySelector('.th-quick-view-qty-wrap');
 
     const images = this.getQuickViewImages(product);
     if (!images.length && imageEl) {
@@ -836,9 +735,13 @@ class ProductCard extends HTMLElement {
     }
 
     const primaryActionsEl = modal.querySelector('[data-quick-view="primary-actions"]');
+    const isOutOfStock = this.isUnavailable(product);
+    const canShowAddButton = !product?.donation?.can_donate && !isOutOfStock;
+
+    quantityWrap?.classList.toggle('hidden', !canShowAddButton);
 
     if (addBtnContainer) {
-      if (product?.donation?.can_donate) {
+      if (!canShowAddButton) {
         addBtnContainer.innerHTML = '';
         primaryActionsEl?.classList.add('is-link-only');
       } else {
@@ -886,9 +789,8 @@ class ProductCard extends HTMLElement {
     }
 
     if (stockEl) {
-      const isOut = Boolean(product?.is_out_of_stock);
-      stockEl.textContent = isOut ? this.outOfStock || '' : '';
-      stockEl.classList.toggle('hidden', !isOut);
+      stockEl.textContent = isOutOfStock ? this.outOfStock || '' : '';
+      stockEl.classList.toggle('hidden', !isOutOfStock);
     }
 
     this.renderQuickViewRating(modal, product);
@@ -968,7 +870,7 @@ class ProductCard extends HTMLElement {
     this.minimal ? this.classList.add('s-product-card-minimal') : '';
     this.product?.donation ? this.classList.add('s-product-card-donation') : '';
     this.shadowOnHover ? this.classList.add('s-product-card-shadow') : '';
-    this.product?.is_out_of_stock ? this.classList.add('s-product-card-out-of-stock') : '';
+    this.isUnavailable() ? this.classList.add('s-product-card-out-of-stock') : '';
 
     // Apply Tharaa skin ONLY to the normal vertical card (most used in sliders/lists)
     const shouldSkin =
@@ -1000,7 +902,7 @@ class ProductCard extends HTMLElement {
       : '';
 
     // Add to cart button HTML - moved to content area
-    const addToCartBtn = !this.hideAddBtn && !this.horizontal && !this.fullImage
+    const addToCartBtn = !this.hideAddBtn && !this.horizontal && !this.fullImage && !this.isUnavailable()
       ? `<div class="s-product-card-add-btn">
             <salla-add-product-button
               fill="outline"

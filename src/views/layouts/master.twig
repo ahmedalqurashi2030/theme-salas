@@ -182,7 +182,7 @@
             class="th-quick-view-close"
             data-quick-view="close-btn"
             data-close-modal="product-quick-view-modal"
-            aria-label="{{ user.language.code starts with 'ar' ? 'إغلاق المعاينة السريعة' : 'Close quick view' }}">
+            aria-label="{{ trans('common.quick_view_close') }}">
             <i class="sicon-cancel" aria-hidden="true"></i>
           </salla-button>
 
@@ -199,7 +199,7 @@
             class="th-quick-view-gallery hidden"
             data-quick-view="gallery"
             role="list"
-            aria-label="{{ user.language.code starts with 'ar' ? 'صور المنتج' : 'Product images' }}">
+            aria-label="{{ trans('common.product_images') }}">
           </div>
         </div>
 
@@ -239,7 +239,7 @@
                   size="sm"
                   class="th-quick-view-utility-btn"
                   data-quick-view="share-trigger"
-                  aria-label="{{ user.language.code starts with 'ar' ? 'مشاركة المنتج' : 'Share product' }}">
+                  aria-label="{{ trans('common.share_product') }}">
                   <i class="sicon-share" aria-hidden="true"></i>
                 </salla-button>
               </salla-social-share>
