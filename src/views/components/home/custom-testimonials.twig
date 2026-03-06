@@ -158,8 +158,8 @@
     {% if reviews|length %}
       <salla-slider
         id="{{ slider_id }}"
-        class="th-home-testimonials__slider testimonials-slider s-slider-wrapper"
-        type="testimonials"
+        class="th-home-testimonials__slider s-slider-wrapper"
+        type="carousel"
         show-controls="{{ slider_show_controls ? 'true' : 'false' }}"
         auto-play="{{ slider_auto_play ? 'true' : 'false' }}"
         slider-config='{{ slider_config|json_encode|e("html_attr") }}'
@@ -185,38 +185,39 @@
             {% set reviewer_stars = reviewer_stars + 0 %}
             {% set reviewer_stars = reviewer_stars < 1 ? 1 : (reviewer_stars > 5 ? 5 : reviewer_stars) %}
 
-            {% set reviewer_text = item.text|default(attribute(item, 'items.text')|default('')) %}
+            {% set reviewer_text = item.text|default(attribute(item, 'items.text')|default(item.comment|default(attribute(item, 'items.comment')|default(item.content|default(attribute(item, 'items.content')|default('')))))) %}
             {% if reviewer_text is iterable %}
               {% set reviewer_text = reviewer_text.value|default(reviewer_text.ar|default(reviewer_text.en|default(''))) %}
             {% endif %}
+            {% set reviewer_text = reviewer_text|striptags|trim %}
 
             {% set reviewer_rating_aria = rating_prefix ~ ' ' ~ reviewer_stars ~ ' ' ~ rating_suffix %}
 
             <div class="swiper-slide s-reviews-swiper-slide">
               <article class="s-reviews-testimonial">
                 <div class="s-reviews-testimonial__inner">
-                  <span class="s-reviews-testimonial__icon" aria-hidden="true">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                      <title>quote-open</title>
-                      <path d="M8 12v-5.333c0-0.737-0.596-1.333-1.333-1.333-3.676 0-6.667 2.991-6.667 6.667v8c0 3.676 2.991 6.667 6.667 6.667h1.333c3.676 0 6.667-2.991 6.667-6.667v-1.333c0-3.676-2.991-6.667-6.667-6.667zM12 20c0 2.205-1.795 4-4 4h-1.333c-2.205 0-4-1.795-4-4v-8c0-1.739 1.115-3.221 2.667-3.772v5.105c0 0.737 0.596 1.333 1.333 1.333h1.333c2.205 0 4 1.795 4 4zM25.333 12v-5.333c0-0.737-0.596-1.333-1.333-1.333-3.676 0-6.667 2.991-6.667 6.667v8c0 3.676 2.991 6.667 6.667 6.667h1.333c3.676 0 6.667-2.991 6.667-6.667v-1.333c0-3.676-2.991-6.667-6.667-6.667zM29.333 20c0 2.205-1.795 4-4 4h-1.333c-2.205 0-4-1.795-4-4v-8c0-1.739 1.115-3.221 2.667-3.772v5.105c0 0.737 0.596 1.333 1.333 1.333h1.333c2.205 0 4 1.795 4 4z"></path>
-                    </svg>
-                  </span>
+                  <div class="th-home-testimonial-card__head">
+                    <span class="s-reviews-testimonial__icon" aria-hidden="true">
+                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                        <title>quote-open</title>
+                        <path d="M8 12v-5.333c0-0.737-0.596-1.333-1.333-1.333-3.676 0-6.667 2.991-6.667 6.667v8c0 3.676 2.991 6.667 6.667 6.667h1.333c3.676 0 6.667-2.991 6.667-6.667v-1.333c0-3.676-2.991-6.667-6.667-6.667zM12 20c0 2.205-1.795 4-4 4h-1.333c-2.205 0-4-1.795-4-4v-8c0-1.739 1.115-3.221 2.667-3.772v5.105c0 0.737 0.596 1.333 1.333 1.333h1.333c2.205 0 4 1.795 4 4zM25.333 12v-5.333c0-0.737-0.596-1.333-1.333-1.333-3.676 0-6.667 2.991-6.667 6.667v8c0 3.676 2.991 6.667 6.667 6.667h1.333c3.676 0 6.667-2.991 6.667-6.667v-1.333c0-3.676-2.991-6.667-6.667-6.667zM29.333 20c0 2.205-1.795 4-4 4h-1.333c-2.205 0-4-1.795-4-4v-8c0-1.739 1.115-3.221 2.667-3.772v5.105c0 0.737 0.596 1.333 1.333 1.333h1.333c2.205 0 4 1.795 4 4z"></path>
+                      </svg>
+                    </span>
 
-                  <div class="s-reviews-testimonial__text">
-                    <p>{{ reviewer_text }}</p>
+                    <div class="s-reviews-testimonial__rating" aria-label="{{ reviewer_rating_aria }}">
+                      <salla-rating-stars size="small" value="{{ reviewer_stars }}"></salla-rating-stars>
+                    </div>
+                  </div>
 
-                    <div class="s-reviews-testimonial__name_wrapper">
-                      <span class="s-reviews-testimonial__avatar">
-                        <img src="{{ reviewer_avatar }}" loading="lazy" decoding="async" width="68" height="68" alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}">
-                      </span>
+                  <p class="s-reviews-testimonial__copy">{{ reviewer_text }}</p>
 
-                      <div class="s-reviews-testimonial__info">
-                        <h3>{{ reviewer_name }}</h3>
-                      </div>
+                  <div class="s-reviews-testimonial__name_wrapper">
+                    <span class="s-reviews-testimonial__avatar">
+                      <img src="{{ reviewer_avatar }}" loading="lazy" decoding="async" width="68" height="68" alt="{{ reviewer_name|trim ? reviewer_name : 'testimonial-' ~ index }}">
+                    </span>
 
-                      <div class="s-reviews-testimonial__rating" aria-label="{{ reviewer_rating_aria }}">
-                        <salla-rating-stars size="small" value="{{ reviewer_stars }}"></salla-rating-stars>
-                      </div>
+                    <div class="s-reviews-testimonial__info">
+                      <h3>{{ reviewer_name }}</h3>
                     </div>
                   </div>
                 </div>
