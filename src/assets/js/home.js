@@ -429,7 +429,7 @@ class Home extends BasePage {
     renderBlogFallbackCard(article, index) {
         const dateInfo = this.formatBlogDate(article.createdAt);
         const badgeClass = (index % 4) + 1;
-        const fallbackCategory = (document.documentElement.lang || 'ar').startsWith('ar') ? 'تقنية' : 'Tech';
+        const fallbackCategory = 'Tech';
         const safeTitle = this.escapeHtml(article.title);
         const safeUrl = this.escapeAttr(article.url);
         const safeImage = this.escapeAttr(article.image);
@@ -515,9 +515,51 @@ class Home extends BasePage {
             compare.dataset.beforeAfterInitialized = 'true';
 
             const handle = compare.querySelector('.th-before-after-hero__handle');
+            const beforeImage = compare.querySelector('[data-before-after-image="before"]');
+            const afterImage = compare.querySelector('[data-before-after-image="after"]');
             if (!handle) return;
 
             const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+            const getImageMetrics = image => {
+                if (!image?.naturalWidth || !image?.naturalHeight) return null;
+
+                return {
+                    width: image.naturalWidth,
+                    height: image.naturalHeight,
+                    ratio: image.naturalWidth / image.naturalHeight,
+                };
+            };
+            const setSliderValue = value => {
+                const rounded = Math.round(clamp(value, 0, 100));
+                handle.setAttribute('aria-valuenow', String(rounded));
+                handle.setAttribute('aria-valuetext', `${rounded}%`);
+            };
+            const syncCompareMetrics = () => {
+                const beforeMetrics = getImageMetrics(beforeImage);
+                const afterMetrics = getImageMetrics(afterImage);
+                const referenceMetrics = beforeMetrics || afterMetrics;
+                if (!referenceMetrics) return;
+
+                const safeWidths = [beforeMetrics?.width, afterMetrics?.width].filter(Boolean);
+                const maxSafeWidth = safeWidths.length ? Math.min(...safeWidths) : referenceMetrics.width;
+                const hasRatioMismatch = beforeMetrics && afterMetrics && Math.abs(beforeMetrics.ratio - afterMetrics.ratio) > 0.02;
+
+                compare.style.setProperty('--th-before-after-ratio', `${referenceMetrics.width} / ${referenceMetrics.height}`);
+                compare.style.setProperty('--th-before-after-max-width', `${maxSafeWidth}px`);
+                compare.classList.toggle('has-ratio-mismatch', Boolean(hasRatioMismatch));
+                compare.classList.add('is-ready');
+            };
+
+            [beforeImage, afterImage].forEach(image => {
+                if (!image) return;
+                if (image.complete && image.naturalWidth) {
+                    syncCompareMetrics();
+                }
+                image.addEventListener('load', syncCompareMetrics, { passive: true });
+                image.addEventListener('error', syncCompareMetrics, { passive: true });
+            });
+            syncCompareMetrics();
+
             const toPercent = clientX => {
                 const rect = compare.getBoundingClientRect();
                 if (!rect.width) return 50;
@@ -532,7 +574,7 @@ class Home extends BasePage {
                 rafId = requestAnimationFrame(() => {
                     const percentText = `${nextPercent}%`;
                     compare.style.setProperty('--th-before-after-pos', percentText);
-                    handle.setAttribute('aria-valuenow', String(Math.round(nextPercent)));
+                    setSliderValue(nextPercent);
                     rafId = 0;
                 });
             };
@@ -540,7 +582,7 @@ class Home extends BasePage {
             const initialPosition = parseFloat(compare.dataset.initialPosition || '50');
             const startPosition = Number.isFinite(initialPosition) ? initialPosition : 50;
             compare.style.setProperty('--th-before-after-pos', `${clamp(startPosition, 0, 100)}%`);
-            handle.setAttribute('aria-valuenow', String(Math.round(clamp(startPosition, 0, 100))));
+            setSliderValue(startPosition);
 
             let isDragging = false;
             let activePointerId = null;

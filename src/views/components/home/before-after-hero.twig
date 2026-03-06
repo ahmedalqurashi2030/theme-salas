@@ -12,13 +12,38 @@
 | component.after_label | string | After badge text
 #}
 
-{% set title = component.title ?? 'شاهدي النتيجة قبل وبعد' %}
+{% set title = component.title ?? 'شاهد النتيجة قبل وبعد' %}
 {% set description = component.description ?? '' %}
 {% set button_text = component.button_text ?? '' %}
 {% set button_link = component.button_link ?? '#' %}
 
-{% set before_image = component.before_image ?? component.after_image ?? '' %}
-{% set after_image = component.after_image ?? component.before_image ?? '' %}
+{% set before_source = component.before_image ?? component.after_image ?? null %}
+{% set after_source = component.after_image ?? component.before_image ?? null %}
+
+{% if before_source and before_source.url is defined %}
+	{% set before_image = before_source.url %}
+{% elseif before_source and before_source.original is defined %}
+	{% set before_image = before_source.original %}
+{% else %}
+	{% set before_image = before_source ?? '' %}
+{% endif %}
+
+{% if after_source and after_source.url is defined %}
+	{% set after_image = after_source.url %}
+{% elseif after_source and after_source.original is defined %}
+	{% set after_image = after_source.original %}
+{% else %}
+	{% set after_image = after_source ?? '' %}
+{% endif %}
+
+{% set before_width = before_source and before_source.width is defined ? before_source.width : null %}
+{% set before_height = before_source and before_source.height is defined ? before_source.height : null %}
+{% set after_width = after_source and after_source.width is defined ? after_source.width : null %}
+{% set after_height = after_source and after_source.height is defined ? after_source.height : null %}
+{% set compare_width = before_width ?? after_width %}
+{% set compare_height = before_height ?? after_height %}
+{% set compare_ratio = (compare_width and compare_height) ? compare_width ~ ' / ' ~ compare_height : '4 / 3' %}
+
 {% set layout_style_raw = component.layout_style[0] ?? component.layout_style ?? 'split' %}
 {% set layout_style = layout_style_raw.label ?? layout_style_raw.key ?? layout_style_raw.value ?? layout_style_raw %}
 {% set is_stacked_layout = layout_style in ['stacked', 'عمودي (المحتوى فوق الصورة)'] %}
@@ -35,7 +60,6 @@
 		<div class="th-before-after-hero__panel relative overflow-hidden rounded-[20px] p-[14px] md:p-6 lg:p-8">
 			<div class="th-before-after-hero__inner relative grid items-center gap-6 {{ is_stacked_layout ? 'grid-cols-1' : 'lg:grid-cols-[minmax(250px,0.88fr)_minmax(0,1fr)] lg:gap-[30px]' }}">
 				<div class="th-before-after-hero__content min-w-0 {{ is_stacked_layout ? 'text-center' : 'text-center lg:text-right ltr:lg:text-left' }}">
-				
 					{% if title %}
 						<h2 class="th-before-after-hero__title mb-3">{{ title }}</h2>
 					{% endif %}
@@ -45,45 +69,43 @@
 							{{ description|raw }}
 						</div>
 					{% endif %}
-
-
 				</div>
 
-				<div class="th-before-after-hero__visual min-w-0">
-					<div class="th-before-after-hero__compare js-before-after-hero" data-initial-position="50" style="--th-before-after-pos: 50%;">
-						<div class="th-before-after-hero__base">
-							<img class="th-before-after-hero__img" src="{{ before_image }}" alt="{{ before_alt }}">
-							{% if before_desc %}
-								<span class="th-before-after-hero__caption th-before-after-hero__caption--before">{{ before_desc }}</span>
-							{% endif %}
-						</div>
+				{% if before_image and after_image %}
+					<div class="th-before-after-hero__visual min-w-0">
+						<div class="th-before-after-hero__compare js-before-after-hero" data-initial-position="50" style="--th-before-after-pos: 50%; --th-before-after-ratio: {{ compare_ratio }};{% if compare_width %} --th-before-after-max-width: {{ compare_width }}px;{% endif %}">
+							<div class="th-before-after-hero__base">
+								<img class="th-before-after-hero__img" data-before-after-image="before" src="{{ before_image }}" alt="{{ before_alt }}" loading="lazy" decoding="async" draggable="false"{% if before_width %} width="{{ before_width }}"{% endif %}{% if before_height %} height="{{ before_height }}"{% endif %}>
+								{% if before_desc %}
+									<span class="th-before-after-hero__caption th-before-after-hero__caption--before">{{ before_desc }}</span>
+								{% endif %}
+							</div>
 
-						<div class="th-before-after-hero__overlay">
-							<img class="th-before-after-hero__img" src="{{ after_image }}" alt="{{ after_alt }}">
-							{% if after_desc %}
-								<span class="th-before-after-hero__caption th-before-after-hero__caption--after">{{ after_desc }}</span>
-							{% endif %}
-						</div>
+							<div class="th-before-after-hero__overlay">
+								<img class="th-before-after-hero__img" data-before-after-image="after" src="{{ after_image }}" alt="{{ after_alt }}" loading="lazy" decoding="async" draggable="false"{% if after_width %} width="{{ after_width }}"{% endif %}{% if after_height %} height="{{ after_height }}"{% endif %}>
+								{% if after_desc %}
+									<span class="th-before-after-hero__caption th-before-after-hero__caption--after">{{ after_desc }}</span>
+								{% endif %}
+							</div>
 
-						<button type="button" class="th-before-after-hero__handle" aria-label="تحريك للمقارنة بين {{ before_word }} و {{ after_word }}" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-							<span class="th-before-after-hero__handle-circle" aria-hidden="true">
-								<i class="sicon-arrow-left th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--left"></i>
-								<i class="sicon-arrow-right th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--right"></i>
+							<button type="button" class="th-before-after-hero__handle" aria-label="{{ before_word }} / {{ after_word }}" role="slider" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50%">
+								<span class="th-before-after-hero__handle-circle" aria-hidden="true">
+									<i class="sicon-arrow-left th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--left"></i>
+									<i class="sicon-arrow-right th-before-after-hero__handle-arrow th-before-after-hero__handle-arrow--right"></i>
+								</span>
+								<span class="sr-only">{{ before_word }} / {{ after_word }}</span>
+							</button>
+
+							<span class="th-before-after-hero__badge th-before-after-hero__badge--before">
+								<span class="th-before-after-hero__badge-title">{{ before_word }}</span>
 							</span>
-							<span class="sr-only">{{ before_word }}
-								/
-								{{ after_word }}</span>
-						</button>
 
-						<span class="th-before-after-hero__badge th-before-after-hero__badge--before">
-							<span class="th-before-after-hero__badge-title">{{ before_word }}</span>
-						</span>
-
-						<span class="th-before-after-hero__badge th-before-after-hero__badge--after">
-							<span class="th-before-after-hero__badge-title">{{ after_word }}</span>
-						</span>
+							<span class="th-before-after-hero__badge th-before-after-hero__badge--after">
+								<span class="th-before-after-hero__badge-title">{{ after_word }}</span>
+							</span>
+						</div>
 					</div>
-				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

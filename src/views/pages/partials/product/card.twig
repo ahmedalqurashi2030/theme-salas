@@ -7,6 +7,10 @@ view options:
 *Notice: if marchent wants equal image, {{store.settings.product.fit_type}} will be (contain|cover) if not, it will be empty.
 * Deprecated: use salla-product-card
 #}
+{# Normalize the shared card rating setting so fixed Twig cards match moving JS cards #}
+{% set card_show_rating_raw = theme.settings.get('card_show_rating', true) %}
+{% set card_show_rating_value = card_show_rating_raw.value ?? card_show_rating_raw.selected ?? card_show_rating_raw[0].value ?? card_show_rating_raw[0].selected ?? card_show_rating_raw %}
+{% set card_show_rating_enabled = card_show_rating_value in [true, 1, '1', 'true', 'on', 'yes'] %}
 <div id="product-{{ product.id }}" class='product-entry {{ block_classes ?: '' }}
   {{ is_horizontal ? 'product-entry--horizontal': 'product-entry--vertical' }}
   {{ is_special ? 'product-entry--special':'' }}
@@ -112,11 +116,15 @@ view options:
                 <span class="font-bold text-sm">{{ product.price|money }}</span>
             {% endif %}
 
-            {% if product.rating and product.rating.stars %}
+            {% if card_show_rating_enabled %}
+                {% set rating_count = product.rating.count|default(0) %}
+                {% set rating_stars = product.rating.stars|default(null) %}
                 <div class="product-rating text-sm text-gray-500 flex items-center gap-1">
-                    <span class="text-gray-500 text-xs">({{ product.rating.count|default(0) }})</span>
-                    <span class="font-bold text-gray-600">{{ product.rating.stars|number }}</span>
-                    <i class="sicon-star2 text-amber-400"></i>
+                    <span class="text-gray-500 text-xs">({{ rating_count }})</span>
+                    {% if rating_stars %}
+                        <span class="font-bold text-gray-600">{{ rating_stars|number }}</span>
+                    {% endif %}
+                    <i class="sicon-star2 {{ rating_stars ? 'text-amber-400' : 'text-gray-300' }}"></i>
                 </div>
             {% endif %}
         </div>

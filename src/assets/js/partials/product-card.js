@@ -96,6 +96,20 @@ class ProductCard extends HTMLElement {
     return fallback;
   }
 
+  getLangText(keys, fallback = '') {
+    const keyList = Array.isArray(keys) ? keys : [keys];
+
+    for (const key of keyList) {
+      if (!key) continue;
+      const value = window.salla?.lang?.get?.(key);
+      if (value && value !== key) {
+        return value;
+      }
+    }
+
+    return fallback;
+  }
+
   escapeHTML(str = '') {
     return String(str)
       .replace(/&/g, '&amp;')
@@ -146,35 +160,71 @@ class ProductCard extends HTMLElement {
     return `<h4 class="s-product-card-price">${this.getPriceFormat(this.product?.price)}</h4>`;
   }
 
-  getDiscountPercent() {
-    const regular = Number(this.product?.regular_price || 0);
-    const sale = Number(this.product?.sale_price || 0);
-    if (!this.product?.is_on_sale || !regular || !sale || sale >= regular) return null;
+  getDiscountPercent(product = this.product) {
+    const regular = Number(product?.regular_price || 0);
+    const sale = Number(product?.sale_price || 0);
+    if (!product?.is_on_sale || !regular || !sale || sale >= regular) return null;
     return Math.round((1 - sale / regular) * 100);
   }
 
-  getDiscountBadgeHtml() {
+  getDiscountBadgeHtml(product = this.product, className = 'th-product-card-discount-badge') {
     if (!this.showCardDiscountBadge) return '';
-    const p = this.getDiscountPercent();
-    return p ? `<span class="th-product-card-discount-badge">-${p}%</span>` : '';
+    const p = this.getDiscountPercent(product);
+    return p ? `<span class="${className}">-${p}%</span>` : '';
+  }
+
+  getQuickViewTopBadgeHtml(product = this.product) {
+    if (product?.preorder?.label) {
+      return `<span class="th-quick-view-top-badge">${this.escapeHTML(product.preorder.label)}</span>`;
+    }
+
+    if (product?.promotion_title) {
+      return `<span class="th-quick-view-top-badge">${this.escapeHTML(product.promotion_title)}</span>`;
+    }
+
+    return '';
+  }
+
+  getQuickViewPriceHtml(product = this.product) {
+    if (!product) return '';
+
+    if (product.is_on_sale) {
+      const discountChip = this.getDiscountBadgeHtml(product, 'th-quick-view-discount-chip');
+
+      return `<div class="s-product-card-sale-price">
+        <div class="th-quick-view-sale-row">
+          <h4>${this.getPriceFormat(product.sale_price)}</h4>
+          ${discountChip}
+        </div>
+        <span class="th-quick-view-regular-price">${this.getPriceFormat(product?.regular_price)}</span>
+      </div>`;
+    }
+
+    if (product.starting_price) {
+      return `<div class="s-product-card-starting-price">
+        <p>${this.startingPrice}</p>
+        <h4>${this.getPriceFormat(product?.starting_price)}</h4>
+      </div>`;
+    }
+
+    return `<h4 class="s-product-card-price">${this.getPriceFormat(product?.price)}</h4>`;
   }
 
   getRatingHtml() {
     if (!this.showCardRating) return '';
     const ratingValue = Number(this.product?.rating?.stars || 0);
-    if (!ratingValue) return '';
-
-    const normalizedValue = Number.isInteger(ratingValue)
-      ? ratingValue.toFixed(0)
-      : ratingValue.toFixed(1);
     const ratingCount = Number(this.product?.rating?.count || 0);
+    const hasRatingValue = ratingValue > 0;
+    const normalizedValue = hasRatingValue
+      ? (Number.isInteger(ratingValue) ? ratingValue.toFixed(0) : ratingValue.toFixed(1))
+      : '';
 
     // Style: (Count) Value Star -- RTL: Star Value (Count)
     // Structure: Icon - Value - Count
     return '<div class="s-product-card-rating text-sm flex items-center gap-1">'
       + `<span class="text-gray-400 text-xs">(${salla.helpers.number(ratingCount)})</span>`
-      + `<span class="font-bold text-gray-600">${normalizedValue}</span>`
-      + '<i class="sicon-star2 text-amber-400"></i>'
+      + (hasRatingValue ? `<span class="font-bold text-gray-600">${normalizedValue}</span>` : '')
+      + `<i class="sicon-star2 ${hasRatingValue ? 'text-amber-400' : 'text-gray-300'}"></i>`
       + '</div>';
   }
 
@@ -418,8 +468,11 @@ class ProductCard extends HTMLElement {
       brandEl.classList.toggle('hidden', !brandName);
     }
 
+    const priceHtml = product?.donation?.can_donate ? '' : this.getProductPrice();
+
     if (priceEl) {
-      priceEl.innerHTML = product?.donation?.can_donate ? '' : this.getProductPrice();
+      priceEl.innerHTML = priceHtml;
+      priceEl.closest('.th-quick-view-price-box')?.classList.toggle('hidden', !priceHtml);
     }
 
     if (badgeEl) {
@@ -489,7 +542,7 @@ class ProductCard extends HTMLElement {
               window.salla?.notify?.success?.(title, window.salla?.lang?.get?.('common.copied') || '');
             }
           } catch (e) {
-            // silent fail – sharing is an enhancement only
+            // silent fail; sharing is an enhancement only
           }
         });
       }
@@ -510,6 +563,12 @@ class ProductCard extends HTMLElement {
     imageEl.src = images[0].url;
     imageEl.alt = this.escapeHTML(images[0].alt || productName || '');
 
+    if (images.length === 1) {
+      galleryEl.classList.add('hidden');
+      galleryEl.innerHTML = '';
+      return;
+    }
+
     galleryEl.innerHTML = images
       .map((image, index) => `
         <button
@@ -517,7 +576,7 @@ class ProductCard extends HTMLElement {
           class="th-quick-view-thumb ${index === 0 ? 'is-active' : ''}"
           data-src="${this.escapeHTML(image.url)}"
           data-alt="${this.escapeHTML(image.alt || productName || '')}"
-          aria-label="${this.escapeHTML(productName || 'Product image')} ${index + 1}">
+          aria-label="${this.escapeHTML(productName || this.getLangText('common.product_details', 'Product'))} ${index + 1}">
           <img src="${this.escapeHTML(image.url)}" alt="${this.escapeHTML(image.alt || productName || '')}" loading="lazy"/>
         </button>
       `)
@@ -550,22 +609,23 @@ class ProductCard extends HTMLElement {
     const ratingEl = modal.querySelector('[data-quick-view="rating"]');
     if (!ratingEl) return;
 
-    const ratingValue = Number(product?.rating?.stars || 0);
-    const ratingCount = Number(product?.rating?.count || 0);
-    if (!ratingValue) {
-      ratingEl.classList.add('hidden');
+    if (!this.showCardRating) {
       ratingEl.innerHTML = '';
+      ratingEl.classList.add('hidden');
       return;
     }
 
-    const normalizedValue = Number.isInteger(ratingValue)
-      ? ratingValue.toFixed(0)
-      : ratingValue.toFixed(1);
+    const ratingValue = Number(product?.rating?.stars || 0);
+    const ratingCount = Number(product?.rating?.count || 0);
+    const hasRatingValue = ratingValue > 0;
+    const normalizedValue = hasRatingValue
+      ? (Number.isInteger(ratingValue) ? ratingValue.toFixed(0) : ratingValue.toFixed(1))
+      : '';
 
     ratingEl.classList.remove('hidden');
     ratingEl.innerHTML = `
-      <i class="sicon-star2" aria-hidden="true"></i>
-      <b>${normalizedValue}</b>
+      <i class="sicon-star2 ${hasRatingValue ? 'text-amber-400' : 'text-gray-300'}" aria-hidden="true"></i>
+      ${hasRatingValue ? `<b>${normalizedValue}</b>` : ''}
       <span>(${salla.helpers.number(ratingCount)})</span>
     `;
   }
@@ -577,7 +637,7 @@ class ProductCard extends HTMLElement {
     const isTaxIncluded = Boolean(
       product?.is_taxable || salla.config.get('store.settings.tax.taxable_prices_enabled'),
     );
-    const taxText = window.salla?.lang?.get?.('pages.products.tax_included') || '';
+    const taxText = this.getLangText('pages.products.tax_included', '');
     taxEl.textContent = isTaxIncluded ? taxText : '';
     taxEl.classList.toggle('hidden', !isTaxIncluded || !taxText);
   }
@@ -615,25 +675,27 @@ class ProductCard extends HTMLElement {
     if (!plainDescription) {
       descriptionEl.innerHTML = '';
       descriptionEl.classList.add('hidden');
+      descriptionEl.classList.remove('is-expanded');
       return;
     }
 
     const maxLength = 235;
     const isLong = plainDescription.length > maxLength;
     const shortDescription = isLong ? `${plainDescription.slice(0, maxLength).trim()}...` : plainDescription;
-    const sectionTitle =
-      window.salla?.lang?.get?.('common.product_details')
-      || (salla.config.get('theme.is_rtl') ? 'تفاصيل المنتج' : 'Product details');
-    const readMoreText =
-      window.salla?.lang?.get?.('common.read_more')
-      || (salla.config.get('theme.is_rtl') ? 'اقرأ المزيد' : 'Read more');
+    const sectionTitle = this.getLangText('common.product_details', 'Product details');
+    const readMoreText = this.getLangText([
+      'components.product_tabs.read_more',
+      'common.read_more',
+    ], 'Read more');
+    const readLessText = this.getLangText('components.product_tabs.read_less', 'Read less');
 
     descriptionEl.innerHTML = `
       <h4 class="th-quick-view-description-title">${this.escapeHTML(sectionTitle)}</h4>
       <p class="th-quick-view-description-text">${this.escapeHTML(shortDescription)}</p>
-      ${isLong ? `<button type="button" class="th-quick-view-description-toggle" data-quick-view="description-toggle">${this.escapeHTML(readMoreText)}</button>` : ''}
+      ${isLong ? `<button type="button" class="th-quick-view-description-toggle" data-quick-view="description-toggle" aria-expanded="false">${this.escapeHTML(readMoreText)}</button>` : ''}
     `;
     descriptionEl.classList.remove('hidden');
+    descriptionEl.classList.remove('is-expanded');
 
     if (!isLong) return;
     const toggleButton = descriptionEl.querySelector('[data-quick-view="description-toggle"]');
@@ -646,9 +708,8 @@ class ProductCard extends HTMLElement {
       if (textEl) {
         textEl.textContent = isExpanded ? plainDescription : shortDescription;
       }
-      toggleButton.textContent = isExpanded
-        ? (salla.config.get('theme.is_rtl') ? 'إخفاء' : 'Show less')
-        : readMoreText;
+      toggleButton.textContent = isExpanded ? readLessText : readMoreText;
+      toggleButton.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
     });
   }
 
@@ -662,9 +723,21 @@ class ProductCard extends HTMLElement {
     const normalized = Math.min(99, Math.max(1, Math.round(Number(value) || 1)));
     modal.dataset.quickViewQty = String(normalized);
 
-    const quantityValueEl = modal.querySelector('[data-quick-view="qty-value"]');
-    if (quantityValueEl) {
-      quantityValueEl.textContent = String(normalized);
+    const quantityComponent = modal.querySelector('[data-quick-view="qty-input"]');
+    const quantityInput = quantityComponent?.querySelector?.('input[name="quantity"], input');
+
+    if (quantityInput) {
+      const currentValue = Number(quantityInput.value || 0);
+      if (currentValue !== normalized) {
+        if (typeof quantityComponent?.setValue === 'function') {
+          quantityComponent.setValue(normalized, false);
+        } else {
+          quantityInput.value = String(normalized);
+          quantityComponent?.setAttribute?.('value', String(normalized));
+        }
+      }
+    } else if (quantityComponent) {
+      quantityComponent.setAttribute('value', String(normalized));
     }
 
     const addButton = modal.querySelector('[data-quick-view="add-button"] salla-add-product-button');
@@ -677,18 +750,46 @@ class ProductCard extends HTMLElement {
     if (!modal || modal.dataset.quickViewQtyBound === 'true') return;
     modal.dataset.quickViewQtyBound = 'true';
 
-    modal.addEventListener('click', (event) => {
-      const clickedElement = event.target instanceof Element ? event.target : null;
-      const plusBtn = clickedElement?.closest?.('[data-quick-view="qty-plus"]');
-      const minusBtn = clickedElement?.closest?.('[data-quick-view="qty-minus"]');
+    const quantityComponent = modal.querySelector('[data-quick-view="qty-input"]');
+    if (!quantityComponent) return;
 
-      if (!plusBtn && !minusBtn) return;
-      event.preventDefault();
-      event.stopPropagation();
+    const syncQuantity = (nextValue) => {
+      this.setQuickViewQuantity(modal, nextValue);
+    };
 
-      const currentQty = this.getQuickViewQuantity(modal);
-      this.setQuickViewQuantity(modal, plusBtn ? currentQty + 1 : currentQty - 1);
+    const bindQuantityInput = () => {
+      const quantityInput = quantityComponent.querySelector('input[name="quantity"], input');
+      if (!quantityInput || quantityInput.dataset.quickViewQtyInputBound === 'true') return;
+
+      quantityInput.dataset.quickViewQtyInputBound = 'true';
+      syncQuantity(quantityInput.value);
+
+      ['change', 'input'].forEach((eventName) => {
+        quantityInput.addEventListener(eventName, (event) => {
+          syncQuantity(event.target?.value || quantityInput.value);
+        });
+      });
+    };
+
+    bindQuantityInput();
+
+    if (quantityComponent.dataset.quickViewQtyComponentBound !== 'true') {
+      quantityComponent.dataset.quickViewQtyComponentBound = 'true';
+      quantityComponent.addEventListener('change', () => {
+        const quantityInput = quantityComponent.querySelector('input[name="quantity"], input');
+        syncQuantity(quantityInput?.value || quantityComponent.getAttribute('value') || 1);
+      });
+    }
+
+    const observer = new MutationObserver(() => {
+      bindQuantityInput();
+      const quantityInput = quantityComponent.querySelector('input[name="quantity"], input');
+      if (quantityInput) {
+        syncQuantity(quantityInput.value);
+      }
     });
+
+    observer.observe(quantityComponent, { childList: true, subtree: true });
   }
 
   populateQuickViewModal(modal, product = this.product) {
@@ -701,7 +802,8 @@ class ProductCard extends HTMLElement {
     const linkEl = modal.querySelector('[data-quick-view="link"]');
     const stockEl = modal.querySelector('[data-quick-view="stock"]');
     const wishlistBtn = modal.querySelector('[data-quick-view="wishlist-btn"]');
-    const shareBtn = modal.querySelector('[data-quick-view="share-btn"]');
+    const shareEl = modal.querySelector('[data-quick-view="share"]');
+    const shareTrigger = modal.querySelector('[data-quick-view="share-trigger"]');
 
     const images = this.getQuickViewImages(product);
     if (!images.length && imageEl) {
@@ -720,17 +822,25 @@ class ProductCard extends HTMLElement {
       brandEl.classList.toggle('hidden', !brandName);
     }
 
-    if (priceEl) {
-      priceEl.innerHTML = product?.donation?.can_donate ? '' : this.getProductPrice();
+    if (badgeEl) {
+      const topBadgeHtml = this.getQuickViewTopBadgeHtml(product);
+      badgeEl.innerHTML = topBadgeHtml;
+      badgeEl.classList.toggle('hidden', !topBadgeHtml);
     }
 
-    if (badgeEl) {
-      badgeEl.innerHTML = product?.is_on_sale ? this.getDiscountBadgeHtml() : '';
+    const priceHtml = product?.donation?.can_donate ? '' : this.getQuickViewPriceHtml(product);
+
+    if (priceEl) {
+      priceEl.innerHTML = priceHtml;
+      priceEl.closest('.th-quick-view-price-box')?.classList.toggle('hidden', !priceHtml);
     }
+
+    const primaryActionsEl = modal.querySelector('[data-quick-view="primary-actions"]');
 
     if (addBtnContainer) {
       if (product?.donation?.can_donate) {
         addBtnContainer.innerHTML = '';
+        primaryActionsEl?.classList.add('is-link-only');
       } else {
         const notifyChannels = Array.isArray(product?.notify_availability?.channels)
           ? product.notify_availability.channels.join(',')
@@ -749,8 +859,10 @@ class ProductCard extends HTMLElement {
 
         const buttonLabel = this.escapeHTML(
           product?.add_to_cart_label
-          || window.salla?.lang?.get?.('pages.products.add_to_cart')
-          || '',
+          || this.getLangText([
+            'common.add_to_cart',
+            'pages.products.add_to_cart',
+          ], 'Add to Cart'),
         );
 
         addBtnContainer.innerHTML = `
@@ -765,6 +877,7 @@ class ProductCard extends HTMLElement {
             ${buttonLabel}
           </salla-add-product-button>
         `;
+        primaryActionsEl?.classList.remove('is-link-only');
       }
     }
 
@@ -802,31 +915,23 @@ class ProductCard extends HTMLElement {
       }
     }
 
-    if (shareBtn) {
-      shareBtn.dataset.productUrl = product?.url || window.location.href;
-      shareBtn.dataset.productTitle = product?.name || document.title;
-
-      if (!shareBtn.dataset.boundShare) {
-        shareBtn.dataset.boundShare = 'true';
-        shareBtn.addEventListener('click', async () => {
-          const url = shareBtn.dataset.productUrl || window.location.href;
-          const title = shareBtn.dataset.productTitle || document.title;
-
-          try {
-            if (navigator.share) {
-              await navigator.share({ title, url });
-              return;
-            }
-
-            if (navigator.clipboard?.writeText) {
-              await navigator.clipboard.writeText(url);
-              window.salla?.notify?.success?.(title, window.salla?.lang?.get?.('common.copied') || '');
-            }
-          } catch (e) {
-            // silent fail - sharing is enhancement only
-          }
-        });
+    if (shareEl) {
+      const shareUrl = product?.url || window.location.href;
+      const shareTitle = product?.name || document.title;
+      shareEl.setAttribute('url', shareUrl);
+      shareEl.setAttribute('url-name', shareTitle);
+      if (typeof shareEl.refresh === 'function') {
+        shareEl.refresh();
       }
+    }
+
+    if (shareEl && shareTrigger && shareTrigger.dataset.boundShareTrigger !== 'true') {
+      shareTrigger.dataset.boundShareTrigger = 'true';
+      shareTrigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        shareEl.open?.();
+      });
     }
   }
 

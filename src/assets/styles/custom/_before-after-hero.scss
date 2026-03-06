@@ -48,13 +48,20 @@
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.2);
 }
 
+.th-before-after-hero__visual {
+  display: flex;
+  justify-content: center;
+}
+
 .th-before-after-hero__compare {
   --th-before-after-pos: 50%;
+  --th-before-after-ratio: 4 / 3;
 
   position: relative;
   direction: ltr;
-  width: 100%;
-  aspect-ratio: 16/10;
+  inline-size: min(100%, var(--th-before-after-max-width, 100%));
+  aspect-ratio: var(--th-before-after-ratio);
+  margin-inline: auto;
   border-radius: var(--th-ba-radius-lg);
   overflow: hidden;
   background: var(--th-border-soft, #dce2eb);
@@ -71,6 +78,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  background: #fff;
 }
 
 .th-before-after-hero__base {
@@ -91,11 +99,17 @@
 }
 
 .th-before-after-hero__img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   pointer-events: none;
+}
+
+.th-before-after-hero__compare.has-ratio-mismatch .th-before-after-hero__img {
+  object-fit: contain;
+  background: #fff;
 }
 
 .th-before-after-hero__handle {
@@ -226,7 +240,6 @@
 @media (max-width: 767px) {
   .th-before-after-hero__compare {
     border-radius: 16px;
-    aspect-ratio: 5/4;
   }
 
   .th-before-after-hero__badge {
