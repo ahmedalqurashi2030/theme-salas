@@ -10,18 +10,6 @@
 
 {% set has_multiple_sections = items|length > 1 %}
 <section class="s-block s-block--features-products th-featured-products-style3 container {% if has_multiple_sections %}two-cols{% endif %}">
-  {% if has_multiple_sections %}
-    <div class="th-featured-products-style3__mobile-pagination swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal" data-featured-style3-pagination hidden>
-      {% for section in items %}
-        <button
-          type="button"
-          class="swiper-pagination-bullet{% if loop.first %} swiper-pagination-bullet-active{% endif %}"
-          data-featured-style3-dot="{{ loop.index0 }}"
-          aria-label="{{ trans('common.slide')|default('Slide') }} {{ loop.index }}">
-        </button>
-      {% endfor %}
-    </div>
-  {% endif %}
   <div class="inner">
     {% for section in items %}
       {% set side_products = section.products|slice(0, 3) %}
@@ -68,4 +56,12 @@
       </section>
     {% endfor %}
   </div>
+  {% if has_multiple_sections %}
+    <div
+      class="th-featured-products-style3__mobile-pagination swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"
+      data-featured-style3-pagination
+      data-slide-label="{{ trans('common.slide')|default('Slide') }}"
+      hidden>
+    </div>
+  {% endif %}
 </section>

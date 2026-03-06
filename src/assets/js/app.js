@@ -207,7 +207,7 @@ class App extends AppHelpers {
       return;
     }
 
-    const mobileQuery = window.matchMedia('(max-width: 767px)');
+    const desktopQuery = window.matchMedia('(min-width: 1024px)');
 
     const bindBlock = (block) => {
       if (!(block instanceof HTMLElement) || block.dataset.featuredStyle3PaginationBound === 'true') {
@@ -217,21 +217,32 @@ class App extends AppHelpers {
 
       const inner = block.querySelector('.inner');
       const pagination = block.querySelector('[data-featured-style3-pagination]');
-      const dots = Array.from(block.querySelectorAll('[data-featured-style3-dot]'));
       const sections = inner ? Array.from(inner.children).filter((child) => child.tagName === 'SECTION') : [];
+      const slideLabel = pagination instanceof HTMLElement ? (pagination.dataset.slideLabel || 'Slide') : 'Slide';
 
-      if (!inner || !pagination || sections.length < 2 || dots.length !== sections.length) {
+      if (!(inner instanceof HTMLElement) || !(pagination instanceof HTMLElement) || sections.length < 2) {
         return;
       }
 
-      let activeIndex = 0;
+      let activePage = 0;
+      let pageStarts = sections.map((_, index) => index);
       let scrollTimeout = null;
+      let isPointerDown = false;
+      let dragStartX = 0;
+      let dragStartScrollLeft = 0;
+      let hasDragged = false;
+      let suppressClick = false;
+      let activePointerId = null;
 
-      const isMobile = () => mobileQuery.matches;
+      const isDesktop = () => desktopQuery.matches;
+      const getPageSize = () => isDesktop() ? 2 : 1;
+      const shouldPaginate = () => isDesktop() ? sections.length > 2 : sections.length > 1;
+      const canDrag = () => block.classList.contains('is-scrollable');
 
-      const setActiveDot = (index) => {
-        const safeIndex = Math.max(0, Math.min(index, dots.length - 1));
-        activeIndex = safeIndex;
+      const setActiveDot = (pageIndex) => {
+        const dots = Array.from(pagination.querySelectorAll('[data-featured-style3-dot]'));
+        const safeIndex = Math.max(0, Math.min(pageIndex, dots.length - 1));
+        activePage = safeIndex;
 
         dots.forEach((dot, dotIndex) => {
           const isActive = dotIndex === safeIndex;
@@ -240,14 +251,43 @@ class App extends AppHelpers {
         });
       };
 
+      const renderDots = () => {
+        pagination.innerHTML = '';
+
+        if (pageStarts.length < 2) {
+          pagination.hidden = true;
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+
+        pageStarts.forEach((_, pageIndex) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'swiper-pagination-bullet';
+          dot.dataset.featuredStyle3Dot = String(pageIndex);
+          dot.setAttribute('aria-label', `${slideLabel} ${pageIndex + 1}`);
+          fragment.appendChild(dot);
+        });
+
+        pagination.appendChild(fragment);
+        pagination.hidden = false;
+        setActiveDot(Math.min(activePage, pageStarts.length - 1));
+      };
+
       const syncActiveIndexFromScroll = () => {
+        if (pagination.hidden || !pageStarts.length) {
+          return;
+        }
+
         const containerRect = inner.getBoundingClientRect();
         const isRTL = getComputedStyle(block).direction === 'rtl';
 
-        let nearestIndex = activeIndex;
+        let nearestPage = activePage;
         let nearestDistance = Number.POSITIVE_INFINITY;
 
-        sections.forEach((section, index) => {
+        pageStarts.forEach((sectionIndex, pageIndex) => {
+          const section = sections[sectionIndex];
           const sectionRect = section.getBoundingClientRect();
           const distance = isRTL
             ? Math.abs(sectionRect.right - containerRect.right)
@@ -255,45 +295,144 @@ class App extends AppHelpers {
 
           if (distance < nearestDistance) {
             nearestDistance = distance;
-            nearestIndex = index;
+            nearestPage = pageIndex;
           }
         });
 
-        setActiveDot(nearestIndex);
+        setActiveDot(nearestPage);
       };
 
-      const scrollToIndex = (index) => {
-        const targetIndex = Math.max(0, Math.min(index, sections.length - 1));
-        setActiveDot(targetIndex);
+      const scrollToPage = (pageIndex) => {
+        const safeIndex = Math.max(0, Math.min(pageIndex, pageStarts.length - 1));
+        const target = sections[pageStarts[safeIndex]];
+        if (!target) {
+          return;
+        }
 
-        sections[targetIndex].scrollIntoView({
+        setActiveDot(safeIndex);
+        target.scrollIntoView({
           behavior: 'smooth',
           block: 'nearest',
           inline: 'start',
         });
       };
 
-      const syncPaginationVisibility = () => {
-        pagination.hidden = !isMobile();
-
-        if (!isMobile()) {
+      const stopDragging = () => {
+        if (!isPointerDown) {
           return;
         }
 
-        syncActiveIndexFromScroll();
+        isPointerDown = false;
+        activePointerId = null;
+        block.classList.remove('is-dragging');
+        inner.classList.remove('is-dragging');
+
+        if (hasDragged) {
+          suppressClick = true;
+          window.setTimeout(() => {
+            suppressClick = false;
+          }, 80);
+        }
       };
 
-      dots.forEach((dot, dotIndex) => {
-        dot.addEventListener('click', () => {
-          if (!isMobile()) {
-            return;
+      const syncPaginationState = () => {
+        const pageSize = getPageSize();
+        pageStarts = sections.reduce((pages, _section, index) => {
+          if (index % pageSize === 0) {
+            pages.push(index);
           }
-          scrollToIndex(dotIndex);
-        });
+          return pages;
+        }, []);
+
+        const shouldEnable = shouldPaginate() && pageStarts.length > 1;
+        block.classList.toggle('is-scrollable', shouldEnable);
+        block.classList.toggle('is-draggable', shouldEnable);
+
+        const hasOverflow = shouldEnable && Math.ceil(inner.scrollWidth - inner.clientWidth) > 8;
+        const enablePagination = shouldEnable && hasOverflow;
+
+        block.classList.toggle('is-scrollable', enablePagination);
+        block.classList.toggle('is-draggable', enablePagination);
+        block.classList.toggle('has-pagination', enablePagination);
+
+        renderDots();
+
+        if (!enablePagination) {
+          pagination.hidden = true;
+          activePage = 0;
+          stopDragging();
+          return;
+        }
+
+        window.requestAnimationFrame(syncActiveIndexFromScroll);
+      };
+
+      pagination.addEventListener('click', (event) => {
+        const dot = event.target.closest('[data-featured-style3-dot]');
+        if (!(dot instanceof HTMLElement)) {
+          return;
+        }
+
+        scrollToPage(Number(dot.dataset.featuredStyle3Dot || 0));
+      });
+
+      inner.addEventListener('click', (event) => {
+        if (!suppressClick) {
+          return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        suppressClick = false;
+      }, true);
+
+      inner.addEventListener('pointerdown', (event) => {
+        if (!canDrag()) {
+          return;
+        }
+
+        isPointerDown = true;
+        hasDragged = false;
+        activePointerId = event.pointerId;
+        dragStartX = event.clientX;
+        dragStartScrollLeft = inner.scrollLeft;
+        block.classList.add('is-dragging');
+        inner.classList.add('is-dragging');
+
+        if (typeof inner.setPointerCapture === 'function') {
+          inner.setPointerCapture(event.pointerId);
+        }
+      });
+
+      inner.addEventListener('pointermove', (event) => {
+        if (!isPointerDown || activePointerId !== event.pointerId || !canDrag()) {
+          return;
+        }
+
+        const deltaX = event.clientX - dragStartX;
+        if (Math.abs(deltaX) > 4) {
+          hasDragged = true;
+        }
+
+        if (!hasDragged) {
+          return;
+        }
+
+        inner.scrollLeft = dragStartScrollLeft - deltaX;
+        event.preventDefault();
+      });
+
+      inner.addEventListener('pointerup', stopDragging);
+      inner.addEventListener('pointercancel', stopDragging);
+      inner.addEventListener('lostpointercapture', stopDragging);
+      inner.addEventListener('pointerleave', (event) => {
+        if (isPointerDown && event.pointerType === 'mouse') {
+          stopDragging();
+        }
       });
 
       inner.addEventListener('scroll', () => {
-        if (!isMobile()) {
+        if (!block.classList.contains('is-scrollable')) {
           return;
         }
 
@@ -303,13 +442,18 @@ class App extends AppHelpers {
         scrollTimeout = window.setTimeout(syncActiveIndexFromScroll, 80);
       }, { passive: true });
 
-      if (typeof mobileQuery.addEventListener === 'function') {
-        mobileQuery.addEventListener('change', syncPaginationVisibility);
-      } else if (typeof mobileQuery.addListener === 'function') {
-        mobileQuery.addListener(syncPaginationVisibility);
+      const handleViewportChange = () => {
+        syncPaginationState();
+      };
+
+      if (typeof desktopQuery.addEventListener === 'function') {
+        desktopQuery.addEventListener('change', handleViewportChange);
+      } else if (typeof desktopQuery.addListener === 'function') {
+        desktopQuery.addListener(handleViewportChange);
       }
 
-      syncPaginationVisibility();
+      window.addEventListener('resize', handleViewportChange, { passive: true });
+      window.requestAnimationFrame(syncPaginationState);
     };
 
     blocks.forEach(bindBlock);
