@@ -1,97 +1,112 @@
 {
-  "blocks": {
-    "header": {
-      "cart": "السلة",
-      "wishlist": "المفضلة",
-      "free_shipping": "شحن مجاني للطلبات",
-      "all_categories": "جميع الأقسام",
-      "featured_products": "منتجات مميزة",
-      "menu": "القائمة",
-      "login": "تسجيل الدخول",
-      "language": "اللغة"
-    },
-    "footer": {
-      "home": "الرئيسية",
-      "categories": "الأقسام",
-      "my_account": "حسابي"
-    },
-    "appBanner": {
-      "download_now": "حمّله الآن"
-    }
-  },
-  "components": {
-    "promo_hero": {
-      "countdown_label": "ينتهي العرض خلال",
-      "badge": "تصفية نهاية العام",
-      "seconds": "ثانية",
-      "minutes": "دقيقة",
-      "hours": "ساعة",
-      "days": "يوم",
-      "most_requested": "الأكثر طلبًا هذا الأسبوع",
-      "offer_finished": "انتهى العرض",
-      "featured_products": "المنتجات المميزة",
-      "shop_now": "تسوق الآن",
-      "empty_products": "لا توجد منتجات مختارة لهذا القسم حاليًا.",
-      "rating_prefix": "التقييم",
-      "rating_suffix": "من 5"
-    },
-    "testimonials": {
-      "section_title": "تجارب عملائنا المميزة",
-      "section_subtitle": "نفخر بخدمة آلاف العملاء، وتقييماتهم هي الدافع لتقديم الأفضل دائمًا.",
-      "customers_count": "2k+ عميل سعيد",
-      "empty": "لا توجد آراء متاحة حاليًا.",
-      "customer_name": "عميل",
-      "average_rating_prefix": "متوسط التقييم",
-      "average_rating_suffix": "من 5",
-      "rating_prefix": "التقييم",
-      "rating_suffix": "من 5"
-    },
-    "product_categories": {
-      "section_title": "منتجات مختارة",
-      "section_description": "تصفح أحدث المجموعات لدينا"
-    },
-    "comparison": {
-      "before": "قبل",
-      "after": "بعد"
-    },
-    "th_blog": {
-      "view_all": "مشاهدة جميع المدونات"
-    },
-    "product_tabs": {
-      "description": "الوصف",
-      "reviews": "التقييمات",
-      "read_more": "قراءة المزيد",
-      "read_less": "عرض أقل",
-      "write_review": "اكتب تقييمك",
-      "reviews_summary_label": "آراء العملاء وتقييماتهم",
-      "reviews_empty_title": "لا توجد تقييمات حتى الآن",
-      "reviews_empty_hint": "كن أول من يشارك تجربته مع هذا المنتج."
-    }
-  },
-  "pages": {
-    "cart": {
-      "cart_options": "خيارات السلة"
-    },
-    "order": {
-      "can_edit_or_delete_your_review_within": "يمكنك تعديل أو حذف تقييمك خلال",
-      "edit_period_ended": "تم انتهاء المدة المحددة لتعديل التقييم",
-      "delete_period_ended": "تم انتهاء المدة المحددة لحذف التقييم",
-      "days_since_added": "أيام منذ إضافته",
-      "option_name": "الخيار",
-      "option_content": "المحتوى"
-    }
-  },
-  "common": {
-    "all": "الكل",
-    "new": "جديد",
-    "best_seller": "الأكثر شهرة",
-    "add_to_cart": "إضافة للسلة",
-    "quantity": "الكمية",
-    "product_details": "تفاصيل المنتج",
-    "adding": "جاري الإضافة...",
-    "added": "تمت الإضافة ✓",
-    "product_added_to_cart": "تمت إضافة المنتج إلى السلة",
-    "bank_offer_sub_title_multiple": "ادفع قيمة مشترياتك عبر أحد البطاقات البنكية التالية واحصل على الخصم المحدد",
-    "bank_offer_sub_title_single": "ادفع قيمة مشترياتك عبر بطاقة بنك :bank_name واحصل على خصم"
-  }
+    "blocks":  {
+                   "header":  {
+                                  "cart":  "السلة",
+                                  "wishlist":  "المفضلة",
+                                  "free_shipping":  "شحن مجاني للطلبات",
+                                  "all_categories":  "جميع الأقسام",
+                                  "featured_products":  "منتجات مميزة",
+                                  "menu":  "القائمة",
+                                  "login":  "تسجيل الدخول",
+                                  "language":  "اللغة"
+                              },
+                   "footer":  {
+                                  "home":  "الرئيسية",
+                                  "categories":  "الأقسام",
+                                  "my_account":  "حسابي"
+                              },
+                   "appBanner":  {
+                                     "download_now":  "حمّله الآن"
+                                 }
+               },
+    "components":  {
+                       "promo_hero":  {
+                                          "countdown_label":  "ينتهي العرض خلال",
+                                          "badge":  "تصفية نهاية العام",
+                                          "seconds":  "ثانية",
+                                          "minutes":  "دقيقة",
+                                          "hours":  "ساعة",
+                                          "days":  "يوم",
+                                          "most_requested":  "الأكثر طلبًا هذا الأسبوع",
+                                          "offer_finished":  "انتهى العرض",
+                                          "featured_products":  "المنتجات المميزة",
+                                          "shop_now":  "تسوق الآن",
+                                          "empty_products":  "لا توجد منتجات مختارة لهذا القسم حاليًا.",
+                                          "rating_prefix":  "التقييم",
+                                          "rating_suffix":  "من 5"
+                                      },
+                       "testimonials":  {
+                                            "section_title":  "تجارب عملائنا المميزة",
+                                            "section_subtitle":  "نفخر بخدمة آلاف العملاء، وتقييماتهم هي الدافع لتقديم الأفضل دائمًا.",
+                                            "customers_count":  "2k+ عميل سعيد",
+                                            "empty":  "لا توجد آراء متاحة حاليًا.",
+                                            "customer_name":  "عميل",
+                                            "average_rating_prefix":  "متوسط التقييم",
+                                            "average_rating_suffix":  "من 5",
+                                            "rating_prefix":  "التقييم",
+                                            "rating_suffix":  "من 5"
+                                        },
+                       "product_categories":  {
+                                                  "section_title":  "منتجات مختارة",
+                                                  "section_description":  "تصفح أحدث المجموعات لدينا"
+                                              },
+                       "comparison":  {
+                                          "before":  "قبل",
+                                          "after":  "بعد"
+                                      },
+                       "th_blog":  {
+                                       "view_all":  "مشاهدة جميع المدونات"
+                                   },
+                       "product_tabs":  {
+                                            "description":  "الوصف",
+                                            "reviews":  "التقييمات",
+                                            "read_more":  "قراءة المزيد",
+                                            "read_less":  "عرض أقل",
+                                            "write_review":  "اكتب تقييمك",
+                                            "reviews_summary_label":  "آراء العملاء وتقييماتهم",
+                                            "reviews_empty_title":  "لا توجد تقييمات حتى الآن",
+                                            "reviews_empty_hint":  "كن أول من يشارك تجربته مع هذا المنتج."
+                                        },
+                       "global_announcement":  {
+                                                   "default_text":  "تخفيضات موسمية وعروض خاصة هذا الأسبوع",
+                                                   "aria_label":  "شريط إعلاني عام",
+                                                   "close":  "إغلاق الإعلان"
+                                               },
+                       "th_faq":  {
+                                      "section_title":  "الأسئلة الشائعة",
+                                      "section_subtitle":  "إجابات سريعة وواضحة على أكثر الأسئلة التي يطرحها العملاء قبل الطلب.",
+                                      "featured_badge":  "موضوع مميز",
+                                      "featured_title":  "كيف تعمل سياسة الاسترجاع والاستبدال؟",
+                                      "featured_content":  "يمكنك الاطلاع على سياسة الاسترجاع والاستبدال الخاصة بالمتجر لمعرفة الشروط والمدة وآلية معالجة الطلب.",
+                                      "empty":  "لا توجد أسئلة مضافة حاليًا."
+                                  }
+                   },
+    "pages":  {
+                  "cart":  {
+                               "cart_options":  "خيارات السلة"
+                           },
+                  "order":  {
+                                "can_edit_or_delete_your_review_within":  "يمكنك تعديل أو حذف تقييمك خلال",
+                                "edit_period_ended":  "تم انتهاء المدة المحددة لتعديل التقييم",
+                                "delete_period_ended":  "تم انتهاء المدة المحددة لحذف التقييم",
+                                "days_since_added":  "أيام منذ إضافته",
+                                "option_name":  "الخيار",
+                                "option_content":  "المحتوى"
+                            }
+              },
+    "common":  {
+                   "all":  "الكل",
+                   "new":  "جديد",
+                   "best_seller":  "الأكثر شهرة",
+                   "add_to_cart":  "إضافة للسلة",
+                   "quantity":  "الكمية",
+                   "product_details":  "تفاصيل المنتج",
+                   "adding":  "جاري الإضافة...",
+                   "added":  "تمت الإضافة ✓",
+                   "product_added_to_cart":  "تمت إضافة المنتج إلى السلة",
+                   "bank_offer_sub_title_multiple":  "ادفع قيمة مشترياتك عبر أحد البطاقات البنكية التالية واحصل على الخصم المحدد",
+                   "bank_offer_sub_title_single":  "ادفع قيمة مشترياتك عبر بطاقة بنك :bank_name واحصل على خصم",
+                   "enable_javascript_message":  "للحصول على كامل وظائف المتجر، يرجى تفعيل JavaScript في المتصفح.",
+                   "enable_javascript_link":  "طريقة تفعيل JavaScript"
+               }
 }

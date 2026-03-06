@@ -17,12 +17,12 @@
 #}
 {% set source = component|default(section.settings|default({})) %}
 
-{% set section_title = source.section_title|default('الأسئلة الشائعة') %}
-{% set section_sub = source.section_sub|default('نجيب هنا على أكثر الأسئلة التي تصلنا من عملاء ثراء.') %}
+{% set section_title = source.section_title|default(trans('components.th_faq.section_title')) %}
+{% set section_sub = source.section_sub|default(trans('components.th_faq.section_subtitle')) %}
 {% set show_featured_card = source.show_featured_card ?? true %}
-{% set featured_badge = source.featured_badge|default('موضوع مميز') %}
-{% set featured_title = source.featured_title|default('كيف تعمل سياسة الاسترجاع للمنتجات الفاخرة؟') %}
-{% set featured_content = source.featured_content|default('يمكنك استرجاع المنتج خلال 30 يومًا من تاريخ الاستلام وفق الشروط الموضحة في سياسة المتجر.') %}
+{% set featured_badge = source.featured_badge|default(trans('components.th_faq.featured_badge')) %}
+{% set featured_title = source.featured_title|default(trans('components.th_faq.featured_title')) %}
+{% set featured_content = source.featured_content|default(trans('components.th_faq.featured_content')) %}
 {% set faq_items = source.faq_items|default([]) %}
 
 {% set faq_count = faq_items|length %}
@@ -36,7 +36,7 @@
   {% set right_faq_items = faq_items|slice(split_index) %}
 {% endif %}
 
-<section class="th-faq" id="tharaa-faq-{{ section.id }}">
+<section class="th-faq" id="tharaa-faq-{{ section.id }}" data-th-faq>
   <div class="th-faq__container container">
     <header class="th-faq__header">
       <h2 class="th-faq__title">{{ section_title }}</h2>
@@ -104,7 +104,7 @@
               </details>
             </article>
           {% else %}
-            <p class="th-faq__empty">لا توجد أسئلة مضافة حاليًا.</p>
+            <p class="th-faq__empty">{{ trans('components.th_faq.empty') }}</p>
           {% endfor %}
         </div>
       </div>
@@ -143,22 +143,4 @@
       )|raw }}
     </script>
   {% endif %}
-
-  <script>
-    (function () {
-      var root = document.getElementById('tharaa-faq-{{ section.id }}');
-      if (!root) return;
-
-      var detailsNodes = root.querySelectorAll('.th-faq__item details');
-      detailsNodes.forEach(function (target) {
-        target.addEventListener('toggle', function () {
-          if (!target.open) return;
-
-          detailsNodes.forEach(function (node) {
-            if (node !== target) node.removeAttribute('open');
-          });
-        });
-      });
-    })();
-  </script>
 </section>

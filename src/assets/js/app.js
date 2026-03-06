@@ -42,6 +42,9 @@ class App extends AppHelpers {
 
     this.initLoadingBarPagination();
     this.initFeaturedProductsStyle3MobilePagination();
+    this.initThStoreFeaturesMobilePagination();
+    this.initGlobalAnnouncementBars();
+    this.initFaqAccordions();
     this.status = 'ready';
     document.dispatchEvent(new CustomEvent('theme::ready'));
     this.log('Theme Loaded');
@@ -310,6 +313,179 @@ class App extends AppHelpers {
     };
 
     blocks.forEach(bindBlock);
+  }
+
+
+  initThStoreFeaturesMobilePagination() {
+    const sections = document.querySelectorAll('[data-th-store-features]');
+    if (!sections.length) {
+      return;
+    }
+
+    const mobileQuery = window.matchMedia('(max-width: 767px)');
+
+    const debounce = (fn, wait = 120) => {
+      let timeout;
+      return (...args) => {
+        window.clearTimeout(timeout);
+        timeout = window.setTimeout(() => fn(...args), wait);
+      };
+    };
+
+    const bindSection = (section) => {
+      if (!(section instanceof HTMLElement) || section.dataset.thStoreFeaturesPaginationBound === 'true') {
+        return;
+      }
+      section.dataset.thStoreFeaturesPaginationBound = 'true';
+
+      const track = section.querySelector('[data-th-store-features-track]');
+      const pagination = section.querySelector('[data-th-store-features-pagination]');
+      const cards = Array.from(section.querySelectorAll('.th-store-features__card'));
+      const dots = Array.from(section.querySelectorAll('[data-th-store-features-dot]'));
+      if (!track || !pagination || !cards.length || dots.length !== cards.length) {
+        return;
+      }
+
+      let activeIndex = 0;
+      const isMobile = () => mobileQuery.matches;
+
+      const setActiveDot = (index) => {
+        activeIndex = Math.max(0, Math.min(index, dots.length - 1));
+        dots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === activeIndex;
+          dot.classList.toggle('swiper-pagination-bullet-active', isActive);
+          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+      };
+
+      const scrollToCard = (index) => {
+        const target = cards[Math.max(0, Math.min(index, cards.length - 1))];
+        if (!target) {
+          return;
+        }
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center',
+        });
+      };
+
+      const updateFromScroll = debounce(() => {
+        if (!isMobile()) {
+          return;
+        }
+
+        const center = track.getBoundingClientRect().left + track.clientWidth / 2;
+        let nearestIndex = activeIndex;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        cards.forEach((card, index) => {
+          const rect = card.getBoundingClientRect();
+          const distance = Math.abs((rect.left + rect.width / 2) - center);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveDot(nearestIndex);
+      }, 100);
+
+      const syncPaginationVisibility = () => {
+        pagination.hidden = !isMobile();
+        if (isMobile()) {
+          updateFromScroll();
+        }
+      };
+
+      dots.forEach((dot, dotIndex) => {
+        dot.addEventListener('click', (event) => {
+          event.preventDefault();
+          if (!isMobile()) {
+            return;
+          }
+          setActiveDot(dotIndex);
+          scrollToCard(dotIndex);
+        });
+      });
+
+      track.addEventListener('scroll', updateFromScroll, { passive: true });
+
+      if (typeof mobileQuery.addEventListener === 'function') {
+        mobileQuery.addEventListener('change', syncPaginationVisibility);
+      } else if (typeof mobileQuery.addListener === 'function') {
+        mobileQuery.addListener(syncPaginationVisibility);
+      }
+
+      setActiveDot(0);
+      syncPaginationVisibility();
+    };
+
+    sections.forEach(bindSection);
+  }
+
+  initGlobalAnnouncementBars() {
+    document.querySelectorAll('[data-th-global-announcement]').forEach((root) => {
+      if (!(root instanceof HTMLElement) || root.dataset.thAnnouncementBound === 'true') {
+        return;
+      }
+      root.dataset.thAnnouncementBound = 'true';
+
+      const dismissible = root.dataset.dismissible === '1';
+      const storageKey = root.dataset.dismissKey || 'th-global-announcement-dismissed';
+      if (!dismissible) {
+        return;
+      }
+
+      try {
+        if (window.localStorage && localStorage.getItem(storageKey) === '1') {
+          root.remove();
+          return;
+        }
+      } catch (error) {
+        this.log('Global announcement localStorage unavailable');
+      }
+
+      const closeButton = root.querySelector('[data-th-global-announcement-close]');
+      if (!closeButton) {
+        return;
+      }
+
+      closeButton.addEventListener('click', () => {
+        root.remove();
+        try {
+          if (window.localStorage) {
+            localStorage.setItem(storageKey, '1');
+          }
+        } catch (error) {
+          this.log('Global announcement dismissal could not be saved');
+        }
+      });
+    });
+  }
+
+  initFaqAccordions() {
+    document.querySelectorAll('[data-th-faq]').forEach((root) => {
+      if (!(root instanceof HTMLElement) || root.dataset.thFaqBound === 'true') {
+        return;
+      }
+      root.dataset.thFaqBound = 'true';
+
+      const detailsNodes = Array.from(root.querySelectorAll('.th-faq__item details'));
+      detailsNodes.forEach((target) => {
+        target.addEventListener('toggle', () => {
+          if (!target.open) {
+            return;
+          }
+
+          detailsNodes.forEach((node) => {
+            if (node !== target) {
+              node.removeAttribute('open');
+            }
+          });
+        });
+      });
+    });
   }
 
   initTharaaHeaderMenu() {

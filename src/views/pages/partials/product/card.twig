@@ -112,18 +112,10 @@ view options:
                 <span class="font-bold text-sm">{{ product.price|money }}</span>
             {% endif %}
 
-            {# 
-               =========================================
-               [DEV MODE] Fake Rating (5 Stars)
-               To revert to real rating:
-               1. Change check back to {% if product.rating %}
-               2. Use {{ product.rating|number }}
-               =========================================
-            #}
-            {% if true %}
+            {% if product.rating and product.rating.stars %}
                 <div class="product-rating text-sm text-gray-500 flex items-center gap-1">
-                    <span class="text-gray-500 text-xs">({{ product.rating.count|default(2) }})</span>
-                    <span class="font-bold text-gray-600">{{ product.rating.stars|default(5.0)|number }}</span>
+                    <span class="text-gray-500 text-xs">({{ product.rating.count|default(0) }})</span>
+                    <span class="font-bold text-gray-600">{{ product.rating.stars|number }}</span>
                     <i class="sicon-star2 text-amber-400"></i>
                 </div>
             {% endif %}

@@ -1,97 +1,112 @@
 {
-  "blocks": {
-    "header": {
-      "cart": "Cart",
-      "wishlist": "Wishlist",
-      "free_shipping": "Free shipping for orders",
-      "all_categories": "All Categories",
-      "featured_products": "Featured Products",
-      "menu": "Menu",
-      "login": "Login",
-      "language": "Language"
-    },
-    "footer": {
-      "home": "Home",
-      "categories": "Categories",
-      "my_account": "My Account"
-    },
-    "appBanner": {
-      "download_now": "download now"
-    }
-  },
-  "components": {
-    "promo_hero": {
-      "countdown_label": "Offer ends in",
-      "badge": "End of Year Sale",
-      "seconds": "Seconds",
-      "minutes": "Minutes",
-      "hours": "Hours",
-      "days": "Days",
-      "most_requested": "Most Requested This Week",
-      "offer_finished": "Offer has ended",
-      "featured_products": "Featured products",
-      "shop_now": "Shop Now",
-      "empty_products": "No selected products for this section yet.",
-      "rating_prefix": "Rating",
-      "rating_suffix": "out of 5"
-    },
-    "testimonials": {
-      "section_title": "Customer Testimonials",
-      "section_subtitle": "Real feedback from customers who trusted our products and service.",
-      "customers_count": "2k+ Happy Customers",
-      "empty": "No testimonials available yet.",
-      "customer_name": "Customer",
-      "average_rating_prefix": "Average rating",
-      "average_rating_suffix": "out of 5",
-      "rating_prefix": "Rating",
-      "rating_suffix": "out of 5"
-    },
-    "product_categories": {
-      "section_title": "Selected Products",
-      "section_description": "Browse our latest collections"
-    },
-    "comparison": {
-      "before": "Before",
-      "after": "After"
-    },
-    "th_blog": {
-      "view_all": "Browse All Blogs"
-    },
-    "product_tabs": {
-      "description": "Description",
-      "reviews": "Reviews",
-      "read_more": "Read more",
-      "read_less": "Read less",
-      "write_review": "Write your review",
-      "reviews_summary_label": "Customer feedback and ratings",
-      "reviews_empty_title": "No reviews yet",
-      "reviews_empty_hint": "Be the first customer to share your experience with this product."
-    }
-  },
-  "pages": {
-    "cart": {
-      "cart_options": "Cart Options"
-    },
-    "order": {
-      "can_edit_or_delete_your_review_within": "You can edit or delete your review within",
-      "edit_period_ended": "The period to edit the review has ended",
-      "delete_period_ended": "The period to delete the review has ended",
-      "days_since_added": "days since it was added",
-      "option_name": "Option name",
-      "option_content": "Content"
-    }
-  },
-  "common": {
-    "all": "All",
-    "new": "New",
-    "best_seller": "Best Seller",
-    "add_to_cart": "Add to Cart",
-    "quantity": "Quantity",
-    "product_details": "Product Details",
-    "adding": "Adding...",
-    "added": "Added ✓",
-    "product_added_to_cart": "Product added to cart",
-    "bank_offer_sub_title_multiple": "Pay for your purchases via one of the following bank cards and get the specified discount",
-    "bank_offer_sub_title_single": "Pay for your purchases via :bank_name bank card and get discount"
-  }
+    "blocks":  {
+                   "header":  {
+                                  "cart":  "Cart",
+                                  "wishlist":  "Wishlist",
+                                  "free_shipping":  "Free shipping for orders",
+                                  "all_categories":  "All Categories",
+                                  "featured_products":  "Featured Products",
+                                  "menu":  "Menu",
+                                  "login":  "Login",
+                                  "language":  "Language"
+                              },
+                   "footer":  {
+                                  "home":  "Home",
+                                  "categories":  "Categories",
+                                  "my_account":  "My Account"
+                              },
+                   "appBanner":  {
+                                     "download_now":  "download now"
+                                 }
+               },
+    "components":  {
+                       "promo_hero":  {
+                                          "countdown_label":  "Offer ends in",
+                                          "badge":  "End of Year Sale",
+                                          "seconds":  "Seconds",
+                                          "minutes":  "Minutes",
+                                          "hours":  "Hours",
+                                          "days":  "Days",
+                                          "most_requested":  "Most Requested This Week",
+                                          "offer_finished":  "Offer has ended",
+                                          "featured_products":  "Featured products",
+                                          "shop_now":  "Shop Now",
+                                          "empty_products":  "No selected products for this section yet.",
+                                          "rating_prefix":  "Rating",
+                                          "rating_suffix":  "out of 5"
+                                      },
+                       "testimonials":  {
+                                            "section_title":  "Customer Testimonials",
+                                            "section_subtitle":  "Real feedback from customers who trusted our products and service.",
+                                            "customers_count":  "2k+ Happy Customers",
+                                            "empty":  "No testimonials available yet.",
+                                            "customer_name":  "Customer",
+                                            "average_rating_prefix":  "Average rating",
+                                            "average_rating_suffix":  "out of 5",
+                                            "rating_prefix":  "Rating",
+                                            "rating_suffix":  "out of 5"
+                                        },
+                       "product_categories":  {
+                                                  "section_title":  "Selected Products",
+                                                  "section_description":  "Browse our latest collections"
+                                              },
+                       "comparison":  {
+                                          "before":  "Before",
+                                          "after":  "After"
+                                      },
+                       "th_blog":  {
+                                       "view_all":  "Browse All Blogs"
+                                   },
+                       "product_tabs":  {
+                                            "description":  "Description",
+                                            "reviews":  "Reviews",
+                                            "read_more":  "Read more",
+                                            "read_less":  "Read less",
+                                            "write_review":  "Write your review",
+                                            "reviews_summary_label":  "Customer feedback and ratings",
+                                            "reviews_empty_title":  "No reviews yet",
+                                            "reviews_empty_hint":  "Be the first customer to share your experience with this product."
+                                        },
+                       "global_announcement":  {
+                                                   "default_text":  "Seasonal offers and special deals this week",
+                                                   "aria_label":  "Global announcement bar",
+                                                   "close":  "Close announcement"
+                                               },
+                       "th_faq":  {
+                                      "section_title":  "Frequently asked questions",
+                                      "section_subtitle":  "Clear answers to the questions customers ask most before placing an order.",
+                                      "featured_badge":  "Featured topic",
+                                      "featured_title":  "How does the return and exchange policy work?",
+                                      "featured_content":  "Check the store return and exchange policy to review the conditions, time window, and request handling process.",
+                                      "empty":  "No questions have been added yet."
+                                  }
+                   },
+    "pages":  {
+                  "cart":  {
+                               "cart_options":  "Cart Options"
+                           },
+                  "order":  {
+                                "can_edit_or_delete_your_review_within":  "You can edit or delete your review within",
+                                "edit_period_ended":  "The period to edit the review has ended",
+                                "delete_period_ended":  "The period to delete the review has ended",
+                                "days_since_added":  "days since it was added",
+                                "option_name":  "Option name",
+                                "option_content":  "Content"
+                            }
+              },
+    "common":  {
+                   "all":  "All",
+                   "new":  "New",
+                   "best_seller":  "Best Seller",
+                   "add_to_cart":  "Add to Cart",
+                   "quantity":  "Quantity",
+                   "product_details":  "Product Details",
+                   "adding":  "Adding...",
+                   "added":  "Added ✓",
+                   "product_added_to_cart":  "Product added to cart",
+                   "bank_offer_sub_title_multiple":  "Pay for your purchases via one of the following bank cards and get the specified discount",
+                   "bank_offer_sub_title_single":  "Pay for your purchases via :bank_name bank card and get discount",
+                   "enable_javascript_message":  "To access the full store experience, please enable JavaScript in your browser.",
+                   "enable_javascript_link":  "How to enable JavaScript"
+               }
 }

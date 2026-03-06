@@ -161,19 +161,21 @@ class ProductCard extends HTMLElement {
 
   getRatingHtml() {
     if (!this.showCardRating) return '';
-    // 1. Check for Real Rating
-    const hasRating = !!this.product?.rating?.stars;
-    const ratingValue = hasRating ? this.product.rating.stars : 5.0;
-    const ratingCount = hasRating ? (this.product.rating.count || 0) : 2;
+    const ratingValue = Number(this.product?.rating?.stars || 0);
+    if (!ratingValue) return '';
+
+    const normalizedValue = Number.isInteger(ratingValue)
+      ? ratingValue.toFixed(0)
+      : ratingValue.toFixed(1);
+    const ratingCount = Number(this.product?.rating?.count || 0);
 
     // Style: (Count) Value Star -- RTL: Star Value (Count)
     // Structure: Icon - Value - Count
-    return `
-      <div class="s-product-card-rating text-sm flex items-center gap-1">
-        <span class="text-gray-400 text-xs">(${ratingCount})</span>
-        <span class="font-bold text-gray-600">${ratingValue}</span>
-        <i class="sicon-star2 text-amber-400"></i>
-      </div>`;
+    return '<div class="s-product-card-rating text-sm flex items-center gap-1">'
+      + `<span class="text-gray-400 text-xs">(${salla.helpers.number(ratingCount)})</span>`
+      + `<span class="font-bold text-gray-600">${normalizedValue}</span>`
+      + '<i class="sicon-star2 text-amber-400"></i>'
+      + '</div>';
   }
 
   getQuickViewModal() {

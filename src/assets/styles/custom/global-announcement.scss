@@ -1,0 +1,127 @@
+.th-global-announcement-bar {
+  background: var(--th-global-announcement-bg);
+  color: var(--th-global-announcement-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+}
+
+.th-global-announcement-bar.is-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 65;
+}
+
+.th-global-announcement-bar__viewport {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  position: relative;
+}
+
+.th-global-announcement-bar__track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  white-space: nowrap;
+  min-width: max-content;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  animation: th-global-announcement-keyframes 26s linear infinite;
+  will-change: transform;
+}
+
+.th-global-announcement-bar:hover .th-global-announcement-bar__track {
+  animation-play-state: paused;
+}
+
+.th-global-announcement-bar__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+  min-height: 42px;
+  text-decoration: none;
+}
+
+.th-global-announcement-bar__item:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.th-global-announcement-bar__icon {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.th-global-announcement-bar__close {
+  position: absolute;
+  inset-inline-end: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.th-global-announcement-bar__close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.th-global-announcement-bar__close:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+@keyframes th-global-announcement-keyframes {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(50%);
+  }
+}
+
+[dir='ltr'] .th-global-announcement-bar__track {
+  animation-name: th-global-announcement-keyframes-ltr;
+}
+
+@keyframes th-global-announcement-keyframes-ltr {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .th-global-announcement-bar__track {
+    animation: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 0.6rem;
+    padding-block: 0.6rem;
+    white-space: normal;
+  }
+}
