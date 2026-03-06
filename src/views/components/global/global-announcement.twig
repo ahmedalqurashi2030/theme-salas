@@ -4,29 +4,66 @@
 #}
 
 {% set enabled_raw = theme.settings.get('global_announcement_visibility', theme.settings.get('global_announcement_enabled', true)) %}
-{% set enabled = enabled_raw not in [false, 0, '0', 'false', 'off', 'no', null, ''] %}
-{% set announcement_text_raw = theme.settings.get('global_announcement_text', trans('components.global_announcement.default_text')) %}
-{% set announcement_text = announcement_text_raw|trim %}
-{% if announcement_text_raw is iterable %}
-  {% set announcement_text = announcement_text_raw[user.language.code]
-    |default(announcement_text_raw.ar|default(announcement_text_raw.en|default('')))
+{% set enabled_value = enabled_raw.value ?? enabled_raw.selected ?? enabled_raw[0].value ?? enabled_raw[0].selected ?? enabled_raw %}
+{% set enabled = enabled_value in [true, 1, '1', 'true', 'on', 'yes'] %}
+
+{% set announcement_text_raw = theme.settings.get('global_announcement_text', null) %}
+{% set announcement_text_value = announcement_text_raw.value ?? announcement_text_raw[0].value ?? announcement_text_raw %}
+{% set announcement_text = '' %}
+
+{% if announcement_text_value is iterable %}
+  {% set announcement_text = announcement_text_value[user.language.code]
+    |default(announcement_text_value.ar|default(announcement_text_value.en|default('')))
     |trim %}
+{% else %}
+  {% set announcement_text = announcement_text_value|default('')|trim %}
 {% endif %}
 
-{% if enabled and announcement_text %}
-  {% set announcement_link = theme.settings.get('global_announcement_link', '')|trim %}
-  {% set bg_color = theme.settings.get('global_announcement_bg_color', '#000000') %}
-  {% set text_color = theme.settings.get('global_announcement_text_color', '#ffffff') %}
-  {% set sticky_on_scroll = theme.settings.get('global_announcement_sticky', false) %}
-  {% set dismissible = theme.settings.get('global_announcement_dismissible', false) %}
-  {% set section_id = 'th-global-announcement-bar' %}
+{% if not announcement_text %}
+  {% set announcement_text = trans('components.global_announcement.default_text')|trim %}
+{% endif %}
 
+{% set announcement_link_raw = theme.settings.get('global_announcement_link', '') %}
+{% set announcement_link = (announcement_link_raw.value ?? announcement_link_raw[0].value ?? announcement_link_raw)|default('')|trim %}
+
+{% set bg_color_raw = theme.settings.get('global_announcement_bg_color', '#000000') %}
+{% set bg_color = (bg_color_raw.value ?? bg_color_raw[0].value ?? bg_color_raw)|default('#000000') %}
+
+{% set text_color_raw = theme.settings.get('global_announcement_text_color', '#ffffff') %}
+{% set text_color = (text_color_raw.value ?? text_color_raw[0].value ?? text_color_raw)|default('#ffffff') %}
+
+{% set sticky_raw = theme.settings.get('global_announcement_sticky', false) %}
+{% set sticky_value = sticky_raw.value ?? sticky_raw.selected ?? sticky_raw[0].value ?? sticky_raw[0].selected ?? sticky_raw %}
+{% set sticky_on_scroll = sticky_value in [true, 1, '1', 'true', 'on', 'yes'] %}
+
+{% set dismissible_raw = theme.settings.get('global_announcement_dismissible', false) %}
+{% set dismissible_value = dismissible_raw.value ?? dismissible_raw.selected ?? dismissible_raw[0].value ?? dismissible_raw[0].selected ?? dismissible_raw %}
+{% set dismissible = dismissible_value in [true, 1, '1', 'true', 'on', 'yes'] %}
+
+{% set section_id = 'th-global-announcement-bar' %}
+{% set dismiss_key = 'th-global-announcement-' ~ user.language.code ~ '-' ~ (announcement_text|lower|replace({
+  ' ': '-',
+  '/': '-',
+  '\\': '-',
+  '.': '-',
+  ',': '-',
+  ':': '-',
+  ';': '-',
+  '#': '-',
+  '%': '-',
+  '?': '-',
+  '&': '-',
+  '=': '-',
+  '+': '-'
+})|slice(0, 80)) %}
+
+{% if enabled and announcement_text %}
   <section
     id="{{ section_id }}"
     class="th-global-announcement-bar {{ sticky_on_scroll ? 'is-sticky' : '' }}"
     data-th-global-announcement
     data-dismissible="{{ dismissible ? '1' : '0' }}"
-    data-dismiss-key="th-global-announcement-dismissed"
+    data-dismiss-key="{{ dismiss_key }}"
     aria-label="{{ trans('components.global_announcement.aria_label') }}"
     style="--th-global-announcement-bg: {{ bg_color }}; --th-global-announcement-color: {{ text_color }};">
 
