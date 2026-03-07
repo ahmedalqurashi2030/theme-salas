@@ -227,6 +227,7 @@ class App extends AppHelpers {
       let activePage = 0;
       let pageStarts = sections.map((_, index) => index);
       let scrollTimeout = null;
+      let syncFrame = null;
       let isPointerDown = false;
       let dragStartX = 0;
       let dragStartScrollLeft = 0;
@@ -344,27 +345,33 @@ class App extends AppHelpers {
           return pages;
         }, []);
 
-        const shouldEnable = shouldPaginate() && pageStarts.length > 1;
-        block.classList.toggle('is-scrollable', shouldEnable);
-        block.classList.toggle('is-draggable', shouldEnable);
-
-        const hasOverflow = shouldEnable && Math.ceil(inner.scrollWidth - inner.clientWidth) > 8;
-        const enablePagination = shouldEnable && hasOverflow;
+        const enablePagination = shouldPaginate() && pageStarts.length > 1;
 
         block.classList.toggle('is-scrollable', enablePagination);
         block.classList.toggle('is-draggable', enablePagination);
         block.classList.toggle('has-pagination', enablePagination);
 
         renderDots();
+        pagination.toggleAttribute('hidden', !enablePagination);
 
         if (!enablePagination) {
-          pagination.hidden = true;
           activePage = 0;
           stopDragging();
           return;
         }
 
         window.requestAnimationFrame(syncActiveIndexFromScroll);
+      };
+
+      const scheduleSyncPaginationState = () => {
+        if (syncFrame) {
+          window.cancelAnimationFrame(syncFrame);
+        }
+
+        syncFrame = window.requestAnimationFrame(() => {
+          syncFrame = null;
+          syncPaginationState();
+        });
       };
 
       pagination.addEventListener('click', (event) => {
@@ -443,7 +450,7 @@ class App extends AppHelpers {
       }, { passive: true });
 
       const handleViewportChange = () => {
-        syncPaginationState();
+        scheduleSyncPaginationState();
       };
 
       if (typeof desktopQuery.addEventListener === 'function') {
@@ -453,7 +460,16 @@ class App extends AppHelpers {
       }
 
       window.addEventListener('resize', handleViewportChange, { passive: true });
-      window.requestAnimationFrame(syncPaginationState);
+
+      if (typeof ResizeObserver === 'function') {
+        const resizeObserver = new ResizeObserver(() => scheduleSyncPaginationState());
+        resizeObserver.observe(inner);
+        sections.forEach((section) => resizeObserver.observe(section));
+      }
+
+      window.addEventListener('load', scheduleSyncPaginationState, { once: true, passive: true });
+      scheduleSyncPaginationState();
+      window.requestAnimationFrame(scheduleSyncPaginationState);
     };
 
     blocks.forEach(bindBlock);

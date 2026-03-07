@@ -266,7 +266,7 @@
 
 /* slider with bg block */
 .s-block--slider-with-bg{
-  @apply bg-gray-100 pb-8 sm:pb-16 mt-8 sm:mt-16 first-of-type:mt-0;
+  @apply bg-gray-100 pb-8 sm:pb-8 mt-8 sm:mt-8 first-of-type:mt-0;
 
   .slider-bg{
     @apply h-96 sm:h-116 transition-opacity bg-center bg-cover text-white relative;
@@ -317,7 +317,7 @@
 
 
 .s-block {
-  @apply mt-8 sm:mt-16;
+  @apply mt-8 sm:mt-8;
 
   &--full-bg{
     + footer,
@@ -411,6 +411,9 @@
 
   .th-featured-products-style3__mobile-pagination {
     display: none;
+    position: static;
+    inset: auto;
+    transform: none;
   }
 
   &.has-pagination {

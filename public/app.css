@@ -1096,9 +1096,6 @@ input:where([type='file']):focus{
 .mt-10{
     margin-top: 2.5rem;
 }
-.mt-16{
-    margin-top: 4rem;
-}
 .mt-2{
     margin-top: 0.5rem;
 }
@@ -22759,8 +22756,8 @@ input[type=radio].sr-only:checked ~ div.has-overlay:after {
 }
 @media (min-width: 640px){
     .s-block--slider-with-bg{
-        margin-top: 4rem;
-        padding-bottom: 4rem;
+        margin-top: 2rem;
+        padding-bottom: 2rem;
     }
 }
 .s-block--slider-with-bg .slider-bg{
@@ -23040,7 +23037,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
 }
 @media (min-width: 640px){
     .s-block{
-        margin-top: 4rem;
+        margin-top: 2rem;
     }
 }
 .s-block--full-bg + footer,
@@ -23185,6 +23182,12 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
 }
 .s-block--features-products.th-featured-products-style3 .th-featured-products-style3__mobile-pagination {
   display: none;
+  position: static;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  transform: none;
 }
 .s-block--features-products.th-featured-products-style3.has-pagination .th-featured-products-style3__mobile-pagination{
     margin-top: 1rem;
@@ -27400,8 +27403,6 @@ body.font-dinnextltarabic-regular .btn--add-to-cart {
   --th-ba-handle-size: 46px;
   --th-ba-divider-size: 2px;
   --th-ba-shadow: 0 20px 50px rgba(15, 23, 42, 0.14);
-  padding-top: max(24px, min(5vw, 72px));
-  padding-bottom: max(24px, min(5vw, 72px));
   position: relative;
 }
 .th-before-after-hero__eyebrow {
@@ -28746,6 +28747,14 @@ body[data-show-cart-total=true] .th-cart-total span {
   width: 100%;
   margin-bottom: 0;
 }
+/* Prevent global carousel/placeholder slide paddings from trimming banner edges */
+salla-slider.tharaa-banners-slider__slider[type]:not(.hydrated) > div > div,
+salla-slider.tharaa-banners-slider__slider[type]:not(.hydrated) .swiper > div > div > div,
+.tharaa-banners-slider__slider.carousel-slider .swiper-wrapper > div,
+.tharaa-banners-slider__slider .swiper-wrapper > .swiper-slide {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
 /* منع أي padding داخلي قد يُظهر جزء من السلايد التالي */
 .tharaa-banners-slider__slider .swiper {
   padding-left: 0 !important;
@@ -28757,22 +28766,22 @@ body[data-show-cart-total=true] .th-cart-total span {
 .tharaa-banners-slider__slider .swiper-wrapper {
   align-items: stretch;
 }
-/* تأكيد ملء الشرائح للمساحة */
+/* Let banner height follow natural image dimensions */
 .tharaa-banners-slider__slider .swiper,
 .tharaa-banners-slider__slider .swiper-wrapper,
 .tharaa-banners-slider__slider .swiper-slide {
-  height: 100%;
+  height: auto;
 }
 .tharaa-banners-slider__slide {
   width: 100%;
   min-width: 100%;
   flex: 0 0 100%;
   display: block;
-  height: 100%;
+  height: auto;
 }
 .tharaa-banners-slider__slide > .tharaa-banners-slider__link,
 .tharaa-banners-slider__slide > div.tharaa-banners-slider__link {
-  height: 100%;
+  height: auto;
 }
 /* Banner link/box */
 .tharaa-banners-slider__link {
@@ -28799,29 +28808,21 @@ body[data-show-cart-total=true] .th-cart-total span {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: var(--tharaa-banner-ratio);
-  min-height: 160px;
+  aspect-ratio: auto;
   overflow: hidden;
   background: #f5f5f5;
 }
 /* Fill image */
 .tharaa-banners-slider__img {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
   display: block;
   width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
+  height: auto;
+  max-width: 100%;
   transition: transform 0.45s ease;
 }
 .tharaa-banners-slider__link:hover .tharaa-banners-slider__img {
-  transform: scale(1.02);
+  transform: none;
 }
 .tharaa-banners-slider__slider .swiper-pagination {
   inset-inline-start: auto !important;
@@ -28890,7 +28891,7 @@ body[data-show-cart-total=true] .th-cart-total span {
     border-radius: var(--tharaa-banner-radius-mobile);
   }
   .tharaa-banners-slider__media.has-mobile {
-    aspect-ratio: var(--tharaa-banner-mobile-ratio);
+    aspect-ratio: auto;
     min-height: auto;
   }
   .tharaa-banners-slider__slider .swiper-pagination {
@@ -32193,9 +32194,9 @@ html[dir=rtl] .th-store-features .th-store-features__mobile-pagination .swiper-p
         padding-top: 2.5rem;
         padding-bottom: 2.5rem;
     }
-    .sm\:py-16{
-        padding-top: 4rem;
-        padding-bottom: 4rem;
+    .sm\:py-8{
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
     .sm\:pb-0{
         padding-bottom: 0px;
