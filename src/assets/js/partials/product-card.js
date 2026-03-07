@@ -1,4 +1,4 @@
-import BasePage from '../base-page';
+﻿import BasePage from '../base-page';
 /**
  * Tharaa - Product Card Skin (SAFE)
  * - Keeps Salla original markup/behavior (maximum compatibility)
@@ -101,6 +101,17 @@ class ProductCard extends HTMLElement {
     if (['1', 'true', 'yes', 'on'].includes(normalized)) return true;
     if (['0', 'false', 'no', 'off'].includes(normalized)) return false;
     return fallback;
+  }
+
+  parseOptionSetting(value, fallback = '') {
+    if (value === undefined || value === null || value === '') return fallback;
+    if (Array.isArray(value) && value.length) {
+      return this.parseOptionSetting(value[0]?.value ?? value[0]?.selected ?? value[0], fallback);
+    }
+    if (typeof value === 'object') {
+      return this.parseOptionSetting(value.value ?? value.selected ?? '', fallback);
+    }
+    return String(value).trim() || fallback;
   }
 
   getLangText(keys, fallback = '') {
@@ -1014,3 +1025,4 @@ class ProductCard extends HTMLElement {
 if (!customElements.get('custom-salla-product-card')) {
   customElements.define('custom-salla-product-card', ProductCard);
 }
+

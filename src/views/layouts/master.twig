@@ -1,4 +1,4 @@
-{# ############## Shared Variables in all views ################
+﻿{# ############## Shared Variables in all views ################
 | Variable                                           | Type     | Description                                                                                              |
 |----------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------|
 | store                                              | Store    |                                                                                                          |
@@ -52,7 +52,7 @@
 <!DOCTYPE html>
 <html
 	lang="{{ user.language.code }}" dir="{{ user.language.dir }}" class="tharaa-theme">
-	<!-- ط¨ط³ظ… ط§ظ„ظ„ظ‡ ط§ظ„ط±ط­ظ…ظ† ط§ظ„ط±ط­ظٹظ… -->
+	<!-- ط·آ¨ط·آ³ط¸â€¦ ط·آ§ط¸â€‍ط¸â€‍ط¸â€، ط·آ§ط¸â€‍ط·آ±ط·آ­ط¸â€¦ط¸â€  ط·آ§ط¸â€‍ط·آ±ط·آ­ط¸ظ¹ط¸â€¦ -->
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -66,8 +66,11 @@
 		{% set show_cart_quantity_and_currency_enabled = show_cart_quantity_and_currency_value in [true, 1, '1', 'true', 'on', 'yes'] %}
 		{% set card_show_rating_raw = theme.settings.get('card_show_rating', true) %}
 		{% set card_show_discount_badge_raw = theme.settings.get('card_show_discount_badge', true) %}
+		{% set add_to_cart_style_raw = theme.settings.get('add_to_cart_style', 'icon_only') %}
 		{% set card_show_rating_value = card_show_rating_raw.value ?? card_show_rating_raw.selected ?? card_show_rating_raw %}
 		{% set card_show_discount_badge_value = card_show_discount_badge_raw.value ?? card_show_discount_badge_raw.selected ?? card_show_discount_badge_raw %}
+		{% set add_to_cart_style_value = add_to_cart_style_raw.value ?? add_to_cart_style_raw.selected ?? add_to_cart_style_raw[0].value ?? add_to_cart_style_raw[0].selected ?? add_to_cart_style_raw %}
+		{% set add_to_cart_style_value = add_to_cart_style_value in ['icon_only', 'icon_text'] ? add_to_cart_style_value : 'icon_only' %}
 		{% set card_show_rating_enabled = card_show_rating_value in [true, 1, '1', 'true', 'on', 'yes'] %}
 		{% set card_show_discount_badge_enabled = card_show_discount_badge_value in [true, 1, '1', 'true', 'on', 'yes'] %}
 
@@ -118,12 +121,13 @@
 	{# tracking services, custom css feature. #}
 	{% hook 'head:end' %}
 </head>
-<body id="app" data-header-is-sticky="{{ theme.settings.get('header_is_sticky', false) ? 'true' : 'false' }}" data-image-zoom="{{ theme.settings.get('imageZoom', false) ? 'true' : 'false' }}" data-can-access-wallet="{{ user.can_access_wallet ? 'true' : 'false' }}" data-show-cart-total="{{ show_cart_quantity_and_currency_enabled ? 'true' : 'false' }}" class="overflow-x-hidden {% hook 'body:classes' %}
+<body id="app" data-header-is-sticky="{{ theme.settings.get('header_is_sticky', false) ? 'true' : 'false' }}" data-image-zoom="{{ theme.settings.get('imageZoom', false) ? 'true' : 'false' }}" data-can-access-wallet="{{ user.can_access_wallet ? 'true' : 'false' }}" data-show-cart-total="{{ show_cart_quantity_and_currency_enabled ? 'true' : 'false' }}" data-card-add-style="{{ add_to_cart_style_value }}" class="overflow-x-hidden {% hook 'body:classes' %}
 																						  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
 																						  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
 																						  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
 																						  {{ card_show_rating_enabled ? '' : ' th-hide-card-rating' }}
 																						  {{ card_show_discount_badge_enabled ? '' : ' th-hide-card-discount' }}
+																								{{ add_to_cart_style_value == 'icon_text' ? ' th-card-add-to-cart-icon-text' : '' }}
 																						  ">
 	<div class="loader-init"></div>
 	<noscript>
@@ -309,3 +313,5 @@
 
 	{% endblock %}
 </body></html>
+
+
