@@ -42,6 +42,10 @@ class ProductCard extends HTMLElement {
       salla.config.get('theme.settings.card_show_discount_badge'),
       true,
     );
+    this.addToCartStyle = this.parseOptionSetting(
+      salla.config.get('theme.settings.add_to_cart_style'),
+      document.body?.dataset?.cardAddStyle || 'icon_only',
+    );
     this.getProps();
 
     this.source = salla.config.get('page.slug');
@@ -927,8 +931,28 @@ class ProductCard extends HTMLElement {
       : '';
 
     // Add to cart button HTML - moved to content area
+    const addToCartLabel = this.escapeHTML(
+      this.product?.add_to_cart_label
+      || this.getLangText([
+        'common.add_to_cart',
+        'pages.products.add_to_cart',
+      ], 'Add to Cart'),
+    );
+    const useIntegratedAddToCart = this.addToCartStyle === 'icon_text';
     const addToCartBtn = !this.hideAddBtn && !this.horizontal && !this.fullImage
-      ? `<div class="s-product-card-add-btn">
+      ? useIntegratedAddToCart
+        ? `<div class="s-product-card-add-btn s-product-card-add-btn--integrated">
+            <salla-add-product-button
+              fill="outline"
+              product-id="${this.product.id}"
+              product-status="${this.product.status}"
+              product-type="${this.product.type}"
+              class="btn-card-add-with-text">
+              <i class="sicon-shopping-bag"></i>
+              <span>${addToCartLabel}</span>
+            </salla-add-product-button>
+          </div>`
+        : `<div class="s-product-card-add-btn">
             <salla-add-product-button
               fill="outline"
               product-id="${this.product.id}"
@@ -940,11 +964,14 @@ class ProductCard extends HTMLElement {
           </div>`
       : '';
     const ratingHtml = this.getRatingHtml();
-    const metaRowHtml = (ratingHtml || addToCartBtn)
+    const metaRowHtml = (ratingHtml || (!useIntegratedAddToCart && addToCartBtn))
       ? `<div class="s-product-card-meta">
           ${ratingHtml}
-          ${addToCartBtn}
+          ${useIntegratedAddToCart ? '' : addToCartBtn}
         </div>`
+      : '';
+    const actionsHtml = useIntegratedAddToCart && addToCartBtn
+      ? `<div class="s-product-card-actions">${addToCartBtn}</div>`
       : '';
     const quickViewBtn = !this.horizontal && !this.fullImage
       ? `<button
@@ -1006,6 +1033,8 @@ class ProductCard extends HTMLElement {
           ${this.product?.donation?.can_donate ? '' : this.getProductPrice()}
         </div>
 
+
+        ${actionsHtml}
         ${optionsComponent}
       </div>
     `;
@@ -1025,4 +1054,6 @@ class ProductCard extends HTMLElement {
 if (!customElements.get('custom-salla-product-card')) {
   customElements.define('custom-salla-product-card', ProductCard);
 }
+
+
 
