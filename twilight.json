@@ -2505,7 +2505,7 @@
                             "icon": "sicon-link",
                             "label": "الرابط",
                             "id": "items.url",
-                            "value": null,
+                            "value": [],
                             "description": null,
                             "required": false,
                             "format": "variable-list",
@@ -2567,7 +2567,7 @@
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": 5
+                    "maxLength": "20"
                 }
             ]
         },
