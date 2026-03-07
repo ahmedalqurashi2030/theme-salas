@@ -1,10 +1,12 @@
 .th-store-features {
-  /* ربط بمتغيرات سلة والتوكنز فقط */
+  /* Bound to Salla theme tokens */
   --th-charcoal: var(--th-text-primary, #191919);
   --th-gold: var(--th-color-primary, #d4af37);
   --th-card-border: var(--th-border-soft, #f0ede5);
   --th-gray-300: var(--th-border-soft, #d4d4d4);
   --th-gray-500: var(--th-text-secondary, #6f6f6f);
+  --th-store-features-track-side-padding: 1rem;
+  --th-store-features-card-width: min(84vw, 22rem);
 
   position: relative;
   overflow: hidden;
@@ -39,27 +41,40 @@
     scroll-behavior: smooth;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    scroll-padding-inline: var(--th-store-features-track-side-padding);
+    touch-action: pan-x;
 
     &::-webkit-scrollbar {
       display: none;
     }
 
+    &:focus-visible {
+      outline: 2px solid color-mix(in srgb, var(--th-gold) 75%, white 25%);
+      outline-offset: 6px;
+    }
+
     @media (min-width: 1024px) {
       overflow: visible;
+      scroll-snap-type: none;
+      scroll-padding-inline: 0;
+      touch-action: auto;
     }
   }
 
   &__card {
-    flex: 0 0 80%;
-    scroll-snap-align: center;
+    flex: 0 0 var(--th-store-features-card-width);
+    max-width: var(--th-store-features-card-width);
+    min-width: 0;
+    scroll-snap-align: start;
     scroll-snap-stop: always;
 
     @media (min-width: 768px) and (max-width: 1023px) {
-      flex: 0 0 57%;
+      --th-store-features-card-width: min(62vw, 29rem);
     }
 
     @media (min-width: 1024px) {
       flex: none;
+      max-width: none;
       min-width: 0;
       scroll-snap-align: none;
     }
@@ -93,7 +108,6 @@
   &__content {
     width: 100%;
   }
-
 
   &__card-title {
     font-size: clamp(1rem, 1.1vw, 1.2rem);
@@ -133,6 +147,10 @@
       margin: 0;
     }
 
+    @media (min-width: 768px) {
+      font-size: .92rem;
+    }
+
     @media (min-width: 1024px) {
       font-size: 1.06rem;
     }
@@ -140,7 +158,7 @@
 
   &--inline {
     .th-store-features__slider {
-      @media (min-width: 768px) {
+      @media (min-width: 1024px) {
         border: 1px solid var(--th-card-border);
         border-radius: 0.25rem;
         background: var(--th-bg-main, #ffffff);
@@ -148,8 +166,13 @@
     }
 
     .th-store-features__card {
-      @media (min-width: 768px) {
+      @media (min-width: 768px) and (max-width: 1023px) {
+        --th-store-features-card-width: min(78vw, 34rem);
+      }
+
+      @media (min-width: 1024px) {
         flex: none;
+        max-width: none;
         min-width: 0;
         scroll-snap-align: none;
 
@@ -214,14 +237,15 @@
   &__mobile-pagination {
     display: none;
 
-    @media (max-width: 767px) {
+    @media (max-width: 1023px) {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      flex-wrap: wrap;
       width: 100%;
       margin-top: 1rem;
-      padding: 0 1rem;
+      padding-inline: 1rem;
     }
   }
 
@@ -229,6 +253,7 @@
     width: 8px;
     height: 8px;
     margin: 0 !important;
+    padding: 0;
     border: 0;
     border-radius: 999px;
     opacity: 1;
@@ -236,10 +261,17 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    appearance: none;
     transition:
       width 220ms ease,
       height 220ms ease,
-      background-color 220ms ease;
+      background-color 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  &__mobile-pagination .swiper-pagination-bullet:focus-visible {
+    outline: 2px solid var(--th-color-primary, var(--color-primary, #111827));
+    outline-offset: 3px;
   }
 
   &__mobile-pagination .swiper-pagination-bullet-active {

@@ -482,7 +482,8 @@ class App extends AppHelpers {
       return;
     }
 
-    const mobileQuery = window.matchMedia('(max-width: 767px)');
+    const compactQuery = window.matchMedia('(max-width: 1023px)');
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     const debounce = (fn, wait = 120) => {
       let timeout;
@@ -502,12 +503,13 @@ class App extends AppHelpers {
       const pagination = section.querySelector('[data-th-store-features-pagination]');
       const cards = Array.from(section.querySelectorAll('.th-store-features__card'));
       const dots = Array.from(section.querySelectorAll('[data-th-store-features-dot]'));
-      if (!track || !pagination || !cards.length || dots.length !== cards.length) {
+      if (!(track instanceof HTMLElement) || !(pagination instanceof HTMLElement) || !cards.length || dots.length !== cards.length) {
         return;
       }
 
       let activeIndex = 0;
-      const isMobile = () => mobileQuery.matches;
+      const isCompact = () => compactQuery.matches;
+      const isRTL = () => getComputedStyle(section).direction === 'rtl';
 
       const setActiveDot = (index) => {
         activeIndex = Math.max(0, Math.min(index, dots.length - 1));
@@ -515,33 +517,40 @@ class App extends AppHelpers {
           const isActive = dotIndex === activeIndex;
           dot.classList.toggle('swiper-pagination-bullet-active', isActive);
           dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          dot.setAttribute('tabindex', isActive ? '0' : '-1');
         });
       };
 
       const scrollToCard = (index) => {
-        const target = cards[Math.max(0, Math.min(index, cards.length - 1))];
-        if (!target) {
+        const safeIndex = Math.max(0, Math.min(index, cards.length - 1));
+        const target = cards[safeIndex];
+        if (!target || !isCompact()) {
           return;
         }
+
+        setActiveDot(safeIndex);
         target.scrollIntoView({
-          behavior: 'smooth',
+          behavior: reducedMotionQuery.matches ? 'auto' : 'smooth',
           block: 'nearest',
-          inline: 'center',
+          inline: isRTL() ? 'end' : 'start',
         });
       };
 
       const updateFromScroll = debounce(() => {
-        if (!isMobile()) {
+        if (!isCompact()) {
           return;
         }
 
-        const center = track.getBoundingClientRect().left + track.clientWidth / 2;
+        const trackRect = track.getBoundingClientRect();
+        const referenceEdge = isRTL() ? trackRect.right : trackRect.left;
         let nearestIndex = activeIndex;
         let nearestDistance = Number.POSITIVE_INFINITY;
 
         cards.forEach((card, index) => {
           const rect = card.getBoundingClientRect();
-          const distance = Math.abs((rect.left + rect.width / 2) - center);
+          const cardEdge = isRTL() ? rect.right : rect.left;
+          const distance = Math.abs(cardEdge - referenceEdge);
           if (distance < nearestDistance) {
             nearestDistance = distance;
             nearestIndex = index;
@@ -549,36 +558,59 @@ class App extends AppHelpers {
         });
 
         setActiveDot(nearestIndex);
-      }, 100);
+      }, 70);
 
       const syncPaginationVisibility = () => {
-        pagination.hidden = !isMobile();
-        if (isMobile()) {
-          updateFromScroll();
+        const shouldShowPagination = isCompact() && dots.length > 1;
+        pagination.hidden = !shouldShowPagination;
+
+        if (shouldShowPagination) {
+          window.requestAnimationFrame(updateFromScroll);
         }
       };
 
       dots.forEach((dot, dotIndex) => {
         dot.addEventListener('click', (event) => {
           event.preventDefault();
-          if (!isMobile()) {
+          scrollToCard(dotIndex);
+        });
+
+        dot.addEventListener('keydown', (event) => {
+          if (!isCompact() || !['ArrowRight', 'ArrowLeft'].includes(event.key)) {
             return;
           }
-          setActiveDot(dotIndex);
-          scrollToCard(dotIndex);
+
+          event.preventDefault();
+          const step = event.key === 'ArrowRight'
+            ? (isRTL() ? -1 : 1)
+            : (isRTL() ? 1 : -1);
+          const nextIndex = Math.max(0, Math.min(activeIndex + step, dots.length - 1));
+          dots[nextIndex]?.focus();
+          scrollToCard(nextIndex);
         });
       });
 
       track.addEventListener('scroll', updateFromScroll, { passive: true });
+      window.addEventListener('resize', updateFromScroll, { passive: true });
 
-      if (typeof mobileQuery.addEventListener === 'function') {
-        mobileQuery.addEventListener('change', syncPaginationVisibility);
-      } else if (typeof mobileQuery.addListener === 'function') {
-        mobileQuery.addListener(syncPaginationVisibility);
+      if (typeof compactQuery.addEventListener === 'function') {
+        compactQuery.addEventListener('change', syncPaginationVisibility);
+      } else if (typeof compactQuery.addListener === 'function') {
+        compactQuery.addListener(syncPaginationVisibility);
+      }
+
+      if (typeof ResizeObserver === 'function') {
+        const resizeObserver = new ResizeObserver(() => {
+          syncPaginationVisibility();
+          window.requestAnimationFrame(updateFromScroll);
+        });
+        resizeObserver.observe(track);
+        cards.forEach((card) => resizeObserver.observe(card));
       }
 
       setActiveDot(0);
       syncPaginationVisibility();
+      window.requestAnimationFrame(updateFromScroll);
     };
 
     sections.forEach(bindSection);

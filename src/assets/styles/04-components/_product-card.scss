@@ -648,3 +648,76 @@
 .tharaa-theme.th-hide-card-discount .th-card-discount-badge {
   display: none !important;
 }
+
+.tharaa-theme.th-card-add-to-cart-icon-text {
+  .s-product-card-entry .s-product-card-meta {
+    justify-content: flex-start;
+  }
+
+  .s-product-card-entry .s-product-card-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .s-product-card-entry .s-product-card-add-btn--integrated {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    display: flex !important;
+    justify-content: center;
+  }
+
+  .s-product-card-entry .s-product-card-add-btn--integrated salla-add-product-button::part(button),
+  .product-entry .btn--add-to-cart:not(.btn--add-to-cart-floating)::part(button),
+  .product-entry .btn--add-to-cart:not(.btn--add-to-cart-floating) button {
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 38px !important;
+    padding: 0 16px !important;
+    border-radius: 999px !important;
+    border: 1px solid var(--th-border-soft, #e5e7eb) !important;
+    background: transparent !important;
+    color: var(--th-color-primary, var(--color-primary, #b99556)) !important;
+    box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  .s-product-card-entry .s-product-card-add-btn--integrated salla-add-product-button::part(button):hover,
+  .product-entry .btn--add-to-cart:not(.btn--add-to-cart-floating)::part(button):hover,
+  .product-entry .btn--add-to-cart:not(.btn--add-to-cart-floating) button:hover {
+    background: var(--th-color-primary, var(--color-primary, #b99556)) !important;
+    border-color: var(--th-color-primary, var(--color-primary, #b99556)) !important;
+    color: #fff !important;
+    transform: none !important;
+  }
+
+  .s-product-card-entry .s-product-card-add-btn--integrated salla-add-product-button > i,
+  .s-product-card-entry .s-product-card-add-btn--integrated salla-add-product-button > span,
+  .product-entry .btn--add-to-cart:not(.btn--add-to-cart-floating) > i,
+  .product-entry .btn--add-to-cart:not(.btn--add-to-cart-floating) > span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .s-product-card-entry .s-product-card-add-btn--integrated salla-add-product-button > span,
+  .product-entry .btn--add-to-cart:not(.btn--add-to-cart-floating) > span {
+    white-space: nowrap;
+  }
+
+  .product-entry .btn--add-to-cart:not(.btn--add-to-cart-floating) {
+    width: auto;
+    margin-inline: auto;
+  }
+}

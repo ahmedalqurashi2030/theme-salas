@@ -1,4 +1,4 @@
-{#
+﻿{#
 view options:
  1- is_horizontal = false  // display horizonal card
  2- is_special = false  // display special product with count down
@@ -11,6 +11,9 @@ view options:
 {% set card_show_rating_raw = theme.settings.get('card_show_rating', true) %}
 {% set card_show_rating_value = card_show_rating_raw.value ?? card_show_rating_raw.selected ?? card_show_rating_raw[0].value ?? card_show_rating_raw[0].selected ?? card_show_rating_raw %}
 {% set card_show_rating_enabled = card_show_rating_value in [true, 1, '1', 'true', 'on', 'yes'] %}
+{% set add_to_cart_style_raw = theme.settings.get('add_to_cart_style', 'icon_only') %}
+{% set add_to_cart_style_value = add_to_cart_style_raw.value ?? add_to_cart_style_raw.selected ?? add_to_cart_style_raw[0].value ?? add_to_cart_style_raw[0].selected ?? add_to_cart_style_raw %}
+{% set card_add_to_cart_integrated = add_to_cart_style_value == 'icon_text' %}
 <div id="product-{{ product.id }}" class='product-entry {{ block_classes ?: '' }}
   {{ is_horizontal ? 'product-entry--horizontal': 'product-entry--vertical' }}
   {{ is_special ? 'product-entry--special':'' }}
@@ -47,7 +50,7 @@ view options:
             </salla-button>
         {% endif %}
 
-        {% if not hide_add_btn and not is_horizontal %}
+        {% if not hide_add_btn and not is_horizontal and not card_add_to_cart_integrated %}
             <salla-add-product-button class="btn--add-to-cart btn--add-to-cart-floating" fill="outline"
                                       product-id="{{ product.id }}"
                                       product-status="{{ product.status }}"
@@ -129,6 +132,18 @@ view options:
             {% endif %}
         </div>
 
+        {% if not hide_add_btn and card_add_to_cart_integrated and not is_horizontal %}
+            <div class="flex justify-center mt-4">
+                <salla-add-product-button class="btn--add-to-cart btn--add-to-cart-integrated" fill="outline"
+                                          product-id="{{ product.id }}"
+                                          product-status="{{ product.status }}"
+                                          product-type="{{ product.type }}">
+                    <i class="sicon-shopping-bag text-sm"></i>
+                    <span>{{ product.add_to_cart_label }}</span>
+                </salla-add-product-button>
+            </div>
+        {% endif %}
+
         {% if is_special %}
             {% if main_product.product.discount_ends %}
                 <salla-count-down date="{{ main_product.product.discount_ends }}" boxed labeled></salla-count-down>
@@ -159,3 +174,5 @@ view options:
         {% endif %}
     </div>
 </div>
+
+
